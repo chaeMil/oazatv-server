@@ -3,67 +3,67 @@
 namespace App\AdminModule;
 
 use Nette,
-    Model,
-    Nette\Utils\Html;
+    Model;
 
-class SignPresenter extends BasePresenter
-{
-        public function renderDefault() {
-            if ($this->getUser()->isLoggedIn()) {
-                $this->redirect(':Admin:Main:');
-            }
+class SignPresenter extends BasePresenter {
+
+    public function renderDefault() {
+        if ($this->getUser()->isLoggedIn()) {
+            $this->redirect(':Admin:Main:');
         }
+    }
 
-	/**
-	 * Sign-in form factory.
-	 * @return Nette\Application\UI\Form
-	 */
-	protected function createComponentSignInForm()
-	{
-		$form = new Nette\Application\UI\Form;
-		$form->addText('username', 'Login')
-			->setRequired('Please enter your username.')
-                        ->setAttribute("class","form-control");
+    /**
+     * Sign-in form factory.
+     * @return Nette\Application\UI\Form
+     */
+    protected function createComponentSignInForm() {
+        $form = new Nette\Application\UI\Form;
+        $form->addText('username', 'Login')
+                ->setRequired('Please enter your username.')
+                ->setAttribute("class", "form-control");
 
-		$form->addPassword('password', 'Heslo')
-			->setRequired('Please enter your password.')
-                        ->setAttribute("class", "form-control");
+        $form->addPassword('password', 'Heslo')
+                ->setRequired('Please enter your password.')
+                ->setAttribute("class", "form-control");
 
-		$form->addSubmit('send', 'Přihlásit')
-                        ->setAttribute("class", "btn-lg btn-success btn-block");
+        $form->addSubmit('send', 'Přihlásit')
+                ->setAttribute("class", "btn-lg btn-success btn-block");
 
-		// call method signInFormSucceeded() on success
-		$form->onSuccess[] = $this->signInFormSucceeded;
-                
-                // setup Bootstrap form rendering
-                $this->bootstrapFormRendering($form);
-        
-		return $form;
-	}
+        // call method signInFormSucceeded() on success
+        $form->onSuccess[] = $this->signInFormSucceeded;
 
+        // setup Bootstrap form rendering
+        $this->bootstrapFormRendering($form);
 
-	public function signInFormSucceeded($form)
-	{
-		$values = $form->getValues();
+        return $form;
+    }
 
-                $this->getUser()->setExpiration('20 minutes', TRUE);
+    public function signInFormSucceeded($form) {
+        $values = $form->getValues();
 
-		try {
-			$this->getUser()->login($values->username, $values->password);
-			$this->redirect(':Admin:Main:');
+        $this->getUser()->setExpiration('20 minutes', TRUE);
 
-		} catch (Nette\Security\AuthenticationException $e) {
-			$form->addError($e->getMessage());
-		}
-                
-	}
+        try {
+            $this->getUser()->login($values->username, $values->password);
+            
+            $user = $this->database->table(DB_ADMIN_PREFIX."users")->get($this->getUser()->getId());
+            $user->update(Array(
+                "lastlogin_time" => time(),
+                "lastlogin_ip" => $_SERVER['REMOTE_ADDR']
+                )
+            );
+            
+            $this->redirect(':Admin:Main:');
+        } catch (Nette\Security\AuthenticationException $e) {
+            $form->addError($e->getMessage());
+        }
+    }
 
-
-	public function actionOut()
-	{
-		$this->getUser()->logout();
-		$this->flashMessage('You have been signed out.');
-		$this->redirect('Sign:in');
-	}
+    public function actionOut() {
+        $this->getUser()->logout();
+        $this->flashMessage('You have been signed out.');
+        $this->redirect('Sign:in');
+    }
 
 }
