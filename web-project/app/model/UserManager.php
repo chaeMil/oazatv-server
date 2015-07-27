@@ -1,0 +1,101 @@
+<?php
+
+namespace Model;
+
+use Nette,Nette\Utils\Strings,Nette\Security\Passwords;
+use Nette\Database\Context;
+
+
+/**
+ * Users management.
+ */
+class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
+{
+	const
+		TABLE_NAME = DB_ADMIN_PREFIX.'_users',
+		COLUMN_ID = 'id',
+		COLUMN_NAME = 'login',
+		COLUMN_PASSWORD_HASH = 'password';
+
+
+	/** @var Nette\Database\Context */
+	private $database;
+
+	public function __construct(Nette\Database\Connection $database)
+	{
+		$this->database = new Context($database);
+	}
+
+
+	/**
+	 * Performs an authentication.
+	 * @return Nette\Security\Identity
+	 * @throws Nette\Security\AuthenticationException
+	 */
+	public function authenticate(array $credentials)
+	{
+		list($username, $password) = $credentials;
+		$password = self::removeCapsLock($password);
+		$row = $this->database->table(self::TABLE_NAME)->where(self::COLUMN_NAME, $username)->fetch();
+
+		if (!$row) {
+			throw new Nette\Security\AuthenticationException('The username is incorrect.', self::IDENTITY_NOT_FOUND);
+
+		} elseif (!Passwords::verify($password, $row[self::COLUMN_PASSWORD_HASH])) {
+			throw new Nette\Security\AuthenticationException('The password is incorrect.', self::INVALID_CREDENTIAL);
+
+		} elseif (Passwords::needsRehash($row[self::COLUMN_PASSWORD_HASH])) {
+			$row->update(array(
+				self::COLUMN_PASSWORD_HASH => Passwords::hash($password),
+			));
+		}
+
+                //$roles = $this->database->table('role')->where('user_id', $row['id'])->fetch()->toArray();
+                
+		$arr = $row->toArray();
+		unset($arr[self::COLUMN_PASSWORD_HASH]);
+                
+		return new Nette\Security\Identity($row[self::COLUMN_ID], null, $arr);
+	}
+
+
+	/**
+	 * Adds new user.
+	 * @param  string
+	 * @param  string
+	 * @return void
+	 */
+	public function add($username, $password)
+	{
+		$this->database->table(self::TABLE_NAME)->insert(array(
+			self::COLUMN_NAME => $username,
+			self::COLUMN_PASSWORD_HASH => Passwords::hash(self::removeCapsLock($password)),
+		));
+	}
+        
+        /**
+	 * Update user.
+	 * @param  int
+	 * @param  string
+	 * @return void
+	 */
+	public function update($user_id, $password)
+	{
+		$this->database->table(self::TABLE_NAME)->where('id', $user_id)->update(array(
+			self::COLUMN_PASSWORD_HASH => Passwords::hash(self::removeCapsLock($password)),
+		));
+	}
+
+
+	/**
+	 * Fixes caps lock accidentally turned on.
+	 * @return string
+	 */
+	private static function removeCapsLock($password)
+	{
+		return $password === Strings::upper($password)
+			? Strings::lower($password)
+			: $password;
+	}
+}
+

@@ -27,3 +27,7 @@ services:
     nette.latteFactory:
         setup:
             - setTempDirectory(null)
+
+constants:
+    DB_PREFIX: ""
+    DB_ADMIN_PREFIX: "admin_"
