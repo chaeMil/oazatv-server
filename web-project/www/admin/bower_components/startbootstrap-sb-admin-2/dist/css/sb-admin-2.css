@@ -18,6 +18,9 @@ body {
     padding-top: 110px;
   }
 }
+body.full {
+  padding-left: 0;
+}
 #wrapper {
   width: 100%;
 }
