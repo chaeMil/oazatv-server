@@ -3,8 +3,6 @@
 namespace App\Model;
 
 use Nette,Nette\Utils\Strings,Nette\Security\Passwords;
-use Nette\Database\Context;
-
 
 /**
  * Users management.
@@ -87,7 +85,8 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 	}
         
         public function getUserName($user_id) {
-            return $this->database->table(self::TABLE_NAME)->where(self::COLUMN_ID, $user_id)->get(self::COLUMN_NAME);
+            return $this->database->table(self::TABLE_NAME)
+                    ->where(self::COLUMN_ID, $user_id)->get(self::COLUMN_NAME);
         }
 
 

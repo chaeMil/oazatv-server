@@ -4,6 +4,20 @@
   height: 180px;
   background-color: #333333;
 }
+.profile-img-tiny {
+  background-color: #333333;
+  width: 20px;
+  height: 20px;
+  margin-right: 20px;
+  margin-top: 8px;
+}
+.users .name {
+  line-height: 30px;
+}
+.panel-heading .pull-right .btn-group {
+  margin-top: -12px;
+  border: 1px solid #222222;
+}
 body {
   background-color: #272B30;
   padding-top: 70px;
@@ -17,9 +31,6 @@ body {
   body {
     padding-top: 110px;
   }
-}
-body.full {
-  padding-left: 0;
 }
 #wrapper {
   width: 100%;
