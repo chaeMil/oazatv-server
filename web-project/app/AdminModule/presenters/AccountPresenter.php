@@ -81,6 +81,7 @@ class AccountPresenter extends BasePresenter {
         $this->userManager->update(
                 $this->getUser()->getId(), $vals->newPass
                 );
-        $this->redirect('Acount:default');
+        $this->flashMessage('Heslo úspěšně změněno');
+        $this->redirect('Account:default');
     }
 }

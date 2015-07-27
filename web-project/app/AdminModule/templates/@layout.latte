@@ -39,7 +39,17 @@
 </head>
 
 <body>
-
+    
+    <div class="container">
+        <div n:if="count($flashes)>0" id="flashmessages">
+            <div n:foreach="$flashes as $flash"
+                 class='alert alert-{$flash->type}' role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                {$flash->message}
+            </div>
+        </div>
+    </div>
+            
     {include content}
     
     {block scripts}
