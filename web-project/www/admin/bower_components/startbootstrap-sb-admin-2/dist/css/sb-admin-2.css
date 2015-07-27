@@ -34,6 +34,12 @@ body {
 }
 #wrapper {
   width: 100%;
+  padding-right: 20px;
+}
+@media (max-width: 992px) {
+  #wrapper {
+    padding-left: 20px;
+  }
 }
 #page-wrapper {
   padding: 0 15px;

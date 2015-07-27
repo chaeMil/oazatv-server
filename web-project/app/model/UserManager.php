@@ -88,8 +88,7 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
             return $this->database->table(self::TABLE_NAME)
                     ->where(self::COLUMN_ID, $user_id)->get(self::COLUMN_NAME);
         }
-
-
+       
 	/**
 	 * Fixes caps lock accidentally turned on.
 	 * @return string

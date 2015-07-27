@@ -3,7 +3,8 @@
 namespace App\AdminModule;
 
 use Nette,
-    Model;
+    Model,
+    Latte\Helpers;
 
 /**
  * Presenter for all common sites in administration
@@ -18,17 +19,16 @@ class MainPresenter extends BasePresenter {
     
     private $model;
     public $database;
+    private $userManager;
     
-    function __construct(Nette\Database\Context $database, Model\AdminFacade $adminFacade) {
+    function __construct(Nette\Database\Context $database, 
+            Model\AdminFacade $adminFacade, \App\Model\UserManager $userManager) {
         $this->model = $adminFacade;
         $this->database = $database;
+        $this->userManager = $userManager;
     }
     
     function renderDefault() {
-        
-        if(!$this->user->isLoggedIn()) {
-            $this->redirect("Sign:in");
-        }
         
         $this->getTemplateVariables($this->getUser()->getId());
     }
