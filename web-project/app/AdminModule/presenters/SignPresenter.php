@@ -21,22 +21,23 @@ class SignPresenter extends BasePresenter
 	protected function createComponentSignInForm()
 	{
 		$form = new Nette\Application\UI\Form;
-		$form->addText('username', 'Username')
+		$form->addText('username', 'Login')
 			->setRequired('Please enter your username.')
-                        ->setAttribute("class","login-inp");
+                        ->setAttribute("class","form-control");
 
-		$form->addPassword('password', 'Password')
+		$form->addPassword('password', 'Heslo')
 			->setRequired('Please enter your password.')
-                        ->setAttribute("class", "login-inp");
+                        ->setAttribute("class", "form-control");
 
-		$form->addCheckbox('remember', Html::el('span')->setHtml('<label for="login-check">Remember me</label>'))
-                        ->setAttribute("class", "checkbox-size");
-
-		$form->addSubmit('send', 'Sign in')
-                        ->setAttribute("class", "submit-login");
+		$form->addSubmit('send', 'Přihlásit')
+                        ->setAttribute("class", "btn-lg btn-success btn-block");
 
 		// call method signInFormSucceeded() on success
 		$form->onSuccess[] = $this->signInFormSucceeded;
+                
+                // setup Bootstrap form rendering
+                $this->bootstrapFormRendering($form);
+        
 		return $form;
 	}
 
@@ -45,11 +46,7 @@ class SignPresenter extends BasePresenter
 	{
 		$values = $form->getValues();
 
-		if ($values->remember) {
-			$this->getUser()->setExpiration('14 days', FALSE);
-		} else {
-			$this->getUser()->setExpiration('20 minutes', TRUE);
-		}
+                $this->getUser()->setExpiration('20 minutes', TRUE);
 
 		try {
 			$this->getUser()->login($values->username, $values->password);
@@ -58,6 +55,7 @@ class SignPresenter extends BasePresenter
 		} catch (Nette\Security\AuthenticationException $e) {
 			$form->addError($e->getMessage());
 		}
+                
 	}
 
 

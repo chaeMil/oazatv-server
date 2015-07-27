@@ -23,6 +23,7 @@ class MainPresenter extends BasePresenter {
     }
     
     function renderDefault() {
+        
         if(!$this->user->isLoggedIn()) {
             $this->redirect("Sign:in");
         }

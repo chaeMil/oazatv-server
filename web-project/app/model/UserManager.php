@@ -1,6 +1,6 @@
 <?php
 
-namespace Model;
+namespace App\Model;
 
 use Nette,Nette\Utils\Strings,Nette\Security\Passwords;
 use Nette\Database\Context;
@@ -12,7 +12,7 @@ use Nette\Database\Context;
 class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 {
 	const
-		TABLE_NAME = DB_ADMIN_PREFIX.'_users',
+		TABLE_NAME = DB_ADMIN_PREFIX.'users',
 		COLUMN_ID = 'id',
 		COLUMN_NAME = 'login',
 		COLUMN_PASSWORD_HASH = 'password';
@@ -21,9 +21,9 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 	/** @var Nette\Database\Context */
 	private $database;
 
-	public function __construct(Nette\Database\Connection $database)
+	public function __construct(Nette\Database\Context $database)
 	{
-		$this->database = new Context($database);
+		$this->database = $database;
 	}
 
 

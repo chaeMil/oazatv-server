@@ -16,7 +16,8 @@ nette:
 
 
 session:
-    expiration: 14 days 
+    expiration: 1 day
+
 
 services:
 #   - Model\UserManager(@database)
@@ -27,6 +28,7 @@ services:
     nette.latteFactory:
         setup:
             - setTempDirectory(null)
+    authenticator:  App\Model\UserManager
 
 constants:
     DB_PREFIX: ""
