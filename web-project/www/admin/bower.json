@@ -1,0 +1,20 @@
+{
+  "name": "oaza-tv-admin",
+  "version": "1.0",
+  "homepage": "https://github.com/chaeMil/oazatv-server",
+  "authors": [
+    "Michal Mlejnek <chaemil72@gmail.com>"
+  ],
+  "description": "Oáza.tv administration",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "startbootstrap-sb-admin-2": "~1.0.7"
+  }
+}
