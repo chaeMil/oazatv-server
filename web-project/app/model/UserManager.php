@@ -81,10 +81,14 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 	 */
 	public function update($user_id, $password)
 	{
-		$this->database->table(self::TABLE_NAME)->where('id', $user_id)->update(array(
+		$this->database->table(self::TABLE_NAME)->where(self::COLUMN_ID, $user_id)->update(array(
 			self::COLUMN_PASSWORD_HASH => Passwords::hash(self::removeCapsLock($password)),
 		));
 	}
+        
+        public function getUserName($user_id) {
+            return $this->database->table(self::TABLE_NAME)->where(self::COLUMN_ID, $user_id)->get(self::COLUMN_NAME);
+        }
 
 
 	/**

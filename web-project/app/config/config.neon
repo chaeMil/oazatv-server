@@ -31,5 +31,6 @@ services:
     authenticator:  App\Model\UserManager
 
 constants:
+    VERSION: 0.1
     DB_PREFIX: ""
     DB_ADMIN_PREFIX: "admin_"

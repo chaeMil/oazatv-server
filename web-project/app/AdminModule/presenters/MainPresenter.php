@@ -17,9 +17,11 @@ class MainPresenter extends BasePresenter {
      */
     
     private $model;
+    public $database;
     
-    function __construct(Model\AdminFacade $adminFacade) {
+    function __construct(Nette\Database\Context $database, Model\AdminFacade $adminFacade) {
         $this->model = $adminFacade;
+        $this->database = $database;
     }
     
     function renderDefault() {
@@ -27,5 +29,7 @@ class MainPresenter extends BasePresenter {
         if(!$this->user->isLoggedIn()) {
             $this->redirect("Sign:in");
         }
+        
+        $this->template->user = $this->getUserFromDb($this->getUser()->getId());
     }
 }

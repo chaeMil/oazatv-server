@@ -40,7 +40,9 @@
 
 <body>
 
-    {block content}
+    {include content}
+    
+    {block scripts}
 
     <!-- jQuery -->
     <script src="{$basePath}/admin/bower_components/jquery/dist/jquery.min.js"></script>
@@ -57,6 +59,8 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="{$basePath}/admin/bower_components/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js"></script>
+
+    {/block}
 
 </body>
 

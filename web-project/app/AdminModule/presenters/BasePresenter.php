@@ -2,8 +2,7 @@
 
 namespace App\AdminModule;
 
-use Nette,
-	Model;
+use Nette;
 
 
 /**
@@ -16,7 +15,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         parent::startup();
     }
     
-    private $database;
+    public $database;
     
     public function __construct(Nette\Database\Context $database)
     {
@@ -24,10 +23,16 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         
     }
     
+    public function getUserFromDb($user_id) {
+        return $this->database->table(DB_ADMIN_PREFIX.'users')
+                ->where('id', $user_id)->fetch();
+    }
+    
     protected function createTemplate($class = NULL)
     {
         $template = parent::createTemplate($class);
         $template->userRoles = $this->getUser()->getRoles();
+        $template->version = VERSION;
         return $template;
     }
     
