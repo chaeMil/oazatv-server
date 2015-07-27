@@ -5,18 +5,25 @@ parameters:
 
 
 php:
-	date.timezone: Europe/Prague
+    date.timezone: Europe/Prague
 
 
-application:
-	errorPresenter: Error
-	mapping:
-		*: App\*Module\Presenters\*Presenter
+nette:
+    application:
+        errorPresenter: Front:Error
+        mapping:
+            *: App\*Module\*Presenter
 
 
 session:
-	expiration: 14 days
-
+    expiration: 14 days 
 
 services:
-	router: App\RouterFactory::createRouter
+#   - Model\UserManager(@database)
+#   - Model\PublicFacade(@database)
+    - Model\AdminFacade()
+    - App\RouterFactory
+    router: @App\RouterFactory::createRouter
+    nette.latteFactory:
+        setup:
+            - setTempDirectory(null)
