@@ -5,6 +5,13 @@
 
 body {
     background-color: #272B30;
+    padding-top: 70px;
+    @media(min-width:992px) {
+        padding-left: 270px;
+    }
+    @media(max-width:991px) {
+        padding-top: 110px;
+    }
 }
 
 // Wrappers
@@ -137,7 +144,7 @@ body {
     padding-left: 52px;
 }
 
-@media(min-width:768px) {
+@media(min-width:992px) {
     .sidebar {
         z-index: 1;
         position: absolute;

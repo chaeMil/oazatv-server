@@ -1,5 +1,16 @@
 body {
   background-color: #272B30;
+  padding-top: 70px;
+}
+@media (min-width: 992px) {
+  body {
+    padding-left: 270px;
+  }
+}
+@media (max-width: 991px) {
+  body {
+    padding-top: 110px;
+  }
 }
 #wrapper {
   width: 100%;
@@ -91,7 +102,7 @@ body {
 .sidebar .nav-third-level li a {
   padding-left: 52px;
 }
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   .sidebar {
     z-index: 1;
     position: absolute;

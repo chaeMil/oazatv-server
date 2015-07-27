@@ -277,6 +277,7 @@
 @zindex-modal-background:  1040;
 @zindex-modal:             1050;
 
+@sidebar-width: 250px;
 
 //== Media queries breakpoints
 //
@@ -327,7 +328,7 @@
 @grid-gutter-width:         30px;
 // Navbar collapse
 //** Point at which the navbar becomes uncollapsed.
-@grid-float-breakpoint:     @screen-sm-min;
+@grid-float-breakpoint:     @screen-md-min;
 //** Point at which the navbar begins collapsing.
 @grid-float-breakpoint-max: (@grid-float-breakpoint - 1);
 
@@ -337,17 +338,17 @@
 //## Define the maximum width of `.container` for different screen sizes.
 
 // Small screen / tablet
-@container-tablet:             (720px + @grid-gutter-width);
+@container-tablet:             (720px + @grid-gutter-width - @sidebar-width);
 //** For `@screen-sm-min` and up.
 @container-sm:                 @container-tablet;
 
 // Medium screen / desktop
-@container-desktop:            (940px + @grid-gutter-width);
+@container-desktop:            (940px + @grid-gutter-width - @sidebar-width);
 //** For `@screen-md-min` and up.
 @container-md:                 @container-desktop;
 
 // Large screen / wide desktop
-@container-large-desktop:      (1140px + @grid-gutter-width);
+@container-large-desktop:      (1140px + @grid-gutter-width - @sidebar-width);
 //** For `@screen-lg-min` and up.
 @container-lg:                 @container-large-desktop;
 

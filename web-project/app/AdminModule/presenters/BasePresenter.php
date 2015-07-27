@@ -28,6 +28,10 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
                 ->where('id', $user_id)->fetch();
     }
     
+    public function getTemplateVariables($user_id) {
+        $this->template->user = $this->getUserFromDb($user_id);
+    }
+    
     protected function createTemplate($class = NULL)
     {
         $template = parent::createTemplate($class);

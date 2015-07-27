@@ -30,6 +30,6 @@ class MainPresenter extends BasePresenter {
             $this->redirect("Sign:in");
         }
         
-        $this->template->user = $this->getUserFromDb($this->getUser()->getId());
+        $this->getTemplateVariables($this->getUser()->getId());
     }
 }
