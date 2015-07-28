@@ -28,7 +28,8 @@
                     <br>
                     <span class="row" n:foreach="$users as $userDB">
                         <div class="col-xs-1">
-                            <img class="img-responsive img-circle profile-img-tiny pull-left" />
+                            <img class="img-responsive img-circle profile-img-tiny pull-left"
+                                 src="{$basePath}/admin/uploaded/avatars/{$userDB->id}.jpg?{$rand}"/>
                         </div>
                         <div class="col-xs-9">
                             <h4 class="name">{$userDB->login}</h4>

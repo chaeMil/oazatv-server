@@ -9,6 +9,10 @@
   width: 30px;
   height: 30px;
 }
+.alert .profile-img-tiny {
+  margin-right: 15px;
+  margin-top: -3px;
+}
 .panel-heading .pull-right .btn-group {
   margin-top: -12px;
   border: 1px solid #222222;

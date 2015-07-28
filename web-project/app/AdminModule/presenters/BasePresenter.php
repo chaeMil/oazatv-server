@@ -2,7 +2,8 @@
 
 namespace App\AdminModule;
 
-use Nette;
+use Nette,
+    App\StringUtils;
 
 
 /**
@@ -25,6 +26,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     
     public function getTemplateVariables($user_id) {
         $this->template->user = $this->getUserFromDb($user_id);
+        $this->template->rand = StringUtils::rand(5);
     }
     
     protected function createTemplate($class = NULL)

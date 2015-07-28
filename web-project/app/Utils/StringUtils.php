@@ -46,6 +46,16 @@ class StringUtils {
         }
     }
     
+    public static function rand($length) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+    
     public static function removeExtensionFromFileName($filename) {
         return preg_replace('/\\.[^.\\s]{3,4}$/', '', $filename);
     }
