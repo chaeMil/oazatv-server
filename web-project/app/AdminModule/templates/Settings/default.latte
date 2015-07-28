@@ -26,9 +26,21 @@
                 </div>
                 <div class="panel-body users">
                     <br>
-                    <span n:foreach="$users as $user">
-                        <img class="img-responsive img-circle profile-img-tiny pull-left" />
-                        <h4 class="name">{$user->login}</h4>
+                    <span class="row" n:foreach="$users as $userDB">
+                        <div class="col-xs-1">
+                            <img class="img-responsive img-circle profile-img-tiny pull-left" />
+                        </div>
+                        <div class="col-xs-9">
+                            <h4 class="name">{$userDB->login}</h4>
+                        </div>
+                        <div class="col-xs-2">
+                            {if ($userDB->login != 'root')}
+                                <a n:href="Settings:deleteUser $userDB->id"
+                                    data-confirm="Smazat uživatele '{$userDB->login}'?"
+                                    role="button"
+                                    class="delete-confirm btn btn-warning pull-right">smazat</a>
+                            {/if}
+                        </div>
                     </span>
                 </div>
           </div>

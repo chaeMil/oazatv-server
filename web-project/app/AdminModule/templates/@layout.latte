@@ -70,6 +70,11 @@
     <!-- Custom Theme JavaScript -->
     <script src="{$basePath}/admin/bower_components/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js"></script>
 
+    <script type="text/javascript">
+        $('.delete-confirm').on('click', function () {
+            return confirm($(this).attr("data-confirm"));
+        });
+    </script>
     {/block}
 
 </body>
