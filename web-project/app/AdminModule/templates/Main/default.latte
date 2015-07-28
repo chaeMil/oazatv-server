@@ -8,8 +8,9 @@
     <div class="col-lg-12">
         <h1 class="page-header">Hlavní strana</h1>
         
-        <span>Vítej zpět {$user->login}! Naposledy jsi byl přihlášen(a) {$user->lastlogin_time}.</span>
-        <br><br>
+        <div class="alert alert-info" role="alert">
+            Vítej zpět {$user->login}! Naposledy jsi byl přihlášen(a) před {$lastloginString}.
+        </div>
         
     </div>
    
