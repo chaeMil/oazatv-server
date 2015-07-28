@@ -73,8 +73,13 @@ class SettingsPresenter extends BaseSecuredPresenter {
     
     public function addUserSucceeded($form) {
         $vals = $form->getValues();
-        $this->userManager->add($vals->userName, $vals->pass);
-        $this->flashMessage("Uživatel '".$vals->userName."' úspěšně přidán", "info");
-        $this->redirect("Settings:default");
+        if ($this->userManager->add($vals->userName, $vals->pass) == true) {
+            $this->flashMessage("Uživatel '".$vals->userName."' úspěšně přidán", "info");
+            $this->redirect("Settings:default");
+        } else {
+            $this->flashMessage("Uživatel '".$vals->userName."' už existuje", "danger");
+            $this->redirect("Settings:default");
+        }
+        
     }
 }
