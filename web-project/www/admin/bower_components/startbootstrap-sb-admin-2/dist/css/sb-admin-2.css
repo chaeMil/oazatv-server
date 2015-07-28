@@ -9,6 +9,9 @@
   width: 30px;
   height: 30px;
 }
+.users .profile-img-tiny {
+  margin-right: 10px;
+}
 .alert .profile-img-tiny {
   margin-right: 15px;
   margin-top: -3px;
