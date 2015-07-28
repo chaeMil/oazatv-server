@@ -11,7 +11,7 @@ use Nette,
  * 
  * @author Michal Mlejnek <chaemil72@gmail.com>
  */
-class MainPresenter extends BasePresenter {
+class MainPresenter extends BaseSecuredPresenter {
     
     /**
      * Load model classes for operate with db

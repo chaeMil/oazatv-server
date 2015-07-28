@@ -11,7 +11,7 @@ use Nette,
  *
  * @author Michal Mlejnek <chaemil72@gmail.com>
  */
-class AccountPresenter extends BasePresenter {
+class AccountPresenter extends BaseSecuredPresenter {
     /**
      * DB functions for user manager
      * 
@@ -28,16 +28,6 @@ class AccountPresenter extends BasePresenter {
     function __construct(UserManager $userManager, Nette\Database\Context $database) {
         $this->userManager = $userManager;
         $this->database = $database;
-    }
-    
-    /**
-     * Check if user is logged in
-     */
-    function startup() {
-        parent::startup();
-        if (!$this->getUser()->isLoggedIn()) {
-            $this->redirect(':Sign:sign:');
-        }
     }
     
     function renderDefault() {

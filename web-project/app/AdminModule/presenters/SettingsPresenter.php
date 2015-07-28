@@ -19,7 +19,7 @@ use Nette,
  *
  * @author chaemil
  */
-class SettingsPresenter extends BasePresenter {
+class SettingsPresenter extends BaseSecuredPresenter {
     
     private $model;
     public $database;
@@ -30,16 +30,6 @@ class SettingsPresenter extends BasePresenter {
         $this->model = $adminFacade;
         $this->database = $database;
         $this->userManager = $userManager;
-    }
-    
-    /**
-     * Check if user is logged in
-     */
-    function startup() {
-        parent::startup();
-        if (!$this->getUser()->isLoggedIn()) {
-            $this->redirect(':Sign:sign:');
-        }
     }
     
     function renderDefault() {      
