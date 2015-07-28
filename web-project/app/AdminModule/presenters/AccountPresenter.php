@@ -4,7 +4,8 @@ namespace App\AdminModule;
 use Nette,
     Model,
     Nette\Forms\Form,
-    App\Model\UserManager;
+    App\Model\UserManager,
+    App\ImageUtils;
 
 /**
  * Description of AccountPresenter
@@ -19,6 +20,7 @@ class AccountPresenter extends BaseSecuredPresenter {
      */
     private $userManager;
     public $database;
+    private $userAvatarsDirectory;
 
     /**
      * Constructor
@@ -28,6 +30,7 @@ class AccountPresenter extends BaseSecuredPresenter {
     function __construct(UserManager $userManager, Nette\Database\Context $database) {
         $this->userManager = $userManager;
         $this->database = $database;
+        $this->userAvatarsDirectory = ADMIN_UPLOADED_DIR."avatars/";
     }
     
     function renderDefault() {
@@ -62,6 +65,26 @@ class AccountPresenter extends BaseSecuredPresenter {
         return $form;
     }
     
+    public function createComponentMyAvatarForm() {
+        $form = new Nette\Application\UI\Form;
+        
+        $form->addUpload("avatar", "Vybrat avatar:")
+                ->setRequired()
+                ->setAttribute("class", "form-control")
+                ->addRule(Form::IMAGE, "obrázek musí být jpg");
+        
+        $form->addHidden("user_id", $this->getUser()->getId());;
+        
+        $form->addSubmit("save", null)
+                ->setAttribute("class", "btn btn-primary");
+        
+        $form->onSuccess[] = $this->avatarUploadSucceeded;
+        
+        $this->bootstrapFormRendering($form);
+        
+        return $form;
+    }
+    
     /**
      * 
      * @param type $form
@@ -73,5 +96,18 @@ class AccountPresenter extends BaseSecuredPresenter {
                 );
         $this->flashMessage('Heslo úspěšně změněno');
         $this->redirect('Account:default');
+    }
+    
+    public function avatarUploadSucceeded($form) {
+        $vals = $form->getValues();
+        $user_id = $vals->user_id;
+        
+        $filename = $user_id.".jpg";
+        $vals->avatar->move($this->userAvatarsDirectory.$filename);
+
+        ImageUtils::resizeImage($filename, $this->userAvatarsDirectory, 300, "");
+        
+        $this->flashMessage("Avatar úspěšně změněn", "info");
+        $this->redirect("Account:default");
     }
 }

@@ -45,4 +45,12 @@ class StringUtils {
             }
         }
     }
+    
+    public static function removeExtensionFromFileName($filename) {
+        return preg_replace('/\\.[^.\\s]{3,4}$/', '', $filename);
+    }
+    
+    public static function getExtensionFromFileName($filename) {
+        return pathinfo($filename, PATHINFO_EXTENSION);
+    }
 }
