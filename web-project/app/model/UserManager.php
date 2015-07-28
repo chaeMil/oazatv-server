@@ -77,7 +77,12 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
     }
     
     public function delete($user_id) {
-        $this->database->table(self::TABLE_NAME)->where(self::COLUMN_ID, $user_id)->delete();
+        $user = $this->database->table(self::TABLE_NAME)->where(self::COLUMN_ID, $user_id);
+        $user_avatar = ADMIN_UPLOADED_DIR."/avatars/".$user_id.".jpg";
+        if(file_exists($user_avatar)) {
+            unlink($user_avatar);
+        }
+        $user->delete();
     }
 
     /**

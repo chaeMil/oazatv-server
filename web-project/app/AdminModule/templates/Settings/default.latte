@@ -35,7 +35,7 @@
                             <h4 class="name">{$userDB->login}</h4>
                         </div>
                         <div class="col-xs-2">
-                            {if ($userDB->login != 'root')}
+                            {if ($userDB->login != 'root' && $user->login == 'root')}
                                 <a n:href="Settings:deleteUser $userDB->id"
                                     data-confirm="Smazat uživatele '{$userDB->login}'?"
                                     role="button"

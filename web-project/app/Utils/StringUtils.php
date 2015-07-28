@@ -29,7 +29,7 @@ class StringUtils {
             60 => 'minutou',
             1 => 'sekundou'
         );
-        $a_plural = array('rok' => 'let',
+        $a_plural = array('rokem' => 'roky',
             'měsícem' => 'měsíci',
             'dnem' => 'dny',
             'hodinou' => 'hodinami',
