@@ -1,0 +1,19 @@
+{block content}
+
+<div id="wrapper">
+    
+    {include ../navbar.latte}
+    
+    <div class="container">
+        <div class="row">
+            <a n:href="Main:default"> 
+                <h2><span class="glyphicon glyphicon-chevron-left pull-left"></span>Nahrát video</h2>
+            </a>  
+            
+            {control uploadVideo}
+                        
+        </div>
+    </div>
+    
+</div>
+{/block}
