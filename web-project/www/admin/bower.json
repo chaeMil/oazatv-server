@@ -15,6 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "startbootstrap-sb-admin-2": "~1.0.7"
+    "startbootstrap-sb-admin-2": "~1.0.7",
+    "selectize": "brianreavis/selectize.js#~0.12.1"
   }
 }
