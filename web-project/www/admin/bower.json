@@ -15,6 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "startbootstrap-sb-admin-2": "~1.0.7"
+    "startbootstrap-sb-admin-2": "~1.0.7",
+    "bootstrap-tagsinput": "timschlechter/bootstrap-tagsinput#~0.5.0"
   }
 }

@@ -61,6 +61,7 @@ class UploadPresenter extends BaseSecuredPresenter {
         $form->addText("tags", "tagy:")
                 ->setRequired()
                 ->setHtmlId("tags")
+                ->setAttribute("data-role", "tagsinput")
                 ->setAttribute("class", "form-control");
         
         $form->addText("categories", "kategorie:")
@@ -76,7 +77,7 @@ class UploadPresenter extends BaseSecuredPresenter {
         $form->addTextArea("note", "interní poznámka:")
                 ->setAttribute("class", "form-control");
         
-        $form->addButton("submit", "Nahrát")
+        $form->addSubmit("submit", "Nahrát")
                 ->setHtmlId("submit")
                 ->setAttribute("class", "btn btn-primary btn-xl");
         

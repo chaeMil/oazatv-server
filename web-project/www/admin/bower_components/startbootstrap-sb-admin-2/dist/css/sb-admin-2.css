@@ -20,6 +20,9 @@
   margin-top: -12px;
   border: 1px solid #222222;
 }
+.bootstrap-tagsinput {
+  width: 100%;
+}
 body {
   background-color: #272B30;
   padding-top: 70px;
