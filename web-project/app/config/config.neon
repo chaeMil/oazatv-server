@@ -20,9 +20,8 @@ session:
 
 
 services:
-#   - Model\UserManager(@database)
-#   - Model\PublicFacade(@database)
     - Model\AdminFacade()
+    - Model\VideoManager
     - App\RouterFactory
     router: @App\RouterFactory::createRouter
     nette.latteFactory:

@@ -10,7 +10,8 @@ namespace App\AdminModule;
 
 
 use Nette,
- App\Constants;
+ App\Constants,
+ Model\VideoManager;
 
 /**
  * Description of UploadPresenter
@@ -19,11 +20,19 @@ use Nette,
  */
 class UploadPresenter extends BaseSecuredPresenter {
     
+    public $database;
+    private $videoManager;
+
+    function __construct(Nette\Database\Context $database, VideoManager $videoManager) {
+        $this->database = $database;
+        $this->videoManager = $videoManager;
+    }
+    
     function renderUploadVideo() {
         $this->getTemplateVariables($this->getUser()->getId());
     }
     
-    function createComponentUploadVideo() {
+    function createComponentPrepareVideoInDB() {
         $form = new Nette\Application\UI\Form;
         
         $form->addText("year", "rok:")
@@ -77,12 +86,23 @@ class UploadPresenter extends BaseSecuredPresenter {
         $form->addTextArea("note", "interní poznámka:")
                 ->setAttribute("class", "form-control");
         
-        $form->addSubmit("submit", "Nahrát")
+        $form->addSubmit("submit", "Připravit video")
                 ->setHtmlId("submit")
                 ->setAttribute("class", "btn btn-primary btn-xl");
+        
+        $form->onSuccess[] = $this->prepareVideoInDBSucceeded;
         
         $this->bootstrapFormRendering($form);
         
         return $form;
+    }
+    
+    public function prepareVideoInDBSucceeded($form) {
+        $vals = $form->getValues();
+        
+        $this->videoManager->addVideoToDB('', '', '', '', '',   // empties are for files, none is added now
+                $vals['year'], $vals['month'], $vals['day'], $vals['name_cs'],
+                $vals['name_en'], $vals['tags'], $vals['categories'], 
+                $vals['description_cs'], $vals['description_en'], $vals['note']);
     }
 }
