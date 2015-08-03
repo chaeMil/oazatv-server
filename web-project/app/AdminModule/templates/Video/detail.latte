@@ -1,0 +1,57 @@
+{block content}
+
+<div id="wrapper">
+    
+    {include ../navbar.latte}
+    
+    <div class="container">
+        <div class="row">
+            <a href="javascript:history.go(-1);"> 
+                <h2><span class="glyphicon glyphicon-chevron-left pull-left"></span></h2>
+            </a>  
+            
+        </div>
+        
+        <br>
+        
+        <div class="row">
+            
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs nav-justified">
+                    <li role="presentation"><a data-toggle="tab" href="#info">Základní info</a></li>
+                    <li role="presentation"><a data-toggle="tab" href="#files">Soubory</a></li>
+                    <li role="presentation"><a data-toggle="tab" href="#analytics">Analytics</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane" id="info">...</div>
+                    <div role="tabpanel" class="tab-pane" id="files">...</div>
+                    <div role="tabpanel" class="tab-pane" id="analytics">...</div>
+                </div>
+                
+            </div>
+    </div>
+    
+    
+</div>
+{/block}
+
+{block pageScripts}
+
+<script>
+    
+    // Javascript to enable link to tab
+    var url = document.location.toString();
+    if (url.match('#')) {
+        $('.nav-tabs a[href=#'+url.split('#')[1]+']').tab('show') ;
+    } 
+
+    // Change hash for page-reload
+    $('.nav-tabs a').on('shown.bs.tab', function (e) {
+        window.location.hash = e.target.hash;
+    })
+    
+</script>
+
+{/block}

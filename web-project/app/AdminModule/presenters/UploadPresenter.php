@@ -105,6 +105,6 @@ class UploadPresenter extends BaseSecuredPresenter {
                 $vals['name_en'], $vals['tags'], $vals['categories'], 
                 $vals['description_cs'], $vals['description_en'], $vals['note']);
         
-        $this->redirect(":videoDetail", $insertedId);
+        $this->redirect("Video:detail", array("id" => $insertedId));
     }
 }

@@ -62,9 +62,14 @@ class VideoManager extends BaseModel {
             self::COLUMN_DESCRIPTION_EN => $description_en,
             self::COLUMN_NOTE => $note);
         
-        $this::$database->table(self::TABLE_NAME)->insert($values);
+        $insert = $this::$database->table(self::TABLE_NAME)->insert($values);
         
-        return $this::$database->table(self::TABLE_NAME)->fetch('SELECT LAST_INSERT_ID ();');
+        return $insert->id;
+       
+    }
+    
+    public function getVideoFromDB($id) {
+        return $this::$database->table(self::TABLE_NAME)->get($id);
     }
     
 }
