@@ -23,6 +23,9 @@
 .bootstrap-tagsinput {
   width: 100%;
 }
+.clickable-row:hover {
+  cursor: pointer;
+}
 body {
   background-color: #272B30;
   padding-top: 70px;

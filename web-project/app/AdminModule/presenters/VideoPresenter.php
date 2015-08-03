@@ -31,8 +31,11 @@ class VideoPresenter extends BaseSecuredPresenter {
         $paginator->setItemCount($this->videoManager->countVideos());
         $paginator->setItemsPerPage(30);
         $paginator->setPage(1);
-
+        
         $this->getTemplateVariables($this->getUser()->getId());
+        
+        $this->template->videos = $this->videoManager
+                ->getVideosFromDB($paginator->getLength(), $paginator->getOffset(), "id");
     }
     
     public function renderDetail($id) {

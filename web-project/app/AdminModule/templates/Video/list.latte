@@ -17,12 +17,43 @@
         <br>
         
         <div class="row">
-            
-                
-                
+            <table class="table table-hover">
+                <thead>
+                    <th>id</th>
+                    <th>název česky</th>
+                    <th>název anglicky</th>
+                    <th>datum</th>
+                    <th>tagy</th>
+                    <th>kategorie</th>
+                    <th>poznámka</th>
+                </thead>
+                <tbody>
+                    <tr n:foreach="$videos as $video" 
+                        class="clickable-row"
+                        data-href="{$presenter->link('Video:Detail', $video->id)}">
+                        <td>{$video->id}</td>
+                        <td>{$video->name_cs}</td>
+                        <td>{$video->name_en}</td>
+                        <td>{$video->date|date:'j. n. Y'}</td>
+                        <td>{$video->tags}<td>
+                        <td>{$video->categories}</td>
+                        <td>{$video->note}</td>
+                    </tr>
+                </tbody>                
+            </table>
         </div>
     </div>
     
     
 </div>
+{/block}
+
+{block pageScripts}
+<script>
+    $("document").ready(function($) {
+        $(".clickable-row").click(function() {
+            window.document.location = $(this).data("href");
+        });
+    });
+</script>
 {/block}
