@@ -100,9 +100,11 @@ class UploadPresenter extends BaseSecuredPresenter {
     public function prepareVideoInDBSucceeded($form) {
         $vals = $form->getValues();
         
-        $this->videoManager->addVideoToDB('', '', '', '', '',   // empties are for files, none is added now
+        $insertedId = $this->videoManager->addVideoToDB('', '', '', '', '',   // empties are for files, none is added now
                 $vals['year'], $vals['month'], $vals['day'], $vals['name_cs'],
                 $vals['name_en'], $vals['tags'], $vals['categories'], 
                 $vals['description_cs'], $vals['description_en'], $vals['note']);
+        
+        $this->redirect(":videoDetail", $insertedId);
     }
 }
