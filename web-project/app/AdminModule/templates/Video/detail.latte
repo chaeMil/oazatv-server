@@ -33,7 +33,7 @@
                 </div>
                 <div role="tabpanel" class="tab-pane" id="files">
                     <div class="row text-center">
-                        <img id="spinner" class="hidden" src="{$basePath}/admin/images/ajax-loader.gif">
+                        <img id="spinner" class="hidden" src="{$basePath}/admin_components/images/ajax-loader.gif">
                         <span id="progress"></span>
                     </div>
 
@@ -98,7 +98,7 @@
 <script src="{$basePath}/admin_components/bower_components/resumablejs/resumable.js"></script>
 <script>
 var resumable = new Resumable({
-  target: '{$basePath|noescape}/upload/upload-and-merge-file.php',
+  target: '{$basePath|noescape}/uploaded/upload-and-merge-file.php',
   chunkSize: 16*1024*1024,
   maxFiles: 2
 });
@@ -113,9 +113,9 @@ resumable.on('fileProgress', function(file){
     console.debug(file);
 });
 
-/*resumable.on('complete', function() {
-    window.location = ({$presenter->link('Upload:UploadVideoSucceeded', array('id' => $video->id))});
-});*/
+resumable.on('complete', function() {
+    window.location = ('{$basePath|noescape}/admin/upload/upload-video-succeeded?id={$video->id|noescape}&date={$video->date|noescape}');
+});
 
 resumable.on('fileAdded', function(file, event){
     $('#file-list').append('<li class="list-group-item">' + file.fileName + '</li>');

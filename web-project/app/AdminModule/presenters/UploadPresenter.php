@@ -26,7 +26,7 @@ class UploadPresenter extends BaseSecuredPresenter {
     private $videoManager;
     
     const
-            RESUMABLE_TEMP = 'upload/temp/',
+            RESUMABLE_TEMP = 'uploaded/temp/',
             VIDEOS_FOLDER = 'db/videos/';
 
     function __construct(Nette\Database\Context $database, VideoManager $videoManager) {
@@ -120,21 +120,23 @@ class UploadPresenter extends BaseSecuredPresenter {
         $this->redirect("Video:detail#files", array("id" => $insertedId));
     }
     
-    public function actionUploadVideoSucceeded($id) {
+    public function actionUploadVideoSucceeded() {
         
-        $videoname = Strings::random(32,'0-9a-zA-Z').'.mp4';
+        
+        $videoname = $_GET['date']."-".Strings::random(6,'0-9a-zA-Z');
         
         $files = glob(self::RESUMABLE_TEMP.'/*.*');
         
         foreach($files as $file) {
-            if (strpos($file,'.mp4') !== false) {
-                dump($file); exit;
-                rename($file, self::VIDEOS_FOLDER.$videoname);
-            }
+                //dump($file); exit;
+                $extension = StringUtils::getExtensionFromFileName($file);
+                rename($file, self::VIDEOS_FOLDER.$videoname.$extension);
+                $this->videoManager->saveVideoToDB(
+                        array("id" => $_GET['id'], 
+                    "original_file" => $videoname.$extension));
         }
         
-        
         $this->flashMessage("Video bylo úspěšně nahráno.", 'success');
-        $this->redirect('Video:detail#files', $id);
+        $this->redirect('Video:detail#files', $_GET['id']);
     }
 }

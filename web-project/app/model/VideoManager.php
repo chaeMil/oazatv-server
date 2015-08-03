@@ -50,6 +50,8 @@ class VideoManager extends BaseModel {
 
     public function saveVideoToDB($values) {
         
+        dump($values); exit;
+        
         if (isset($values->id) && $this->checkIfVideoExists($values->id) > 0) {
             $video = $this::$database->table(self::TABLE_NAME)->get($values->id);
             $sql = $video->update($values);
