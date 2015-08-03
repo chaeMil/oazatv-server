@@ -121,8 +121,7 @@ class UploadPresenter extends BaseSecuredPresenter {
     }
     
     public function actionUploadVideoSucceeded() {
-        
-        
+   
         $videoname = $_GET['date']."-".Strings::random(6,'0-9a-zA-Z');
         
         $files = glob(self::RESUMABLE_TEMP.'/*.*');
@@ -130,10 +129,10 @@ class UploadPresenter extends BaseSecuredPresenter {
         foreach($files as $file) {
                 //dump($file); exit;
                 $extension = StringUtils::getExtensionFromFileName($file);
-                rename($file, self::VIDEOS_FOLDER.$videoname.$extension);
+                rename($file, self::VIDEOS_FOLDER.$videoname.".".$extension);
                 $this->videoManager->saveVideoToDB(
                         array("id" => $_GET['id'], 
-                    "original_file" => $videoname.$extension));
+                    "original_file" => $videoname.".".$extension));
         }
         
         $this->flashMessage("Video bylo úspěšně nahráno.", 'success');

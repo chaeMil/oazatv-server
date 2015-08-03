@@ -34,7 +34,8 @@ class VideoManager extends BaseModel {
             COLUMN_CATEGORIES = 'categories',
             COLUMN_DESCRIPTION_CS = 'description_cs',
             COLUMN_DESCRIPTION_EN = 'description_en',
-            COLUMN_NOTE = 'note';
+            COLUMN_NOTE = 'note',
+            VIDEOS_FOLDER = 'db/videos/';
            
     /** @var Nette\Database\Context */
     public static $database;
@@ -50,10 +51,8 @@ class VideoManager extends BaseModel {
 
     public function saveVideoToDB($values) {
         
-        dump($values); exit;
-        
-        if (isset($values->id) && $this->checkIfVideoExists($values->id) > 0) {
-            $video = $this::$database->table(self::TABLE_NAME)->get($values->id);
+        if ($this->checkIfVideoExists($_GET['id']) > 0) {
+            $video = $this::$database->table(self::TABLE_NAME)->get($_GET['id']);
             $sql = $video->update($values);
             return $sql;
         } else {
@@ -76,5 +75,13 @@ class VideoManager extends BaseModel {
         return $this::$database->table(self::TABLE_NAME)
                 ->limit($from, $count)
                 ->order($order);
+    }
+    
+    public function getOriginalFileInfo($id) {
+        $video = $this->getVideoFromDB($id);
+        $finfo = finfo_open();
+        $fileinfo = finfo_file($finfo, self::VIDEOS_FOLDER . $video->original_file, FILEINFO_MIME);
+        finfo_close($finfo);
+        return $fileinfo;
     }
 }

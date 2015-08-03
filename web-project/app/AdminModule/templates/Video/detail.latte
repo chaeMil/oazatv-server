@@ -31,7 +31,28 @@
                     <br>
                     {control videoBasicInfoForm}
                 </div>
+                
                 <div role="tabpanel" class="tab-pane" id="files">
+                    
+                    <br>
+                    
+                    <div class="row">
+                        {if ($video->original_file != "")}
+
+                            <div class="col-md-6">
+                                <div class="well">
+                                    <h4>Zdrojový soubor: <small>{$video->original_file}</small></h4>
+                                    <span>{$originalFileInfo}</span>
+                                </div>
+                            </div>
+
+                            
+                        {/if}
+                    </div>
+
+                    <hr>
+                    
+                    <h3>Nahrát soubory:</h3>
                     <div class="row text-center">
                         <img id="spinner" class="hidden" src="{$basePath}/admin_components/images/ajax-loader.gif">
                         <span id="progress"></span>
@@ -40,10 +61,10 @@
                     <br>
 
                     <div class="form-group row">
-                        <label for="name" class="col-sm-2 control-label">Přidat video soubor</label>
+                        <label for="name" class="col-sm-2 control-label">Přidat zdrojový soubor</label>
                         <div class="col-sm-10">
                             <input type="button" class="btn btn-default form-control" id="browseButton"
-                                   value="vybrat video">
+                                   value="vybrat soubor">
                         </div>
                     </div>
 
@@ -53,12 +74,13 @@
                         Nahrát
                     </button>
 
-                    <h3>Soubory:</h3>
+                    <h4>Soubory:</h4>
 
                     <ul id="file-list" class="list-group">
 
                     </ul>
                 </div>
+                        
                 <div role="tabpanel" class="tab-pane" id="analytics">
 
                 </div>
@@ -132,7 +154,7 @@ $('#uploadButton').click(function() {
 
 function verifyForm() {
     valid = true;
-    containsVideo = false;
+    /*containsVideo = false;
     
     $.each(resumable.files, function(index, value) {
         console.log(value.fileName.toString().toLowerCase());
@@ -161,7 +183,9 @@ function verifyForm() {
         return true;
     } else {
         return false;
-    }
+    }*/
+        
+    return valid;
 }
 
 function getUploadProgress() {

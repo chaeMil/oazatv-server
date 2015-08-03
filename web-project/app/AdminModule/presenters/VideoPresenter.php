@@ -43,6 +43,8 @@ class VideoPresenter extends BaseSecuredPresenter {
         $video = $this->videoManager->getVideoFromDB($id);
         
         $this->template->video = $video;
+       
+        $this->template->originalFileInfo = $this->videoManager->getOriginalFileInfo($video->id);;
         $this['videoBasicInfoForm']->setDefaults($video->toArray());
     }
     
