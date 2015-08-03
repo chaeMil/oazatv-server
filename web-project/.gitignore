@@ -28,5 +28,6 @@ build/Release
 # https://do
 
 node_modules
-uploaded
+temp
+avatars
 db/videos
