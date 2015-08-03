@@ -43,16 +43,16 @@ class VideoManager extends BaseModel {
     }
     
     private function checkIfVideoExists($id) {
-        return $this->database->table(self::TABLE_NAME)
+        return $this::$database->table(self::TABLE_NAME)
                 ->where(self::COLUMN_ID, $id)->count();
     }
 
     public function saveVideoToDB($values) {
         
         if (isset($values->id) && $this->checkIfVideoExists($values->id) > 0) {
-            $sql = $this::$database->table(self::TABLE_NAME)
-                    ->where(self::COLUMN_ID, $values->id)
-                    ->update($values);
+            $video = $this::$database->table(self::TABLE_NAME)->get($values->id);
+            $sql = $video->update($values);
+            return $sql;
         } else {
             $sql = $this::$database->table(self::TABLE_NAME)->insert($values);
         }

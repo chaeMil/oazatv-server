@@ -51,6 +51,16 @@ class VideoPresenter extends BaseSecuredPresenter {
         $form->addText('name_en', 'Název anglicky')
                 ->setRequired()
                 ->setAttribute("class", "form-control");
+        
+        $form->addText('date', 'Datum')
+                ->setRequired()
+                ->setHtmlId("datepicker")
+                ->setAttribute("class", "form-control");
+        
+        $form->addText('tags', 'Tagy')
+                ->setRequired()
+                ->setAttribute("class", "form-control")
+                ->setAttribute("data-role", "tagsinput");
 
         $form->addSubmit('send', 'Uložit')
                 ->setAttribute("class", "btn-lg btn-success btn-block");
@@ -66,5 +76,13 @@ class VideoPresenter extends BaseSecuredPresenter {
     
     public function videoBasicInfoSucceeded($form) {
         $vals = $form->getValues();
+        
+        $status = $this->videoManager->saveVideoToDB($vals);
+        
+        if ($status) {
+            $this->flashMessage("Změny úspěšně uloženy", "success");
+        } else {
+            $this->flashMessage("Nic nebylo změněno", "info");
+        }
     }
 }
