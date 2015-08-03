@@ -28,7 +28,7 @@ class UploadPresenter extends BaseSecuredPresenter {
         $this->videoManager = $videoManager;
     }
     
-    function renderUploadVideo() {
+    function renderPrepareVideo() {
         $this->getTemplateVariables($this->getUser()->getId());
     }
     
