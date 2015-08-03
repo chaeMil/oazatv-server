@@ -21,6 +21,7 @@ class VideoManager extends BaseModel {
     const
             TABLE_NAME = 'db_video_files',
             COLUMN_ID = 'id',
+            COLUMN_PUBLISHED = 'published',
             COLUMN_ORIGINAL_FILE = 'original_file',
             COLUMN_MP4_FILE = 'mp4_file',
             COLUMN_WEBM_FILE = 'webm_file',
@@ -65,4 +66,7 @@ class VideoManager extends BaseModel {
         return $this::$database->table(self::TABLE_NAME)->get($id);
     }
     
+    public function countVideos() {
+        return $this::$database->table(self::TABLE_NAME)->count("*");
+    }
 }

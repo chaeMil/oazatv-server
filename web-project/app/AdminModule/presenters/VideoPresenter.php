@@ -27,6 +27,11 @@ class VideoPresenter extends BaseSecuredPresenter {
     }
     
     public function renderList() {
+        $paginator = new Nette\Utils\Paginator;
+        $paginator->setItemCount($this->videoManager->countVideos());
+        $paginator->setItemsPerPage(30);
+        $paginator->setPage(1);
+
         $this->getTemplateVariables($this->getUser()->getId());
     }
     
@@ -43,6 +48,15 @@ class VideoPresenter extends BaseSecuredPresenter {
         
         $form->addHidden('id')
                 ->setRequired();
+        
+        $published = array(
+            '0' => 'Ne',
+            '1' => 'Ano',
+        );
+        
+        $form->addSelect("published", "zveřejneno")
+                ->setItems($published)
+                ->setAttribute("class", "form-control");
         
         $form->addText('name_cs', 'název česky')
                 ->setRequired()
