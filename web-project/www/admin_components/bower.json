@@ -18,6 +18,7 @@
     "startbootstrap-sb-admin-2": "~1.0.7",
     "bootstrap-tagsinput": "timschlechter/bootstrap-tagsinput#~0.5.0",
     "resumable.js": "~2.9.0",
-    "eonasdan-bootstrap-datetimepicker": "~4.15.35"
+    "eonasdan-bootstrap-datetimepicker": "~4.15.35",
+    "resumablejs": "~1.0.2"
   }
 }

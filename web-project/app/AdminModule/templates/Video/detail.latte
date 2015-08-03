@@ -32,7 +32,32 @@
                     {control videoBasicInfoForm}
                 </div>
                 <div role="tabpanel" class="tab-pane" id="files">
+                    <div class="row text-center">
+                        <img id="spinner" class="hidden" src="{$basePath}/admin/images/ajax-loader.gif">
+                        <span id="progress"></span>
+                    </div>
 
+                    <br>
+
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-2 control-label">Přidat video soubor</label>
+                        <div class="col-sm-10">
+                            <input type="button" class="btn btn-default form-control" id="browseButton"
+                                   value="vybrat video">
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary pull-right" id="uploadButton">
+                        <span class="glyphicon glyphicon-upload" aria-hidden="true">         
+                        </span>
+                        Nahrát
+                    </button>
+
+                    <h3>Soubory:</h3>
+
+                    <ul id="file-list" class="list-group">
+
+                    </ul>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="analytics">
 
@@ -68,6 +93,81 @@
         });
     });
     
+</script>
+
+<script src="{$basePath}/admin_components/bower_components/resumablejs/resumable.js"></script>
+<script>
+var resumable = new Resumable({
+  target: '{$basePath|noescape}/upload/upload-and-merge-file.php',
+  chunkSize: 16*1024*1024,
+  maxFiles: 2
+});
+  
+resumable.assignBrowse($('#browseButton'));
+
+resumable.on('fileSuccess', function(file, message){
+    console.debug(file);
+    console.debug(message);
+});
+resumable.on('fileProgress', function(file){
+    console.debug(file);
+});
+
+/*resumable.on('complete', function() {
+    window.location = ({$presenter->link('Upload:UploadVideoSucceeded', array('id' => $video->id))});
+});*/
+
+resumable.on('fileAdded', function(file, event){
+    $('#file-list').append('<li class="list-group-item">' + file.fileName + '</li>');
+});
+
+$('#uploadButton').click(function() {
+    if (verifyForm()) {
+        resumable.upload(); 
+        $('#spinner').removeClass('hidden');
+        $('#progress').removeClass('hidden');
+        getUploadProgress();
+    }
+});
+
+function verifyForm() {
+    valid = true;
+    containsVideo = false;
+    
+    $.each(resumable.files, function(index, value) {
+        console.log(value.fileName.toString().toLowerCase());
+        if (!containsVideo) {
+            if (value.fileName.toString().toLowerCase().indexOf('.mp4') >= 0) {
+                containsVideo = true;
+            }
+        }
+    });
+    
+    console.log('valid: ' + valid + ' video: ' + containsVideo);
+    
+    if (!valid) {
+        $('#name').closest('.form-group').addClass('has-error');
+    } else {
+        $('#name').closest('.form-group').removeClass('has-error');
+    }
+    
+    if (!containsVideo) {
+        $('#browseButton').closest('.form-group').addClass('has-error');
+    } else {
+        $('#browseButton').closest('.form-group').removeClass('has-error');
+    }
+    
+    if (valid && containsVideo) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function getUploadProgress() {
+        $('#progress').html(Math.round(resumable.progress() * 100) + "%");
+        setTimeout(getUploadProgress, 250);
+      }
 </script>
 
 {/block}

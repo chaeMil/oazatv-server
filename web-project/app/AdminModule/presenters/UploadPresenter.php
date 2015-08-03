@@ -12,7 +12,8 @@ namespace App\AdminModule;
 use Nette,
  App\Constants,
  Model\VideoManager,
- App\StringUtils;
+ App\StringUtils,
+Nette\Utils\Strings;
 
 /**
  * Description of UploadPresenter
@@ -23,6 +24,10 @@ class UploadPresenter extends BaseSecuredPresenter {
     
     public $database;
     private $videoManager;
+    
+    const
+            RESUMABLE_TEMP = 'upload/temp/',
+            VIDEOS_FOLDER = 'db/videos/';
 
     function __construct(Nette\Database\Context $database, VideoManager $videoManager) {
         $this->database = $database;
@@ -113,5 +118,23 @@ class UploadPresenter extends BaseSecuredPresenter {
         $this->flashMessage("Video uloženo v DB", "success");
         $this->flashMessage("Zbyvá nahrát soubory pro zpracování", "info");
         $this->redirect("Video:detail#files", array("id" => $insertedId));
+    }
+    
+    public function actionUploadVideoSucceeded($id) {
+        
+        $videoname = Strings::random(32,'0-9a-zA-Z').'.mp4';
+        
+        $files = glob(self::RESUMABLE_TEMP.'/*.*');
+        
+        foreach($files as $file) {
+            if (strpos($file,'.mp4') !== false) {
+                dump($file); exit;
+                rename($file, self::VIDEOS_FOLDER.$videoname);
+            }
+        }
+        
+        
+        $this->flashMessage("Video bylo úspěšně nahráno.", 'success');
+        $this->redirect('Video:detail#files', $id);
     }
 }

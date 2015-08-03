@@ -33,4 +33,4 @@ constants:
     VERSION: 0.1
     DB_PREFIX: ""
     DB_ADMIN_PREFIX: "admin_"
-    ADMIN_UPLOADED_DIR: "admin/uploaded/"
+    ADMIN_UPLOADED_DIR: "upload/"
