@@ -63,4 +63,8 @@ class StringUtils {
     public static function getExtensionFromFileName($filename) {
         return pathinfo($filename, PATHINFO_EXTENSION);
     }
+    
+    public static function addLeadingZero($input, $length) {
+        return str_pad($input, $length, '0', STR_PAD_LEFT);
+    }
 }

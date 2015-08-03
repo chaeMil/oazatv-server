@@ -8,7 +8,8 @@
 
 namespace Model;
 
-use Nette;
+use Nette,
+ App\StringUtils;
 
 /**
  * Description of VideoManager
@@ -44,8 +45,8 @@ class VideoManager extends BaseModel {
     public function addVideoToDB($original_file, $mp4_file, $webm_file, $mp3_file,
             $thumb_file, $year, $month, $day, $name_cs, $name_en, $tags, 
             $categories, $description_cs, $description_en, $note) {
-        
-        $sql_date = date('Y-m-d', strtotime($year."-"-$month."-".$day));;
+                
+        $sql_date = date('Y-m-d', strtotime($year."-".StringUtils::addLeadingZero($month, 2)."-".StringUtils::addLeadingZero($day, 2)));
         
         $values = Array(self::COLUMN_ORIGINAL_FILE => $original_file,
             self::COLUMN_MP4_FILE => $mp4_file, 
@@ -62,9 +63,6 @@ class VideoManager extends BaseModel {
             self::COLUMN_NOTE => $note);
         
         $insert = VideoManager::$database->table(self::TABLE_NAME)->insert($values);
-        
-        dump($insert);
-        dump($sql_date);
     }
     
 }
