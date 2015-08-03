@@ -42,29 +42,22 @@ class VideoManager extends BaseModel {
         $this::$database = $database;
     }
     
-    public function addVideoToDB($original_file, $mp4_file, $webm_file, $mp3_file,
-            $thumb_file, $year, $month, $day, $name_cs, $name_en, $tags, 
-            $categories, $description_cs, $description_en, $note) {
-                
-        $sql_date = date('Y-m-d', strtotime($year."-".StringUtils::addLeadingZero($month, 2)."-".StringUtils::addLeadingZero($day, 2)));
+    private function checkIfVideoExists($id) {
+        return $this->database->table(self::TABLE_NAME)
+                ->where(self::COLUMN_ID, $id)->count();
+    }
+
+    public function saveVideoToDB($values) {
         
-        $values = Array(self::COLUMN_ORIGINAL_FILE => $original_file,
-            self::COLUMN_MP4_FILE => $mp4_file, 
-            self::COLUMN_WEBM_FILE => $webm_file,
-            self::COLUMN_MP3_FILE => $mp3_file,
-            self::COLUMN_THUMB_FILE => $thumb_file,
-            self::COLUMN_DATE => $sql_date,
-            self::COLUMN_NAME_CS => $name_cs,
-            self::COLUMN_NAME_EN => $name_en,
-            self::COLUMN_TAGS => $tags,
-            self::COLUMN_CATEGORIES => $categories,
-            self::COLUMN_DESCRIPTION_CS => $description_cs,
-            self::COLUMN_DESCRIPTION_EN => $description_en,
-            self::COLUMN_NOTE => $note);
+        if (isset($values->id) && $this->checkIfVideoExists($values->id) > 0) {
+            $sql = $this::$database->table(self::TABLE_NAME)
+                    ->where(self::COLUMN_ID, $values->id)
+                    ->update($values);
+        } else {
+            $sql = $this::$database->table(self::TABLE_NAME)->insert($values);
+        }
         
-        $insert = $this::$database->table(self::TABLE_NAME)->insert($values);
-        
-        return $insert->id;
+        return $sql->id;
        
     }
     

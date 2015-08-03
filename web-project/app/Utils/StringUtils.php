@@ -67,4 +67,8 @@ class StringUtils {
     public static function addLeadingZero($input, $length) {
         return str_pad($input, $length, '0', STR_PAD_LEFT);
     }
+    
+    public static function formatSQLDate($year, $month, $day) {
+        return date('Y-m-d', strtotime($year."-".StringUtils::addLeadingZero($month, 2)."-".StringUtils::addLeadingZero($day, 2)));
+    }
 }

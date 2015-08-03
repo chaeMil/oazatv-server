@@ -26,8 +26,45 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->videoManager = $videoManager;
     }
     
+    public function renderList() {
+        $this->getTemplateVariables($this->getUser()->getId());
+    }
+    
     public function renderDetail($id) {
         $this->getTemplateVariables($this->getUser()->getId());
-        $this->template->video = $this->videoManager->getVideoFromDB($id);
+        $video = $this->videoManager->getVideoFromDB($id);
+        
+        $this->template->video = $video;
+        $this['videoBasicInfoForm']->setDefaults($video->toArray());
+    }
+    
+    public function createComponentVideoBasicInfoForm() {        
+        $form = new Nette\Application\UI\Form;
+        
+        $form->addHidden('id')
+                ->setRequired();
+        
+        $form->addText('name_cs', 'Název česky')
+                ->setRequired()
+                ->setAttribute("class", "form-control");
+
+        $form->addText('name_en', 'Název anglicky')
+                ->setRequired()
+                ->setAttribute("class", "form-control");
+
+        $form->addSubmit('send', 'Uložit')
+                ->setAttribute("class", "btn-lg btn-success btn-block");
+
+        // call method signInFormSucceeded() on success
+        $form->onSuccess[] = $this->videoBasicInfoSucceeded;
+
+        // setup Bootstrap form rendering
+        $this->bootstrapFormRendering($form);
+
+        return $form;
+    }
+    
+    public function videoBasicInfoSucceeded($form) {
+        $vals = $form->getValues();
     }
 }

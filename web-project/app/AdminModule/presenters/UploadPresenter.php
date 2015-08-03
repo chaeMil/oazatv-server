@@ -11,7 +11,8 @@ namespace App\AdminModule;
 
 use Nette,
  App\Constants,
- Model\VideoManager;
+ Model\VideoManager,
+ App\StringUtils;
 
 /**
  * Description of UploadPresenter
@@ -98,13 +99,19 @@ class UploadPresenter extends BaseSecuredPresenter {
     }
     
     public function prepareVideoInDBSucceeded($form) {
-        $vals = $form->getValues();
+       
+        $values = $form->getValues();        
         
-        $insertedId = $this->videoManager->addVideoToDB('', '', '', '', '',   // empties are for files, none is added now
-                $vals['year'], $vals['month'], $vals['day'], $vals['name_cs'],
-                $vals['name_en'], $vals['tags'], $vals['categories'], 
-                $vals['description_cs'], $vals['description_en'], $vals['note']);
+        $sqlDate = StringUtils::formatSQLDate($values['year'], $values['month'], $values['day']);
+        unset($values['year']);
+        unset($values['month']);
+        unset($values['day']);
+        $values['date'] = $sqlDate;
         
-        $this->redirect("Video:detail", array("id" => $insertedId));
+        $insertedId = $this->videoManager->saveVideoToDB($values);
+        
+        $this->flashMessage("Video uloženo v DB", "success");
+        $this->flashMessage("Zbyvá nahrát soubory pro zpracování", "info");
+        $this->redirect("Video:detail#files", array("id" => $insertedId));
     }
 }

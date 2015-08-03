@@ -7,7 +7,9 @@
     <div class="container">
         <div class="row">
             <a href="javascript:history.go(-1);"> 
-                <h2><span class="glyphicon glyphicon-chevron-left pull-left"></span></h2>
+                <h2><span class="glyphicon glyphicon-chevron-left pull-left"></span>
+                    {$video->name_cs} / {$video->name_en}
+                </h2>
             </a>  
             
         </div>
@@ -18,16 +20,23 @@
             
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs nav-justified">
-                    <li role="presentation"><a data-toggle="tab" href="#info">Základní info</a></li>
+                    <li role="presentation" class="active"><a data-toggle="tab" href="#info">Základní info</a></li>
                     <li role="presentation"><a data-toggle="tab" href="#files">Soubory</a></li>
                     <li role="presentation"><a data-toggle="tab" href="#analytics">Analytics</a></li>
                 </ul>
 
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane" id="info">...</div>
-                    <div role="tabpanel" class="tab-pane" id="files">...</div>
-                    <div role="tabpanel" class="tab-pane" id="analytics">...</div>
+                    <div role="tabpanel" class="tab-pane active" id="info">
+                        <br>
+                        {control videoBasicInfoForm}
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="files">
+                        
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="analytics">
+                        
+                    </div>
                 </div>
                 
             </div>
