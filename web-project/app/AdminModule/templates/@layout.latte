@@ -91,6 +91,14 @@
             return confirm($(this).attr("data-confirm"));
         });
     </script>
+    
+    <script>
+        $("document").ready(function($) {
+            $(".clickable-row").click(function() {
+                window.document.location = $(this).data("href");
+            });
+        });
+    </script>
     {/block}
     
     {block pageScripts}

@@ -29,7 +29,7 @@
                 </thead>
                 <tbody>
                     <tr n:foreach="$videos as $video" 
-                        class="clickable-row"
+                        class="clickable-row {if ($video->published == 1)}active{/if}"
                         data-href="{$presenter->link('Video:Detail', $video->id)}">
                         <td>{$video->id}</td>
                         <td>{$video->name_cs}</td>
@@ -46,14 +46,4 @@
     
     
 </div>
-{/block}
-
-{block pageScripts}
-<script>
-    $("document").ready(function($) {
-        $(".clickable-row").click(function() {
-            window.document.location = $(this).data("href");
-        });
-    });
-</script>
 {/block}
