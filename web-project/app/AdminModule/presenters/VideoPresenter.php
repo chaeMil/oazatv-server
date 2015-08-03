@@ -44,26 +44,36 @@ class VideoPresenter extends BaseSecuredPresenter {
         $form->addHidden('id')
                 ->setRequired();
         
-        $form->addText('name_cs', 'Název česky')
+        $form->addText('name_cs', 'název česky')
                 ->setRequired()
                 ->setAttribute("class", "form-control");
 
-        $form->addText('name_en', 'Název anglicky')
+        $form->addText('name_en', 'název anglicky')
                 ->setRequired()
                 ->setAttribute("class", "form-control");
         
-        $form->addText('date', 'Datum')
+        $form->addText('date', 'datum')
                 ->setRequired()
                 ->setHtmlId("datepicker")
                 ->setAttribute("class", "form-control");
         
-        $form->addText('tags', 'Tagy')
+        $form->addText('tags', 'tagy')
                 ->setRequired()
                 ->setAttribute("class", "form-control")
                 ->setAttribute("data-role", "tagsinput");
+        
+        $form->addTextArea('description_cs', 'popis česky')
+                ->setAttribute("class", "form-control");
+        
+        $form->addTextArea('description_en', 'popis anglicky')
+                ->setAttribute("class", "form-control");
+        
+        $form->addTextArea("note", "interní poznámka")
+                ->setAttribute("class", "form-control");
 
         $form->addSubmit('send', 'Uložit')
                 ->setAttribute("class", "btn-lg btn-success btn-block");
+        
 
         // call method signInFormSucceeded() on success
         $form->onSuccess[] = $this->videoBasicInfoSucceeded;
