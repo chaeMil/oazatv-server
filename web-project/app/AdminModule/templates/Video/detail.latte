@@ -8,7 +8,7 @@
         <div class="row">
             <a href="javascript:history.go(-1);"> 
                 <h2><span class="glyphicon glyphicon-chevron-left pull-left"></span>
-                    {$video->name_cs} / {$video->name_en}
+                    {$video->name_cs} / {$video->name_en} <small> #{$video->hash}</small>
                 </h2>
             </a>  
             
@@ -84,13 +84,13 @@
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     {if (!$video->mp4_file)}
-                                                        <li><a n:href="Video:convertFile, $video->id, $mp4File">MP4 soubor</a></li>
+                                                        <li><a n:href="Video:convertFile, $video->id, $mp4File, $originalFile">MP4 soubor</a></li>
                                                     {/if}
                                                     {if (!$video->mp3_file)}
-                                                        <li><a n:href="Video:convertFile, $video->id, $mp3File">MP3 soubor</a></li>
+                                                        <li><a n:href="Video:convertFile, $video->id, $mp3File, $originalFile">MP3 soubor</a></li>
                                                     {/if}
                                                     {if (!$video->webm_file)}
-                                                        <li><a n:href="Video:convertFile, $video->id, $webmFile">WEBM soubor</a></li>
+                                                        <li><a n:href="Video:convertFile, $video->id, $webmFile, $originalFile">WEBM soubor</a></li>
                                                     {/if}
                                                 </ul>
                                             </div>
@@ -109,6 +109,24 @@
                                             <a n:href="Video:deleteVideoFile, $video->id, $mp4File"
                                                data-confirm="smazat MP4 soubor?"
                                                class="btn btn-danger delete-confirm pull-right">smazat</a>
+                                               
+                                            <div class="btn-group">
+                                                <button type="button" 
+                                                        class="btn btn-default dropdown-toggle" 
+                                                        data-toggle="dropdown" 
+                                                        aria-haspopup="true" 
+                                                        aria-expanded="false">
+                                                    zkonvertovat <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    {if (!$video->mp3_file)}
+                                                        <li><a n:href="Video:convertFile, $video->id, $mp3File, $mp4File">MP3 soubor</a></li>
+                                                    {/if}
+                                                    {if (!$video->webm_file)}
+                                                        <li><a n:href="Video:convertFile, $video->id, $webmFile, $mp4File">WEBM soubor</a></li>
+                                                    {/if}
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -139,6 +157,24 @@
                                             <a n:href="Video:deleteVideoFile, $video->id, $webmFile"
                                                data-confirm="smazat WEBM soubor?"
                                                class="btn btn-danger delete-confirm pull-right">smazat</a>
+                                               
+                                               <div class="btn-group">
+                                                    <button type="button" 
+                                                            class="btn btn-default dropdown-toggle" 
+                                                            data-toggle="dropdown" 
+                                                            aria-haspopup="true" 
+                                                            aria-expanded="false">
+                                                        zkonvertovat <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        {if (!$video->mp4_file)}
+                                                            <li><a n:href="Video:convertFile, $video->id, $mp4File, $webmFile">MP4 soubor</a></li>
+                                                        {/if}
+                                                        {if (!$video->mp3_file)}
+                                                            <li><a n:href="Video:convertFile, $video->id, $mp3File, $webmFile">MP3 soubor</a></li>
+                                                        {/if}
+                                                    </ul>
+                                                </div>
                                         </div>
                                     </div>
                                 </div>

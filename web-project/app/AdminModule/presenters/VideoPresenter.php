@@ -135,7 +135,7 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->redirect("Video:Detail#files", $id);
     }
     
-    public function actionConvertFile($id, $target) {
+    public function actionConvertFile($id, $target, $input) {
         $this->flashMessage("Soubor byl přidán do fronty", "info");
         $this->redirect("Video:Detail#files", $id);
     }
