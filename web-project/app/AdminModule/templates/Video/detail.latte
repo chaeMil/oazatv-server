@@ -37,68 +37,84 @@
                     <br>
                     
                     <div class="row">
-                        {if ($video->original_file != "")}
+                        
+                        <div class="col-md-12">
+                            {if ($video->original_file != "")}
+                                <div class="col-md-6">
+                                    <div class="well">
+                                        <h4>Zdrojový soubor: <small>{$video->original_file}</small></h4>
+                                        <span>{$originalFileInfo}</span>
+                                        <br><br>
+                                        <a n:href="Video:deleteVideoFile, $video->id, $originalFile"
+                                           data-confirm="smazat originální soubor?"
+                                           class="btn btn-danger delete-confirm pull-right">smazat</a>
 
-                            <div class="col-md-6">
-                                <div class="well">
-                                    <h4>Zdrojový soubor: <small>{$video->original_file}</small></h4>
-                                    <span>{$originalFileInfo}</span>
-                                    <br><br>
-                                    <a n:href="Video:deleteOriginalFile $video->id"
-                                       data-confirm="smazat originální soubor?"
-                                       class="btn btn-danger delete-confirm pull-right">smazat</a>
-                                    
-                                    
-                                    <button type="button" 
-                                            class="btn btn-default dropdown-toggle" 
-                                            data-toggle="dropdown" 
-                                            aria-haspopup="true" 
-                                            aria-expanded="false">
-                                        použít jako <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Action</a></li>
-                                        <li><a href="#">Another action</a></li>
-                                        <li><a href="#">Something else here</a></li>
-                                        <li role="separator" class="divider"></li>
-                                        <li><a href="#">Separated link</a></li>
-                                    </ul>
+
+                                        <button type="button" 
+                                                class="btn btn-default dropdown-toggle" 
+                                                data-toggle="dropdown" 
+                                                aria-haspopup="true" 
+                                                aria-expanded="false">
+                                            použít jako <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            {if (!$video->mp4_file && strpos($originalFileInfo,'mp4') !== false)}
+                                                <li><a n:href="Video:useOriginalFileAs, $video->id, $mp4File">MP4 soubor</a></li>
+                                            {/if}
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
+                            {/if}
 
-                            
-                        {/if}
+                            {if ($video->mp4_file != "")}
+                                <div class="col-md-6">
+                                    <div class="well">
+                                        <h4>MP4 soubor: <small>{$video->mp4_file}</small></h4>
+                                        <br><br>
+                                        <a n:href="Video:deleteVideoFile, $video->id, $mp4File"
+                                           data-confirm="smazat MP4 soubor?"
+                                           class="btn btn-danger delete-confirm pull-right">smazat</a>
+                                        <br><br>
+                                    </div>
+                                </div>
+                            {/if}
+                        </div>
+                        
                     </div>
 
                     <hr>
                     
-                    <h3>Nahrát soubory:</h3>
-                    <div class="row text-center">
-                        <img id="spinner" class="hidden" src="{$basePath}/admin_components/images/ajax-loader.gif">
-                        <span id="progress"></span>
-                    </div>
-
-                    <br>
-
-                    <div class="form-group row">
-                        <label for="name" class="col-sm-2 control-label">Přidat zdrojový soubor</label>
-                        <div class="col-sm-10">
-                            <input type="button" class="btn btn-default form-control" id="browseButton"
-                                   value="vybrat soubor">
+                    {if (!$video->original_file)}
+                    
+                        <h3>Nahrát soubory:</h3>
+                        <div class="row text-center">
+                            <img id="spinner" class="hidden" src="{$basePath}/admin_components/images/ajax-loader.gif">
+                            <span id="progress"></span>
                         </div>
-                    </div>
 
-                    <button class="btn btn-primary pull-right" id="uploadButton">
-                        <span class="glyphicon glyphicon-upload" aria-hidden="true">         
-                        </span>
-                        Nahrát
-                    </button>
+                        <br>
 
-                    <h4>Soubory:</h4>
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-2 control-label">Přidat zdrojový soubor</label>
+                            <div class="col-sm-10">
+                                <input type="button" class="btn btn-default form-control" id="browseButton"
+                                       value="vybrat soubor">
+                            </div>
+                        </div>
 
-                    <ul id="file-list" class="list-group">
+                        <button class="btn btn-primary pull-right" id="uploadButton">
+                            <span class="glyphicon glyphicon-upload" aria-hidden="true">         
+                            </span>
+                            Nahrát
+                        </button>
 
-                    </ul>
+                        <h4>Soubory:</h4>
+
+                        <ul id="file-list" class="list-group">
+
+                        </ul>
+                    {/if}
+                    
                 </div>
                         
                 <div role="tabpanel" class="tab-pane" id="analytics">
@@ -142,7 +158,7 @@
 var resumable = new Resumable({
   target: '{$basePath|noescape}/uploaded/upload-and-merge-file.php',
   chunkSize: 16*1024*1024,
-  maxFiles: 2
+  maxFiles: 1
 });
   
 resumable.assignBrowse($('#browseButton'));

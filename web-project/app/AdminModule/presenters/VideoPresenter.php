@@ -45,6 +45,10 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->template->video = $video;
        
         $this->template->originalFileInfo = $this->videoManager->getOriginalFileInfo($video->id);;
+        $this->template->originalFile = VideoManager::COLUMN_ORIGINAL_FILE;
+        $this->template->mp4File = VideoManager::COLUMN_MP4_FILE;
+        $this->template->mp3File = VideoManager::COLUMN_MP3_FILE;
+        $this->template->webmFile = VideoManager::COLUMN_WEBM_FILE;
         $this['videoBasicInfoForm']->setDefaults($video->toArray());
     }
     
@@ -119,9 +123,15 @@ class VideoPresenter extends BaseSecuredPresenter {
         }
     }
     
-    public function actionDeleteOriginalFile($id) {
-        $this->videoManager->deleteOriginalFile($id);
-        $this->flashMessage("Originální soubor byl smazán", "danger");
+    public function actionUseOriginalFileAs($id, $target) {
+        $this->videoManager->useOriginalFileAs($id, $target);
+        $this->flashMessage("Originání soubor použit jako: ".$target, "success");
+        $this->redirect("Video:Detail#files", $id);
+    }
+    
+    public function actionDeleteVideoFile($id, $file) {
+        $this->videoManager->deleteVideoFile($id, $file);
+        $this->flashMessage("Soubor byl smazán", "danger");
         $this->redirect("Video:Detail#files", $id);
     }
 }

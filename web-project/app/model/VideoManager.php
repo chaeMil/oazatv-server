@@ -99,9 +99,14 @@ class VideoManager extends BaseModel {
         return $fileinfo;
     }
     
-    public function deleteOriginalFile($id) {
+    public function deleteVideoFile($id, $file) {
         $video = $this->getVideoFromDB($id);
-        unlink(VIDEOS_FOLDER . $id ."/". $video->original_file);
-        $video->update(array(self::COLUMN_ORIGINAL_FILE => ""));
+        unlink(VIDEOS_FOLDER . $id ."/". $video->$file);
+        $video->update(array($file => ""));
+    }
+    
+    public function useOriginalFileAs($id, $target) {
+        $video = $this->getVideoFromDB($id);
+        $video->update(array(self::COLUMN_ORIGINAL_FILE => "", $target => $video->original_file));
     }
 }
