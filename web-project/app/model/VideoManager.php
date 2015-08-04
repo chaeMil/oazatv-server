@@ -58,13 +58,12 @@ class VideoManager extends BaseModel {
             $videoId = 0;
         }
         
-        $values['hash'] = StringUtils::rand(8);
-        
         if ($videoId != 0 && $this->checkIfVideoExists($videoId) > 0) {
             $video = $this::$database->table(self::TABLE_NAME)->get($videoId);
             $sql = $video->update($values);
             return $sql;
         } else {
+            $values['hash'] = StringUtils::rand(8);
             $sql = $this::$database->table(self::TABLE_NAME)->insert($values);
             $newVideoDir = VIDEOS_FOLDER.$sql->id."/";
             $newVideoThumbsDir = $newVideoDir."thumbs/";
