@@ -41,46 +41,74 @@
                         <div class="col-md-12">
                             {if ($video->original_file != "")}
                                 <div class="col-md-6">
-                                    <div class="well">
-                                        <h4>Zdrojový soubor: <small>{$video->original_file}</small></h4>
-                                        <span>{$originalFileInfo}</span>
-                                        <br><br>
-                                        <a n:href="Video:deleteVideoFile, $video->id, $originalFile"
-                                           data-confirm="smazat originální soubor?"
-                                           class="btn btn-danger delete-confirm pull-right">smazat</a>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4>Zdrojový soubor: <small>{$video->original_file}</small></h4>
+                                        </div>
+                                        <div class="panel-body">
+                                            <span>{$originalFileInfo}</span>
+                                            <hr>
+                                            <a n:href="Video:deleteVideoFile, $video->id, $originalFile"
+                                               data-confirm="smazat originální soubor?"
+                                               class="btn btn-danger delete-confirm pull-right">smazat</a>
 
+                                            <div class="btn-group">
+                                                <button type="button" 
+                                                        class="btn btn-default dropdown-toggle" 
+                                                        data-toggle="dropdown" 
+                                                        aria-haspopup="true" 
+                                                        aria-expanded="false">
+                                                    použít jako <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    {if (!$video->mp4_file && strpos($originalFileInfo,'mp4') !== false)}
+                                                        <li><a n:href="Video:useOriginalFileAs, $video->id, $mp4File">MP4 soubor</a></li>
+                                                    {/if}
+                                                    {if (!$video->mp3_file && strpos($originalFileInfo,'mp3') !== false)}
+                                                        <li><a n:href="Video:useOriginalFileAs, $video->id, $mp3File">MP3 soubor</a></li>
+                                                    {/if}
+                                                    {if (!$video->webm_file && strpos($originalFileInfo,'webm') !== false)}
+                                                        <li><a n:href="Video:useOriginalFileAs, $video->id, $webmFile">WEBM soubor</a></li>
+                                                    {/if}
+                                                </ul>
+                                            </div>
 
-                                        <button type="button" 
-                                                class="btn btn-default dropdown-toggle" 
-                                                data-toggle="dropdown" 
-                                                aria-haspopup="true" 
-                                                aria-expanded="false">
-                                            použít jako <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            {if (!$video->mp4_file && strpos($originalFileInfo,'mp4') !== false)}
-                                                <li><a n:href="Video:useOriginalFileAs, $video->id, $mp4File">MP4 soubor</a></li>
-                                            {/if}
-                                            {if (!$video->mp3_file && strpos($originalFileInfo,'mp3') !== false)}
-                                                <li><a n:href="Video:useOriginalFileAs, $video->id, $mp3File">MP3 soubor</a></li>
-                                            {/if}
-                                            {if (!$video->webm_file && strpos($originalFileInfo,'webm') !== false)}
-                                                <li><a n:href="Video:useOriginalFileAs, $video->id, $webmFile">WEBM soubor</a></li>
-                                            {/if}
-                                        </ul>
+                                            <div class="btn-group">
+                                                <button type="button" 
+                                                        class="btn btn-default dropdown-toggle" 
+                                                        data-toggle="dropdown" 
+                                                        aria-haspopup="true" 
+                                                        aria-expanded="false">
+                                                    zkonvertovat <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    {if (!$video->mp4_file)}
+                                                        <li><a n:href="Video:convertFile, $video->id, $mp4File">MP4 soubor</a></li>
+                                                    {/if}
+                                                    {if (!$video->mp3_file)}
+                                                        <li><a n:href="Video:convertFile, $video->id, $mp3File">MP3 soubor</a></li>
+                                                    {/if}
+                                                    {if (!$video->webm_file)}
+                                                        <li><a n:href="Video:convertFile, $video->id, $webmFile">WEBM soubor</a></li>
+                                                    {/if}
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             {/if}
 
                             {if ($video->mp4_file != "")}
                                 <div class="col-md-6">
-                                    <div class="well">
-                                        <h4>MP4 soubor: <small>{$video->mp4_file}</small></h4>
-                                        <br><br>
-                                        <a n:href="Video:deleteVideoFile, $video->id, $mp4File"
-                                           data-confirm="smazat MP4 soubor?"
-                                           class="btn btn-danger delete-confirm pull-right">smazat</a>
-                                        <br><br>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4>MP4 soubor: <small>{$video->mp4_file}</small></h4>
+                                        </div>
+                                        <div class="panel-body">
+                                            <a n:href="Video:deleteVideoFile, $video->id, $mp4File"
+                                               data-confirm="smazat MP4 soubor?"
+                                               class="btn btn-danger delete-confirm pull-right">smazat</a>
+                                        </div>
                                     </div>
                                 </div>
                             {/if}
