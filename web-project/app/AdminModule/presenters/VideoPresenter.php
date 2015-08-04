@@ -139,4 +139,10 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->flashMessage("Soubor byl přidán do fronty", "info");
         $this->redirect("Video:Detail#files", $id);
     }
+    
+    public function actionDeleteVideo($id) {
+        $this->videoManager->deleteVideo($id);
+        $this->flashMessage("Video bylo smazáno!", "danger");
+        $this->redirect("Video:List");
+    }
 }

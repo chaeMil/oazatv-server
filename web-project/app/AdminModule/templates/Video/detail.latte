@@ -23,6 +23,7 @@
                 <li role="presentation" class="active"><a data-toggle="tab" href="#info">Základní info</a></li>
                 <li role="presentation"><a data-toggle="tab" href="#files">Soubory</a></li>
                 <li role="presentation"><a data-toggle="tab" href="#analytics">Analytics</a></li>
+                <li role="presentation"><a data-toggle="tab" href="#delete">Smazat video</a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -153,6 +154,15 @@
                         
                 <div role="tabpanel" class="tab-pane" id="analytics">
 
+                </div>
+                    
+                <div role="tabpanel" class="tab-pane" id="delete">
+                    <br>
+                    <div class="text-center">
+                        <a n:href="Video:DeleteVideo $video->id"
+                           data-confirm="Opravdu smazat video?"
+                            class="btn btn-lg btn-danger delete-confirm">Smazat video?</a>
+                    </div>
                 </div>
             </div>
                 

@@ -9,7 +9,8 @@
 namespace Model;
 
 use Nette,
- App\StringUtils;
+ App\StringUtils,
+ App\FileUtils;
 
 /**
  * Description of VideoManager
@@ -21,6 +22,7 @@ class VideoManager extends BaseModel {
     const
             TABLE_NAME = 'db_video_files',
             COLUMN_ID = 'id',
+            COLUMN_HASH = 'hash',
             COLUMN_PUBLISHED = 'published',
             COLUMN_ORIGINAL_FILE = 'original_file',
             COLUMN_MP4_FILE = 'mp4_file',
@@ -55,6 +57,8 @@ class VideoManager extends BaseModel {
         } else {
             $videoId = 0;
         }
+        
+        $values['hash'] = StringUtils::rand(8);
         
         if ($videoId != 0 && $this->checkIfVideoExists($videoId) > 0) {
             $video = $this::$database->table(self::TABLE_NAME)->get($videoId);
@@ -103,6 +107,12 @@ class VideoManager extends BaseModel {
         $video = $this->getVideoFromDB($id);
         unlink(VIDEOS_FOLDER . $id ."/". $video->$file);
         $video->update(array($file => ""));
+    }
+    
+    public function deleteVideo($id) {
+        $video = $this->getVideoFromDB($id);
+        FileUtils::recursiveDelete(VIDEOS_FOLDER . $id ."/");
+        $video->delete();
     }
     
     public function useOriginalFileAs($id, $target) {
