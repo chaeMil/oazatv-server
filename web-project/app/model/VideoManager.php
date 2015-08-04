@@ -34,8 +34,7 @@ class VideoManager extends BaseModel {
             COLUMN_CATEGORIES = 'categories',
             COLUMN_DESCRIPTION_CS = 'description_cs',
             COLUMN_DESCRIPTION_EN = 'description_en',
-            COLUMN_NOTE = 'note',
-            VIDEOS_FOLDER = 'db/videos/';
+            COLUMN_NOTE = 'note';
            
     /** @var Nette\Database\Context */
     public static $database;
@@ -95,7 +94,7 @@ class VideoManager extends BaseModel {
     public function getOriginalFileInfo($id) {
         $video = $this->getVideoFromDB($id);
         $finfo = finfo_open();
-        $fileinfo = finfo_file($finfo, self::VIDEOS_FOLDER . $video->original_file, FILEINFO_MIME);
+        $fileinfo = finfo_file($finfo, VIDEOS_FOLDER . $id ."/". $video->original_file, FILEINFO_MIME);
         finfo_close($finfo);
         return $fileinfo;
     }

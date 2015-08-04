@@ -86,7 +86,7 @@ function createFileFromChunks($temp_dir, $fileName, $chunkSize, $totalSize) {
     if ($total_files * $chunkSize >=  ($totalSize - $chunkSize + 1)) {
 
         // create the final destination file 
-        if (($fp = fopen('temp/'.$fileName, 'w')) !== false) {
+        if (($fp = fopen('resumable-temp/'.$fileName, 'w')) !== false) {
             for ($i=1; $i<=$total_files; $i++) {
                 fwrite($fp, file_get_contents($temp_dir.'/'.$fileName.'.part'.$i));
                 _log('writing chunk '.$i);
@@ -116,7 +116,7 @@ function createFileFromChunks($temp_dir, $fileName, $chunkSize, $totalSize) {
 //check if request is GET and the requested chunk exists or not. this makes testChunks work
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
-    $temp_dir = 'temp/'.$_GET['resumableIdentifier'];
+    $temp_dir = 'resumable-temp/'.$_GET['resumableIdentifier'];
     $chunk_file = $temp_dir.'/'.$_GET['resumableFilename'].'.part'.$_GET['resumableChunkNumber'];
     if (file_exists($chunk_file)) {
          header("HTTP/1.0 200 Ok");
@@ -139,7 +139,7 @@ if (!empty($_FILES)) foreach ($_FILES as $file) {
 
     // init the destination file (format <filename.ext>.part<#chunk>
     // the file is stored in a temporary directory
-    $temp_dir = 'temp/'.$_POST['resumableIdentifier'];
+    $temp_dir = 'resumable-temp/'.$_POST['resumableIdentifier'];
     $dest_file = $temp_dir.'/'.$_POST['resumableFilename'].'.part'.$_POST['resumableChunkNumber'];
 
     // create the temporary directory
