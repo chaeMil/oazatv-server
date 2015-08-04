@@ -51,12 +51,27 @@ class VideoManager extends BaseModel {
 
     public function saveVideoToDB($values) {
         
-        if ($this->checkIfVideoExists($_GET['id']) > 0) {
-            $video = $this::$database->table(self::TABLE_NAME)->get($_GET['id']);
+        if(isset($_GET['id'])) {
+            $videoId = \Nette\Utils\Strings::webalize($_GET['id']);
+        } else {
+            $videoId = 0;
+        }
+        
+        if ($videoId != 0 && $this->checkIfVideoExists($videoId) > 0) {
+            $video = $this::$database->table(self::TABLE_NAME)->get($videoId);
             $sql = $video->update($values);
             return $sql;
         } else {
             $sql = $this::$database->table(self::TABLE_NAME)->insert($values);
+            $newVideoDir = VIDEOS_FOLDER.$sql->id."/";
+            $newVideoThumbsDir = $newVideoDir."thumbs/";
+            $vewVideoLogsDir = $newVideoDir."logs/";
+            mkdir($newVideoDir);
+            mkdir($newVideoThumbsDir);
+            mkdir($vewVideoLogsDir);
+            chmod($newVideoDir, 0755);
+            chmod($newVideoThumbsDir, 0755);
+            chmod($vewVideoLogsDir, 0755);
         }
         
         return $sql->id;

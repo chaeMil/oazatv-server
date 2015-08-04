@@ -26,8 +26,7 @@ class UploadPresenter extends BaseSecuredPresenter {
     private $videoManager;
     
     const
-            RESUMABLE_TEMP = 'uploaded/temp/',
-            VIDEOS_FOLDER = 'db/videos/';
+            RESUMABLE_TEMP = 'uploaded/resumable-temp/';
 
     function __construct(Nette\Database\Context $database, VideoManager $videoManager) {
         $this->database = $database;
@@ -129,7 +128,7 @@ class UploadPresenter extends BaseSecuredPresenter {
         foreach($files as $file) {
                 //dump($file); exit;
                 $extension = StringUtils::getExtensionFromFileName($file);
-                rename($file, self::VIDEOS_FOLDER.$videoname.".".$extension);
+                rename($file, VIDEOS_FOLDER.$videoname.".".$extension);
                 $this->videoManager->saveVideoToDB(
                         array("id" => $_GET['id'], 
                     "original_file" => $videoname.".".$extension));
