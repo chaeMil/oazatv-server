@@ -43,6 +43,26 @@
                                 <div class="well">
                                     <h4>Zdrojový soubor: <small>{$video->original_file}</small></h4>
                                     <span>{$originalFileInfo}</span>
+                                    <br><br>
+                                    <a n:href="Video:deleteOriginalFile $video->id"
+                                       data-confirm="smazat originální soubor?"
+                                       class="btn btn-danger delete-confirm pull-right">smazat</a>
+                                    
+                                    
+                                    <button type="button" 
+                                            class="btn btn-default dropdown-toggle" 
+                                            data-toggle="dropdown" 
+                                            aria-haspopup="true" 
+                                            aria-expanded="false">
+                                        použít jako <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
                                 </div>
                             </div>
 
@@ -136,7 +156,7 @@ resumable.on('fileProgress', function(file){
 });
 
 resumable.on('complete', function() {
-    window.location = ('{$basePath|noescape}/admin/upload/upload-video-succeeded?id={$video->id|noescape}&date={$video->date|noescape}');
+    window.location = ('{$basePath|noescape}/admin/upload/upload-original-file-succeeded?id={$video->id|noescape}&date={$video->date|noescape}');
 });
 
 resumable.on('fileAdded', function(file, event){
@@ -144,49 +164,11 @@ resumable.on('fileAdded', function(file, event){
 });
 
 $('#uploadButton').click(function() {
-    if (verifyForm()) {
-        resumable.upload(); 
-        $('#spinner').removeClass('hidden');
-        $('#progress').removeClass('hidden');
-        getUploadProgress();
-    }
+    resumable.upload(); 
+    $('#spinner').removeClass('hidden');
+    $('#progress').removeClass('hidden');
+    getUploadProgress();
 });
-
-function verifyForm() {
-    valid = true;
-    /*containsVideo = false;
-    
-    $.each(resumable.files, function(index, value) {
-        console.log(value.fileName.toString().toLowerCase());
-        if (!containsVideo) {
-            if (value.fileName.toString().toLowerCase().indexOf('.mp4') >= 0) {
-                containsVideo = true;
-            }
-        }
-    });
-    
-    console.log('valid: ' + valid + ' video: ' + containsVideo);
-    
-    if (!valid) {
-        $('#name').closest('.form-group').addClass('has-error');
-    } else {
-        $('#name').closest('.form-group').removeClass('has-error');
-    }
-    
-    if (!containsVideo) {
-        $('#browseButton').closest('.form-group').addClass('has-error');
-    } else {
-        $('#browseButton').closest('.form-group').removeClass('has-error');
-    }
-    
-    if (valid && containsVideo) {
-        return true;
-    } else {
-        return false;
-    }*/
-        
-    return valid;
-}
 
 function getUploadProgress() {
         $('#progress').html(Math.round(resumable.progress() * 100) + "%");

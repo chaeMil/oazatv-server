@@ -118,4 +118,10 @@ class VideoPresenter extends BaseSecuredPresenter {
             $this->flashMessage("Nic nebylo změněno", "info");
         }
     }
+    
+    public function actionDeleteOriginalFile($id) {
+        $this->videoManager->deleteOriginalFile($id);
+        $this->flashMessage("Originální soubor byl smazán", "danger");
+        $this->redirect("Video:Detail#files", $id);
+    }
 }
