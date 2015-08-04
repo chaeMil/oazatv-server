@@ -19,6 +19,7 @@
     "bootstrap-tagsinput": "timschlechter/bootstrap-tagsinput#~0.5.0",
     "resumable.js": "~2.9.0",
     "eonasdan-bootstrap-datetimepicker": "~4.15.35",
-    "resumablejs": "~1.0.2"
+    "resumablejs": "~1.0.2",
+    "bootbox": "~4.4.0"
   }
 }

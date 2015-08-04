@@ -69,6 +69,9 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{$basePath}/admin_components/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    
+    <!-- bootbox js -->
+    <script src="{$basePath}/admin_components/bower_components/bootbox/bootbox.js"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="{$basePath}/admin_components/bower_components/metisMenu/dist/metisMenu.min.js"></script>
@@ -87,8 +90,17 @@
     <script src="{$basePath}/admin_components/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
     
     <script type="text/javascript">
-        $('.delete-confirm').on('click', function () {
-            return confirm($(this).attr("data-confirm"));
+        $('.confirm').on('click', function (e) {
+            e.preventDefault();
+            var message = $(this).attr("data-confirm");
+            var button = $(this);
+            var dialog = bootbox.confirm(message, function(result) {
+                            console.log(result);
+                            if (result) {
+                                window.location.href = button.attr('href');
+                            }
+                          }); 
+            return dialog;
         });
     </script>
     

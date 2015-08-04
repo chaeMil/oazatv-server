@@ -51,7 +51,7 @@
                                             <hr>
                                             <a n:href="Video:deleteVideoFile, $video->id, $originalFile"
                                                data-confirm="smazat originální soubor?"
-                                               class="btn btn-danger delete-confirm pull-right">smazat</a>
+                                               class="btn btn-danger confirm pull-right">smazat</a>
 
                                             <div class="btn-group">
                                                 <button type="button" 
@@ -108,7 +108,7 @@
                                         <div class="panel-body">
                                             <a n:href="Video:deleteVideoFile, $video->id, $mp4File"
                                                data-confirm="smazat MP4 soubor?"
-                                               class="btn btn-danger delete-confirm pull-right">smazat</a>
+                                               class="btn btn-danger confirm pull-right">smazat</a>
                                                
                                             <div class="btn-group">
                                                 <button type="button" 
@@ -141,7 +141,7 @@
                                         <div class="panel-body">
                                             <a n:href="Video:deleteVideoFile, $video->id, $mp3File"
                                                data-confirm="smazat MP3 soubor?"
-                                               class="btn btn-danger delete-confirm pull-right">smazat</a>
+                                               class="btn btn-danger confirm pull-right">smazat</a>
                                         </div>
                                     </div>
                                 </div>
@@ -156,7 +156,7 @@
                                         <div class="panel-body">
                                             <a n:href="Video:deleteVideoFile, $video->id, $webmFile"
                                                data-confirm="smazat WEBM soubor?"
-                                               class="btn btn-danger delete-confirm pull-right">smazat</a>
+                                               class="btn btn-danger confirm pull-right">smazat</a>
                                                
                                                <div class="btn-group">
                                                     <button type="button" 
@@ -237,7 +237,7 @@
                     <div class="text-center">
                         <a n:href="Video:DeleteVideo $video->id"
                            data-confirm="Opravdu smazat video?"
-                            class="btn btn-lg btn-danger delete-confirm">Smazat video?</a>
+                            class="btn btn-lg btn-danger confirm">Smazat video?</a>
                     </div>
                 </div>
             </div>
@@ -308,6 +308,12 @@ function getUploadProgress() {
     var progress = Math.round(resumable.progress() * 100);
     $('#progress .progress-bar').css('width', progress + "%").attr('aria-valuenow', progress).text(progress + "%");
     setTimeout(getUploadProgress, 250);
+}
+
+window.onbeforeunload = function(){
+    if (resumable.isUploading()) {
+        return "Probíhá nahrávání videa.";
+    }
 }
 </script>
 
