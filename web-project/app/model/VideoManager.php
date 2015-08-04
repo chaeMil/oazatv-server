@@ -97,9 +97,14 @@ class VideoManager extends BaseModel {
     public function getOriginalFileInfo($id) {
         $video = $this->getVideoFromDB($id);
         $finfo = finfo_open();
-        $fileinfo = finfo_file($finfo, VIDEOS_FOLDER . $id ."/". $video->original_file, FILEINFO_MIME);
-        finfo_close($finfo);
-        return $fileinfo;
+        $file = VIDEOS_FOLDER . $id ."/". $video->original_file;
+        if (file_exists($file)) {
+            $fileinfo = finfo_file($finfo, $file, FILEINFO_MIME);
+            finfo_close($finfo);
+            return $fileinfo;
+        } else {
+            return false;
+        }
     }
     
     public function deleteVideoFile($id, $file) {
