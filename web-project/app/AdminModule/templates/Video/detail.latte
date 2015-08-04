@@ -61,6 +61,12 @@
                                             {if (!$video->mp4_file && strpos($originalFileInfo,'mp4') !== false)}
                                                 <li><a n:href="Video:useOriginalFileAs, $video->id, $mp4File">MP4 soubor</a></li>
                                             {/if}
+                                            {if (!$video->mp3_file && strpos($originalFileInfo,'mp3') !== false)}
+                                                <li><a n:href="Video:useOriginalFileAs, $video->id, $mp3File">MP3 soubor</a></li>
+                                            {/if}
+                                            {if (!$video->webm_file && strpos($originalFileInfo,'webm') !== false)}
+                                                <li><a n:href="Video:useOriginalFileAs, $video->id, $webmFile">WEBM soubor</a></li>
+                                            {/if}
                                         </ul>
                                     </div>
                                 </div>
@@ -132,33 +138,31 @@
 {block pageScripts}
 
 <script>
-    
-    // Javascript to enable link to tab
-    var url = document.location.toString();
-    if (url.match('#')) {
-        $('.nav-tabs a[href=#'+url.split('#')[1]+']').tab('show') ;
-    } 
+// Javascript to enable link to tab
+var url = document.location.toString();
+if (url.match('#')) {
+    $('.nav-tabs a[href=#'+url.split('#')[1]+']').tab('show') ;
+} 
 
-    // Change hash for page-reload
-    $('.nav-tabs a').on('shown.bs.tab', function (e) {
-        window.location.hash = e.target.hash;
-    })
-    
-    $(function () {
-        $('#datepicker').datetimepicker({
-            format: 'YYYY-MM-DD',
-            locale: 'cs'
-        });
+// Change hash for page-reload
+$('.nav-tabs a').on('shown.bs.tab', function (e) {
+    window.location.hash = e.target.hash;
+})
+
+$(function () {
+    $('#datepicker').datetimepicker({
+        format: 'YYYY-MM-DD',
+        locale: 'cs'
     });
-    
+});
 </script>
 
 <script src="{$basePath}/admin_components/bower_components/resumablejs/resumable.js"></script>
 <script>
 var resumable = new Resumable({
-  target: '{$basePath|noescape}/uploaded/upload-and-merge-file.php',
-  chunkSize: 16*1024*1024,
-  maxFiles: 1
+    target: '{$basePath|noescape}/uploaded/upload-and-merge-file.php',
+    chunkSize: 16*1024*1024,
+    maxFiles: 1
 });
   
 resumable.assignBrowse($('#browseButton'));
@@ -187,9 +191,9 @@ $('#uploadButton').click(function() {
 });
 
 function getUploadProgress() {
-        $('#progress').html(Math.round(resumable.progress() * 100) + "%");
-        setTimeout(getUploadProgress, 250);
-      }
+    $('#progress').html(Math.round(resumable.progress() * 100) + "%");
+    setTimeout(getUploadProgress, 250);
+}
 </script>
 
 {/block}
