@@ -113,6 +113,36 @@
                                     </div>
                                 </div>
                             {/if}
+                            
+                            {if ($video->mp3_file != "")}
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4>MP3 soubor: <small>{$video->mp3_file}</small></h4>
+                                        </div>
+                                        <div class="panel-body">
+                                            <a n:href="Video:deleteVideoFile, $video->id, $mp3File"
+                                               data-confirm="smazat MP3 soubor?"
+                                               class="btn btn-danger delete-confirm pull-right">smazat</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {/if}
+                            
+                            {if ($video->webm_file != "")}
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4>WEBM soubor: <small>{$video->webm_file}</small></h4>
+                                        </div>
+                                        <div class="panel-body">
+                                            <a n:href="Video:deleteVideoFile, $video->id, $webmFile"
+                                               data-confirm="smazat WEBM soubor?"
+                                               class="btn btn-danger delete-confirm pull-right">smazat</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {/if}
                         </div>
                         
                     </div>
