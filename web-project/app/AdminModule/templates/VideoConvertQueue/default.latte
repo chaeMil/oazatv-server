@@ -20,8 +20,8 @@
             <table class="table table-hover">
                 <thead>
                     <th>id</th>
-                    <th>název česky</th>
-                    <th>název anglicky</th>
+                    <th>název</th>
+                    <th>konverze</th>
                     <th>přidáno</th>
                     <th>začátek konverze</th>
                     <th>konec konverze</th>
@@ -33,11 +33,11 @@
                         data-href="{$presenter->link('Video:Detail', $video->video_id)}">
                         <td>{$video->id}</td>
                         <td></td>
-                        <td></td>
+                        <td>{$video->input} > {$video->target}</td>
                         <td class="date">{$video->added}</td>
                         <td class="date">{$video->started_at}</td>
                         <td class="date">{$video->finished_at}</td>
-                        <td></td>
+                        <td>{if ($video->status == 0)}čeká se{/if}{if ($video->status == 1)}konvertuje se{/if}{if ($video->status == 2)}hotovo{/if}</td>
                     </tr>
                 </tbody>                
             </table>
