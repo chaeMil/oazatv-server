@@ -53,11 +53,7 @@ class CronPresenter extends BasePresenter {
                         $videoToConvert->input." > ".$videoToConvert->target, "info");
                 $this->conversionManager->startConversion($videoToConvert->id);
             } else {
-                if ($this->queueManager->isConvertingNow()) {
-                    
-                } else {
-                    $this->flashMessage("nothing to convert and nothing is converting now", "info");
-                }
+                $this->flashMessage("nothing to convert and nothing is converting now", "info");
             }
         }
     }
