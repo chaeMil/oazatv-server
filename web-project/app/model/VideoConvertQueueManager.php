@@ -63,6 +63,21 @@ class VideoConvertQueueManager extends BaseModel {
                 ->where(self::COLUMN_STATUS, self::STATUS_WAITING)->limit(1)->fetch();
     }
     
+    public function isConvertingNow() {
+        $converting = $this::$database->table(self::TABLE_NAME)->order(self::COLUMN_ID."=?", "ASC")
+                ->where(self::COLUMN_STATUS, self::STATUS_CONVERTING)->limit(1)->count();
+        if ($converting == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+    public function getCurrentlyConvertedVideo() {
+        return $this::$database->table(self::TABLE_NAME)->order(self::COLUMN_ID."=?", "ASC")
+                ->where(self::COLUMN_STATUS, self::STATUS_CONVERTING)->limit(1)->fetch();
+    }
+    
     public function getVideoFromQueue($videoId) {
         return $this::$database->table(self::TABLE_NAME)->where(self::COLUMN_VIDEO_ID, $videoId);
     }
