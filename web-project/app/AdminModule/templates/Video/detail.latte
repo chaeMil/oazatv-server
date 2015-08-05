@@ -329,7 +329,8 @@ window.onbeforeunload = function(){
     function openPlayer(file) {
         bootbox.dialog({
             title: "přehrává se: " + file,
-            message: '<video width="100%" controls><source src="{$basePath|noescape}/db/videos/{$video->id}/' +  file +'"></video>',
+            message: '<video width="100%" controls><source src="{$basePath|noescape}/db/videos/{$video->id}/' +  file +'"></video>\n\
+                        <a class="player-download btn btn-primary" href="{$basePath|noescape}/db/videos/{$video->id}/' +  file +'" download>stáhnout</a>',
             buttons: {
                 main: {
                     label: "zavřít",
