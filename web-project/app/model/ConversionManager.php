@@ -36,6 +36,7 @@ class ConversionManager {
     
     public function startConversion($queueId) {
         $queueItem = $this->queueManager->getVideoFromQueueByQueueId($queueId);
+        $queueItem->update(array(VideoConvertQueueManager::COLUMN_STATUS => VideoConvertQueueManager::STATUS_CONVERTING));
         $video = $this->videoManager->getVideoFromDB($queueItem->video_id);
         
     }
