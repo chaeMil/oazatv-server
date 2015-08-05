@@ -11,7 +11,8 @@ namespace App\AdminModule;
 use Nette,
     Model,
     App\Model\UserManager,
-    Nette\Forms\Form;
+    Nette\Forms\Form,
+    Model\ServerSettings;
 
 /**
  * Description of SettingsPresenter
@@ -23,12 +24,14 @@ class SettingsPresenter extends BaseSecuredPresenter {
     private $model;
     public $database;
     private $userManager;
+    private $settings;
 
-    function __construct(Nette\Database\Context $database, Model\AdminFacade $adminFacade, UserManager $userManager) {
+    function __construct(Nette\Database\Context $database, 
+            UserManager $userManager, ServerSettings $settings) {
         parent::__construct($database);
-        $this->model = $adminFacade;
         $this->database = $database;
         $this->userManager = $userManager;
+        $this->settings = $settings;
     }
 
     function renderDefault() {
@@ -50,7 +53,7 @@ class SettingsPresenter extends BaseSecuredPresenter {
         $this->userManager->delete($user_id);
         $this->redirect("Settings:default");
     }
-
+    
     function createComponentAddUser() {
         $form = new Nette\Application\UI\Form;
 
@@ -87,6 +90,83 @@ class SettingsPresenter extends BaseSecuredPresenter {
             $this->flashMessage("Uživatel '" . $vals->userName . "' už existuje", "danger");
             $this->redirect("Settings:default");
         }
+    }
+    
+    function createComponentServerSettings() {
+        $keyValues = $this->settings->loadAllSettings();
+
+        $form = new Nette\Application\UI\Form;
+        
+        foreach($keyValues as $keyValue) {
+            $form->addText($keyValue['key'], $keyValue['key'])
+                    ->setAttribute("class", "form-control")
+                    ->setDefaultValue($keyValue['value']);
+        }
+        
+        $form->addSubmit("submit", "uložit")
+                ->setAttribute("class", "btn btn-success btn-lg");
+        
+        $this->bootstrapFormRendering($form);
+        
+        return $form;
+    }
+    
+    function createComponentAddKeyValue() {
+        $form = new Nette\Application\UI\Form;
+        
+        $form->addText("key", "klíč")
+                ->setRequired()
+                ->setAttribute("class", "form-control");
+        
+        $form->addText("value", "hodnota")
+                ->setRequired()
+                ->setAttribute("class", "form-control");
+        
+        $form->addSubmit("submit", "uložit")
+                ->setAttribute("class", "btn btn-success btn-lg");
+        
+        $form->onSuccess[] = $this->addKeyValueSucceeded;
+        
+        $this->bootstrapFormRendering($form);
+        
+        return $form;
+    }
+    
+    function createComponentDeleteKey() {
+        $form = new Nette\Application\UI\Form;
+        
+        $keys = $this->settings->loadAllSettings();
+        
+        $keysArray = array();
+        $keysArray[''] = "";
+        
+        foreach($keys as $key) {
+            $keysArray[$key['key']] = $key['key']." = ".$key['value'];
+        }
+        
+        $form->addSelect("delete", "smazat")
+                ->setItems($keysArray)
+                ->setAttribute("class", "form-control");
+        
+        $form->addSubmit("submit", "smazat")
+                ->setAttribute("class", "btn btn-danger");
+        
+        $this->bootstrapFormRendering($form);
+        
+       return $form; 
+    }
+    
+    function addKeyValueSucceeded($form) {
+        $values = $form->getValues();
+        
+        $this->settings->saveValue($values->key, $values->value);
+        
+        $this->flashMessage("Hodnota uložena", "success");
+        $this->redirect("Settings:");
+    }
+    
+    function renderAddKeyValue() {
+        $this->getTemplateVariables($this->getUser()->getId());
     }
 
 }

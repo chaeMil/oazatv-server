@@ -17,15 +17,13 @@ class MainPresenter extends BaseSecuredPresenter {
      * Load model classes for operate with db
      */
     
-    private $model;
     public $database;
     private $userManager;
     private $queueManager;
     
-    function __construct(Nette\Database\Context $database, 
-            Model\AdminFacade $adminFacade, \App\Model\UserManager $userManager,
+    function __construct(Nette\Database\Context $database,
+            \App\Model\UserManager $userManager,
             \Model\VideoConvertQueueManager $queueManager) {
-        $this->model = $adminFacade;
         $this->database = $database;
         $this->userManager = $userManager;
         $this->queueManager = $queueManager;

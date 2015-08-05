@@ -20,7 +20,6 @@
                             {if ($user->login == 'root')}
                                 <a n:href="Settings:addUser" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></a>
                             {/if}
-                            <a class="btn btn-default"><span class="glyphicon glyphicon-list"></span></a>
                         </div>
                     </span>
                 </div>
@@ -41,6 +40,26 @@
                             {/if}
                         </div>
                     </span>
+                </div>
+            </div>
+                        
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Nastavení serveru</h3>
+                    
+                    <span class="pull-right">
+                        <div class="btn-group">
+                            {if ($user->login == 'root')}
+                                <a n:href="Settings:addKeyValue" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></a>
+                            {/if}
+                        </div>
+                    </span>
+                </div>
+                <div class="panel-body users">
+                    <br>
+                    {control serverSettings}
+                    <hr>
+                    {control deleteKey}
                 </div>
           </div>
                         

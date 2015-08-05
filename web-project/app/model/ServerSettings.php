@@ -31,7 +31,7 @@ class ServerSettings extends BaseModel {
     }
  
     public function loadAllSettings() {
-        return $this::$database->table(self::TABLE_NAME)->fetchAll();
+        return $this::$database->table(self::TABLE_NAME)->fetchAssoc(self::COLUMN_KEY, self::COLUMN_VALUE);
     }
     
     private function checkIfKeyExists($key) {

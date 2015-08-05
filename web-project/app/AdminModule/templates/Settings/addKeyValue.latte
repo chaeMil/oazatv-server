@@ -1,0 +1,29 @@
+
+{block content}
+
+<div id="wrapper">
+    
+    {include ../navbar.latte}
+    
+    <div class="container">
+        <div class="row">
+            <a n:href="Settings:default"> 
+                <h2><span class="glyphicon glyphicon-chevron-left pull-left"></span>Nastavení</h2>
+            </a>  
+            
+            <hr>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Přidat hodnotu</h3>
+                </div>
+                <div class="panel-body">
+                    {control addKeyValue}
+                </div>
+          </div>
+                        
+        </div>
+    </div>
+    
+</div>
+{/block}
