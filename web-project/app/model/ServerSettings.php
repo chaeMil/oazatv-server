@@ -8,6 +8,8 @@
 
 namespace Model;
 
+use Nette;
+
 /**
  * Description of ServerSettings
  *
@@ -32,12 +34,22 @@ class ServerSettings extends BaseModel {
         return $this::$database->table(self::TABLE_NAME)->fetchAll();
     }
     
+    private function checkIfKeyExists($key) {
+        return $this::$database->table(self::TABLE_NAME)
+                ->where(self::COLUMN_KEY, $key)->count();
+    }
+    
     public function loadValue($key) {
         return $this::$database->table(self::TABLE_NAME)->where(self::COLUMN_KEY, $key)->fetch();
     }
     
     public function saveValue($key, $value) {
-        $option = $this::$database->table(self::TABLE_NAME)->where(self::COLUMN_KEY, $key);
-        $option->update(self::COLUMN_VALUE, $value);
+        if ($this->checkIfKeyExists($key) != 0) {
+            $option = $this::$database->table(self::TABLE_NAME)->where(self::COLUMN_KEY, $key);
+            $option->update(self::COLUMN_VALUE, $value);
+        } else {
+            $this::$database->table(self::TABLE_NAME)->insert(array(self::COLUMN_KEY => $key, self::COLUMN_VALUE => $value));
+        }
+        
     }
 }
