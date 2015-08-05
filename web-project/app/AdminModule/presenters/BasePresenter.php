@@ -10,12 +10,10 @@ use Nette,
 /**
  * Base presenter for all application presenters.
  */
-abstract class BasePresenter extends Nette\Application\UI\Presenter
-{    
+abstract class BasePresenter extends Nette\Application\UI\Presenter {    
     public $database;
     
-    public function __construct(Nette\Database\Context $database)
-    {
+    public function __construct(Nette\Database\Context $database) {
         $this->database = $database;
         
     }
@@ -30,8 +28,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         $this->template->rand = StringUtils::rand(5);
     }
     
-    protected function createTemplate($class = NULL)
-    {
+    protected function createTemplate($class = NULL) {
         $template = parent::createTemplate($class);
         $template->userRoles = $this->getUser()->getRoles();
         $template->version = VERSION;

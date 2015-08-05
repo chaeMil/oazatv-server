@@ -30,7 +30,3 @@
 php_value upload_max_filesize 32M
 php_value post_max_size 38M
 php_value memory_limit 64M
-
-AddType application/octet-stream .mp3
-AddType application/octet-stream .mp4
-AddType application/octet-stream .webm
