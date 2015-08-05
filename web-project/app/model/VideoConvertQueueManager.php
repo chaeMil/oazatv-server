@@ -50,8 +50,8 @@ class VideoConvertQueueManager extends BaseModel {
         }
     }
     
-    public function getQueue() {
-        return $this::$database->table(self::TABLE_NAME);
+    public function getQueue($order) {
+        return $this::$database->table(self::TABLE_NAME)->order(self::COLUMN_ID."=?", $order);
     }
     
     public function getVideoFromQueue($videoId) {
