@@ -33,11 +33,15 @@ class CronPresenter extends BasePresenter {
     public function actionCheckVideoConversionQueue() {
         $videoToConvert = $this->queueManager->getFirstVideoToConvert();
         if ($videoToConvert) {
-            $this->flashMessage("found video to convert", "info");
+            $videoToConvertFromDB = $this->videoManager->getVideoFromDB($videoToConvert->video_id);
+            $this->flashMessage("found video to convert: [".$videoToConvertFromDB->id."] ".
+                    $videoToConvertFromDB->name_cs." / ".$videoToConvertFromDB->name_en."  |  conversion: ".
+                    $videoToConvert->input." > ".$videoToConvert->target, "info");
         } else {
             if ($this->queueManager->isConvertingNow()) {
                 $convertedVideo = $this->queueManager->getCurrentlyConvertedVideo();
                 $convertedVideoFromDB = $this->videoManager->getVideoFromDB($convertedVideo->video_id);
+                
                 $this->flashMessage("now converting video: [".$convertedVideoFromDB->id."] ".
                         $convertedVideoFromDB->name_cs." / ".$convertedVideoFromDB->name_en."  |  conversion: ".
                         $convertedVideo->input." > ".$convertedVideo->target);
