@@ -84,13 +84,13 @@
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     {if (!$video->mp4_file)}
-                                                        <li><a n:href="Video:convertFile, $video->id, $mp4File, $originalFile">MP4 soubor</a></li>
+                                                        <li><a n:href="Video:convertFile, $video->id, $originalFile, $mp4File">MP4 soubor</a></li>
                                                     {/if}
                                                     {if (!$video->mp3_file)}
-                                                        <li><a n:href="Video:convertFile, $video->id, $mp3File, $originalFile">MP3 soubor</a></li>
+                                                        <li><a n:href="Video:convertFile, $video->id, $originalFile, $mp3File">MP3 soubor</a></li>
                                                     {/if}
                                                     {if (!$video->webm_file)}
-                                                        <li><a n:href="Video:convertFile, $video->id, $webmFile, $originalFile">WEBM soubor</a></li>
+                                                        <li><a n:href="Video:convertFile, $video->id, $originalFile, $webmFile">WEBM soubor</a></li>
                                                     {/if}
                                                 </ul>
                                             </div>
@@ -120,10 +120,10 @@
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     {if (!$video->mp3_file)}
-                                                        <li><a n:href="Video:convertFile, $video->id, $mp3File, $mp4File">MP3 soubor</a></li>
+                                                        <li><a n:href="Video:convertFile, $video->id, $mp4File, $mp3File">MP3 soubor</a></li>
                                                     {/if}
                                                     {if (!$video->webm_file)}
-                                                        <li><a n:href="Video:convertFile, $video->id, $webmFile, $mp4File">WEBM soubor</a></li>
+                                                        <li><a n:href="Video:convertFile, $video->id, $mp4File, $webmFile">WEBM soubor</a></li>
                                                     {/if}
                                                 </ul>
                                             </div>
@@ -168,10 +168,10 @@
                                                     </button>
                                                     <ul class="dropdown-menu">
                                                         {if (!$video->mp4_file)}
-                                                            <li><a n:href="Video:convertFile, $video->id, $mp4File, $webmFile">MP4 soubor</a></li>
+                                                            <li><a n:href="Video:convertFile, $video->id, $webmFile, $mp4File">MP4 soubor</a></li>
                                                         {/if}
                                                         {if (!$video->mp3_file)}
-                                                            <li><a n:href="Video:convertFile, $video->id, $mp3File, $webmFile">MP3 soubor</a></li>
+                                                            <li><a n:href="Video:convertFile, $video->id, $webmFile, $mp3File">MP3 soubor</a></li>
                                                         {/if}
                                                     </ul>
                                                 </div>

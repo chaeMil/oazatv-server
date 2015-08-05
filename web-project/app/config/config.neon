@@ -22,6 +22,7 @@ session:
 services:
     - Model\AdminFacade()
     - Model\VideoManager
+    - Model\VideoConvertQueueManager
     - App\RouterFactory
     router: @App\RouterFactory::createRouter
     nette.latteFactory:

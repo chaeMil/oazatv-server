@@ -10,7 +10,8 @@ namespace Model;
 
 use Nette,
  App\StringUtils,
- App\FileUtils;
+ App\FileUtils,
+ Model\VideoConvertQueueManager;
 
 /**
  * Description of VideoManager
@@ -37,12 +38,14 @@ class VideoManager extends BaseModel {
             COLUMN_DESCRIPTION_CS = 'description_cs',
             COLUMN_DESCRIPTION_EN = 'description_en',
             COLUMN_NOTE = 'note';
-           
+    
     /** @var Nette\Database\Context */
     public static $database;
+    public static $queueManager;
 
-    public function __construct(Nette\Database\Context $database) {
+    public function __construct(Nette\Database\Context $database, \Model\VideoConvertQueueManager $queueManager) {
         $this::$database = $database;
+        $this::$queueManager = $queueManager;
     }
     
     private function checkIfVideoExists($id) {
@@ -122,5 +125,9 @@ class VideoManager extends BaseModel {
     public function useOriginalFileAs($id, $target) {
         $video = $this->getVideoFromDB($id);
         $video->update(array(self::COLUMN_ORIGINAL_FILE => "", $target => $video->original_file));
+    }
+    
+    public function addVideoToConvertQueue($id, $input, $target) {
+        $this::$queueManager->addVideoToQueue($id, $input, $target);
     }
 }
