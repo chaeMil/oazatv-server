@@ -46,10 +46,18 @@ class ServerSettings extends BaseModel {
     public function saveValue($key, $value) {
         if ($this->checkIfKeyExists($key) != 0) {
             $option = $this::$database->table(self::TABLE_NAME)->where(self::COLUMN_KEY, $key);
-            $option->update(self::COLUMN_VALUE, $value);
+            $option->update(array(self::COLUMN_VALUE => $value));
         } else {
-            $this::$database->table(self::TABLE_NAME)->insert(array(self::COLUMN_KEY => $key, self::COLUMN_VALUE => $value));
+            $this::$database->table(self::TABLE_NAME)
+                    ->insert(array(self::COLUMN_KEY => $key, self::COLUMN_VALUE =>$value));
         }
-        
+    }
+    
+    public function deleteKey($key) {
+        if ($this->checkIfKeyExists($key) != 0) {
+            $key = $this::$database->table(self::TABLE_NAME)
+                    ->where(self::COLUMN_KEY, $key)->fetch();
+            $key->delete();
+        }
     }
 }

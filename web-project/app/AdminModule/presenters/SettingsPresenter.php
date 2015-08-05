@@ -106,20 +106,37 @@ class SettingsPresenter extends BaseSecuredPresenter {
         $form->addSubmit("submit", "uložit")
                 ->setAttribute("class", "btn btn-success btn-lg");
         
+        $form->onSuccess[] = $this->saveServerSettingsSucceeded;
+        
         $this->bootstrapFormRendering($form);
         
         return $form;
     }
     
+    public function saveServerSettingsSucceeded($form) {
+        $values = $form->getValues();
+        $values = (array) $values;
+        
+        foreach($values as $value) {
+            $key = array_search ($value, $values);
+            $this->settings->saveValue($key, $value);
+        }
+        
+        $this->flashMessage("Nastavení uložena", "success");
+        $this->redirect("Settings:");
+    }
+    
     function createComponentAddKeyValue() {
         $form = new Nette\Application\UI\Form;
         
-        $form->addText("key", "klíč")
+        $form->addText("key", "klíč [a-zA-Z0-9]")
                 ->setRequired()
+                ->setAttribute("pattern", "[a-zA-Z0-9_]+")
                 ->setAttribute("class", "form-control");
         
-        $form->addText("value", "hodnota")
+        $form->addText("value", "hodnota [a-zA-Z0-9]")
                 ->setRequired()
+                ->setAttribute("pattern", "[a-zA-Z0-9_]+")
                 ->setAttribute("class", "form-control");
         
         $form->addSubmit("submit", "uložit")
@@ -151,6 +168,8 @@ class SettingsPresenter extends BaseSecuredPresenter {
         $form->addSubmit("submit", "smazat")
                 ->setAttribute("class", "btn btn-danger");
         
+        $form->onSuccess[] = $this->deleteKeySucceeded;
+        
         $this->bootstrapFormRendering($form);
         
        return $form; 
@@ -162,6 +181,16 @@ class SettingsPresenter extends BaseSecuredPresenter {
         $this->settings->saveValue($values->key, $values->value);
         
         $this->flashMessage("Hodnota uložena", "success");
+        $this->redirect("Settings:");
+    }
+    
+    function deleteKeySucceeded($form) {
+        $values = $form->getValues();
+        
+        if ($values->delete != "") {
+            $this->settings->deleteKey($values->delete);
+            $this->flashMessage("Klíč smazán", "danger");
+        }
         $this->redirect("Settings:");
     }
     
