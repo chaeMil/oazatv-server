@@ -23,9 +23,9 @@
                     <th>název česky</th>
                     <th>název anglicky</th>
                     <th>datum</th>
-                    <th>tagy</th>
-                    <th>kategorie</th>
-                    <th>poznámka</th>
+                    <th class="hidden-xs">tagy</th>
+                    <th class="hidden-xs">kategorie</th>
+                    <th class="hidden-xs">poznámka</th>
                 </thead>
                 <tbody>
                     <tr n:foreach="$videos as $video" 
@@ -35,9 +35,9 @@
                         <td>{$video->name_cs}</td>
                         <td>{$video->name_en}</td>
                         <td>{$video->date|date:'j. n. Y'}</td>
-                        <td>{$video->tags}<td>
-                        <td>{$video->categories}</td>
-                        <td>{$video->note}</td>
+                        <td class="hidden-xs">{$video->tags}<td>
+                        <td class="hidden-xs">{$video->categories}</td>
+                        <td class="hidden-xs">{$video->note}</td>
                     </tr>
                 </tbody>                
             </table>

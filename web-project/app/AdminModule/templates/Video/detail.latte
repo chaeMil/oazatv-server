@@ -4,7 +4,7 @@
     
     {include ../navbar.latte}
     
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <a href="javascript:history.go(-1);"> 
                 <h2><span class="glyphicon glyphicon-chevron-left pull-left"></span>
@@ -41,10 +41,12 @@
                         
                         <div class="col-md-12">
                             {if ($video->original_file != "")}
-                                <div class="col-md-6">
+                                <div class="col-md-6 col-lg-4">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h4>Zdrojový soubor: <small>{$video->original_file}</small></h4>
+                                            <h4>Zdrojový soubor: <small>{$video->original_file}</small></h4>     
+                                            <i onclick="openPlayer({$video->original_file});" 
+                                               class="open-player fa fa-play-circle-o fa-3x pull-right"></i>
                                         </div>
                                         <div class="panel-body">
                                             <span>{$originalFileInfo}</span>
@@ -100,10 +102,12 @@
                             {/if}
 
                             {if ($video->mp4_file != "")}
-                                <div class="col-md-6">
+                                <div class="col-md-6 col-lg-4">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4>MP4 soubor: <small>{$video->mp4_file}</small></h4>
+                                            <i onclick="openPlayer({$video->mp4_file});" 
+                                               class="open-player fa fa-play-circle-o fa-3x pull-right"></i>
                                         </div>
                                         <div class="panel-body">
                                             <a n:href="Video:deleteVideoFile, $video->id, $mp4File"
@@ -133,10 +137,12 @@
                             {/if}
                             
                             {if ($video->mp3_file != "")}
-                                <div class="col-md-6">
+                                <div class="col-md-6 col-lg-4">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4>MP3 soubor: <small>{$video->mp3_file}</small></h4>
+                                            <i onclick="openPlayer({$video->mp3_file});" 
+                                               class="open-player fa fa-play-circle-o fa-3x pull-right"></i>
                                         </div>
                                         <div class="panel-body">
                                             <a n:href="Video:deleteVideoFile, $video->id, $mp3File"
@@ -148,10 +154,12 @@
                             {/if}
                             
                             {if ($video->webm_file != "")}
-                                <div class="col-md-6">
+                                <div class="col-md-6 col-lg-4">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4>WEBM soubor: <small>{$video->webm_file}</small></h4>
+                                            <i onclick="openPlayer({$video->webm_file});" 
+                                               class="open-player fa fa-play-circle-o fa-3x pull-right"></i>
                                         </div>
                                         <div class="panel-body">
                                             <a n:href="Video:deleteVideoFile, $video->id, $webmFile"
@@ -317,4 +325,19 @@ window.onbeforeunload = function(){
 }
 </script>
 
+<script>
+    function openPlayer(file) {
+        bootbox.dialog({
+            title: "přehrává se: " + file,
+            message: '<video width="100%" controls><source src="{$basePath|noescape}/db/videos/{$video->id}/' +  file +'"></video>',
+            buttons: {
+                main: {
+                    label: "zavřít",
+                    className: "btn-primary"
+                }
+            }
+        });
+    }
+    
+</script>
 {/block}
