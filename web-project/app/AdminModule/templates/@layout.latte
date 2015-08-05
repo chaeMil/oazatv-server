@@ -109,7 +109,23 @@
             $(".clickable-row").click(function() {
                 window.document.location = $(this).data("href");
             });
+            
+            //bg ajax worker called every 10 seconds
+            bgAjaxWorker();
+            setInterval(function() { bgAjaxWorker(); }, 10000);
         });
+        
+        function bgAjaxWorker() {
+            console.log("ajax worker tick");
+            loadNavbarQueue(false);
+        }
+        
+        function loadNavbarQueue(force) {
+            if (force || $('#navbarQueue').is(":visible")) {
+                $('#navbarQueue').load({$presenter->link('VideoConvertQueue:NavbarQueue')});
+                console.log('ajax: refreshing navbar queue');
+            }
+        }
     </script>
     
     <script>

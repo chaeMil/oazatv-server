@@ -34,4 +34,8 @@ class VideoConvertQueuePresenter extends BaseSecuredPresenter {
         $this->getTemplateVariables($this->getUser()->getId());
         $this->template->queueVideos = $this->queueManager->getQueue();
     }
+    
+    public function renderNavbarQueue() {
+        
+    }
 }
