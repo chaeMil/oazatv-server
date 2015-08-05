@@ -1,0 +1,49 @@
+{block content}
+
+<div id="wrapper">
+    
+    {include ../navbar.latte}
+    
+    <div class="container">
+        <div class="row">
+            <a href="javascript:history.go(-1);"> 
+                <h2><span class="glyphicon glyphicon-chevron-left pull-left"></span>
+                    Fronta ke konverzi
+                </h2>
+            </a>  
+            
+        </div>
+        
+        <br>
+        
+        <div class="row">
+            <table class="table table-hover">
+                <thead>
+                    <th>id</th>
+                    <th>název česky</th>
+                    <th>název anglicky</th>
+                    <th>přidáno</th>
+                    <th>začátek konverze</th>
+                    <th>konec konverze</th>
+                    <th>status</th>
+                </thead>
+                <tbody>
+                    <tr n:foreach="$queueVideos as $video" 
+                        class="clickable-row"
+                        data-href="{$presenter->link('Video:Detail', $video->video_id)}">
+                        <td>{$video->id}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>                
+            </table>
+        </div>
+    </div>
+    
+    
+</div>
+{/block}
