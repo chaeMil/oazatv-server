@@ -23,9 +23,13 @@ class VideoConvertQueueManager extends BaseModel {
             COLUMN_INPUT = 'input',
             COLUMN_TARGET = 'target',
             COLUMN_STATUS = 'status',
+            COLUMN_PROGRESS = 'progress',
             COLUMN_ADDED = 'added',
             COLUMN_STARTED_AT = 'started_at',
-            COLUMN_FINISHED_AT = 'finished_at';
+            COLUMN_FINISHED_AT = 'finished_at',
+            STATUS_WAITING = 0,
+            STATUS_CONVERTING = 1,
+            STATUS_FINISHED = 2;
     
     /** @var Nette\Database\Context */
     public static $database;
@@ -56,5 +60,13 @@ class VideoConvertQueueManager extends BaseModel {
     
     public function getVideoFromQueue($videoId) {
         return $this::$database->table(self::TABLE_NAME)->where(self::COLUMN_VIDEO_ID, $videoId);
+    }
+    
+    public function getQueueCount($status) {
+        if(!isset($status)) {
+            return $this::$database->table(self::TABLE_NAME)->count();
+        } else {
+            return $this::$database->table(self::TABLE_NAME)->where(self::COLUMN_STATUS, $status)->count();
+        }
     }
 }

@@ -20,12 +20,15 @@ class MainPresenter extends BaseSecuredPresenter {
     private $model;
     public $database;
     private $userManager;
+    private $queueManager;
     
     function __construct(Nette\Database\Context $database, 
-            Model\AdminFacade $adminFacade, \App\Model\UserManager $userManager) {
+            Model\AdminFacade $adminFacade, \App\Model\UserManager $userManager,
+            \Model\VideoConvertQueueManager $queueManager) {
         $this->model = $adminFacade;
         $this->database = $database;
         $this->userManager = $userManager;
+        $this->queueManager = $queueManager;
     }
     
     function renderDefault() {
@@ -33,5 +36,6 @@ class MainPresenter extends BaseSecuredPresenter {
         $this->getTemplateVariables($this->getUser()->getId());
         $this->template->lastloginString = StringUtils::
             timeElapsedString($this->getUser()->getIdentity()->data['lastlogin_time']);
+        $this->template->queueTasks = $this->queueManager->getQueueCount(\Model\VideoConvertQueueManager::STATUS_WAITING);
     }
 }
