@@ -34,9 +34,9 @@
                         <td>{$video->id}</td>
                         <td></td>
                         <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td class="date">{$video->added}</td>
+                        <td class="date">{$video->started_at}</td>
+                        <td class="date">{$video->finished_at}</td>
                         <td></td>
                     </tr>
                 </tbody>                
@@ -46,4 +46,18 @@
     
     
 </div>
+{/block}
+
+{block pageScripts}
+<script n:syntax="off">
+    $('.date').each(function () {
+        var text = $(this).html();
+        var date = moment(text).calendar();
+        if (date != '11.01.2030') {
+            $(this).text(date);
+        } else {
+            $(this).text('');
+        }
+    });
+</script>
 {/block}
