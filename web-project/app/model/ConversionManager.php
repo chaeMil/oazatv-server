@@ -18,7 +18,7 @@ use Nette,
  *
  * @author Michal Mlejnek <chaemil72 at gmail.com>
  */
-class ConversionManager extends BaseModel {
+class ConversionManager {
     
     /** @var Nette\Database\Context */
     public static $database;
@@ -36,7 +36,7 @@ class ConversionManager extends BaseModel {
     
     public function startConversion($queueId) {
         $queueItem = $this->queueManager->getVideoFromQueueByQueueId($queueId);
-        dump($queueItem); exit;
         $video = $this->videoManager->getVideoFromDB($queueItem->video_id);
+        
     }
 }
