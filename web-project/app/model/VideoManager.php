@@ -52,8 +52,8 @@ class VideoManager extends BaseModel {
 
     public function saveVideoToDB($values) {
         
-        if(isset($_GET['id'])) {
-            $videoId = \Nette\Utils\Strings::webalize($_GET['id']);
+        if(isset($values['id'])) {
+            $videoId = \Nette\Utils\Strings::webalize($values['id']);
         } else {
             $videoId = 0;
         }
