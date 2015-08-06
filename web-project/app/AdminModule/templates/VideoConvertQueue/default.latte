@@ -33,7 +33,7 @@
                         class="clickable-row"
                         data-href="{$presenter->link('Video:Detail', $video->video_id)}">
                         <td>{$video->id}</td>
-                        <td>{$videoFromDB = $videoManager->getVideoFromDB($video->video_id)}
+                        <td>{var $videoFromDB = $videoManager->getVideoFromDB($video->video_id)}
                             {$videoFromDB->name_cs} / 
                             {$videoFromDB->name_en}</td>
                         <td>{$video->input} > {$video->target}</td>
