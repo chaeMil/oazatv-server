@@ -103,7 +103,8 @@ class ConversionManager {
         
         $CONVcommand = PATH_TO_FFMPEG. " -i ".$CONVfolder.$CONVinput." -y -threads "
                 .$CONVthreads." ".$CONVvideo." ".$CONVaudio." ".$CONVextraParam
-                ." ".$CONVtarget;
+                ." ".$CONVfolder.$CONVtarget." 1> ".$CONVfolder."logs/".date("Y-m-d_H-i-s.txt").".log"
+                ." 2>&1 &";
         
         dump($CONVcommand);
         echo $CONVcommand;
