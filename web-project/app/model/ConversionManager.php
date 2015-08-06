@@ -89,12 +89,24 @@ class ConversionManager {
         dump($CONVfolder); dump($CONVinput); dump($CONVtarget);
         dump($CONVcodecAudio); dump($CONVcodecVideo); dump($CONVextraParam);
         
-        $CONVcommand = "cd ".$CONVfolder." & touch ".$CONVlog." & ".PATH_TO_FFMPEG." -i ./".$CONVinput.
-                " -y -threads ".$CONVthreads." -c:v ".$CONVcodecVideo." ".$CONVvideoBitrate."k ".
-                "-c:a ".$CONVcodecAudio. " -b:a ".$CONVaudioBitrate."k ".$CONVextraParam.
-                " ./".$CONVtarget." 1> ".$CONVlog." 2>&1 &";
+        if ($CONVaudioBitrate != 0 && $CONVcodecAudio != "") {
+            $CONVaudio = " -c:a ".$CONVcodecAudio." -b:a ".$CONVaudioBitrate."k";
+        } else {
+            $CONVaudio = "";
+        }
+        
+        if ($CONVvideoBitrate != 0 && $CONVcodecVideo != "") {
+            $CONVvideo = " -c:v ".$CONVcodecVideo." -b:v ".$CONVvideoBitrate."k";
+        } else {
+            $CONVvideo = "";
+        }
+        
+        $CONVcommand = PATH_TO_FFMPEG. " -i ".$CONVfolder.$CONVinput." -y -threads "
+                .$CONVthreads." ".$CONVvideo." ".$CONVaudio." ".$CONVextraParam
+                ." ".$CONVtarget;
         
         dump($CONVcommand);
         echo $CONVcommand;
+        shell_exec($CONVcommand);
     }
 }

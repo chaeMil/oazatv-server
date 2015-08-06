@@ -74,9 +74,9 @@ class VideoManager extends BaseModel {
             mkdir($newVideoDir);
             mkdir($newVideoThumbsDir);
             mkdir($vewVideoLogsDir);
-            chmod($newVideoDir, 0755);
-            chmod($newVideoThumbsDir, 0755);
-            chmod($vewVideoLogsDir, 0755);
+            chmod($newVideoDir, 0777);
+            chmod($newVideoThumbsDir, 0777);
+            chmod($vewVideoLogsDir, 0777);
         }
         
         return $sql->id;
