@@ -61,8 +61,11 @@ class VideoConvertQueueManager extends BaseModel {
         $queueItem->delete();
     }
     
-    public function getQueue($order) {
-        return $this::$database->table(self::TABLE_NAME)->order(self::COLUMN_ID."=?", $order);
+    public function getQueue($order, $limit) {
+        if (empty($limit)) {
+            $limit == 50;
+        }
+        return $this::$database->table(self::TABLE_NAME)->order(self::COLUMN_ID."=?", $order)->limit($limit);
     }
     
     public function getFirstVideoToConvert() {

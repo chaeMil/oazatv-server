@@ -10,7 +10,8 @@ namespace App\AdminModule;
 
 use Nette,
  Model\VideoConvertQueueManager,
- Model\VideoManager;
+ Model\VideoManager,
+ Model\ConversionManager;
 
 /**
  * Description of VideoConvertQueuePresenter
@@ -22,22 +23,27 @@ class VideoConvertQueuePresenter extends BaseSecuredPresenter {
     public $database;
     private $videoManager;
     private $queueManager;
+    private $conversionManager;
     
     function __construct(Nette\Database\Context $database, 
-            VideoManager $videoManager, \Model\VideoConvertQueueManager $queueManager) {
+            VideoManager $videoManager, \Model\VideoConvertQueueManager $queueManager,
+            ConversionManager $conversionManager) {
         $this->database = $database;
         $this->videoManager = $videoManager;
         $this->queueManager = $queueManager;
+        $this->conversionManager = $conversionManager;
     }
     
     public function renderDefault() {
         $this->getTemplateVariables($this->getUser()->getId());        
-        $this->template->queueVideos = $this->queueManager->getQueue("ASC");
+        $this->template->queueVideos = $this->queueManager->getQueue("ASC", 100);
         $this->template->videoManager = $this->videoManager;
     }
     
     public function renderNavbarQueue() {
-        $this->template->queueVideos = $this->queueManager->getQueue("ASC");
+        $this->template->queueVideos = $this->queueManager->getQueue("ASC", 5);
+        $this->template->videoManager = $this->videoManager;
+        $this->template->conversionManager = $this->conversionManager;
     }
     
     public function actionRemoveFromQueue($id) {
