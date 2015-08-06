@@ -37,7 +37,11 @@ class VideoManager extends BaseModel {
             COLUMN_CATEGORIES = 'categories',
             COLUMN_DESCRIPTION_CS = 'description_cs',
             COLUMN_DESCRIPTION_EN = 'description_en',
-            COLUMN_NOTE = 'note';
+            COLUMN_NOTE = 'note',
+            THUMB_1024 = 1024,
+            THUMB_512 = 512,
+            THUMB_256 = 256,
+            THUMB_128 = 128;
     
     /** @var Nette\Database\Context */
     public static $database;
@@ -135,5 +139,39 @@ class VideoManager extends BaseModel {
     
     public function addVideoToConvertQueue($id, $input, $target) {
         $this::$queueManager->addVideoToQueue($id, $input, $target);
+    }
+    
+    public function getThumbnails($id) {
+        $video = $this->getVideoFromDB($id);
+        $thumb = VIDEOS_FOLDER.$video->id."/thumbs/".str_replace(".jpg", "_".self::THUMB_1024.".jpg", $video->thumb_file);
+        $thumbfile = VIDEOS_FOLDER.$video->id."/thumbs/".str_replace(".jpg", "", $video->thumb_file);
+        if (!file_exists($thumb)) {
+            $this->generateThumbnails($id);
+        }
+        return array(self::THUMB_1024 => $thumbfile."_".self::THUMB_1024.".jpg",
+                self::THUMB_512 => $thumbfile."_".self::THUMB_512.".jpg",
+                self::THUMB_256 => $thumbfile."_".self::THUMB_256.".jpg",
+                self::THUMB_128 => $thumbfile."_".self::THUMB_128.".jpg");
+    }
+    
+    public function deleteThumbnails($id) {
+        foreach($this->getThumbnails($id) as $thumbnail) {
+            if (file_exists($thumbnail)) {
+                unlink($thumbnail);
+            }
+        } 
+    }
+    
+    private function generateThumbnails($videoId) {
+        $video = $this->getVideoFromDB($videoId);
+        if ($video->thumb_file != '') {
+            $thumbFile = VIDEOS_FOLDER.$video->id."/".$video->thumb_file;
+            if (file_exists($thumbFile)) {
+                \App\ImageUtils::resizeImage(VIDEOS_FOLDER.$video->id, $video->thumb_file, self::THUMB_1024, self::THUMB_1024, VIDEOS_FOLDER.$video->id."/thumbs/");
+                \App\ImageUtils::resizeImage(VIDEOS_FOLDER.$video->id, $video->thumb_file, self::THUMB_512, self::THUMB_512, VIDEOS_FOLDER.$video->id."/thumbs/");
+                \App\ImageUtils::resizeImage(VIDEOS_FOLDER.$video->id, $video->thumb_file, self::THUMB_256, self::THUMB_256, VIDEOS_FOLDER.$video->id."/thumbs/");
+                \App\ImageUtils::resizeImage(VIDEOS_FOLDER.$video->id, $video->thumb_file, self::THUMB_128, self::THUMB_128, VIDEOS_FOLDER.$video->id."/thumbs/");
+            }
+        }
     }
 }

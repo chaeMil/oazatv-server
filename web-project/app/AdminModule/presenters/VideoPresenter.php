@@ -49,6 +49,9 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->template->mp4File = VideoManager::COLUMN_MP4_FILE;
         $this->template->mp3File = VideoManager::COLUMN_MP3_FILE;
         $this->template->webmFile = VideoManager::COLUMN_WEBM_FILE;
+        $this->template->thumbFile = VideoManager::COLUMN_THUMB_FILE;
+        $this->template->thumbs = $this->videoManager->getThumbnails($id);
+        dump($this->videoManager->getThumbnails($id));
         $this['videoBasicInfoForm']->setDefaults($video->toArray());
     }
     
@@ -131,6 +134,9 @@ class VideoPresenter extends BaseSecuredPresenter {
     
     public function actionDeleteVideoFile($id, $file) {
         $this->videoManager->deleteVideoFile($id, $file);
+        if ($file == VideoManager::COLUMN_THUMB_FILE) {
+            $this->videoManager->deleteThumbnails($id);
+        }
         $this->flashMessage("Soubor byl smazán", "danger");
         $this->redirect("Video:Detail#files", $id);
     }

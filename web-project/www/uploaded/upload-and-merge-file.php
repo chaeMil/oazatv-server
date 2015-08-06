@@ -12,8 +12,6 @@
  * the parts have been uploaded, a final destination file is
  * being created from all the stored parts (appending one by one).
  *
- * @author Gregory Chris (http://online-php.com)
- * @email www.online.php@gmail.com
  */
 
 

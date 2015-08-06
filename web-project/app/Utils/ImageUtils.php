@@ -17,7 +17,7 @@ use App\StringUtils,
  * @author chaemil
  */
 class ImageUtils {
-    public static function resizeImage($imagefile, $dir, $size, $postfix) {
+    public static function resizeImage($dir, $imagefile, $size, $postfix, $outputDir) {
         $image = Image::fromFile($dir."/".$imagefile);
         $image->resize($size,NULL,Image::SHRINK_ONLY);
         $imagefile_without_extension = StringUtils::removeExtensionFromFileName($imagefile);
@@ -26,6 +26,9 @@ class ImageUtils {
             $separator = "_";
         } else {
             $separator = "";
+        }
+        if (!empty($outputDir)) {
+            $dir = $outputDir;
         }
         $image->save($dir."/".$imagefile_without_extension.$separator.$postfix.".".$extension, 
                     80, Image::JPEG);

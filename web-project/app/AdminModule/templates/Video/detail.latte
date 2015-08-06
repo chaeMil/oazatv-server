@@ -73,6 +73,9 @@
                                                     {if (!$video->webm_file && strpos($originalFileInfo,'webm') !== false)}
                                                         <li><a n:href="Video:useOriginalFileAs, $video->id, $webmFile">WEBM soubor</a></li>
                                                     {/if}
+                                                    {if (!$video->thumb_file && strpos($originalFileInfo,'jpeg') !== false)}
+                                                        <li><a n:href="Video:useOriginalFileAs, $video->id, $thumbFile">miniatura</a></li>
+                                                    {/if}
                                                 </ul>
                                             </div>
 
@@ -183,6 +186,21 @@
                                                         {/if}
                                                     </ul>
                                                 </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {/if}
+                            
+                            {if ($video->thumb_file != "")}
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4>miniatura: <small>{$video->thumb_file}</small></h4>
+                                        </div>
+                                        <div class="panel-body">
+                                            <a n:href="Video:deleteVideoFile, $video->id, $thumbFile"
+                                               data-confirm="smazat miniaturu?"
+                                               class="btn btn-danger confirm pull-right">smazat</a>
                                         </div>
                                     </div>
                                 </div>
