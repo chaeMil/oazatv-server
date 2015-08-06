@@ -83,16 +83,18 @@ class ConversionManager {
         $CONVthreads = $this->serverSettings->loadValue("conversion_threads");
         $CONVfolder = CONVERSION_FOLDER_ROOT . $video->id . "/";
         $CONVtarget = \App\StringUtils::rand(6).$CONVextension;
+        $CONVlog = "./logs/".date("Y-m-d_H-i-s").".txt";
         
         dump($CONVaudioBitrate); dump($CONVvideoBitrate); dump($CONVthreads); 
         dump($CONVfolder); dump($CONVinput); dump($CONVtarget);
         dump($CONVcodecAudio); dump($CONVcodecVideo); dump($CONVextraParam);
         
-        $CONVcommand = "cd ".$CONVfolder." & ".PATH_TO_FFMPEG." -i ./".$CONVinput.
+        $CONVcommand = "cd ".$CONVfolder." & touch ".$CONVlog." & ".PATH_TO_FFMPEG." -i ./".$CONVinput.
                 " -y -threads ".$CONVthreads." -c:v ".$CONVcodecVideo." ".$CONVvideoBitrate."k ".
                 "-c:a ".$CONVcodecAudio. " -b:a ".$CONVaudioBitrate."k ".$CONVextraParam.
-                " ./".$CONVtarget." 1> ./logs/".date("Y-m-d_H-i-s").".txt 2>&1 &";
+                " ./".$CONVtarget." 1> ".$CONVlog." 2>&1 &";
         
         dump($CONVcommand);
+        echo $CONVcommand;
     }
 }
