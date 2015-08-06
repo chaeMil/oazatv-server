@@ -34,6 +34,10 @@ class MainPresenter extends BaseSecuredPresenter {
         $this->getTemplateVariables($this->getUser()->getId());
         $this->template->lastloginString = StringUtils::
             timeElapsedString($this->getUser()->getIdentity()->data['lastlogin_time']);
-        $this->template->queueTasks = $this->queueManager->getQueueCount(\Model\VideoConvertQueueManager::STATUS_WAITING);
+        $isConvertingVideo = $this->queueManager->getQueueCount(Model\VideoConvertQueueManager::STATUS_CONVERTING);
+        $awaitingConversion = $this->queueManager->getQueueCount(\Model\VideoConvertQueueManager::STATUS_WAITING);
+        
+        $this->template->isConvertingVideo = $isConvertingVideo;
+        $this->template->awaitingConversion = $awaitingConversion;
     }
 }
