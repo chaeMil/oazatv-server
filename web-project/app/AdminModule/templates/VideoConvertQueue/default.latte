@@ -33,13 +33,18 @@
                         class="clickable-row"
                         data-href="{$presenter->link('Video:Detail', $video->video_id)}">
                         <td>{$video->id}</td>
-                        <td></td>
+                        <td>{$videoFromDB = $videoManager->getVideoFromDB($video->video_id)}
+                            {$videoFromDB->name_cs} / 
+                            {$videoFromDB->name_en}</td>
                         <td>{$video->input} > {$video->target}</td>
                         <td class="date">{$video->added}</td>
                         <td class="date">{$video->started_at}</td>
                         <td class="date">{$video->finished_at}</td>
-                        <td>{if ($video->status == 0)}čeká se{/if}{if ($video->status == 1)}konvertuje se{/if}{if ($video->status == 2)}hotovo{/if}</td>
-                        <td><a n:href="VideoConvertQueue:removeFromQueue $video->id" class="btn btn-danger btn-sm">odebrat</a>
+                        <td>{if ($video->status == 0)}čeká se{/if}
+                            {if ($video->status == 1)}konvertuje se{/if}
+                            {if ($video->status == 2)}hotovo{/if}</td>
+                        <td><a n:href="VideoConvertQueue:removeFromQueue $video->id" 
+                               class="btn btn-danger btn-sm">odebrat</a>
                     </tr>
                 </tbody>                
             </table>
