@@ -43,7 +43,8 @@ class VideoConvertQueueManager extends BaseModel {
         return $this::$database->table(self::TABLE_NAME)
                 ->where(array(self::COLUMN_VIDEO_ID => $videoId,
                     self::COLUMN_INPUT => $inputFile,
-                    self::COLUMN_TARGET => $target))->count();
+                    self::COLUMN_TARGET => $target,
+                    self::COLUMN_STATUS => self::STATUS_WAITING))->count();
     }
     
     public function addVideoToQueue($videoId, $inputFile, $target) {

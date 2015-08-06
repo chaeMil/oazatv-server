@@ -114,8 +114,10 @@ class VideoManager extends BaseModel {
     public function deleteVideoFile($id, $file) {
         $video = $this->getVideoFromDB($id);
         $fileToDelete = VIDEOS_FOLDER . $id ."/". $video->$file;
-        if (file_exists($fileToDelete)) {
-            unlink($fileToDelete);
+        if (!empty($video->$file)) {
+            if (file_exists($fileToDelete)) {
+                unlink($fileToDelete);
+            }
         }
         $video->update(array($file => ""));
     }
