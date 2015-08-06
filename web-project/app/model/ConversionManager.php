@@ -43,15 +43,15 @@ class ConversionManager {
         switch ($queueItem->target) {
             case VideoManager::COLUMN_MP3_FILE:
                 $CONVbitrate = $this->serverSettings->loadValue("mp3_bitrate");
-                $CONVinput = $video->mp3_file;
+                $CONVextension = ".mp3";
                 break;
             case VideoManager::COLUMN_MP4_FILE:
                 $CONVbitrate = $this->serverSettings->loadValue("mp4_bitrate");
-                $CONVinput = $video->mp4_file;
+                $CONVextension = ".mp4";
                 break;
             case VideoManager::COLUMN_WEBM_FILE:
                 $CONVbitrate = $this->serverSettings->loadValue("webm_bitrate");
-                $CONVinput = $video->webm_file;
+                $CONVextension = ".webm";
                 break;
         }
         
@@ -70,9 +70,9 @@ class ConversionManager {
         
         $CONVthreads = $this->serverSettings->loadValue("conversion_threads");
         $CONVfolder = CONVERSION_FOLDER_ROOT . $video->id . "/";
+        $CONVtarget = \App\StringUtils::rand(6).$CONVextension;
         
-        
-        dump($CONVbitrate); dump($CONVthreads); dump($CONVfolder); dump($CONVinput);
+        dump($CONVbitrate); dump($CONVthreads); dump($CONVfolder); dump($CONVinput); dump($CONVtarget);
         
         
     }
