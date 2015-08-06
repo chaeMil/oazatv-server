@@ -51,7 +51,6 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->template->webmFile = VideoManager::COLUMN_WEBM_FILE;
         $this->template->thumbFile = VideoManager::COLUMN_THUMB_FILE;
         $this->template->thumbs = $this->videoManager->getThumbnails($id);
-        dump($this->videoManager->getThumbnails($id));
         $this['videoBasicInfoForm']->setDefaults($video->toArray());
     }
     
