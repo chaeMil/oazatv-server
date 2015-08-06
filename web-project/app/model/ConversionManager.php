@@ -36,8 +36,44 @@ class ConversionManager {
     
     public function startConversion($queueId) {
         $queueItem = $this->queueManager->getVideoFromQueueByQueueId($queueId);
-        $queueItem->update(array(VideoConvertQueueManager::COLUMN_STATUS => VideoConvertQueueManager::STATUS_CONVERTING));
+        //$queueItem->update(array(VideoConvertQueueManager::COLUMN_STATUS => VideoConvertQueueManager::STATUS_CONVERTING));
         $video = $this->videoManager->getVideoFromDB($queueItem->video_id);
+        
+        //setup bitrate
+        switch ($queueItem->target) {
+            case VideoManager::COLUMN_MP3_FILE:
+                $CONVbitrate = $this->serverSettings->loadValue("mp3_bitrate");
+                $CONVinput = $video->mp3_file;
+                break;
+            case VideoManager::COLUMN_MP4_FILE:
+                $CONVbitrate = $this->serverSettings->loadValue("mp4_bitrate");
+                $CONVinput = $video->mp4_file;
+                break;
+            case VideoManager::COLUMN_WEBM_FILE:
+                $CONVbitrate = $this->serverSettings->loadValue("webm_bitrate");
+                $CONVinput = $video->webm_file;
+                break;
+        }
+        
+        //setup input file
+        switch ($queueItem->input) {
+            case VideoManager::COLUMN_MP3_FILE:
+                $CONVinput = $video->mp3_file;
+                break;
+            case VideoManager::COLUMN_MP4_FILE:
+                $CONVinput = $video->mp4_file;
+                break;
+            case VideoManager::COLUMN_WEBM_FILE:
+                $CONVinput = $video->webm_file;
+                break;
+        }
+        
+        $CONVthreads = $this->serverSettings->loadValue("conversion_threads");
+        $CONVfolder = CONVERSION_FOLDER_ROOT . $video->id . "/";
+        
+        
+        dump($CONVbitrate); dump($CONVthreads); dump($CONVfolder); dump($CONVinput);
+        
         
     }
 }

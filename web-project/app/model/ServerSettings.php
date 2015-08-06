@@ -40,7 +40,11 @@ class ServerSettings extends BaseModel {
     }
     
     public function loadValue($key) {
-        return $this::$database->table(self::TABLE_NAME)->where(self::COLUMN_KEY, $key)->fetch();
+        if ($this->checkIfKeyExists($key) != 0) {
+            return $this::$database->table(self::TABLE_NAME)->where(self::COLUMN_KEY, $key)->fetch()->value;
+        } else {
+            return false;
+        }
     }
     
     public function saveValue($key, $value) {

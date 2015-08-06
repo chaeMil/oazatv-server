@@ -43,6 +43,7 @@ class CronPresenter extends BasePresenter {
             $this->flashMessage("now converting video: [".$convertedVideoFromDB->id."] ".
                     $convertedVideoFromDB->name_cs." / ".$convertedVideoFromDB->name_en."  |  conversion: ".
                     $convertedVideo->input." > ".$convertedVideo->target);
+            
         } else {
             
             $videoToConvert = $this->queueManager->getFirstVideoToConvert();
@@ -51,6 +52,7 @@ class CronPresenter extends BasePresenter {
                 $this->flashMessage("found video to convert: [".$videoToConvertFromDB->id."] ".
                         $videoToConvertFromDB->name_cs." / ".$videoToConvertFromDB->name_en."  |  conversion: ".
                         $videoToConvert->input." > ".$videoToConvert->target, "info");
+                
                 $this->conversionManager->startConversion($videoToConvert->id);
             } else {
                 $this->flashMessage("nothing to convert and nothing is converting now", "info");
