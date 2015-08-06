@@ -44,14 +44,23 @@ class ConversionManager {
             case VideoManager::COLUMN_MP3_FILE:
                 $CONVbitrate = $this->serverSettings->loadValue("mp3_bitrate");
                 $CONVextension = ".mp3";
+                $CONVcodecVideo = "";
+                $CONVcodecAudio = "";
+                $CONVextraParam = "-g 0";
                 break;
             case VideoManager::COLUMN_MP4_FILE:
                 $CONVbitrate = $this->serverSettings->loadValue("mp4_bitrate");
                 $CONVextension = ".mp4";
+                $CONVcodecVideo = "libx264 -preset medium -profile:v baseline -level 3";
+                $CONVcodecAudio = "aac -strict -2";
+                $CONVextraParam = "-deinterlace -movflags faststart -async 1";
                 break;
             case VideoManager::COLUMN_WEBM_FILE:
                 $CONVbitrate = $this->serverSettings->loadValue("webm_bitrate");
                 $CONVextension = ".webm";
+                $CONVcodecVideo = "libvpx";
+                $CONVcodecAudio = "libvorbis";
+                $CONVextraParam = "-async 1";
                 break;
         }
         
@@ -73,6 +82,7 @@ class ConversionManager {
         $CONVtarget = \App\StringUtils::rand(6).$CONVextension;
         
         dump($CONVbitrate); dump($CONVthreads); dump($CONVfolder); dump($CONVinput); dump($CONVtarget);
+        dump($CONVcodecAudio); dump($CONVcodecVideo); dump($CONVextraParam);
         
         
     }
