@@ -42,21 +42,24 @@ class ConversionManager {
         //setup bitrate
         switch ($queueItem->target) {
             case VideoManager::COLUMN_MP3_FILE:
-                $CONVbitrate = $this->serverSettings->loadValue("mp3_bitrate");
+                $CONVaudioBitrate = $this->serverSettings->loadValue("mp3_audio_bitrate");
+                $CONVvideoBitrate = $this->serverSettings->loadValue("mp3_video_bitrate");
                 $CONVextension = ".mp3";
                 $CONVcodecVideo = "";
                 $CONVcodecAudio = "";
                 $CONVextraParam = "-g 0";
                 break;
             case VideoManager::COLUMN_MP4_FILE:
-                $CONVbitrate = $this->serverSettings->loadValue("mp4_bitrate");
+                $CONVaudioBitrate = $this->serverSettings->loadValue("mp4_audio_bitrate");
+                $CONVvideoBitrate = $this->serverSettings->loadValue("mp4_video_bitrate");
                 $CONVextension = ".mp4";
                 $CONVcodecVideo = "libx264 -preset medium -profile:v baseline -level 3";
                 $CONVcodecAudio = "aac -strict -2";
                 $CONVextraParam = "-deinterlace -movflags faststart -async 1";
                 break;
             case VideoManager::COLUMN_WEBM_FILE:
-                $CONVbitrate = $this->serverSettings->loadValue("webm_bitrate");
+                $CONVaudioBitrate = $this->serverSettings->loadValue("webm_audio_bitrate");
+                $CONVvideoBitrate = $this->serverSettings->loadValue("webm_video_bitrate");
                 $CONVextension = ".webm";
                 $CONVcodecVideo = "libvpx";
                 $CONVcodecAudio = "libvorbis";
@@ -81,9 +84,15 @@ class ConversionManager {
         $CONVfolder = CONVERSION_FOLDER_ROOT . $video->id . "/";
         $CONVtarget = \App\StringUtils::rand(6).$CONVextension;
         
-        dump($CONVbitrate); dump($CONVthreads); dump($CONVfolder); dump($CONVinput); dump($CONVtarget);
+        dump($CONVaudioBitrate); dump($CONVvideoBitrate); dump($CONVthreads); 
+        dump($CONVfolder); dump($CONVinput); dump($CONVtarget);
         dump($CONVcodecAudio); dump($CONVcodecVideo); dump($CONVextraParam);
         
+        $CONVcommand = "cd ".$CONVfolder." & ".PATH_TO_FFMPEG." -i ./".$CONVinput.
+                " -y -threads ".$CONVthreads." -c:v ".$CONVcodecVideo." ".$CONVvideoBitrate."k ".
+                "-c:a ".$CONVcodecAudio. " -b:a ".$CONVaudioBitrate."k ".$CONVextraParam.
+                " ./".$CONVtarget." 1> ./logs/".date("Y-m-d_H-i-s").".txt 2>&1 &";
         
+        dump($CONVcommand);
     }
 }
