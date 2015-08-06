@@ -31,7 +31,7 @@ class VideoConvertQueuePresenter extends BaseSecuredPresenter {
     }
     
     public function renderDefault() {
-        $this->getTemplateVariables($this->getUser()->getId());
+        $this->getTemplateVariables($this->getUser()->getId());        
         $this->template->queueVideos = $this->queueManager->getQueue("ASC");
     }
     

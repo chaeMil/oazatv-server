@@ -36,13 +36,17 @@ class CronPresenter extends BasePresenter {
     
     public function actionCheckVideoConversionQueue() {
         
-        if ($this->queueManager->isConvertingNow()) {
+        if ($this->queueManager->isConvertingNow() && $this->queueManager->isFFMPEGRunning()) {
             $convertedVideo = $this->queueManager->getCurrentlyConvertedVideo();
             $convertedVideoFromDB = $this->videoManager->getVideoFromDB($convertedVideo->video_id);
 
             $this->flashMessage("now converting video: [".$convertedVideoFromDB->id."] ".
                     $convertedVideoFromDB->name_cs." / ".$convertedVideoFromDB->name_en."  |  conversion: ".
                     $convertedVideo->input." > ".$convertedVideo->target);
+            
+        } elseif($this->queueManager->isConvertingNow() && !$this->queueManager->isFFMPEGRunning()) {
+            
+            $this->redirect("Cron:ConversionCompleteCallback");
             
         } else {
             
@@ -58,5 +62,19 @@ class CronPresenter extends BasePresenter {
                 $this->flashMessage("nothing to convert and nothing is converting now", "info");
             }
         }
+    }
+    
+    public function actionConversionCompleteCallback() {
+        $convertedVideo = $this->queueManager->getCurrentlyConvertedVideo();
+        if (!empty($convertedVideo)) {
+            $convertedVideoFromDB = $this->videoManager->getVideoFromDB($convertedVideo->video_id);
+
+            $convertedVideo->update(array(VideoConvertQueueManager::COLUMN_FINISHED_AT => date('Y-m-d H:i:s'),
+                                    VideoConvertQueueManager::COLUMN_STATUS => VideoConvertQueueManager::STATUS_FINISHED));
+            
+            $convertedVideoFromDB->update(array($convertedVideo->target => $convertedVideo->target_filename));
+        }
+        
+        
     }
 }

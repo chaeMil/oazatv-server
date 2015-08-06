@@ -22,6 +22,7 @@ class VideoConvertQueueManager extends BaseModel {
             COLUMN_VIDEO_ID = 'video_id',
             COLUMN_INPUT = 'input',
             COLUMN_TARGET = 'target',
+            COLUMN_TARGET_FILENAME = 'target_filename',
             COLUMN_STATUS = 'status',
             COLUMN_PROGRESS = 'progress',
             COLUMN_ADDED = 'added',
@@ -73,9 +74,19 @@ class VideoConvertQueueManager extends BaseModel {
         }
     }
     
+    public function isFFMPEGRunning() {
+        exec("pgrep ffmpeg", $pids);
+        if(empty($pids)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
     public function getCurrentlyConvertedVideo() {
         return $this::$database->table(self::TABLE_NAME)->order(self::COLUMN_ID."=?", "ASC")
-                ->where(self::COLUMN_STATUS, self::STATUS_CONVERTING)->limit(1)->fetch();
+                ->select("*")->where(self::COLUMN_STATUS, self::STATUS_CONVERTING)
+                ->limit(1)->fetch();
     }
     
     public function getVideoFromQueue($videoId) {

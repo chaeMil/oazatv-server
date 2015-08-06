@@ -36,7 +36,6 @@ class ConversionManager {
     
     public function startConversion($queueId) {
         $queueItem = $this->queueManager->getVideoFromQueueByQueueId($queueId);
-        //$queueItem->update(array(VideoConvertQueueManager::COLUMN_STATUS => VideoConvertQueueManager::STATUS_CONVERTING));
         $video = $this->videoManager->getVideoFromDB($queueItem->video_id);
         
         //setup bitrate
@@ -78,16 +77,26 @@ class ConversionManager {
             case VideoManager::COLUMN_WEBM_FILE:
                 $CONVinput = $video->webm_file;
                 break;
+            case VideoManager::COLUMN_ORIGINAL_FILE:
+                $CONVinput = $video->original_file;
+                break;
         }
         
         $CONVthreads = $this->serverSettings->loadValue("conversion_threads");
         $CONVfolder = CONVERSION_FOLDER_ROOT . $video->id . "/";
         $CONVtarget = \App\StringUtils::rand(6).$CONVextension;
-        $CONVlog = "./logs/".date("Y-m-d_H-i-s").".txt";
+        $CONVlog = "logs/".date("Y-m-d_H-i-s").".log";
         
-        dump($CONVaudioBitrate); dump($CONVvideoBitrate); dump($CONVthreads); 
+        $queueItem->update(array(VideoConvertQueueManager::COLUMN_STATUS => VideoConvertQueueManager::STATUS_CONVERTING,
+                                VideoConvertQueueManager::COLUMN_STARTED_AT => date('Y-m-d H:i:s'),
+                                VideoConvertQueueManager::COLUMN_TARGET_FILENAME => $CONVtarget));
+        
+        $this->videoManager->deleteVideoFile($video->id, $queueItem->target);
+        $video->update(array($queueItem->target => ""));
+        
+        /*dump($CONVaudioBitrate); dump($CONVvideoBitrate); dump($CONVthreads); 
         dump($CONVfolder); dump($CONVinput); dump($CONVtarget);
-        dump($CONVcodecAudio); dump($CONVcodecVideo); dump($CONVextraParam);
+        dump($CONVcodecAudio); dump($CONVcodecVideo); dump($CONVextraParam);*/
         
         if ($CONVaudioBitrate != 0 && $CONVcodecAudio != "") {
             $CONVaudio = " -c:a ".$CONVcodecAudio." -b:a ".$CONVaudioBitrate."k";
@@ -103,11 +112,11 @@ class ConversionManager {
         
         $CONVcommand = PATH_TO_FFMPEG. " -i ".$CONVfolder.$CONVinput." -y -threads "
                 .$CONVthreads." ".$CONVvideo." ".$CONVaudio." ".$CONVextraParam
-                ." ".$CONVfolder.$CONVtarget." 1> ".$CONVfolder."logs/".date("Y-m-d_H-i-s.txt").".log"
+                ." ".$CONVfolder.$CONVtarget." 1> ".$CONVfolder.$CONVlog
                 ." 2>&1 &";
         
-        dump($CONVcommand);
-        echo $CONVcommand;
+        //dump($CONVcommand);
+        //echo $CONVcommand;
         shell_exec($CONVcommand);
     }
 }
