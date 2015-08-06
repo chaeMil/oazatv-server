@@ -38,4 +38,16 @@ class VideoConvertQueuePresenter extends BaseSecuredPresenter {
     public function renderNavbarQueue() {
         $this->template->queueVideos = $this->queueManager->getQueue("ASC");
     }
+    
+    public function actionRemoveFromQueue($id) {
+        $queueItem = $this->queueManager->getVideoFromQueueByQueueId($id);
+        if ($queueItem->status == VideoConvertQueueManager::STATUS_CONVERTING) {
+            $this->flashMessage("Nelze odebrat právě se konvertuje!", "warning");
+            $this->redirect("VideoConvertQueue:");
+        } else {
+            $this->queueManager->removeFromQueue($id);
+            $this->flashMessage("Úspěšně odebráno", "success");
+            $this->redirect("VideoConvertQueue:");
+        }
+    }
 }

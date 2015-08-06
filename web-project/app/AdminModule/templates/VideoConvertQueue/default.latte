@@ -26,6 +26,7 @@
                     <th>začátek konverze</th>
                     <th>konec konverze</th>
                     <th>status</th>
+                    <th></th>
                 </thead>
                 <tbody>
                     <tr n:foreach="$queueVideos as $video" 
@@ -38,6 +39,7 @@
                         <td class="date">{$video->started_at}</td>
                         <td class="date">{$video->finished_at}</td>
                         <td>{if ($video->status == 0)}čeká se{/if}{if ($video->status == 1)}konvertuje se{/if}{if ($video->status == 2)}hotovo{/if}</td>
+                        <td><a n:href="VideoConvertQueue:removeFromQueue $video->id" class="btn btn-danger btn-sm">odebrat</a>
                     </tr>
                 </tbody>                
             </table>
