@@ -22,7 +22,7 @@ class VideoConvertQueuePresenter extends BaseSecuredPresenter {
     public $database;
     private $videoManager;
     private $queueManager;
-
+    
     function __construct(Nette\Database\Context $database, 
             VideoManager $videoManager, \Model\VideoConvertQueueManager $queueManager) {
         $this->database = $database;
