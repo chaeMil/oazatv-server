@@ -35,7 +35,7 @@ class VideoConvertQueuePresenter extends BaseSecuredPresenter {
     }
     
     public function renderDefault() {
-        $this->getTemplateVariables($this->getUser()->getId());        
+        $this->getTemplateVariables($this->getUser()->getId());
         $this->template->queueVideos = $this->queueManager->getQueue("ASC", 100);
         $this->template->videoManager = $this->videoManager;
     }
@@ -44,6 +44,15 @@ class VideoConvertQueuePresenter extends BaseSecuredPresenter {
         $this->template->queueVideos = $this->queueManager->getQueue("ASC", 5);
         $this->template->videoManager = $this->videoManager;
         $this->template->conversionManager = $this->conversionManager;
+    }
+    
+    public function renderQueueItem($id) {
+        $this->getTemplateVariables($this->getUser()->getId());
+        $queueItem = $this->queueManager->getVideoFromQueueByQueueId($id);
+        $this->template->queueItem = $queueItem;
+        $this->template->conversionManager = $this->conversionManager;
+        $this->template->video = $this->videoManager->getVideoFromDB($queueItem->video_id);
+        $this->template->thumbs = $this->videoManager->getThumbnails($queueItem->video_id);
     }
     
     public function actionRemoveFromQueue($id) {

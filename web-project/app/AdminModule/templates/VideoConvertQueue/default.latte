@@ -31,7 +31,7 @@
                 <tbody>
                     <tr n:foreach="$queueVideos as $video" 
                         class="clickable-row"
-                        data-href="{$presenter->link('Video:Detail', $video->video_id)}">
+                        data-href="{$presenter->link('VideoConvertQueue:queueItem', $video->id)}">
                         <td>{$video->id}</td>
                         <td>{var $videoFromDB = $videoManager->getVideoFromDB($video->video_id)}
                             {$videoFromDB->name_cs} / 

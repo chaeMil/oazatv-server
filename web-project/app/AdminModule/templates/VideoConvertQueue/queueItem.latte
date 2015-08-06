@@ -1,0 +1,61 @@
+{block content}
+
+<div id="wrapper">
+    
+    {include ../navbar.latte}
+    
+    <div class="container-fluid">
+        <div class="row">
+            <a n:href="VideoConvertQueue:"> 
+                <h2><span class="glyphicon glyphicon-chevron-left pull-left"></span>
+                    Fronta ke konverzi
+                </h2>
+            </a>  
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>{$video->name_cs} / {$video->name_en}</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img class="img-responsive" src="{$basePath}/{$thumbs['512']}" />
+                        </div>
+                        <div class="col-md-8">
+                            <h4><span class="text-muted">konverze: </span>{$queueItem->input} > {$queueItem->target}</h4>
+                            <h4><span class="text-muted">status: </span>
+                                        {if ($queueItem->status == 0)}čeká se{/if}
+                                        {if ($queueItem->status == 1)}konvertuje se{/if}
+                                        {if ($queueItem->status == 2)}hotovo{/if}
+                            </h4>
+                            <hr>
+                            <a class="btn btn-lg btn-primary" n:href="Video:Detail $video->id">přejít k videu</a>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="progress {if ($queueItem->status == 1)} active{/if}">
+                                {if ($queueItem->status == 1)}{var $progress = $conversionManager->getConversionStatus($queueItem->id)}{/if}
+                                <div class="progress-bar {if ($queueItem->status == 1)}progress-bar-info{/if} 
+                                                        {if ($queueItem->status == 2)}progress-bar-success{/if}" 
+                                     role="progressbar" aria-valuenow="{if ($queueItem->status == 1)}{$progress|noescape}{/if}" 
+                                     aria-valuemin="0" aria-valuemax="100" 
+                                     style="width: {if ($queueItem->status == 1)}{$progress|noescape}%{/if}
+                                        {if ($queueItem->status == 2)}100%{/if}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+</div>
+{/block}
