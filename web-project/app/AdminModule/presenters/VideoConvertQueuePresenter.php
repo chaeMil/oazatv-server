@@ -48,6 +48,11 @@ class VideoConvertQueuePresenter extends BaseSecuredPresenter {
     
     public function renderQueueItem($id) {
         $this->getTemplateVariables($this->getUser()->getId());
+        $this->template->queueId = $id;
+    }
+    
+    public function renderQueueItemAjax($id) {
+        $this->getTemplateVariables($this->getUser()->getId());
         $queueItem = $this->queueManager->getVideoFromQueueByQueueId($id);
         $this->template->queueItem = $queueItem;
         $this->template->conversionManager = $this->conversionManager;

@@ -119,7 +119,12 @@
         
         function bgAjaxWorker() {
             console.log("ajax worker tick");
-            loadNavbarQueue(false);
+            try {
+                loadNavbarQueue(false);
+                refreshQueueItem();
+            } catch(e) {
+                console.log(e);
+            }
         }
         
         function loadNavbarQueue(force) {
