@@ -118,7 +118,9 @@
         });
         
         function bgAjaxWorker() {
-            console.log("ajax worker tick");
+            var dt = new Date();
+            var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+            console.log("ajax worker tick [" + time + "]");
             try {
                 loadNavbarQueue(false);
                 refreshQueueItem();
