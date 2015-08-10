@@ -1,0 +1,19 @@
+{block content}
+
+<div id="wrapper">
+    
+    {include ../navbar.latte}
+    
+    <div class="container">
+        <div class="row">
+            <a n:href="BugReport:"> 
+                <h2><span class="glyphicon glyphicon-chevron-left pull-left"></span>Nahlásit chybu</h2>
+            </a>  
+            
+            {control addBugReport}
+                        
+        </div>
+    </div>
+    
+</div>
+{/block}

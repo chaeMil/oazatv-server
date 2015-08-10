@@ -1,0 +1,51 @@
+{block content}
+
+<div id="wrapper">
+    
+    {include ../navbar.latte}
+    
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10">
+                <a href="javascript:history.go(-1);"> 
+                    <h2><span class="glyphicon glyphicon-chevron-left pull-left"></span>
+                        Hlášení chyb
+                    </h2>
+                </a>  
+            </div>
+            <div class="col-md-2">
+                <br>
+                <a n:href="BugReport:add" class="btn btn-danger pull-right">nahlásit chybu</a>
+            </div>
+        </div>
+        
+        <br>
+        
+        <div class="row">
+            <table class="table table-hover">
+                <thead>
+                    <th>id</th>
+                    <th>uživatel</th>
+                    <th>název</th>
+                    <th>priorita</th>
+                </thead>
+                <tbody>
+                    <tr n:foreach="$bugs as $bug" 
+                        class="clickable-row {if ($bug->solved == 1)}active{/if}"
+                        data-href="{$presenter->link('BugReport:Detail', $bug->id)}">
+                        <td>{$bug->id}</td>
+                        <td>{$userManager->getUserName($bug->user_id)}</td>
+                        <td>{$bug->bug_name}</td>
+                        <td>{if ($bug->priority == 0)}nízká{/if}
+                        {if ($bug->priority == 1)}normální{/if}
+                        {if ($bug->priority == 2)}vysoká{/if}
+                        {if ($bug->priority == 3)}urgentní{/if}</td>
+                    </tr>
+                </tbody>                
+            </table>
+        </div>
+    </div>
+    
+    
+</div>
+{/block}

@@ -1,0 +1,20 @@
+{block content}
+
+<div id="wrapper">
+    
+    {include ../navbar.latte}
+    
+    <div class="container">
+        <div class="row">
+            <a n:href="BugReport:"> 
+                <h2><span class="glyphicon glyphicon-chevron-left pull-left"></span>{$bug->bug_name}</h2>
+            </a>  
+            
+            <h3>nahlásil: {$userManager->getUserName($bug->user_id)}</h3>
+            <span>{$bug->bug_desc}</span>
+            
+        </div>
+    </div>
+    
+</div>
+{/block}

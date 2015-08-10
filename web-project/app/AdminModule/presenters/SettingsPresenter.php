@@ -21,7 +21,6 @@ use Nette,
  */
 class SettingsPresenter extends BaseSecuredPresenter {
 
-    private $model;
     public $database;
     private $userManager;
     private $settings;
