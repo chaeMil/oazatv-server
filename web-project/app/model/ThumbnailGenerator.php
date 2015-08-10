@@ -42,7 +42,7 @@ class ThumbnailGenerator {
         
         $command = PATH_TO_FFMPEG." -ss ".$hour.":".$minute.":".$second." -i "
                 .CONVERSION_FOLDER_ROOT.$videoId."/".$file." -r 1 -vframes 1 -y ".
-                USER_TEMP_FOLDER.$userId."/".$videoId."_".$hour."-".$minute."-".$second.".jpg";
+                USER_TEMP_FOLDER.$userId."/thumb_".$videoId."_".$hour."-".$minute."-".$second.".jpg";
         
         //echo($command);
         

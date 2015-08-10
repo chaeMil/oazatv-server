@@ -55,19 +55,17 @@
                             <a class="btn btn-danger" id="capture">zachytit</a>
                         </div>
                     </div>
-                            
-                    <hr>
-                    
-                    <div id="thumbs">
                         
                         
-                    </div>
-                    
                 </div>
+                    
             </div>
         </div>
+                            
+        <div id="thumbs">
     </div>
 </div>
+                                
 {/block}
 
 {block pageScripts}
@@ -95,6 +93,10 @@
         $("#thumbs").append($("<div class='thumb col-md-4'>").load({$basePath} + '/admin/thumbnail-generator/generate/?videoId=' 
                 + {$video->id} + '&file=' +  $('#file').val() + "&hour=" + hour + "&minute=" + minute + 
                 "&second=" + second + "&userId=" + {$userId}));
+    });
+    
+    $(document).on('click', '.trash', function() {
+        $(this).parent().remove();
     });
     
 </script>
