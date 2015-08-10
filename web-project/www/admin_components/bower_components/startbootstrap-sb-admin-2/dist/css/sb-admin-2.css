@@ -36,6 +36,38 @@
 .player-download {
   margin-bottom: -142px;
 }
+#thumbs .thumb .trash {
+  position: absolute;
+  bottom: 12px;
+  left: 36px;
+  z-index: 10;
+  font-size: 30px;
+  cursor: pointer;
+  text-shadow: 0 0 2px #000000;
+  color: white;
+}
+#thumbs .thumb .trash:hover {
+  color: #d9534f;
+}
+#thumbs .thumb .download {
+  position: absolute;
+  bottom: 12px;
+  left: 86px;
+  z-index: 10;
+  font-size: 30px;
+  cursor: pointer;
+  text-shadow: 0 0 2px #000000;
+  color: white;
+}
+#thumbs .thumb .download:hover {
+  color: #5cb85c;
+}
+#thumbs .thumb img {
+  position: relative;
+  left: 0px;
+  top: 0px;
+  padding: 8px;
+}
 body {
   background-color: #272B30;
   padding-top: 70px;
