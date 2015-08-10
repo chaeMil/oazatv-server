@@ -1,0 +1,43 @@
+{block content}
+
+<div id="wrapper">
+    
+    {include ../navbar.latte}
+    
+    <div class="container">
+        <div class="row">
+            <h2>Vytvářeč miniatur</h2>
+           
+            <hr>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Videa bez miniatury</h3>
+                </div>
+                <div class="panel-body">
+                    <br>
+                    
+                    <table class="table table-hover">
+                        <thead>
+                            <th>id</th>
+                            <th>název česky</th>
+                            <th>název anglicky</th>
+                            <th>datum</th>
+                        </thead>
+                        <tbody>
+                            <tr n:foreach="$videosWithoutThumb as $video" 
+                                class="clickable-row {if ($video->published == 1)}active{/if}"
+                                data-href="{$presenter->link('ThumbnailGenerator:create', $video->id)}">
+                                <td>{$video->id}</td>
+                                <td>{$video->name_cs}</td>
+                                <td>{$video->name_en}</td>
+                                <td>{$video->date|date:'j. n. Y'}</td>
+                            </tr>
+                        </tbody>                
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
