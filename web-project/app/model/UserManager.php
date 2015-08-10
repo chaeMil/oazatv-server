@@ -18,7 +18,7 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
             COLUMN_PASSWORD_HASH = 'password';
 
     /** @var Nette\Database\Context */
-    private $database;
+    public $database;
 
     public function __construct(Nette\Database\Context $database) {
         $this->database = $database;
@@ -115,6 +115,10 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
             mkdir("temp/users/".$userId);
             chmod("temp/users/".$userId, 0777);
         }
+    }
+    
+    public function emptyUserTempFolder($userId) {
+        \App\FileUtils::recursiveDelete("temp/users/".$userId."/");
     }
 
 }

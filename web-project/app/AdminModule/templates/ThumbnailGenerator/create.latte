@@ -92,7 +92,7 @@
             var second = $('#second').val();
         }
         
-        $("#thumbs").append($("<div class='thumbs'>").load({$basePath} + '/admin/thumbnail-generator/generate/?videoId=' 
+        $("#thumbs").append($("<div class='thumb col-md-4'>").load({$basePath} + '/admin/thumbnail-generator/generate/?videoId=' 
                 + {$video->id} + '&file=' +  $('#file').val() + "&hour=" + hour + "&minute=" + minute + 
                 "&second=" + second + "&userId=" + {$userId}));
     });

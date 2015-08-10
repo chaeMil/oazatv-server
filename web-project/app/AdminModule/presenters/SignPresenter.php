@@ -3,9 +3,18 @@
 namespace App\AdminModule;
 
 use Nette,
-    Model;
+    Model,
+    App\Model\UserManager;
 
 class SignPresenter extends BasePresenter {
+    
+    public $database;
+    private $userManager;
+
+    function __construct(UserManager $userManager, Nette\Database\Context $database) {
+        $this->userManager = $userManager;
+        $this->database = $database;
+    }
 
     public function renderDefault() {
         if ($this->getUser()->isLoggedIn()) {
@@ -47,7 +56,7 @@ class SignPresenter extends BasePresenter {
         try {
             $this->getUser()->login($values->username, $values->password);
             
-            $user = $this->database->table(DB_ADMIN_PREFIX."users")->get($this->getUser()->getId());
+            $user = $this->database->table("admin_users")->get($this->getUser()->getId());
             $user->update(Array(
                 "lastlogin_time" => time(),
                 "lastlogin_ip" => $_SERVER['REMOTE_ADDR']
@@ -61,6 +70,7 @@ class SignPresenter extends BasePresenter {
     }
 
     public function actionOut() {
+        $this->userManager->emptyUserTempFolder($this->getUser()->getId());
         $this->getUser()->logout();
         $this->flashMessage('You have been signed out.');
         $this->redirect('Sign:in');
