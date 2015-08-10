@@ -197,7 +197,9 @@
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4>miniatura: <small>{$video->thumb_file}</small></h4>
-                                            <img src="{$basePath}/{$thumbs['128']}" />
+                                            <img onclick="openImageViewer({$video->thumb_file});" 
+                                                 src="{$basePath}/{$thumbs['128']}"
+                                                 class="thumb-clickable"/>
                                         </div>
                                         <div class="panel-body">
                                             <a n:href="Video:deleteVideoFile, $video->id, $thumbFile"
@@ -364,7 +366,23 @@ window.onbeforeunload = function(){
                     label: "zavřít",
                     className: "btn-primary"
                 }
-            }
+            },
+            className: "modal50"
+        });
+    }
+    
+    function openImageViewer(file) {
+        bootbox.dialog({
+            title: "zobrazuje se: " + file,
+            message: '<img width="100%" class="img-responsive" src="{$basePath|noescape}/db/videos/{$video->id}/' +  file +'" />\n\
+                        <a class="player-download btn btn-primary" href="{$basePath|noescape}/db/videos/{$video->id}/' +  file +'" download>stáhnout</a>',
+            buttons: {
+                main: {
+                    label: "zavřít",
+                    className: "btn-primary"
+                }
+            },
+            className: "modal60"
         });
     }
     

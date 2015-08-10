@@ -99,5 +99,20 @@
         $(this).parent().remove();
     });
     
+    
+    function openImageViewer(file) {
+        bootbox.dialog({
+            title: "zobrazuje se: " + file,
+            message: '<img width="100%" class="img-responsive" src="'+file+'" />\n\
+                        <a class="player-download btn btn-primary" href="'+file+'" download>stáhnout</a>',
+            buttons: {
+                main: {
+                    label: "zavřít",
+                    className: "btn-primary"
+                }
+            },
+            className: "modal60"
+        });
+    }
 </script>
 {/block}
