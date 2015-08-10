@@ -20,6 +20,7 @@ session:
 
 
 services:
+    - Model\ThumbnailGenerator
     - Model\VideoManager
     - Model\VideoConvertQueueManager
     - Model\ConversionManager

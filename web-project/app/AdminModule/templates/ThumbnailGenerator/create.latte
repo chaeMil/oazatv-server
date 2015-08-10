@@ -23,7 +23,7 @@
                     <div class="form-group">
                         <label class="col-md-1 control-label" for="file">soubor</label>
                         <div class="col-md-2">
-                            <select id="selectbasic" name="file" class="form-control">
+                            <select id="file" name="file" class="form-control">
                                 {if ($video->original_file != '')}
                                     <option value="{$video->original_file}">originální soubor</option>
                                 {/if}
@@ -38,32 +38,64 @@
                             
                         <label class="col-md-1 control-label" for="hour">hodiny</label>  
                         <div class="col-md-1">
-                            <input id="textinput" name="hour" type="number" min="0" max="9" step="1" placeholder="HH" class="form-control input-md">
+                            <input id="hour" name="hour" type="number" min="0" max="9" step="1" placeholder="HH" class="form-control input-md">
                         </div>
                         
                         <label class="col-md-1 control-label" for="minute">minuty</label>  
                         <div class="col-md-1">
-                            <input id="textinput" name="minute" type="number" min="0" max="59" step="1" placeholder="MM" class="form-control input-md">
+                            <input id="minute" name="minute" type="number" min="0" max="59" step="1" placeholder="MM" class="form-control input-md">
                         </div>
                         
                         <label class="col-md-1 control-label" for="second">sekundy</label>  
                         <div class="col-md-1">
-                            <input id="textinput" name="second" type="number" min="0" max="59" step="1" placeholder="SS" class="form-control input-md">
-                        </div>
-                        
-                        <label class="col-md-1 control-label" for="frame">snímek</label>  
-                        <div class="col-md-1">
-                            <input id="textinput" name="frame" type="number" min="0" max="25" step="1" placeholder="FF" class="form-control input-md">
+                            <input id="second" name="second" type="number" min="0" max="59" step="1" placeholder="SS" class="form-control input-md">
                         </div>
                         
                         <div class="col-md-1">
                             <a class="btn btn-danger" id="capture">zachytit</a>
                         </div>
-                  </div>
+                    </div>
+                            
+                    <hr>
+                    
+                    <div id="thumbs">
+                        
+                        
+                    </div>
                     
                 </div>
             </div>
         </div>
     </div>
 </div>
+{/block}
+
+{block pageScripts}
+<script>
+    
+    $('#capture').click(function() {
+        if (!$('#hour').val()) {
+            var hour = 0;
+        } else {
+            var hour = $('#hour').val();
+        }
+        
+        if (!$('#minute').val()) {
+            var minute = 0;
+        } else {
+            var minute = $('#minute').val();
+        }
+        
+        if (!$('#second').val()) {
+            var second = 0;
+        } else {
+            var second = $('#second').val();
+        }
+        
+        $("#thumbs").append($("<div class='thumbs'>").load({$basePath} + '/admin/thumbnail-generator/generate/?videoId=' 
+                + {$video->id} + '&file=' +  $('#file').val() + "&hour=" + hour + "&minute=" + minute + 
+                "&second=" + second + "&userId=" + {$userId}));
+    });
+    
+</script>
 {/block}

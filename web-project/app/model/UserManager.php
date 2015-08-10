@@ -109,5 +109,12 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
     private static function removeCapsLock($password) {
         return $password === Strings::upper($password) ? Strings::lower($password) : $password;
     }
+    
+    public static function createUserTempFolder($userId) {
+        if (!file_exists("temp/users/".$userId)) {
+            mkdir("temp/users/".$userId);
+            chmod("temp/users/".$userId, 0777);
+        }
+    }
 
 }

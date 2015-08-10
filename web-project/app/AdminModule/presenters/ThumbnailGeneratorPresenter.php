@@ -9,7 +9,8 @@
 namespace App\AdminModule;
 
 use Nette,
- Model\VideoManager;
+ Model\VideoManager,
+ Model\ThumbnailGenerator;
 
 /**
  * Description of ThumbnailGeneratorPresenter
@@ -20,10 +21,13 @@ class ThumbnailGeneratorPresenter extends BaseSecuredPresenter {
     
     public $database;
     private $videoManager;
+    private $generator;
 
-    function __construct(Nette\Database\Context $database, VideoManager $videoManager) {
+    function __construct(Nette\Database\Context $database, VideoManager $videoManager,
+     \Model\ThumbnailGenerator $generator) {
         $this->database = $database;
         $this->videoManager = $videoManager;
+        $this->generator = $generator;
     }
     
     public function renderDefault() {
@@ -37,5 +41,15 @@ class ThumbnailGeneratorPresenter extends BaseSecuredPresenter {
     public function renderCreate($videoId) {
         $this->getTemplateVariables($this->getUser()->getId());
         $this->template->video = $this->videoManager->getVideoFromDB($videoId);
+        $this->template->userId = $this->getUser()->getId();
+    }
+    
+    public function actionGenerate($videoId, $userId,  $file, $hour, $minute, $second) {
+        $this->generator->generate($videoId, $userId, $file, $hour, $minute, $second); 
+        $this->template->videoId = $videoId;
+        $this->template->userId = $userId;
+        $this->template->hour = \App\StringUtils::addLeadingZero($hour, 2);
+        $this->template->minute = \App\StringUtils::addLeadingZero($minute, 2);
+        $this->template->second = \App\StringUtils::addLeadingZero($second, 2);;
     }
 }
