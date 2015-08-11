@@ -58,4 +58,8 @@ class ThumbnailGeneratorPresenter extends BaseSecuredPresenter {
         $this->flashMessage("Miniatura nastavena", "success");
         $this->redirect("ThumbnailGenerator:create", $videoId);
     }
+    
+    public function actionExportToImageEditor($inputFile) {
+        $this->redirect("ImageEditor:", $inputFile);
+    }
 }

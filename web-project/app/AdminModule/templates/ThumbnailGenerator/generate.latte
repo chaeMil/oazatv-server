@@ -6,6 +6,10 @@
     n:href="ThumbnailGenerator:useAsThumb, $videoId, 'temp/users/'.$userId.'/thumb_'.$videoId.'_'.$hour.'-'.$minute.'-'.$second.'.jpg'">
     <i class="fa fa-check use"></i>
 </a>
+<a data-confirm="Exportovat do editoru obrázků?" class="confirm"
+    n:href="ImageEditor:default 'temp/users/'.$userId.'/thumb_'.$videoId.'_'.$hour.'-'.$minute.'-'.$second.'.jpg'">
+    <i class="fa fa-pencil-square-o export"></i>
+</a>
 <img onclick="openImageViewer('{$basePath|noescape}/temp/users/{$userId|noescape}/thumb_{$videoId|noescape}_{$hour|noescape}-{$minute|noescape}-{$second|noescape}.jpg');"
      class="img-responsive thumb-clickable" 
      src="{$basePath}/temp/users/{$userId}/thumb_{$videoId}_{$hour}-{$minute}-{$second}.jpg" />
