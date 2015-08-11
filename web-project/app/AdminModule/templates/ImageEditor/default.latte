@@ -26,23 +26,89 @@
                     
                     <div class="form-group">
                         
-                        <!-- kontrast -->
-                        <label class="col-md-1 control-label text-right" for="contrast">Kontrast</label>  
-                        <div class="col-md-3">
-                            <input id="contrast" name="contrast" type="range" min="-100" max="100" step="1" value="0">
+                        <div class="row">
+                            <!-- kontrast -->
+                            <label class="col-md-1 control-label text-right" for="contrast">kontrast</label>  
+                            <div class="col-md-3">
+                                <input class="reset" id="contrast" name="contrast" type="range" min="-100" max="100" step="1" value="0">
+                            </div>
+
+                            <!-- jas -->
+                            <label class="col-md-1 control-label text-right" for="brightness">jas</label>  
+                            <div class="col-md-3">
+                                <input class="reset" id="brightness" name="brightness" type="range" min="-100" max="100" step="1" value="0">
+                            </div>
+
+                            <!-- sytost -->
+                            <label class="col-md-1 control-label text-right" for="saturation">sytost</label>  
+                            <div class="col-md-3">
+                                <input class="reset" id="saturation" name="saturation" type="range" min="-100" max="100" step="1" value="0">
+                            </div>
                         </div>
-                    
-                        <!-- jas -->
-                        <label class="col-md-1 control-label text-right" for="brightness">Jas</label>  
-                        <div class="col-md-3">
-                            <input id="brightness" name="brightness" type="range" min="-100" max="100" step="1" value="0">
+                        
+                        <br>
+                        
+                        <div class="row">
+                            <!-- živost -->
+                            <label class="col-md-1 control-label text-right" for="vibrance">živost</label>  
+                            <div class="col-md-3">
+                                <input class="reset" id="vibrance" name="vibrance" type="range" min="-100" max="100" step="1" value="0">
+                            </div>
+                            
+                            <!-- expozice -->
+                            <label class="col-md-1 control-label text-right" for="exposure">expozice</label>  
+                            <div class="col-md-3">
+                                <input class="reset" id="exposure" name="exposure" type="range" min="-100" max="100" step="1" value="0">
+                            </div>
+                            
+                            <!-- hue -->
+                            <label class="col-md-1 control-label text-right" for="hue">HUE</label>  
+                            <div class="col-md-3">
+                                <input class="reset" id="hue" name="hue" type="range" min="0" max="100" step="1" value="0">
+                            </div>
                         </div>
-                    
-                        <!-- sytost -->
-                        <label class="col-md-1 control-label text-right" for="saturation">Sytost</label>  
-                        <div class="col-md-3">
-                            <input id="saturation" name="saturation" type="range" min="-100" max="100" step="1" value="0">
+                        
+                        <br>
+                        
+                        <div class="row">
+                            <!-- sépie -->
+                            <label class="col-md-1 control-label text-right" for="sepia">sépie</label>  
+                            <div class="col-md-3">
+                                <input class="reset" id="sepia" name="sepia" type="range" min="-0" max="100" step="1" value="0">
+                            </div>
+                            
+                            <!-- gamma -->
+                            <label class="col-md-1 control-label text-right" for="gamma">gamma</label>  
+                            <div class="col-md-3">
+                                <input class="reset" id="gamma" name="gamma" type="range" min="1" max="10" step="0.1" value="0">
+                            </div>
+                            
+                            <!-- šum -->
+                            <label class="col-md-1 control-label text-right" for="noise">šum</label>  
+                            <div class="col-md-3">
+                                <input class="reset" id="noise" name="noise" type="range" min="0" max="100" step="1" value="0">
+                            </div>
                         </div>
+                        
+                        <br>
+                        
+                        <div class="row">
+                            <!-- zostřit -->
+                            <label class="col-md-1 control-label text-right" for="sharpen">zostřit</label>  
+                            <div class="col-md-3">
+                                <input class="reset" id="sharpen" name="sharpen" type="range" min="0" max="100" step="1" value="0">
+                            </div>
+                            
+                            <!-- rozmazat -->
+                            <label class="col-md-1 control-label text-right" for="stackBlur">rozmazat</label>  
+                            <div class="col-md-3">
+                                <input class="reset" id="stackBlur" name="stackBlur" type="range" min="1" max="40" step="1" value="0">
+                            </div>
+                           
+                        </div>
+                        
+                        <hr>
+                        <p>pravým kliknutím vyresetuješ posuvník</p>
                     
                     </div>
                     
@@ -59,6 +125,13 @@
 
 
 <script>  
+    
+    $('.reset').bind("contextmenu",function(e){
+        e.preventDefault();
+        $(this).val(0);
+        processImage();
+     }); 
+
     $('#contrast').on("change", function() {       
         processImage();
     });
@@ -71,14 +144,54 @@
         processImage();
     });
     
+    $('#vibrance').on("change", function() {       
+        processImage();
+    });
+    
+    $('#exposure').on("change", function() {       
+        processImage();
+    });
+    
+    $('#hue').on("change", function() {       
+        processImage();
+    });
+    
+    $('#sepia').on("change", function() {       
+        processImage();
+    });
+    
+    $('#gamma').on("change", function() {       
+        processImage();
+    });
+    
+    $('#noise').on("change", function() {       
+        processImage();
+    });
+    
+    $('#sharpen').on("change", function() {       
+        processImage();
+    });
+    
+    $('#stackBlur').on("change", function() {       
+        processImage();
+    });
+    
     function processImage() {
         $('#caman').remove();
         $('#plane').append('<img src="{$basePath|noescape}/{$inputFile|noescape}" id="caman"  class="center-block"/>');
         
         Caman("#caman", function () {
             this.contrast(($('#contrast').val() / 10) * 3);
-            this.brightness($('#brightness').val());
+            this.brightness(($('#brightness').val() / 10) * 3);
             this.saturation($('#saturation').val());
+            this.vibrance($('#vibrance').val() * 10);
+            this.exposure($('#exposure').val());
+            this.hue($('#hue').val());
+            this.gamma($('#gamma').val());
+            this.noise($('#noise').val());
+            this.sepia($('#sepia').val());
+            this.sharpen($('#sharpen').val());
+            this.stackBlur($('#stackBlur').val());
             
             this.render();
         });
