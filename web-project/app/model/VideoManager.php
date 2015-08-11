@@ -137,6 +137,15 @@ class VideoManager extends BaseModel {
         $video->update(array(self::COLUMN_ORIGINAL_FILE => "", $target => $video->original_file));
     }
     
+    public function useExternaFileAsThumb($id, $file) {
+        $video = $this->getVideoFromDB($id);
+        $this->deleteVideoFile($id, self::COLUMN_THUMB_FILE);
+        $this->deleteThumbnails($id);
+        $newThumbName = StringUtils::rand(6).".jpg";
+        copy($file, VIDEOS_FOLDER.$id."/".$newThumbName);
+        $video->update(array(self::COLUMN_THUMB_FILE => $newThumbName));        
+    }
+    
     public function addVideoToConvertQueue($id, $input, $target) {
         $this::$queueManager->addVideoToQueue($id, $input, $target);
     }

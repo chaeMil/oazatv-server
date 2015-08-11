@@ -52,4 +52,10 @@ class ThumbnailGeneratorPresenter extends BaseSecuredPresenter {
         $this->template->minute = \App\StringUtils::addLeadingZero($minute, 2);
         $this->template->second = \App\StringUtils::addLeadingZero($second, 2);;
     }
+    
+    public function actionUseAsThumb($videoId, $file) {
+        $this->videoManager->useExternaFileAsThumb($videoId, $file);
+        $this->flashMessage("Miniatura nastavena", "success");
+        $this->redirect("ThumbnailGenerator:create", $videoId);
+    }
 }
