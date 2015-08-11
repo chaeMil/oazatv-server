@@ -14,7 +14,9 @@
                 
             <hr>
             
-            <img src="{$basePath}/{$inputFile}" id="caman"  class="center-block"/>
+            <div id="plane">
+                <img src="{$basePath}/{$inputFile}" id="caman"  class="center-block"/>
+            </div>
             
             <br>
             
@@ -27,19 +29,19 @@
                         <!-- kontrast -->
                         <label class="col-md-1 control-label text-right" for="contrast">Kontrast</label>  
                         <div class="col-md-3">
-                            <input id="contrast" name="contrast" type="range" min="-100" max="100" step="1" value="0" data-filter="contrast">
+                            <input id="contrast" name="contrast" type="range" min="-100" max="100" step="1" value="0">
                         </div>
                     
                         <!-- jas -->
                         <label class="col-md-1 control-label text-right" for="brightness">Jas</label>  
                         <div class="col-md-3">
-                            <input id="brightness" name="brightness" type="range" min="-100" max="100" step="1" value="0" data-filter="brightness">
+                            <input id="brightness" name="brightness" type="range" min="-100" max="100" step="1" value="0">
                         </div>
                     
                         <!-- sytost -->
                         <label class="col-md-1 control-label text-right" for="saturation">Sytost</label>  
                         <div class="col-md-3">
-                            <input id="saturation" name="saturation" type="range" min="-100" max="100" step="1" value="0" data-filter="saturation">
+                            <input id="saturation" name="saturation" type="range" min="-100" max="100" step="1" value="0">
                         </div>
                     
                     </div>
@@ -55,16 +57,32 @@
 {block pageScripts}
 <script type="text/javascript" src="{$basePath}/admin_components/bower_components/caman/dist/caman.full.min.js"></script>
 
-<script>
-    Caman("#caman", function () {
-        
-    });
-</script>
 
-<script>
-    var contrast = $("#contrast").slider(); 
-    var brightness = $("#brightness").slider(); 
-    var saturation = $("#saturation").slider(); 
+<script>  
+    $('#contrast').on("change", function() {       
+        processImage();
+    });
+    
+    $('#brightness').on("change", function() {       
+        processImage();
+    });
+    
+    $('#saturation').on("change", function() {       
+        processImage();
+    });
+    
+    function processImage() {
+        $('#caman').remove();
+        $('#plane').append('<img src="{$basePath|noescape}/{$inputFile|noescape}" id="caman"  class="center-block"/>');
+        
+        Caman("#caman", function () {
+            this.contrast(($('#contrast').val() / 10) * 3);
+            this.brightness($('#brightness').val());
+            this.saturation($('#saturation').val());
+            
+            this.render();
+        });
+    }
 </script>
 
 {/block}
