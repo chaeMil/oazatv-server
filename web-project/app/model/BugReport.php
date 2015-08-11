@@ -59,8 +59,4 @@ class BugReport {
     public function countBugs() {
         return $this::$database->table(self::TABLE_NAME)->count("*");
     }
-    
-    public function countUnresolvedBugs() {
-        return $this::$database->table(self::TABLE_NAME)->where(self::COLUMN_SOLVED, 0)->count("*");
-    }
 }

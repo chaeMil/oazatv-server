@@ -20,16 +20,13 @@ class MainPresenter extends BaseSecuredPresenter {
     public $database;
     private $userManager;
     private $queueManager;
-    private $bugReport;
     
     function __construct(Nette\Database\Context $database,
             \App\Model\UserManager $userManager,
-            \Model\VideoConvertQueueManager $queueManager,
-            Model\BugReport $bugReport) {
+            \Model\VideoConvertQueueManager $queueManager) {
         $this->database = $database;
         $this->userManager = $userManager;
         $this->queueManager = $queueManager;
-        $this->bugReport = $bugReport;
     }
     
     function renderDefault() {
@@ -42,6 +39,5 @@ class MainPresenter extends BaseSecuredPresenter {
         
         $this->template->isConvertingVideo = $isConvertingVideo;
         $this->template->awaitingConversion = $awaitingConversion;
-        $this->template->unresolvedBugs = $this->bugReport->countUnresolvedBugs();
     }
 }
