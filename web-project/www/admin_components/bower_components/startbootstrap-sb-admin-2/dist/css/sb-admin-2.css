@@ -121,6 +121,10 @@
 .modal100 > .modal-dialog {
   width: 100% !important;
 }
+#caman {
+  max-width: 100%;
+  height: auto;
+}
 body {
   background-color: #272B30;
   padding-top: 70px;

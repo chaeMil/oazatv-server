@@ -10,7 +10,20 @@
                 <h2><span class="glyphicon glyphicon-chevron-left pull-left"></span>
                     Editor obrázků <small>{$inputFile}</small>
                 </h2>
-            </a>  
+            </a>
+                
+            <hr>
+            
+            <img src="{$basePath}/{$inputFile}" id="caman"  class="center-block"/>
+            
+            <br>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">Nástroje</div>
+                <div class="panel-body">
+                    
+                </div>
+            </div>
             
         </div>
     </div>
@@ -18,7 +31,16 @@
 {/block}
 
 {block pageScripts}
+<script type="text/javascript" src="{$basePath}/admin_components/bower_components/caman/dist/caman.full.min.js"></script>
 
+<script>
+    Caman("#caman", function () {
+        
+    });
+</script>
 
+<script>
+    $('')    
+</script>
 
 {/block}
