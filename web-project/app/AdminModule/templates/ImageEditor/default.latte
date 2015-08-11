@@ -22,6 +22,28 @@
                 <div class="panel-heading">Nástroje</div>
                 <div class="panel-body">
                     
+                    <div class="form-group">
+                        
+                        <!-- kontrast -->
+                        <label class="col-md-1 control-label text-right" for="contrast">Kontrast</label>  
+                        <div class="col-md-3">
+                            <input id="contrast" name="contrast" type="range" min="-100" max="100" step="1" value="0" data-filter="contrast">
+                        </div>
+                    
+                        <!-- jas -->
+                        <label class="col-md-1 control-label text-right" for="brightness">Jas</label>  
+                        <div class="col-md-3">
+                            <input id="brightness" name="brightness" type="range" min="-100" max="100" step="1" value="0" data-filter="brightness">
+                        </div>
+                    
+                        <!-- sytost -->
+                        <label class="col-md-1 control-label text-right" for="saturation">Sytost</label>  
+                        <div class="col-md-3">
+                            <input id="saturation" name="saturation" type="range" min="-100" max="100" step="1" value="0" data-filter="saturation">
+                        </div>
+                    
+                    </div>
+                    
                 </div>
             </div>
             
@@ -40,7 +62,9 @@
 </script>
 
 <script>
-    $('')    
+    var contrast = $("#contrast").slider(); 
+    var brightness = $("#brightness").slider(); 
+    var saturation = $("#saturation").slider(); 
 </script>
 
 {/block}
