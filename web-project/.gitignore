@@ -31,3 +31,4 @@ node_modules
 temp
 avatars
 db/videos
+db/albums

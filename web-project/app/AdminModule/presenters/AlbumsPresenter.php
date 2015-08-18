@@ -9,7 +9,9 @@
 namespace App\AdminModule;
 
 use Nette,
- Model\PhotosManager;
+ Model\PhotosManager,
+ App\StringUtils,
+ App\ImageUtils;
 
 /**
  * Description of AlbumsPresenter
@@ -44,6 +46,7 @@ class AlbumsPresenter extends BaseSecuredPresenter {
         
         $this->template->album = $album;
         $this['createAlbumForm']->setDefaults($album->toArray());
+        $this['uploadPhotos']->setDefaults(array('album_id' => $id));
     }
     
     public function renderCreateAlbum() {
@@ -51,7 +54,44 @@ class AlbumsPresenter extends BaseSecuredPresenter {
     }
     
     public function actionDeleteAlbum($id) {
+        //TODO!
+    }
+    
+    public function createComponentUploadPhotos() {
+        $form = new Nette\Application\UI\Form;
         
+        $form->addHidden('album_id');
+        
+        $form->addMultiUpload("photos", "fotky")
+                ->setRequired()
+                ->setAttribute("class", "form-control");
+        
+        $form->addSubmit("submit", "nahrát")
+                ->setAttribute("class", "btn btn-success btn-lg");
+        
+        $this->bootstrapFormRendering($form);
+        
+         $form->onSuccess[] = $this->photosUploadSuceeded;
+        
+        return $form;
+    }
+    
+    public function photosUploadSuceeded($form) {
+        $vals = $form->getValues();
+        
+        foreach($vals['photos'] as $photo) {
+            $extension = StringUtils::getExtensionFromFileName($photo->name);
+            $filename = StringUtils::rand(8);
+            $newName = ALBUMS_FOLDER.$vals['album_id']."/".$filename.".".$extension;
+            rename($photo, $newName);
+            $this->photosManager->savePhotoToDB(
+                        array(PhotosManager::COLUMN_ALBUM_ID => $vals['album_id'],
+                            PhotosManager::COLUMN_FILE => $filename.".".$extension));
+            chmod($newName, 0777);
+        }
+        
+        $this->flashMessage("Úspěšně nahráno", "success");
+        $this->redirect("Albums:albumDetail#files", $vals['album_id']);
     }
     
     public function createComponentCreateAlbumForm() {        

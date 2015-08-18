@@ -22,7 +22,7 @@ class PhotosManager {
     const
             TABLE_NAME_PHOTOS = 'db_photo_files',
             COLUMN_ID = 'id',
-            COLUMN_ALBUM_DI = 'album_id',
+            COLUMN_ALBUM_ID = 'album_id',
             COLUMN_FILE = 'file',
             COLUMN_DESCRIPTION_CS = 'description_cs',
             COLUMN_DESCRIPTION_EN = 'description_en',
@@ -80,5 +80,9 @@ class PhotosManager {
         return $this::$database->table(self::TABLE_NAME_ALBUMS)
                 ->limit($from, $count)
                 ->order($order);
+    }
+    
+    public function savePhotoToDB($values) {
+        $this::$database->table(self::TABLE_NAME_PHOTOS)->insert($values);
     }
 }
