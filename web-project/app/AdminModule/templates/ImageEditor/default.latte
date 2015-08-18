@@ -109,7 +109,7 @@
                         
                         <hr>
                         <p>pravým kliknutím vyresetuješ posuvník</p>
-                    
+                        <a id="doneButton" class="hidden btn btn-success btn pull-right" style="margin-top: -35px">hotovo</a>
                     </div>
                     
                 </div>
@@ -196,6 +196,48 @@
             this.render();
         });
     }
+    
+    function dataURItoBlob(dataURI) {
+        // convert base64/URLEncoded data component to raw binary data held in a string
+        var byteString;
+        if (dataURI.split(',')[0].indexOf('base64') >= 0)
+            byteString = atob(dataURI.split(',')[1]);
+        else
+            byteString = unescape(dataURI.split(',')[1]);
+
+        // separate out the mime component
+        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+        // write the bytes of the string to a typed array
+        var ia = new Uint8Array(byteString.length);
+        for (var i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+
+        return new Blob([ia], { type:mimeString} );
+    }
+    
+    function uploadImage() {
+        // Generate the image data
+        var pic = document.getElementById("caman").toDataURL("image/png");
+        pic = pic.replace(/^data:image\/(png|jpg);base64,/, "")
+
+        // Sending the image data to Server
+        $.ajax({
+            type: 'POST',
+            url: '',
+            data: '{ "imageData" : "' + pic + '" }',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (msg) {
+                alert("Done, Picture Uploaded.");
+            }
+        });
+    }
+    
+    $('#doneButton').on('click', function() {
+        uploadImage();
+    });
 </script>
 
 {/block}
