@@ -43,6 +43,7 @@ class AlbumsPresenter extends BaseSecuredPresenter {
         $album = $this->photosManager->getAlbumFromDB($id);
         
         $this->template->album = $album;
+        $this['createAlbumForm']->setDefaults($album->toArray());
     }
     
     public function renderCreateAlbum() {
@@ -55,6 +56,8 @@ class AlbumsPresenter extends BaseSecuredPresenter {
     
     public function createComponentCreateAlbumForm() {        
         $form = new Nette\Application\UI\Form;
+        
+        $form->addHidden("id");
         
         $published = array(
             '0' => 'Ne',
