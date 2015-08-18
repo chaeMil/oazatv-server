@@ -9,7 +9,7 @@
 namespace Model;
 
 use Nette,
- App\Model\UserManager;
+ Model\UserManager;
 
 /**
  * Description of BugReport

@@ -10,7 +10,7 @@ namespace App\AdminModule;
 
 use Nette,
     Model,
-    App\Model\UserManager,
+    Model\UserManager,
     Nette\Forms\Form,
     Model\ServerSettings;
 

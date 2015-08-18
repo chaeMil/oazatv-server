@@ -4,7 +4,7 @@ namespace App\AdminModule;
 use Nette,
     Model,
     Nette\Forms\Form,
-    App\Model\UserManager,
+    Model\UserManager,
     App\ImageUtils;
 
 /**

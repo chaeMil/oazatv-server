@@ -10,7 +10,7 @@ namespace Model;
 
 use Nette,
  Model\VideoManager,
- App\Model\UserManager;
+ Model\UserManager;
 
 /**
  * Description of ThumbnailGeneratorModel

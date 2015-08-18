@@ -4,7 +4,7 @@ namespace App\AdminModule;
 
 use Nette,
     Model,
-    App\Model\UserManager;
+    Model\UserManager;
 
 class SignPresenter extends BasePresenter {
     

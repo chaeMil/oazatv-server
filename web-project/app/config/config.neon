@@ -31,7 +31,7 @@ services:
     nette.latteFactory:
         setup:
             - setTempDirectory(null)
-    authenticator:  App\Model\UserManager
+    authenticator:  Model\UserManager
 
 constants:
     VERSION: "0.2.3 (2015-08-11)"

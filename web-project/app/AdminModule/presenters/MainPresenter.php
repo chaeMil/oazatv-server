@@ -22,7 +22,7 @@ class MainPresenter extends BaseSecuredPresenter {
     private $queueManager;
     
     function __construct(Nette\Database\Context $database,
-            \App\Model\UserManager $userManager,
+            \Model\UserManager $userManager,
             \Model\VideoConvertQueueManager $queueManager) {
         $this->database = $database;
         $this->userManager = $userManager;

@@ -9,6 +9,7 @@
 namespace App\AdminModule;
 
 use Nette,
+ Model\UserManager,
  Model\BugReport;
 
 /**
@@ -23,7 +24,7 @@ class BugReportPresenter extends BaseSecuredPresenter {
     private $userManager;
     
     function __construct(Nette\Database\Context $database, 
-            BugReport $bugReport, \App\Model\UserManager $userManager) {
+            BugReport $bugReport, UserManager $userManager) {
         parent::__construct($database);
         $this->database = $database;
         $this->bugReport = $bugReport;
