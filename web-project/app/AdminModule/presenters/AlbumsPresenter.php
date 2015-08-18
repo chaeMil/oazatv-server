@@ -16,7 +16,7 @@ use Nette,
  *
  * @author chaemil
  */
-class AlbumsPresenter {
+class AlbumsPresenter extends BaseSecuredPresenter {
     
     public $database;
     private $photosManager;
@@ -28,7 +28,7 @@ class AlbumsPresenter {
     
     public function renderList() {
         $paginator = new Nette\Utils\Paginator;
-        $paginator->setItemCount($this->photosManager->countVideos());
+        $paginator->setItemCount($this->photosManager->countAlbums());
         $paginator->setItemsPerPage(30);
         $paginator->setPage(1);
         
@@ -45,11 +45,12 @@ class AlbumsPresenter {
         $this->template->album = $album;
     }
     
-    public function createComponentVideoBasicInfoForm() {        
+    public function renderCreateAlbum() {
+        $this->getTemplateVariables($this->getUser()->getId());
+    }
+    
+    public function createComponentCreateAlbumForm() {        
         $form = new Nette\Application\UI\Form;
-        
-        $form->addHidden('id')
-                ->setRequired();
         
         $published = array(
             '0' => 'Ne',
@@ -93,6 +94,9 @@ class AlbumsPresenter {
     
     public function albumInfoSucceeded($form) {
         $vals = $form->getValues();
+        if(empty($vals['id'])) {
+            $vals['id'] = 0;
+        }
         
         $status = $this->photosManager->saveAlbumToDB($vals);
         
@@ -101,5 +105,7 @@ class AlbumsPresenter {
         } else {
             $this->flashMessage("Nic nebylo změněno", "info");
         }
+        
+        $this->redirect('Albums:detail', $vals['id']);
     }
 }

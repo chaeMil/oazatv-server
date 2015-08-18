@@ -1,0 +1,30 @@
+{block content}
+
+<div id="wrapper">
+    
+    {include ../navbar.latte}
+    
+    <div class="container">
+        <div class="row">
+            <a n:href="Main:default"> 
+                <h2><span class="glyphicon glyphicon-chevron-left pull-left"></span>Vytvořit album</h2>
+            </a>  
+            
+            {control createAlbumForm}
+                        
+        </div>
+    </div>
+    
+</div>
+{/block}
+
+{block pageScripts}
+<script>
+    $(function () {
+        $('#datepicker').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale: 'cs'
+        });
+    });
+</script>
+{/block}

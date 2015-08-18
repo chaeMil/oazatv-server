@@ -26,6 +26,7 @@ services:
     - Model\VideoConvertQueueManager
     - Model\ConversionManager
     - Model\ServerSettings
+    - Model\PhotosManager
     - App\RouterFactory
     router: @App\RouterFactory::createRouter
     nette.latteFactory:
@@ -39,4 +40,4 @@ constants:
     DB_ADMIN_PREFIX: "admin_"
     ADMIN_UPLOADED_DIR: "uploaded/"
     VIDEOS_FOLDER: "db/videos/"
-    ABLUMS_FOLDER: "db/albums"
+    ALBUMS_FOLDER: "db/albums"
