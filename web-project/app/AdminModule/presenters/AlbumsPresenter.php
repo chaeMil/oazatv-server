@@ -49,6 +49,10 @@ class AlbumsPresenter extends BaseSecuredPresenter {
         $this->getTemplateVariables($this->getUser()->getId());
     }
     
+    public function actionDeleteAlbum($id) {
+        
+    }
+    
     public function createComponentCreateAlbumForm() {        
         $form = new Nette\Application\UI\Form;
         
@@ -100,12 +104,13 @@ class AlbumsPresenter extends BaseSecuredPresenter {
         
         $status = $this->photosManager->saveAlbumToDB($vals);
         
+        
         if ($status) {
             $this->flashMessage("Změny úspěšně uloženy", "success");
         } else {
             $this->flashMessage("Nic nebylo změněno", "info");
         }
         
-        $this->redirect('Albums:detail', $vals['id']);
+        $this->redirect('Albums:albumDetail', $status);
     }
 }

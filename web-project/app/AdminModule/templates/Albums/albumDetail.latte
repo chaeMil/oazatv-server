@@ -1,0 +1,67 @@
+{block content}
+
+<div id="wrapper">
+    
+    {include ../navbar.latte}
+    
+    <div class="container-fluid">
+        <div class="row">
+            <a href="javascript:history.go(-1);"> 
+                <h2><span class="glyphicon glyphicon-chevron-left pull-left"></span>
+                    {$album->name_cs} / {$album->name_en} <small> #{$album->hash}</small>
+                </h2>
+            </a>  
+            
+        </div>
+        
+        <br>
+        
+        <div class="row">
+            
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs nav-justified">
+                <li role="presentation" class="active"><a data-toggle="tab" href="#info">Základní info</a></li>
+                <li role="presentation"><a data-toggle="tab" href="#files">Soubory</a></li>
+                <li role="presentation"><a data-toggle="tab" href="#analytics">Analytics</a></li>
+                <li role="presentation"><a data-toggle="tab" href="#delete">Smazat albums</a></li>
+                <li role="presentation"><a data-toggle="tab" href="#tools">Další nástroje</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="info">
+                    <br>
+                    {*control albumBasicInfo*}
+                </div>
+                
+                <div role="tabpanel" class="tab-pane" id="files">
+                    
+                    <br>
+                    
+                </div>
+                        
+                <div role="tabpanel" class="tab-pane" id="analytics">
+
+                </div>
+                    
+                <div role="tabpanel" class="tab-pane" id="delete">
+                    <br>
+                    <div class="text-center">
+                        <a n:href="Albums:DeleteAlbum $album->id"
+                           data-confirm="Opravdu smazat album?"
+                            class="btn btn-lg btn-danger confirm">Smazat album?</a>
+                    </div>
+                </div>
+                    
+                <div role="tabpanel" class="tab-pane" id="tools">
+                    <br>
+
+                </div>
+            </div>
+                
+        </div>
+    </div>
+    
+    
+</div>
+{/block}

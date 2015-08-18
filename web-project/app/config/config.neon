@@ -40,4 +40,4 @@ constants:
     DB_ADMIN_PREFIX: "admin_"
     ADMIN_UPLOADED_DIR: "uploaded/"
     VIDEOS_FOLDER: "db/videos/"
-    ALBUMS_FOLDER: "db/albums"
+    ALBUMS_FOLDER: "db/albums/"

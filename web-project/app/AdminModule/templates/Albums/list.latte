@@ -27,7 +27,7 @@
                 <tbody>
                     <tr n:foreach="$albums as $album" 
                         class="clickable-row {if ($album->published == 1)}active{/if}"
-                        {*data-href="{$presenter->link('Album:Detail', $album->id)}"*}>
+                        data-href="{$presenter->link('Albums:albumDetail', $album->id)}">
                         <td>{$album->id}</td>
                         <td>{$album->name_cs}</td>
                         <td>{$album->name_en}</td>
