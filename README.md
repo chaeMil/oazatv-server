@@ -29,7 +29,7 @@ including backend administration, frontend user website and json API for mobile 
     - Google Cloud Messaging integration (for use in mobile apps)
 
 ###Frontend features:
-*frontend is for now non existend (planned in future)*
+*planned in future*
 
 ##Technical breakdown
 
