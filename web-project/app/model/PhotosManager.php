@@ -118,16 +118,19 @@ class PhotosManager {
                 ->where(self::COLUMN_ID, $photoId)
                 ->fetch();
         
-        ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file, 
-                self::THUMB_2048, self::THUMB_2048, ALBUMS_FOLDER.$photo->album_id.'/thumbs/');
-        ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file, 
-                self::THUMB_1024, self::THUMB_1024, ALBUMS_FOLDER.$photo->album_id.'/thumbs/');
-        ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file, 
-                self::THUMB_512, self::THUMB_512, ALBUMS_FOLDER.$photo->album_id.'/thumbs/');
-        ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file, 
-                self::THUMB_256, self::THUMB_256, ALBUMS_FOLDER.$photo->album_id.'/thumbs/');
-        ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file, 
-                self::THUMB_128, self::THUMB_128, ALBUMS_FOLDER.$photo->album_id.'/thumbs/');
+        if (file_exists(ALBUMS_FOLDER.$photo->album_id.'/'.$photo->file)) {
+        
+            ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file, 
+                    self::THUMB_2048, self::THUMB_2048, ALBUMS_FOLDER.$photo->album_id.'/thumbs/');
+            ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file, 
+                    self::THUMB_1024, self::THUMB_1024, ALBUMS_FOLDER.$photo->album_id.'/thumbs/');
+            ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file, 
+                    self::THUMB_512, self::THUMB_512, ALBUMS_FOLDER.$photo->album_id.'/thumbs/');
+            ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file, 
+                    self::THUMB_256, self::THUMB_256, ALBUMS_FOLDER.$photo->album_id.'/thumbs/');
+            ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file, 
+                    self::THUMB_128, self::THUMB_128, ALBUMS_FOLDER.$photo->album_id.'/thumbs/');
+        }
     }
     
     public function deletePhotoThumbnails($photoId) {
@@ -136,6 +139,21 @@ class PhotosManager {
                 unlink($thumbnail);
             }
         } 
+    }
+    
+    public function deletePhoto($photoId) {
+        $photo = $this->database->table(self::TABLE_NAME_PHOTOS)
+                ->select('*')
+                ->where(self::COLUMN_ID, $photoId)
+                ->fetch();
+        
+        $this->deletePhotoThumbnails($photoId);
+        $file = ALBUMS_FOLDER.$photo->album_id."/".$photo->file;
+        if (file_exists($file)) {
+            unlink($file);
+        }
+        
+        $photo->delete();        
     }
     
     public function getPhotosFromAlbum($aldumId) {

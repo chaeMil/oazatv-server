@@ -46,7 +46,8 @@
                                 <div class="aspect-ratio ratio1-1 thumb"
                                      style="background-image: url({$basePath}/db/albums/{$photo->album_id}/thumbs/{str_replace('.jpg', '_512.jpg', $photo->file)});">
                                 
-                                    <i class="fa fa-trash delete"></i>
+                                    <i class="fa fa-trash delete" data-delete="{$basePath}/admin/albums/ajax-delete-photo?id={$photo->id}"></i>
+                                    <i class="fa fa-trash trash"></i>
                                     <i class="fa fa-undo undo"></i>
                                     <i class="fa fa-pencil-square-o edit"></i>
                                     <div class="photo-desc hidden">
@@ -111,25 +112,21 @@ if (url.match('#')) {
 // Change hash for page-reload
 $('.nav-tabs a').on('shown.bs.tab', function (e) {
     window.location.hash = e.target.hash;
-})
-
-$(function () {
-    $('#datepicker').datetimepicker({
-        format: 'YYYY-MM-DD',
-        locale: 'cs'
-    });
 });
+</script>
+
+<script>
 
 $("#photosGrid").sortable();
 
-$('.edit').each(function() {
+$('#photosGrid .edit').each(function() {
     $(this).on('click', function() {
         $(this).next().toggleClass('hidden');
     });
 });
 
-$('.delete').each(function()  {
-   $(this).on('click', function() {
+$('#photosGrid .trash').each(function()  {
+    $(this).on('click', function() {
        var photo = $(this).parent().parent();
        photo.addClass('hidden');
        photo.clone().appendTo('#trash')
@@ -138,11 +135,23 @@ $('.delete').each(function()  {
    });
 });
 
-$(document).on('click', '.undo', function() {
+$(document).on('click', '#trash .undo', function() {
     var id = $(this).parent().parent().data('id');
-    console.log(id);
     $('#photosGrid').find('[data-id=' + id + ']').removeClass('hidden');
     $(this).parent().parent().remove();
+});
+
+$(document).on('click', '#trash .delete', function() {
+    var link = $(this).data('delete');
+    var element = $(this).parent().parent();
+    bootbox.confirm("Smazat fotku?", function(result) {
+        if (result === true) {
+            $.ajax({
+                url: link
+            });
+            element.remove();
+        };
+    }); 
 });
 </script>
 {/block}

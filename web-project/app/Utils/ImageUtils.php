@@ -30,7 +30,17 @@ class ImageUtils {
         if (!empty($outputDir)) {
             $dir = $outputDir;
         }
-        $image->save($dir."/".$imagefile_without_extension.$separator.$postfix.".".$extension, 
+        
+        switch($extension) {
+            case 'jpg':
+                $image->save($dir."/".$imagefile_without_extension.$separator.$postfix.".".$extension, 
                     80, Image::JPEG);
+                break;
+            case 'png':
+                $image->save($dir."/".$imagefile_without_extension.$separator.$postfix.".".$extension, 
+                    100, Image::PNG);
+                break;
+        }
+        
     }
 }

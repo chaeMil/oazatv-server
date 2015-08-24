@@ -57,7 +57,13 @@ class AlbumsPresenter extends BaseSecuredPresenter {
     }
     
     public function actionDeleteAlbum($id) {
-        //TODO!
+        //TODO!!!
+    }
+    
+    public function actionAjaxDeletePhoto() {
+        $id = Nette\Utils\Strings::webalize($_GET['id']);
+        $this->photosManager->deletePhoto($id);
+        exit;
     }
     
     public function createComponentUploadPhotos() {
@@ -74,7 +80,7 @@ class AlbumsPresenter extends BaseSecuredPresenter {
         
         $this->bootstrapFormRendering($form);
         
-         $form->onSuccess[] = $this->photosUploadSuceeded;
+        $form->onSuccess[] = $this->photosUploadSuceeded;
         
         return $form;
     }

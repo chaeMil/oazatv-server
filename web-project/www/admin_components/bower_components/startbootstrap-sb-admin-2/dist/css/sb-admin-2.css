@@ -252,7 +252,7 @@ input[type=range]:focus::-ms-fill-upper {
   box-shadow: 0 0 8px 0 rgba(255, 255, 255, 0.7);
 }
 #photosGrid .photo:hover .edit,
-#photosGrid .photo:hover .delete {
+#photosGrid .photo:hover .trash {
   display: block;
 }
 #photosGrid .photo .thumb {
@@ -268,8 +268,9 @@ input[type=range]:focus::-ms-fill-upper {
   right: 8px;
 }
 #photosGrid .photo .edit,
-#photosGrid .photo .delete,
-#photosGrid .photo .undo {
+#photosGrid .photo .trash,
+#photosGrid .photo .undo,
+#photosGrid .photo .delete {
   display: none;
   position: absolute;
   top: 8px;
@@ -279,15 +280,16 @@ input[type=range]:focus::-ms-fill-upper {
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 #photosGrid .photo .edit:hover,
-#photosGrid .photo .delete:hover,
-#photosGrid .photo .undo:hover {
+#photosGrid .photo .trash:hover,
+#photosGrid .photo .undo:hover,
+#photosGrid .photo .delete:hover {
   color: #428bca;
   cursor: pointer;
 }
-#photosGrid .photo .delete {
+#photosGrid .photo .trash {
   right: 36px;
 }
-#photosGrid .photo .delete:hover {
+#photosGrid .photo .trash:hover {
   color: #d9534f;
 }
 #photosGrid .placeholder {
@@ -310,6 +312,9 @@ input[type=range]:focus::-ms-fill-upper {
   opacity: 1;
 }
 #trash .photo .edit {
+  display: none;
+}
+#trash .photo .trash {
   display: none;
 }
 #trash .photo .delete,

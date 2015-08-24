@@ -301,7 +301,7 @@ input[type=range]:focus::-ms-fill-upper {
 				box-shadow: 0 0 8px 0 rgba(255, 255, 255, 0.7);
 			}
 
-			.edit, .delete {
+			.edit, .trash {
 				display: block;
 			}
 		}
@@ -321,7 +321,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 		}
 
-		.edit, .delete, .undo {
+		.edit, .trash, .undo, .delete {
 			display: none;
 			position: absolute;
 			top: 8px;
@@ -336,7 +336,7 @@ input[type=range]:focus::-ms-fill-upper {
 			}
 		}
 
-		.delete {
+		.trash {
 			right: 36px;
 
 			&:hover {
@@ -369,6 +369,10 @@ input[type=range]:focus::-ms-fill-upper {
 		}
 
 		.edit {
+			display: none;
+		}
+
+		.trash {
 			display: none;
 		}
 
