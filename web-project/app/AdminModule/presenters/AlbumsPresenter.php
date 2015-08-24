@@ -57,7 +57,9 @@ class AlbumsPresenter extends BaseSecuredPresenter {
     }
     
     public function actionDeleteAlbum($id) {
-        //TODO!!!
+        $this->photosManager->deleteAlbum($id);
+        $this->flashMessage("Album smazáno", "danger");
+        $this->redirect("Albums:list");
     }
     
     public function actionUpdateAlbum($id) {

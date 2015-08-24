@@ -74,6 +74,20 @@ class PhotosManager {
         return $sql->id;
     }
     
+    public function deleteAlbum($id) {
+        $album = $this->database->table(self::TABLE_NAME_ALBUMS)
+                ->get($id);
+        
+        $photos = $this->database->table(self::TABLE_NAME_PHOTOS)
+                ->select('*')
+                ->where(self::COLUMN_ALBUM_ID, $id);
+        
+        FileUtils::recursiveDelete(ALBUMS_FOLDER.$id);
+        
+        $photos->delete();
+        $album->delete();
+    }
+    
     public function getAlbumFromDB($id) {
         return $this->database->table(self::TABLE_NAME_ALBUMS)
                 ->select("*")->where(self::COLUMN_ID, $id)->fetch();
