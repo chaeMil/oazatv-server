@@ -21,6 +21,7 @@
     "eonasdan-bootstrap-datetimepicker": "~4.15.35",
     "resumablejs": "~1.0.2",
     "bootbox": "~4.4.0",
-    "caman": "~4.1.2"
+    "caman": "~4.1.2",
+    "jquery-sortable": "~0.9.13"
   }
 }

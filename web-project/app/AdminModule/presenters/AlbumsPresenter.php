@@ -45,8 +45,11 @@ class AlbumsPresenter extends BaseSecuredPresenter {
         $album = $this->photosManager->getAlbumFromDB($id);
         
         $this->template->album = $album;
+        $this->template->photos = $this->photosManager->getPhotosFromAlbum($id);
+        $this->template->photosManager = $this->photosManager;
         $this['createAlbumForm']->setDefaults($album->toArray());
         $this['uploadPhotos']->setDefaults(array('album_id' => $id));
+        
     }
     
     public function renderCreateAlbum() {
@@ -79,6 +82,8 @@ class AlbumsPresenter extends BaseSecuredPresenter {
     public function photosUploadSuceeded($form) {
         $vals = $form->getValues();
         
+        $order = $this->photosManager->getAlbumMaxOrderNumber($vals['album_id']);
+        
         foreach($vals['photos'] as $photo) {
             $extension = StringUtils::getExtensionFromFileName($photo->name);
             $filename = StringUtils::rand(8);
@@ -86,8 +91,10 @@ class AlbumsPresenter extends BaseSecuredPresenter {
             rename($photo, $newName);
             $this->photosManager->savePhotoToDB(
                         array(PhotosManager::COLUMN_ALBUM_ID => $vals['album_id'],
-                            PhotosManager::COLUMN_FILE => $filename.".".$extension));
+                            PhotosManager::COLUMN_FILE => $filename.".".$extension,
+                            PhotosManager::COLUMN_ORDER => $order));
             chmod($newName, 0777);
+            $order++;
         }
         
         $this->flashMessage("Úspěšně nahráno", "success");

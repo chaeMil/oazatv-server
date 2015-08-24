@@ -252,3 +252,29 @@ input[type=range]:focus::-ms-fill-lower {
 input[type=range]:focus::-ms-fill-upper {
   background: #6e7987;
 }
+
+.aspect-ratio {
+    width: 100%;
+    background-size: cover;
+    position: relative;
+    display: inline-block;
+}
+.aspect-ratio:before {
+    content: '';
+    display: block;
+}
+.ratio1-1:before {
+    padding-top: 100%;
+}
+
+.ratio2-1:before {
+    padding-top: 50%;
+}
+
+.ratio4-3:before {
+    padding-top: 75%;
+}
+
+.ratio16-9:before {
+    padding-top: 56.25%;
+}
