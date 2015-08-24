@@ -61,7 +61,24 @@ class AlbumsPresenter extends BaseSecuredPresenter {
     }
     
     public function actionUpdateAlbum($id) {
-        
+        foreach($_POST as $key => $value) {
+            if (strpos($key, 'cs') !== FALSE) {
+                $photoId = substr($key, 0, strpos($key, '_'));
+                $descCs = $value;
+                $descEn = $_POST[str_replace('cs', 'en', $key)];
+                $order = $_POST[$photoId.'_order'];
+                $this->photosManager
+                        ->updatePhotoInDB(array(PhotosManager::COLUMN_DESCRIPTION_CS => $descCs,
+                            PhotosManager::COLUMN_DESCRIPTION_EN => $descEn,
+                            PhotosManager::COLUMN_ID => $photoId,
+                            PhotosManager::COLUMN_ORDER => $order));
+            } else {
+                continue;
+            }
+            
+        }
+        $this->flashMessage("Změny uloženy", "success");
+        $this->redirect('Albums:albumDetail#files', $id);
     }
     
     public function actionAjaxDeletePhoto() {

@@ -93,6 +93,12 @@ class PhotosManager {
         $this->database->table(self::TABLE_NAME_PHOTOS)->insert($values);
     }
     
+    public function updatePhotoInDB($values) {
+        $photo = $this->database->table(self::TABLE_NAME_PHOTOS)
+                ->get($values['id']);
+        $photo->update($values);
+    }
+    
     public function getPhotoFromDB($id) {
         return $this->database->table(self::TABLE_NAME_PHOTOS)
                 ->select("*")->where(self::COLUMN_ID, $id)->fetch();
@@ -159,6 +165,7 @@ class PhotosManager {
     public function getPhotosFromAlbum($aldumId) {
         return $this->database->table(self::TABLE_NAME_PHOTOS)
                 ->select('*')
+                ->order(self::COLUMN_ORDER, "ASC")
                 ->where(self::COLUMN_ALBUM_ID, $aldumId);
     }
     

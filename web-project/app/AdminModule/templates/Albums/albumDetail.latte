@@ -61,6 +61,10 @@
                                             placeholder="anglický popis"
                                             type="text" 
                                             value="{$photo->description_en}">
+                                        <input class="orderInput"
+                                               type="hidden"
+                                               name="{$photo->id}_order"
+                                               value="{$photo->order}">
                                     </div>
                                 </div>
                             </li>
@@ -156,17 +160,26 @@ $(document).on('click', '#trash .delete', function() {
     }); 
 });
 
+function submitChanges() {
+    var order = 0;
+    $('#photosGrid .orderInput').each(function() {
+        $(this).val(order);
+        order++;
+    });
+    $('#photosForm').submit();
+}
+
 $(document).on('click', '#submitChanges', function(e) {
    e.preventDefault();
    var trashCount = $("#trash").children().length;
    if (trashCount != 0) {
        bootbox.confirm("V koši jsou nesmazané fotky. <br>Při odeslání změn budou tyto obnoveny. <br><br>Pokračovat?", function(result) {
            if (result) {
-               $('#photosForm').submit();
+               submitChanges();
            }
        });
    } else {
-       $('#photosForm').submit();
+       submitChanges();
    }
 });
 </script>
