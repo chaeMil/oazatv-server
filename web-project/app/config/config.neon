@@ -35,7 +35,7 @@ services:
     authenticator:  Model\UserManager
 
 constants:
-    VERSION: "0.3 (2015-08-19)"
+    VERSION: "0.3.1 (2015-08-24)"
     DB_PREFIX: ""
     DB_ADMIN_PREFIX: "admin_"
     ADMIN_UPLOADED_DIR: "uploaded/"
