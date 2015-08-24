@@ -39,12 +39,38 @@
                     {control uploadPhotos}
                     <hr>
                     
-                    <ul id="photosGrid" class="row">
-                        <li n:foreach="$photos as $photo" class="photo col-xs-4">
-                            {var $temp = $photosManager->getPhotoThumbnails($photo->id)}
-                            <div class="aspect-ratio ratio1-1 thumb"
-                                 style="background-image: url({$basePath}/db/albums/{$photo->album_id}/thumbs/{str_replace('.jpg', '_512.jpg', $photo->file)});"></div>
-                        </li>
+                    <form action="" method="post">
+                        <ul id="photosGrid" class="row">
+                            <li n:foreach="$photos as $photo" class="photo col-xs-4" data-id="{$photo->id}">
+                                {var $temp = $photosManager->getPhotoThumbnails($photo->id)}
+                                <div class="aspect-ratio ratio1-1 thumb"
+                                     style="background-image: url({$basePath}/db/albums/{$photo->album_id}/thumbs/{str_replace('.jpg', '_512.jpg', $photo->file)});">
+                                
+                                    <i class="fa fa-trash delete"></i>
+                                    <i class="fa fa-undo undo"></i>
+                                    <i class="fa fa-pencil-square-o edit"></i>
+                                    <div class="photo-desc hidden">
+                                        <input class="form-control"
+                                            name="{$photo->id}_description_cs" 
+                                            placeholder="český popis"
+                                            type="text" 
+                                            value="{$photo->description_cs}">
+                                        <input class="form-control"
+                                            name="{$photo->id}_description_en" 
+                                            placeholder="anglický popis"
+                                            type="text" 
+                                            value="{$photo->description_en}">
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </form>
+                                    
+                    <hr>
+                    
+                    <h3>Smazat tyto fotky: </h3>
+                    <br>
+                    <ul id="trash" class="row">
                     </ul>
                 </div>
                         
@@ -94,7 +120,29 @@ $(function () {
     });
 });
 
-
 $("#photosGrid").sortable();
+
+$('.edit').each(function() {
+    $(this).on('click', function() {
+        $(this).next().toggleClass('hidden');
+    });
+});
+
+$('.delete').each(function()  {
+   $(this).on('click', function() {
+       var photo = $(this).parent().parent();
+       photo.addClass('hidden');
+       photo.clone().appendTo('#trash')
+               .removeClass('hidden')
+               .addClass('col-xs-2');
+   });
+});
+
+$(document).on('click', '.undo', function() {
+    var id = $(this).parent().parent().data('id');
+    console.log(id);
+    $('#photosGrid').find('[data-id=' + id + ']').removeClass('hidden');
+    $(this).parent().parent().remove();
+});
 </script>
 {/block}

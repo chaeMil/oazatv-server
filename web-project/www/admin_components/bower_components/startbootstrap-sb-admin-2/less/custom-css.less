@@ -281,30 +281,137 @@ input[type=range]:focus::-ms-fill-upper {
 
 #photosGrid {
 	list-style-type: none;
+
+	.photo {
+		margin-bottom: 26px;
+
+		&.dragged {
+			position: absolute;
+			z-index: 100;
+
+			.thumb {
+				box-shadow: 0 0 30px 0 rgba(0,0,0,0.8);
+			}
+		}
+
+		&:hover {
+			cursor: move;
+
+			.thumb {
+				box-shadow: 0 0 8px 0 rgba(255, 255, 255, 0.7);
+			}
+
+			.edit, .delete {
+				display: block;
+			}
+		}
+
+		.thumb {
+			background-size: contain;
+			background-position: center center;
+			background-color: @gray-darker;
+			background-repeat: no-repeat;
+			
+			.photo-desc {
+				position: absolute;
+				bottom: 8px;
+				left: 8px;
+				right: 8px;
+			}
+
+		}
+
+		.edit, .delete, .undo {
+			display: none;
+			position: absolute;
+			top: 8px;
+			right: 8px;
+			font-size: 20px;
+			color: white;
+			text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+
+			&:hover {
+				color: @brand-primary;
+				cursor: pointer;
+			}
+		}
+
+		.delete {
+			right: 36px;
+
+			&:hover {
+				color: @brand-danger;
+			}
+		}
+	}
+
+	.placeholder {
+		width: 33.333%;
+		float: left;
+
+		&:before {
+			content: '';
+		    display: block;
+		    padding-top: 100%;
+		}
+	}
 }
 
-#photosGrid .photo {
-	margin-bottom: 26px;
-}
+#trash {
+	list-style-type: none;
 
-#photosGrid .photo .thumb {
-	background-size: contain;
-	background-position: center center;
-	background-color: black;
-	background-repeat: no-repeat;
-}
+	.photo {
+		margin-bottom: 26px;
+		opacity: 0.4;
 
-#photosGrid .photo.dragged {
-	position: absolute;
-}
+		&:hover {
+			opacity: 1;
+		}
 
-#photosGrid .placeholder {
-	width: 33.333%;
-	float: left;
-}
+		.edit {
+			display: none;
+		}
 
-#photosGrid .placeholder:before {
-    content: '';
-    display: block;
-    padding-top: 100%;
+		.delete, .undo {
+			display: none;
+			position: absolute;
+			top: 8px;
+			right: 8px;
+			font-size: 20px;
+			color: white;
+			text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+
+			&:hover {
+				color: @brand-primary;
+				cursor: pointer;
+			}
+		}
+
+		.delete {
+			right: 36px;
+
+			&:hover {
+				color: @brand-danger;
+			}
+		}
+
+		.thumb {
+			background-size: contain;
+			background-position: center center;
+			background-color: @gray-darker;
+			background-repeat: no-repeat;
+
+		}
+
+		&:hover {
+
+			.thumb {
+				box-shadow: 0 0 8px 0 rgba(255, 255, 255, 0.7);
+			}
+
+			.delete, .undo {
+				display: block;
+			}
+		}
+	}
 }

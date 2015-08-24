@@ -238,14 +238,57 @@ input[type=range]:focus::-ms-fill-upper {
 #photosGrid .photo {
   margin-bottom: 26px;
 }
+#photosGrid .photo.dragged {
+  position: absolute;
+  z-index: 100;
+}
+#photosGrid .photo.dragged .thumb {
+  box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.8);
+}
+#photosGrid .photo:hover {
+  cursor: move;
+}
+#photosGrid .photo:hover .thumb {
+  box-shadow: 0 0 8px 0 rgba(255, 255, 255, 0.7);
+}
+#photosGrid .photo:hover .edit,
+#photosGrid .photo:hover .delete {
+  display: block;
+}
 #photosGrid .photo .thumb {
   background-size: contain;
   background-position: center center;
-  background-color: black;
+  background-color: #222222;
   background-repeat: no-repeat;
 }
-#photosGrid .photo.dragged {
+#photosGrid .photo .thumb .photo-desc {
   position: absolute;
+  bottom: 8px;
+  left: 8px;
+  right: 8px;
+}
+#photosGrid .photo .edit,
+#photosGrid .photo .delete,
+#photosGrid .photo .undo {
+  display: none;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 20px;
+  color: white;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+#photosGrid .photo .edit:hover,
+#photosGrid .photo .delete:hover,
+#photosGrid .photo .undo:hover {
+  color: #428bca;
+  cursor: pointer;
+}
+#photosGrid .photo .delete {
+  right: 36px;
+}
+#photosGrid .photo .delete:hover {
+  color: #d9534f;
 }
 #photosGrid .placeholder {
   width: 33.333%;
@@ -255,6 +298,53 @@ input[type=range]:focus::-ms-fill-upper {
   content: '';
   display: block;
   padding-top: 100%;
+}
+#trash {
+  list-style-type: none;
+}
+#trash .photo {
+  margin-bottom: 26px;
+  opacity: 0.4;
+}
+#trash .photo:hover {
+  opacity: 1;
+}
+#trash .photo .edit {
+  display: none;
+}
+#trash .photo .delete,
+#trash .photo .undo {
+  display: none;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 20px;
+  color: white;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+#trash .photo .delete:hover,
+#trash .photo .undo:hover {
+  color: #428bca;
+  cursor: pointer;
+}
+#trash .photo .delete {
+  right: 36px;
+}
+#trash .photo .delete:hover {
+  color: #d9534f;
+}
+#trash .photo .thumb {
+  background-size: contain;
+  background-position: center center;
+  background-color: #222222;
+  background-repeat: no-repeat;
+}
+#trash .photo:hover .thumb {
+  box-shadow: 0 0 8px 0 rgba(255, 255, 255, 0.7);
+}
+#trash .photo:hover .delete,
+#trash .photo:hover .undo {
+  display: block;
 }
 body {
   background-color: #272B30;
