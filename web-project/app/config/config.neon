@@ -41,3 +41,4 @@ constants:
     ADMIN_UPLOADED_DIR: "uploaded/"
     VIDEOS_FOLDER: "db/videos/"
     ALBUMS_FOLDER: "db/albums/"
+    USER_TEMP_FOLDER: "temp/users/"
