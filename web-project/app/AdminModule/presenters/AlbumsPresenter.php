@@ -60,6 +60,10 @@ class AlbumsPresenter extends BaseSecuredPresenter {
         //TODO!!!
     }
     
+    public function actionUpdateAlbum($id) {
+        
+    }
+    
     public function actionAjaxDeletePhoto() {
         $id = Nette\Utils\Strings::webalize($_GET['id']);
         $this->photosManager->deletePhoto($id);

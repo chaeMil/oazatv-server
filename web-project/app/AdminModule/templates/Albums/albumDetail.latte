@@ -39,7 +39,7 @@
                     {control uploadPhotos}
                     <hr>
                     
-                    <form action="" method="post">
+                    <form action="{plink Albums:updateAlbum, $album->id}" id="photosForm" method="post">
                         <ul id="photosGrid" class="row">
                             <li n:foreach="$photos as $photo" class="photo col-xs-4" data-id="{$photo->id}">
                                 {var $temp = $photosManager->getPhotoThumbnails($photo->id)}
@@ -65,6 +65,8 @@
                                 </div>
                             </li>
                         </ul>
+                                    
+                        <button id="submitChanges" type="submit" class="btn btn-success">uložit změny</button>
                     </form>
                                     
                     <hr>
@@ -152,6 +154,20 @@ $(document).on('click', '#trash .delete', function() {
             element.remove();
         };
     }); 
+});
+
+$(document).on('click', '#submitChanges', function(e) {
+   e.preventDefault();
+   var trashCount = $("#trash").children().length;
+   if (trashCount != 0) {
+       bootbox.confirm("V koši jsou nesmazané fotky. <br>Při odeslání změn budou tyto obnoveny. <br><br>Pokračovat?", function(result) {
+           if (result) {
+               $('#photosForm').submit();
+           }
+       });
+   } else {
+       $('#photosForm').submit();
+   }
 });
 </script>
 {/block}
