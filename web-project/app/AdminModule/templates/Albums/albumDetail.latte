@@ -40,10 +40,10 @@
                     <hr>
                     
                     <ul id="photosGrid" class="row">
-                        <li n:foreach="$photos as $photo" class="photo col-xl-1 col-lg-2 col-md-3 col-sm-4 col-xs-6">
-                            {var photoThumbs = $photosManager->getPhotoThumbnails($photo->id)}
-                            <div class="aspect-ratio ratio1-1"
-                                 style="background-image: url({$basePath}/);"></div>
+                        <li n:foreach="$photos as $photo" class="photo col-xs-4">
+                            {var $temp = $photosManager->getPhotoThumbnails($photo->id)}
+                            <div class="aspect-ratio ratio1-1 thumb"
+                                 style="background-image: url({$basePath}/db/albums/{$photo->album_id}/thumbs/{str_replace('.jpg', '_512.jpg', $photo->file)});"></div>
                         </li>
                     </ul>
                 </div>
@@ -93,5 +93,8 @@ $(function () {
         locale: 'cs'
     });
 });
+
+
+$("#photosGrid").sortable();
 </script>
 {/block}

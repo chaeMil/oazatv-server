@@ -278,3 +278,33 @@ input[type=range]:focus::-ms-fill-upper {
 .ratio16-9:before {
     padding-top: 56.25%;
 }
+
+#photosGrid {
+	list-style-type: none;
+}
+
+#photosGrid .photo {
+	margin-bottom: 26px;
+}
+
+#photosGrid .photo .thumb {
+	background-size: contain;
+	background-position: center center;
+	background-color: black;
+	background-repeat: no-repeat;
+}
+
+#photosGrid .photo.dragged {
+	position: absolute;
+}
+
+#photosGrid .placeholder {
+	width: 33.333%;
+	float: left;
+}
+
+#photosGrid .placeholder:before {
+    content: '';
+    display: block;
+    padding-top: 100%;
+}
