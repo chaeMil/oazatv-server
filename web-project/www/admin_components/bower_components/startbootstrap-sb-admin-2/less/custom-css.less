@@ -301,7 +301,7 @@ input[type=range]:focus::-ms-fill-upper {
 				box-shadow: 0 0 8px 0 rgba(255, 255, 255, 0.7);
 			}
 
-			.edit, .trash {
+			.edit, .trash, .cover {
 				display: block;
 			}
 		}
@@ -337,7 +337,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 		}
 
-		.edit, .trash, .undo, .delete {
+		.edit, .trash, .undo, .delete, .cover {
 			display: none;
 			position: absolute;
 			top: 8px;
@@ -350,6 +350,20 @@ input[type=range]:focus::-ms-fill-upper {
 				color: @brand-primary;
 				cursor: pointer;
 			}
+		}
+
+
+		.cover {
+			left: 8px;
+			width: 25px;
+
+			&:hover {
+				color: @brand-info;
+			}
+		}
+
+		.cover.active {
+			display: block;
 		}
 
 		.trash {

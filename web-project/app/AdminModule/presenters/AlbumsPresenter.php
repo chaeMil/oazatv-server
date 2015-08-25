@@ -84,6 +84,13 @@ class AlbumsPresenter extends BaseSecuredPresenter {
         exit;
     }
     
+    public function actionAjaxSetAlbumCover($albumId, $photoId) {
+        $album = $this->photosManager->getAlbumFromDB($albumId);
+        $album->update(array(PhotosManager::COLUMN_COVER_PHOTO_ID => $photoId));
+        dump($album);
+        exit;
+    }
+    
     public function createComponentUploadPhotos() {
         $form = new Nette\Application\UI\Form;
         

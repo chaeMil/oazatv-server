@@ -49,6 +49,7 @@
                                     <i class="fa fa-trash delete" data-delete="{$basePath}/admin/albums/ajax-delete-photo?id={$photo->id}"></i>
                                     <i class="fa fa-trash trash"></i>
                                     <i class="fa fa-undo undo"></i>
+                                    <i class="fa {if ($album->cover_photo_id == $photo->id)}fa-bookmark active{else}fa-bookmark-o{/if} cover" data-photo-id="{$photo->id}"></i>
                                     <i class="fa fa-pencil-square-o edit"></i>
                                     <div class="photo-desc hidden">
                                         <input class="form-control"
@@ -192,6 +193,20 @@ $(document).on('click', '#submitChanges', function(e) {
    } else {
        submitChanges();
    }
+});
+
+function setCoverPhoto(id) {
+    bootbox.confirm("Nastavit jako úvodní fotku alba?", function(result) {
+           if (result) {
+                $.ajax({
+                    url: {plink Albums:ajaxSetAlbumCover} + '?photoId=' + id + '&albumId=' + {$album->id}
+                });
+           }
+       });
+}
+
+$('#photosGrid .cover').click(function() {
+    setCoverPhoto($(this).data('photo-id'));
 });
 </script>
 {/block}

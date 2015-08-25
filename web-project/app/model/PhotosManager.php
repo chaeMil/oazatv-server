@@ -33,6 +33,7 @@ class PhotosManager {
             COLUMN_PUBLISHED = 'published',
             COLUMN_NAME_EN = 'name_en',
             COLUMN_NAME_CS = 'name_cs',
+            COLUMN_COVER_PHOTO_ID = 'cover_photo_id',
             COLUMN_DATE = 'date',
             COLUMN_DAYS = 'days',
             THUMB_2048 = 2048,
