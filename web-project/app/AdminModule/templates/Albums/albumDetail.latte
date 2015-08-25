@@ -204,13 +204,13 @@ $('#photosGrid .cover').click(function() {
     var element = $(this);
     bootbox.confirm("Nastavit jako úvodní fotku alba?", function(result) {
         if (result) {
-             $.ajax({
-                 url: {plink Albums:ajaxSetAlbumCover} + '?photoId=' + id + '&albumId=' + {$album->id}
-             });
-             $('.cover.active').each(function() {
-                 $(this).removeClass('active fa-bookmark').addClass('fa-bookmark-o');
-             });
-             element.addClass('active fa-bookmark').removeClass('fa-bookmark-o');
+            $.ajax({
+                url: {plink Albums:ajaxSetAlbumCover} + '?photoId=' + id + '&albumId=' + {$album->id}
+            });
+            $('.cover.active').each(function() {
+                $(this).removeClass('active fa-bookmark').addClass('fa-bookmark-o');
+            });
+            element.addClass('active fa-bookmark').removeClass('fa-bookmark-o');
         }
     });
 });

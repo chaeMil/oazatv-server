@@ -13,7 +13,8 @@ use Nette,
  App\Constants,
  Model\VideoManager,
  App\StringUtils,
-Nette\Utils\Strings;
+ Nette\Utils\Strings,
+ App\EventLogger;
 
 /**
  * Description of UploadPresenter
@@ -114,6 +115,9 @@ class UploadPresenter extends BaseSecuredPresenter {
         
         $insertedId = $this->videoManager->saveVideoToDB($values);
         
+        EventLogger::log('user '.$this->getUser()->getIdentity()->login.' added new video '.$insertedId, 
+                EventLogger::ACTIONS_LOG);
+        
         $this->flashMessage("Video uloženo v DB", "success");
         $this->flashMessage("Zbyvá nahrát soubory pro zpracování", "info");
         $this->redirect("Video:detail#files", array("id" => $insertedId));
@@ -133,6 +137,9 @@ class UploadPresenter extends BaseSecuredPresenter {
                         array("id" => $videoId, 
                     "original_file" => $videoname.".".$extension));
         }
+        
+        EventLogger::log('user '.$this->getUser()->getIdentity()->login.' uploaded new original file to video '.$videoId, 
+                EventLogger::ACTIONS_LOG);
         
         $this->flashMessage("Soubor byl úspěšně nahrán.", 'success');
         $this->redirect('Video:detail#files', $_GET['id']);

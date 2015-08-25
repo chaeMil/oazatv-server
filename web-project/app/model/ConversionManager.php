@@ -11,7 +11,8 @@ namespace Model;
 use Nette,
  Model\ServerSettings,
  Model\VideoConvertQueueManager,
- Model\VideoManager;
+ Model\VideoManager,
+ App\EventLogger;
 
 /**
  * Description of ConversionManager
@@ -117,6 +118,9 @@ class ConversionManager {
         
         //dump($CONVcommand);
         //echo $CONVcommand;
+        
+        EventLogger::log('conversion of '.$CONVinput. ' to '.$CONVtarget.' started', 
+                EventLogger::CONVERSION_LOG);
         shell_exec($CONVcommand);
     }
     

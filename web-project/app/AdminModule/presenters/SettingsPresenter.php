@@ -12,7 +12,8 @@ use Nette,
     Model,
     Model\UserManager,
     Nette\Forms\Form,
-    Model\ServerSettings;
+    Model\ServerSettings,
+    App\EventLogger;
 
 /**
  * Description of SettingsPresenter
@@ -50,6 +51,10 @@ class SettingsPresenter extends BaseSecuredPresenter {
                 ->fetch();
         $this->flashMessage("Uživatel '".$user->login."' byl smazán", "warning");
         $this->userManager->delete($user_id);
+        
+        EventLogger::log('user '.$this->getUser()->getIdentity()->login.' deleted user '. $user->login, 
+                EventLogger::ACTIONS_LOG);
+        
         $this->redirect("Settings:default");
     }
     
@@ -83,6 +88,10 @@ class SettingsPresenter extends BaseSecuredPresenter {
     public function addUserSucceeded($form) {
         $vals = $form->getValues();
         if ($this->userManager->add($vals->userName, $vals->pass) == true) {
+            
+            EventLogger::log('user '.$this->getUser()->getIdentity()->login.' added user '. $vals->userName, 
+                EventLogger::ACTIONS_LOG);
+            
             $this->flashMessage("Uživatel '" . $vals->userName . "' úspěšně přidán", "info");
             $this->redirect("Settings:default");
         } else {
@@ -119,6 +128,9 @@ class SettingsPresenter extends BaseSecuredPresenter {
         foreach($values as $value) {
             $key = array_search ($value, $values);
             $this->settings->saveValue($key, $value);
+            
+            EventLogger::log('user '.$this->getUser()->getIdentity()->login.' set server variable '.$key.'='.$value, 
+                EventLogger::ACTIONS_LOG);
         }
         
         $this->flashMessage("Nastavení uložena", "success");
@@ -179,6 +191,9 @@ class SettingsPresenter extends BaseSecuredPresenter {
         
         $this->settings->saveValue($values->key, $values->value);
         
+        EventLogger::log('user '.$this->getUser()->getIdentity()->login.' set server variable '.$values->key.'='.$values->value, 
+                EventLogger::ACTIONS_LOG);
+        
         $this->flashMessage("Hodnota uložena", "success");
         $this->redirect("Settings:");
     }
@@ -187,6 +202,9 @@ class SettingsPresenter extends BaseSecuredPresenter {
         $values = $form->getValues();
         
         if ($values->delete != "") {
+            EventLogger::log('user '.$this->getUser()->getIdentity()->login.' deleted server variable '.$values->delete, 
+                EventLogger::ACTIONS_LOG);
+            
             $this->settings->deleteKey($values->delete);
             $this->flashMessage("Klíč smazán", "danger");
         }

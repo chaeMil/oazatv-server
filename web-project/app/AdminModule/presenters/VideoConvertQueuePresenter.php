@@ -11,7 +11,8 @@ namespace App\AdminModule;
 use Nette,
  Model\VideoConvertQueueManager,
  Model\VideoManager,
- Model\ConversionManager;
+ Model\ConversionManager,
+ App\EventLogger;
 
 /**
  * Description of VideoConvertQueuePresenter
@@ -66,6 +67,9 @@ class VideoConvertQueuePresenter extends BaseSecuredPresenter {
             $this->flashMessage("Nelze odebrat právě se konvertuje!", "warning");
             $this->redirect("VideoConvertQueue:");
         } else {
+            EventLogger::log('user '.$this->getUser()->getIdentity()->login.' removed video '.$queueItem->video_id.' from convert queue', 
+                EventLogger::CONVERSION_LOG);
+            
             $this->queueManager->removeFromQueue($id);
             $this->flashMessage("Úspěšně odebráno", "success");
             $this->redirect("VideoConvertQueue:");

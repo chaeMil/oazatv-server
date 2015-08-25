@@ -4,7 +4,8 @@ namespace App\AdminModule;
 
 use Nette,
     Model,
-    Model\UserManager;
+    Model\UserManager,
+    App\EventLogger;
 
 class SignPresenter extends BasePresenter {
     
@@ -63,6 +64,8 @@ class SignPresenter extends BasePresenter {
                 )
             );
             
+            EventLogger::log('user '.$values->username.' logged in', EventLogger::AUTH_LOG);
+            
             $this->redirect(':Admin:Main:');
         } catch (Nette\Security\AuthenticationException $e) {
             $form->addError($e->getMessage());
@@ -73,6 +76,7 @@ class SignPresenter extends BasePresenter {
         $this->userManager->emptyUserTempFolder($this->getUser()->getId());
         $this->getUser()->logout();
         $this->flashMessage('You have been signed out.');
+        EventLogger::log('user '.$values->username.' logged out', EventLogger::AUTH_LOG);
         $this->redirect('Sign:in');
     }
 

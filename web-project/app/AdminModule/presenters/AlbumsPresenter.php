@@ -11,7 +11,8 @@ namespace App\AdminModule;
 use Nette,
  Model\PhotosManager,
  App\StringUtils,
- App\ImageUtils;
+ App\ImageUtils,
+ App\EventLogger;
 
 /**
  * Description of AlbumsPresenter
@@ -53,6 +54,10 @@ class AlbumsPresenter extends BaseSecuredPresenter {
     
     public function actionDeleteAlbum($id) {
         $this->photosManager->deleteAlbum($id);
+        
+        EventLogger::log('user '.$this->getUser()->getIdentity()->login.' deleted album '. $id, 
+                EventLogger::ACTIONS_LOG);
+        
         $this->flashMessage("Album smazáno", "danger");
         $this->redirect("Albums:list");
     }
@@ -74,6 +79,10 @@ class AlbumsPresenter extends BaseSecuredPresenter {
             }
             
         }
+        
+        EventLogger::log('user '.$this->getUser()->getIdentity()->login.' updated album '. $id, 
+                EventLogger::ACTIONS_LOG);
+        
         $this->flashMessage("Změny uloženy", "success");
         $this->redirect('Albums:albumDetail#files', $id);
     }
@@ -81,13 +90,20 @@ class AlbumsPresenter extends BaseSecuredPresenter {
     public function actionAjaxDeletePhoto() {
         $id = Nette\Utils\Strings::webalize($_GET['id']);
         $this->photosManager->deletePhoto($id);
+        
+        EventLogger::log('user '.$this->getUser()->getIdentity()->login.' deleted photo '. $id, 
+                EventLogger::ACTIONS_LOG);
+                
         exit;
     }
     
     public function actionAjaxSetAlbumCover($albumId, $photoId) {
         $album = $this->photosManager->getAlbumFromDB($albumId);
         $album->update(array(PhotosManager::COLUMN_COVER_PHOTO_ID => $photoId));
-        dump($album);
+        
+        EventLogger::log('user '.$this->getUser()->getIdentity()->login.' changed album: '.$albumId. ' cover photo: '. $photoId, 
+                EventLogger::ACTIONS_LOG);
+        
         exit;
     }
     
@@ -115,6 +131,7 @@ class AlbumsPresenter extends BaseSecuredPresenter {
         
         $order = $this->photosManager->getAlbumMaxOrderNumber($vals['album_id']);
         
+        $count = 0;
         foreach($vals['photos'] as $photo) {
             $extension = StringUtils::getExtensionFromFileName($photo->name);
             $filename = StringUtils::rand(8);
@@ -126,7 +143,11 @@ class AlbumsPresenter extends BaseSecuredPresenter {
                             PhotosManager::COLUMN_ORDER => $order));
             chmod($newName, 0777);
             $order++;
+            $count++;
         }
+        
+        EventLogger::log('user '.$this->getUser()->getIdentity()->login.' uploaded '.$count.' photos to album: '.$vals['album_id'], 
+                EventLogger::ACTIONS_LOG);
         
         $this->flashMessage("Úspěšně nahráno", "success");
         $this->redirect("Albums:albumDetail#files", $vals['album_id']);
@@ -194,9 +215,13 @@ class AlbumsPresenter extends BaseSecuredPresenter {
         
         if ($status) {
             $this->flashMessage("Změny úspěšně uloženy", "success");
+            
+            EventLogger::log('user '.$this->getUser()->getIdentity()->login.' updated album '. $id, 
+                EventLogger::ACTIONS_LOG);
         } else {
             $this->flashMessage("Nic nebylo změněno", "info");
         }
+        
         
         $this->redirect('Albums:albumDetail', $status);
     }
