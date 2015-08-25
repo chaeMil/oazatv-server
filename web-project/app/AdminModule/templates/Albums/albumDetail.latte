@@ -196,17 +196,23 @@ $(document).on('click', '#submitChanges', function(e) {
 });
 
 function setCoverPhoto(id) {
-    bootbox.confirm("Nastavit jako úvodní fotku alba?", function(result) {
-           if (result) {
-                $.ajax({
-                    url: {plink Albums:ajaxSetAlbumCover} + '?photoId=' + id + '&albumId=' + {$album->id}
-                });
-           }
-       });
+    
 }
 
 $('#photosGrid .cover').click(function() {
-    setCoverPhoto($(this).data('photo-id'));
+    var id = $(this).data('photo-id');
+    var element = $(this);
+    bootbox.confirm("Nastavit jako úvodní fotku alba?", function(result) {
+        if (result) {
+             $.ajax({
+                 url: {plink Albums:ajaxSetAlbumCover} + '?photoId=' + id + '&albumId=' + {$album->id}
+             });
+             $('.cover.active').each(function() {
+                 $(this).removeClass('active fa-bookmark').addClass('fa-bookmark-o');
+             });
+             element.addClass('active fa-bookmark').removeClass('fa-bookmark-o');
+        }
+    });
 });
 </script>
 {/block}

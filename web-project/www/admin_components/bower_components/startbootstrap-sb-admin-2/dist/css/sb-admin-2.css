@@ -342,7 +342,10 @@ input[type=range]:focus::-ms-fill-upper {
 #trash .photo .edit {
   display: none;
 }
-#trash .photo .trash {
+#trash .photo .trash,
+#trash .photo .cover,
+#trash .photo .descriptions,
+#trash .photo .photo-desc {
   display: none;
 }
 #trash .photo .delete,
