@@ -123,6 +123,13 @@ if (url.match('#')) {
 $('.nav-tabs a').on('shown.bs.tab', function (e) {
     window.location.hash = e.target.hash;
 });
+
+$(function () {
+    $('#datepicker').datetimepicker({
+        format: 'YYYY-MM-DD',
+        locale: 'cs'
+    });
+});
 </script>
 
 <script>

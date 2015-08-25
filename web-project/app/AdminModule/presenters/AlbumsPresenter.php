@@ -147,6 +147,12 @@ class AlbumsPresenter extends BaseSecuredPresenter {
                 ->setRequired()
                 ->setAttribute("class", "form-control");
         
+        $form->addTextArea('description_cs', "popis česky")
+                ->setAttribute("class", "form-control");
+        
+        $form->addTextArea('description_en', "popis anglicky")
+                ->setAttribute("class", "form-control");
+        
         $form->addText('date', 'datum')
                 ->setRequired()
                 ->setHtmlId("datepicker")
