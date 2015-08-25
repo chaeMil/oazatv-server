@@ -91,6 +91,7 @@ class PhotosManager {
     public function getAlbumFromDB($id) {
         return $this->database->table(self::TABLE_NAME_ALBUMS)
                 ->select("*")->where(self::COLUMN_ID, $id)->fetch();
+                
     }
     
     public function countAlbums() {

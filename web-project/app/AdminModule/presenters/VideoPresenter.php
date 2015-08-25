@@ -35,7 +35,7 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->getTemplateVariables($this->getUser()->getId());
         
         $this->template->videos = $this->videoManager
-                ->getVideosFromDB($paginator->getLength(), $paginator->getOffset(), "id");
+                ->getVideosFromDB($paginator->getLength(), $paginator->getOffset(), "date DESC");
     }
     
     public function renderDetail($id) {
