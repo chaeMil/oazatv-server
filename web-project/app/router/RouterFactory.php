@@ -16,19 +16,26 @@ class RouterFactory
 	public static function createRouter()
 	{
 		$router = new RouteList();
+		
+                $router[] = new Route('api/<presenter>/<action>/<id>', array(
+                    'module' => 'Api',
+                    'presenter' => 'Main',
+                    'action' => 'default',
+                    'id' => NULL
+                ));
                 
                 $router[] = new Route('admin/<presenter>/<action>/<id>', array(
                     'module' => 'Admin',
                     'presenter' => 'Main',
                     'action' => 'default',
-                    'id' => NULL,
+                    'id' => NULL
                 ));
 
                 $router[] = new Route('<presenter>/<action>/<id>', array(
                     'module' => 'Front',
                     'presenter' => 'Main',
                     'action' => 'default',
-                    'id' => NULL,
+                    'id' => NULL
                 ));
                 
 		return $router;
