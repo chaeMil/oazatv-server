@@ -313,10 +313,26 @@ input[type=range]:focus::-ms-fill-upper {
 			background-repeat: no-repeat;
 			
 			.photo-desc {
+				z-index: 15;
 				position: absolute;
 				bottom: 8px;
 				left: 8px;
 				right: 8px;
+			}
+
+			.descriptions {
+				z-index: 10;
+				position: absolute;
+				bottom: 8px;
+				left: 8px;
+				right: 8px;
+
+				.cs, .en {
+					width: 100%;
+					display: block;
+					overflow: hidden;
+					text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+				}
 			}
 
 		}

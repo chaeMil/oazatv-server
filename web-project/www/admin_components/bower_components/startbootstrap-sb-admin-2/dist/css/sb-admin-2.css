@@ -262,10 +262,25 @@ input[type=range]:focus::-ms-fill-upper {
   background-repeat: no-repeat;
 }
 #photosGrid .photo .thumb .photo-desc {
+  z-index: 15;
   position: absolute;
   bottom: 8px;
   left: 8px;
   right: 8px;
+}
+#photosGrid .photo .thumb .descriptions {
+  z-index: 10;
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  right: 8px;
+}
+#photosGrid .photo .thumb .descriptions .cs,
+#photosGrid .photo .thumb .descriptions .en {
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
 }
 #photosGrid .photo .edit,
 #photosGrid .photo .trash,

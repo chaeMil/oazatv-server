@@ -66,6 +66,10 @@
                                                name="{$photo->id}_order"
                                                value="{$photo->order}">
                                     </div>
+                                    <div class="descriptions">
+                                        <span class="cs">{if $photo->description_cs != ''}cs: {$photo->description_cs}{/if}</span>
+                                        <span class="en">{if $photo->description_en != ''}en: {$photo->description_en}{/if}</span>
+                                    </div>
                                 </div>
                             </li>
                         </ul>
