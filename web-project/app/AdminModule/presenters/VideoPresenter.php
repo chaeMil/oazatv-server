@@ -26,16 +26,11 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->videoManager = $videoManager;
     }
     
-    public function renderList() {
-        $paginator = new Nette\Utils\Paginator;
-        $paginator->setItemCount($this->videoManager->countVideos());
-        $paginator->setItemsPerPage(30);
-        $paginator->setPage(1);
-        
+    public function renderList() {       
         $this->getTemplateVariables($this->getUser()->getId());
         
         $this->template->videos = $this->videoManager
-                ->getVideosFromDB($paginator->getLength(), $paginator->getOffset(), "date DESC");
+                ->getVideosFromDB(9999, 0, "date DESC");
     }
     
     public function renderDetail($id) {

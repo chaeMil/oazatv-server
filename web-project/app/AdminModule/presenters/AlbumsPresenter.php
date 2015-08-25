@@ -28,16 +28,11 @@ class AlbumsPresenter extends BaseSecuredPresenter {
         $this->photosManager = $photosManager;
     }
     
-    public function renderList() {
-        $paginator = new Nette\Utils\Paginator;
-        $paginator->setItemCount($this->photosManager->countAlbums());
-        $paginator->setItemsPerPage(30);
-        $paginator->setPage(1);
-        
+    public function renderList() {       
         $this->getTemplateVariables($this->getUser()->getId());
         
         $this->template->albums = $this->photosManager
-                ->getAlbumsFromDB($paginator->getLength(), $paginator->getOffset(), "id");
+                ->getAlbumsFromDB(9999, 0, "date DESC");
     }
     
     public function renderAlbumDetail($id) {
