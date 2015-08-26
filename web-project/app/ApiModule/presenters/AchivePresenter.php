@@ -10,18 +10,27 @@ namespace App\ApiModule;
 
 use Nette,
  Nette\Application\Responses\JsonResponse,
- App\ApiModule\JsonApi;
+ App\ApiModule\JsonApi,
+ Model\VideoManager;
 
 /**
  * Description of MainPresenter
  *
  * @author Michal Mlejnek <chaemil72 at gmail.com>
  */
-class MainPresenter extends BasePresenter {
+class ArchivePresenter extends BasePresenter {
+    
+    public $database;
+    private $videoManager;
+    
+    public function __construct(Nette\Database\Context $database, VideoManager $videoManager) {
+        $this->database = $database;
+        $this->videoManager = $videoManager;
+        
+    }
    
     public function renderDefault() {
-        $response = array('apiVersion' => 2.0,
-                          'appVersion' => VERSION);
+        $response = $this->videoManager->getVideosFromDB(0, 10, VideoManager::COLUMN_DATE);
         
         $this->sendResponse(new JsonResponse($response));
     }

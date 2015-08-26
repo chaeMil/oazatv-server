@@ -17,7 +17,7 @@ class RouterFactory
 	{
 		$router = new RouteList();
 		
-                $router[] = new Route('api/<presenter>/<action>/<id>', array(
+                $router[] = new Route('api/v2/<presenter>/<action>/<id>', array(
                     'module' => 'Api',
                     'presenter' => 'Main',
                     'action' => 'default',

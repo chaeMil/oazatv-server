@@ -98,6 +98,7 @@ class VideoManager extends BaseModel {
     
     public function getVideosFromDB($from, $count, $order) {
         return $this::$database->table(self::TABLE_NAME)
+                ->select('*')
                 ->limit($from, $count)
                 ->order($order);
     }

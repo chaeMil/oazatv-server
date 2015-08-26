@@ -106,7 +106,8 @@ class AccountPresenter extends BaseSecuredPresenter {
         $filename = $user_id.".jpg";
         $vals->avatar->move($this->userAvatarsDirectory.$filename);
 
-        ImageUtils::resizeImage($this->userAvatarsDirectory, $filename, 300, "", $this->userAvatarsDirectory);
+        ImageUtils::resizeImage($this->userAvatarsDirectory, $filename, 300, "",
+                                $this->userAvatarsDirectory);
         
         $this->flashMessage("Avatar úspěšně změněn", "info");
         $this->redirect("Account:default");
