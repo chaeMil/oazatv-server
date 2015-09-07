@@ -180,6 +180,11 @@ class AlbumsPresenter extends BaseSecuredPresenter {
         
         $form->addTextArea('description_en', "popis anglicky")
                 ->setAttribute("class", "form-control");
+                
+        $form->addText('tags', 'tagy')
+                ->setRequired()
+                ->setAttribute("class", "form-control")
+                ->setAttribute("data-role", "tagsinput");
         
         $form->addText('date', 'datum')
                 ->setRequired()
@@ -216,7 +221,7 @@ class AlbumsPresenter extends BaseSecuredPresenter {
         if ($status) {
             $this->flashMessage("Změny úspěšně uloženy", "success");
             
-            EventLogger::log('user '.$this->getUser()->getIdentity()->login.' updated album '. $id, 
+            EventLogger::log('user '.$this->getUser()->getIdentity()->login.' updated album '. $vals['id'], 
                 EventLogger::ACTIONS_LOG);
         } else {
             $this->flashMessage("Nic nebylo změněno", "info");
