@@ -357,10 +357,11 @@ window.onbeforeunload = function(){
 
 <script>
     function openPlayer(file) {
+        var downloadName = {$video->date} + '-' + {$video->hash};
         bootbox.dialog({
             title: "přehrává se: " + file,
             message: '<video width="100%" controls><source src="{$basePath|noescape}/db/videos/{$video->id}/' +  file +'"></video>\n\
-                        <a class="player-download btn btn-primary" href="{$basePath|noescape}/db/videos/{$video->id}/' +  file +'" download>stáhnout</a>',
+                        <a class="player-download btn btn-primary" href="{$basePath|noescape}/db/videos/{$video->id}/' +  file +'" download="' + downloadName + '">stáhnout</a>',
             buttons: {
                 main: {
                     label: "zavřít",
@@ -372,10 +373,11 @@ window.onbeforeunload = function(){
     }
     
     function openImageViewer(file) {
+        var downloadName = {$video->date} + '-' + {$video->hash};
         bootbox.dialog({
             title: "zobrazuje se: " + file,
             message: '<img width="100%" class="img-responsive" src="{$basePath|noescape}/db/videos/{$video->id}/' +  file +'" />\n\
-                        <a class="player-download btn btn-primary" href="{$basePath|noescape}/db/videos/{$video->id}/' +  file +'" download>stáhnout</a>',
+                        <a class="player-download btn btn-primary" href="{$basePath|noescape}/db/videos/{$video->id}/' +  file +'" download="' + downloadName + '">stáhnout</a>',
             buttons: {
                 main: {
                     label: "zavřít",
