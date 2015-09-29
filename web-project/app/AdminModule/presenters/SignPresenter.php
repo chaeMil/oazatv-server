@@ -57,16 +57,17 @@ class SignPresenter extends BasePresenter {
 
         try {
             
+            $this->getUser()->getStorage()->setNamespace('admin');
+            $this->getUser()->login($values->username, $values->password);
+            
             $user = $this->database->table("admin_users")->get($this->getUser()->getId());
+
             $user->update(Array(
                 "lastlogin_time" => time(),
                 "lastlogin_ip" => $_SERVER['REMOTE_ADDR']
                 )
             );
-            
-            $this->getUser()->getStorage()->setNamespace('admin');
-            $this->getUser()->login($values->username, $values->password);
-            
+
             EventLogger::log('user '.$values->username.' logged in', EventLogger::AUTH_LOG);
             
             $this->redirect(':Admin:Main:');

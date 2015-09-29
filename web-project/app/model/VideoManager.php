@@ -193,4 +193,45 @@ class VideoManager extends BaseModel {
             }
         }
     }
+    
+    public function createLocalizedVideoObject($lang, $input) {
+        $video = Array();    
+        
+        switch($lang) {
+            case 'cs':
+                $day = date('d', strtotime($input[self::COLUMN_DATE]));
+                $month = date('n', strtotime($input[self::COLUMN_DATE]));
+                $year = date('Y', strtotime($input[self::COLUMN_DATE]));
+                
+                $video['name'] = $input[self::COLUMN_NAME_CS];
+                $video['date'] = StringUtils::formatCzechDate($year, $month, $day);
+                $video['desc'] = $input[self::COLUMN_DESCRIPTION_CS];
+                break;
+            case 'en':
+                $day = date('d', strtotime($input[self::COLUMN_DATE]));
+                $month = date('n', strtotime($input[self::COLUMN_DATE]));
+                $year = date('Y', strtotime($input[self::COLUMN_DATE]));
+                
+                $video['name'] = $input[self::COLUMN_NAME_CS];
+                $video['date'] = StringUtils::formatEnglishDate($year, $month, $day);
+                $video['desc'] = $input[self::COLUMN_DESCRIPTION_EN];
+                break;
+        }
+        
+        $videoId = $input[self::COLUMN_ID];
+        $video['tags'] = $input[self::COLUMN_TAGS];
+        if ($input[self::COLUMN_MP3_FILE] != '') {
+            $video['mp3'] = VIDEOS_FOLDER.$videoId.'/'.$input[self::COLUMN_MP3_FILE];
+        }
+        if ($input[self::COLUMN_MP4_FILE] != '') {
+            $video['mp4'] = VIDEOS_FOLDER.$videoId.'/'.$input[self::COLUMN_MP4_FILE];
+        }
+        if ($input[self::COLUMN_WEBM_FILE] != '') {
+            $video['webm'] = VIDEOS_FOLDER.$videoId.'/'.$input[self::COLUMN_WEBM_FILE];
+        }
+        $video['categories'] = $input[self::COLUMN_CATEGORIES];
+        $video['thumbs'] = $this->getThumbnails($videoId);
+        
+        return $video;
+    }
 }

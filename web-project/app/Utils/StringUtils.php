@@ -71,4 +71,22 @@ class StringUtils {
     public static function formatSQLDate($year, $month, $day) {
         return date('Y-m-d', strtotime($year."-".StringUtils::addLeadingZero($month, 2)."-".StringUtils::addLeadingZero($day, 2)));
     }
+    
+    public static function formatCzechDate($year, $month, $day) {
+        return /*self::czechDay($day)." ".*/$day.". ".self::czechMonth($month)." ".$year;
+    }
+    
+    public static function czechMonth($mesic) {
+        static $nazvy = array(1 => 'leden', 'únor', 'březen', 'duben', 'květen', 'červen', 'červenec', 'srpen', 'září', 'říjen', 'listopad', 'prosinec');
+        return $nazvy[$mesic];
+    }
+    
+    public static function czechDay($den) {
+        static $nazvy = array('neděle', 'pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota');
+        return $nazvy[$den];
+    }
+    
+    public static function formatEnglishDate($year, $month, $day) {
+        return $month.'/'.$day.'/'.$year;
+    }
 }

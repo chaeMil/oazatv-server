@@ -20,6 +20,8 @@ class MainPresenter extends BasePresenter {
     public function renderDefault() {
         $this->template->newestVideos = $this->videoManager->getVideosFromDB(0, 10);
         $this->template->lang = $this->lang;
+        dump($this->videoManager->createLocalizedVideoObject($this->lang, 
+                $this->videoManager->getVideoFromDB(43)));
     }
     
 }
