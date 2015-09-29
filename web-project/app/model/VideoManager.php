@@ -92,6 +92,11 @@ class VideoManager extends BaseModel {
                 ->select("*")->where(self::COLUMN_ID, $id)->fetch();
     }
     
+    public function getVideoFromDBbyHash($hash) {
+        return self::$database->table(self::TABLE_NAME)
+                ->select("*")->where(self::COLUMN_HASH, $hash)->fetch();
+    }
+    
     public function countVideos() {
         return self::$database->table(self::TABLE_NAME)->count("*");
     }

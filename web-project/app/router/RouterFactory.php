@@ -16,7 +16,9 @@ class RouterFactory
 	public static function createRouter()
 	{
 		$router = new RouteList();
+               
 		
+                //json api links
                 $router[] = new Route('api/v2/<presenter>/<action>/<id>', array(
                     'module' => 'Api',
                     'presenter' => 'Main',
@@ -24,6 +26,7 @@ class RouterFactory
                     'id' => NULL
                 ));
                 
+                //admin links
                 $router[] = new Route('admin/<presenter>/<action>/<id>', array(
                     'module' => 'Admin',
                     'presenter' => 'Main',
@@ -31,12 +34,14 @@ class RouterFactory
                     'id' => NULL
                 ));
 
+                //frontend links
                 $router[] = new Route('[<locale=cs cs|en>/]<presenter>/<action>/<id>', array(
                     'module' => 'Front',
                     'presenter' => 'Main',
                     'action' => 'default',
                     'id' => NULL
                 ));
+                               
                 
 		return $router;
 	}

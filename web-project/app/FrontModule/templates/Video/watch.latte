@@ -1,0 +1,13 @@
+{block content}
+
+<h1>{$video['name']}</h1>
+<p>{$video['desc']}</p>
+<p>{$video['date']}</p>
+<video width="1280" height="720" controls>
+    {if isset($video['mp4'])}
+        <source src="{$basePath}/{$video['mp4']}" type="video/mp4">
+    {/if}
+    {if isset($video['webm'])}
+        <source src="{$basePath}/{$video['webm']}" type="video/webm">
+    {/if}
+</video>

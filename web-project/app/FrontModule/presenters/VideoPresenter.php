@@ -27,8 +27,12 @@ class VideoPresenter extends BasePresenter {
         $this->videoManager = $videoManager;
     }
     
-    public function renderDefault($hash) {
+    public function renderWatch($id) {
+        $hash = $id; //id only in router, actualy its hash
+        $video = $this->videoManager->getVideoFromDBbyHash($hash);
         
+        $this->template->video = $this->videoManager
+                ->createLocalizedVideoObject($this->lang, $video);
     }
     
 }

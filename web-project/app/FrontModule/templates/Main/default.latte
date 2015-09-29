@@ -2,5 +2,5 @@
 
 <h1>{_frontend.homepage.newest_videos}</h1>
 <div n:foreach="$newestVideos as $video">
-    <a n:href="Video:default $video['hash']">{$video['name']}</a>
+    <a n:href="Video:watch $video['hash']">{$video['name']}</a>
 </div>
