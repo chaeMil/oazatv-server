@@ -18,6 +18,7 @@ class SignPresenter extends BasePresenter {
     }
 
     public function renderDefault() {
+        $this->getUser()->getStorage()->setNamespace('admin');
         if ($this->getUser()->isLoggedIn()) {
             $this->redirect(':Admin:Main:');
         }
@@ -74,9 +75,9 @@ class SignPresenter extends BasePresenter {
 
     public function actionOut() {
         $this->userManager->emptyUserTempFolder($this->getUser()->getId());
+        EventLogger::log('user '.$this->getUser()->storage->identity->login.' logged out', EventLogger::AUTH_LOG);
         $this->getUser()->logout();
         $this->flashMessage('You have been signed out.');
-        EventLogger::log('user '.$values->username.' logged out', EventLogger::AUTH_LOG);
         $this->redirect('Sign:in');
     }
 
