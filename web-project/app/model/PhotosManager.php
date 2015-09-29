@@ -245,8 +245,8 @@ class PhotosManager {
         }
         
         
-        $albumId = $input[self::COLUMN_ID];
-        $album['hash'] = $input['hash'];
+        $album['id'] = $input[self::COLUMN_ID];
+        $album['hash'] = $input[self::COLUMN_HASH];
         $album['tags'] = $input[self::COLUMN_TAGS];
         $album['days'] = $input[self::COLUMN_DAYS];
         
