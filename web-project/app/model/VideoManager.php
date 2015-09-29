@@ -218,7 +218,9 @@ class VideoManager extends BaseModel {
                 break;
         }
         
+        
         $videoId = $input[self::COLUMN_ID];
+        $video['hash'] = $input['hash'];
         $video['tags'] = $input[self::COLUMN_TAGS];
         if ($input[self::COLUMN_MP3_FILE] != '') {
             $video['mp3'] = VIDEOS_FOLDER.$videoId.'/'.$input[self::COLUMN_MP3_FILE];
