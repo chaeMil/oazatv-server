@@ -36,7 +36,7 @@ class VideoPresenter extends BaseSecuredPresenter {
     
     public function renderDetail($id) {
         $this->getTemplateVariables($this->getUser()->getId());
-        $video = $this->videoManager->getVideoFromDB($id);
+        $video = $this->videoManager->getVideoFromDB($id, 2);
         
         $this->template->video = $video;
        

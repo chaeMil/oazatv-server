@@ -88,11 +88,18 @@ class VideoManager extends BaseModel {
     }
     
     public function getVideoFromDB($id, $published = 1) {
-        return self::$database->table(self::TABLE_NAME)
-                ->select("*")
-                ->where(array(self::COLUMN_ID => $id, 
-                    self::COLUMN_PUBLISHED => $published))
-                ->fetch();
+        if ($published != 2) {
+            return self::$database->table(self::TABLE_NAME)
+                    ->select("*")
+                    ->where(array(self::COLUMN_ID => $id, 
+                        self::COLUMN_PUBLISHED => $published))
+                    ->fetch();
+        } else {
+            return self::$database->table(self::TABLE_NAME)
+                    ->select("*")
+                    ->where(array(self::COLUMN_ID => $id))
+                    ->fetch();
+        }
     }
     
     public function getVideoFromDBbyHash($hash, $published = 1) {
@@ -144,7 +151,7 @@ class VideoManager extends BaseModel {
     }
     
     public function getOriginalFileInfo($id) {
-        $video = $this->getVideoFromDB($id);
+        $video = $this->getVideoFromDB($id, 2);
         $finfo = finfo_open();
         $file = VIDEOS_FOLDER . $id ."/". $video->original_file;
         if (file_exists($file)) {
@@ -192,7 +199,7 @@ class VideoManager extends BaseModel {
     }
     
     public function getThumbnails($id) {
-        $video = $this->getVideoFromDB($id);
+        $video = $this->getVideoFromDB($id, 2);
         $thumb = VIDEOS_FOLDER.$video->id."/thumbs/".str_replace(".jpg", "_".self::THUMB_1024.".jpg", $video->thumb_file);
         $thumbfile = VIDEOS_FOLDER.$video->id."/thumbs/".str_replace(".jpg", "", $video->thumb_file);
         if (!file_exists($thumb)) {
