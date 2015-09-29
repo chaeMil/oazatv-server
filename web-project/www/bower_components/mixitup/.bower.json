@@ -1,0 +1,22 @@
+{
+  "name": "mixitup",
+  "version": "2.1.10",
+  "main": "src/jquery.mixitup.js",
+  "ignore": [
+    "Gruntfile.js"
+  ],
+  "dependencies": {
+    "jquery": ">=1.7"
+  },
+  "homepage": "https://github.com/barrel/mixitup",
+  "_release": "2.1.10",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.1.10",
+    "commit": "567b1f36a0378ae1e85606614e1f75e210f3230f"
+  },
+  "_source": "git://github.com/barrel/mixitup.git",
+  "_target": "~2.1.10",
+  "_originalSource": "mixitup",
+  "_direct": true
+}
