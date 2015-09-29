@@ -12,10 +12,15 @@ use Nette,
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter {    
     public $database;
+    public $lang;
     
-    public function __construct(Nette\Database\Context $database) {
+    public function __construct(Nette\DI\Container $container, 
+            Nette\Database\Context $database) {
+        parent::__construct();
         $this->database = $database;
-        
+        $langs = array('cs', 'en'); // app supported languages
+        $httpRequest = $container->getByType('Nette\Http\Request');
+        $this->lang = $httpRequest->detectLanguage($langs);
     }
     
     public function bootstrapFormRendering($form) {

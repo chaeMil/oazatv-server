@@ -48,12 +48,12 @@ class VideoManager extends BaseModel {
     public static $queueManager;
 
     public function __construct(Nette\Database\Context $database, \Model\VideoConvertQueueManager $queueManager) {
-        $this::$database = $database;
-        $this::$queueManager = $queueManager;
+        self::$database = $database;
+        self::$queueManager = $queueManager;
     }
     
     private function checkIfVideoExists($id) {
-        return $this::$database->table(self::TABLE_NAME)
+        return self::$database->table(self::TABLE_NAME)
                 ->where(self::COLUMN_ID, $id)->count();
     }
 
@@ -66,12 +66,12 @@ class VideoManager extends BaseModel {
         }
         
         if ($videoId != 0 && $this->checkIfVideoExists($videoId) > 0) {
-            $video = $this::$database->table(self::TABLE_NAME)->get($videoId);
+            $video = self::$database->table(self::TABLE_NAME)->get($videoId);
             $sql = $video->update($values);
             return $sql;
         } else {
             $values['hash'] = StringUtils::rand(8);
-            $sql = $this::$database->table(self::TABLE_NAME)->insert($values);
+            $sql = self::$database->table(self::TABLE_NAME)->insert($values);
             $newVideoDir = VIDEOS_FOLDER.$sql->id."/";
             $newVideoThumbsDir = $newVideoDir."thumbs/";
             $vewVideoLogsDir = $newVideoDir."logs/";
@@ -88,19 +88,28 @@ class VideoManager extends BaseModel {
     }
     
     public function getVideoFromDB($id) {
-        return $this::$database->table(self::TABLE_NAME)
+        return self::$database->table(self::TABLE_NAME)
                 ->select("*")->where(self::COLUMN_ID, $id)->fetch();
     }
     
     public function countVideos() {
-        return $this::$database->table(self::TABLE_NAME)->count("*");
+        return self::$database->table(self::TABLE_NAME)->count("*");
     }
     
-    public function getVideosFromDB($from, $count, $order) {
-        return $this::$database->table(self::TABLE_NAME)
+    public function getVideosFromDB($from, $count, $order = self::COLUMN_DATE) {
+        return self::$database->table(self::TABLE_NAME)
                 ->select('*')
-                ->limit($from, $count)
+                ->limit($count, $from)
                 ->order($order);
+    }
+    
+    
+    public function getVideosFromDBbyTags($tags, $limit = 10, $published = 1) {
+        return self::$database->table(self::TABLE_NAME)
+                ->select('*')
+                ->where(array(self::COLUMN_TAGS.' IN(?)' => $tags,
+                        self::COLUMN_PUBLISHED => $published))
+                ->limit($limit);
     }
     
     public function getOriginalFileInfo($id) {
@@ -148,7 +157,7 @@ class VideoManager extends BaseModel {
     }
     
     public function addVideoToConvertQueue($id, $input, $target) {
-        $this::$queueManager->addVideoToQueue($id, $input, $target);
+        self::$queueManager->addVideoToQueue($id, $input, $target);
     }
     
     public function getThumbnails($id) {
