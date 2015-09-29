@@ -98,6 +98,14 @@ class PhotosManager {
                 
     }
     
+    public function getAlbumFromDBbyHash($hash, $published = 1) {
+        return $this->database->table(self::TABLE_NAME_ALBUMS)
+                ->select("*")->where(array(self::COLUMN_HASH=> $hash, 
+                    self::COLUMN_PUBLISHED => $published))
+                ->fetch();
+                
+    }
+    
     public function countAlbums() {
         return $this->database->table(self::TABLE_NAME_ALBUMS)->count("*");
     }
@@ -254,5 +262,31 @@ class PhotosManager {
         
         
         return $album;
+    }
+    
+    public function createLocalizedAlbumPhotosObject($lang, $albumId) {
+        $photos = Array();  
+        
+        $input = $this->getPhotosFromAlbum($albumId);
+        
+        foreach($input as $photo) {
+            
+            $photoOut['id'] = $photo[self::COLUMN_ID];
+            $photoOut['thumbs'] = $this->getPhotoThumbnails($photo[self::COLUMN_ID]);
+            $photoOut['order'] = $photo[self::COLUMN_ORDER];
+            
+            switch($lang) {
+                case 'cs':
+                    $photoOut['desc'] = $photo[self::COLUMN_DESCRIPTION_CS];
+                    break 1;
+                case 'en':
+                    $photoOut['desc'] = $photo[self::COLUMN_DESCRIPTION_EN];
+                    break 1;
+            }
+            
+            $photos[] = $photoOut;
+        }
+        
+        return $photos;
     }
 }

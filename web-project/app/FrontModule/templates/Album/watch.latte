@@ -1,0 +1,12 @@
+{block content}
+
+<h1>{$album['name']}</h1>
+<p>{$album['desc']}</p>
+<p>{$album['date']}</p>
+<hr>
+<div class="row">
+    <div class="col-xs-3" n:foreach="$photos as $photo">
+        <img class="img-responsive img-thumbnail" src="{$basePath}/{$photo['thumbs']['512']}">
+        <span>{$photo['desc']}</span>
+    </div>
+</div>
