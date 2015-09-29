@@ -8,6 +8,8 @@
 
     <link rel="shortcut icon" href="{$basePath}/favicon.ico">
     <link rel="stylesheet" href="{$basePath}/bower_components/bootstrap/dist/css/bootstrap.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,300,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
@@ -46,7 +48,7 @@
     </nav>
 
     <!-- Page Content -->
-    <div class="container-fluid">
+    <div class="container-fluid main-content padded">
         
         <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
