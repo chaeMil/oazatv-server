@@ -11,6 +11,7 @@ use Nette,
  * Base presenter for all application presenters.
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter {    
+    
     public $database;
     public $lang;
     
@@ -18,6 +19,10 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
             Nette\Database\Context $database) {
         parent::__construct();
         $this->database = $database;
+        $this->setupLanguage($container);
+    }
+    
+    public function setupLanguage($container) {
         $langs = array('cs', 'en'); // app supported languages
         $httpRequest = $container->getByType('Nette\Http\Request');
         $this->lang = $httpRequest->detectLanguage($langs);

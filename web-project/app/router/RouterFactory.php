@@ -31,7 +31,7 @@ class RouterFactory
                     'id' => NULL
                 ));
 
-                $router[] = new Route('<presenter>/<action>/<id>', array(
+                $router[] = new Route('[<lang=cs cs|en>/]<presenter>/<action>/<id>', array(
                     'module' => 'Front',
                     'presenter' => 'Main',
                     'action' => 'default',

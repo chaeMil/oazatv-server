@@ -16,8 +16,10 @@ nette:
 
 
 session:
-    expiration: 1 day
+    expiration: 3 day
 
+extensions:
+    translation: Kdyby\Translation\DI\TranslationExtension
 
 services:
     - Model\BugReport
@@ -33,6 +35,10 @@ services:
         setup:
             - setTempDirectory(null)
     authenticator:  Model\UserManager
+
+translation:
+    default: cs
+    fallback: [cs_CZ, cs]
 
 constants:
     VERSION: "0.4 (2015-08-25)"

@@ -19,11 +19,13 @@ class MainPresenter extends BasePresenter {
     
     public function renderDefault() {
         $newestVideos = $this->videoManager->getVideosFromDB(0, 10);
-        $templateNewestVideos;
         
         foreach($newestVideos as $video) {
-            $templateNewestVideos[] = $video;
+            $templateNewestVideos[] = $this->videoManager
+                    ->createLocalizedVideoObject($this->lang, $video);
         }
+        
+        //dump($templateNewestVideos); exit;
         
         $this->template->newestVideos = $templateNewestVideos;
         $this->template->lang = $this->lang;
