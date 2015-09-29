@@ -4,17 +4,21 @@ namespace App\FrontModule;
 
 use Nette,
 Nette\Database\Context,
-Model\VideoManager;
+Model\VideoManager,
+Model\PhotosManager;
 
 
 class MainPresenter extends BasePresenter {
     
     public $videoManager;
+    public $photosManager;
     
     public function __construct(Nette\DI\Container $container,
-            Context $database, VideoManager $videoManager) {
+            Context $database, VideoManager $videoManager,
+            PhotosManager $photosManager) {
         parent::__construct($container, $database);
         $this->videoManager = $videoManager;
+        $this->photosManager = $photosManager;
     }
     
     public function renderDefault() {
@@ -25,7 +29,8 @@ class MainPresenter extends BasePresenter {
                     ->createLocalizedVideoObject($this->lang, $video);
         }
         
-        //dump($templateNewestVideos); exit;
+        $newestAlbums = $this->photosManager->getAlbumsFromDB(0, 10);
+        dump($newestAlbums);
         
         $this->template->newestVideos = $templateNewestVideos;
         $this->template->lang = $this->lang;

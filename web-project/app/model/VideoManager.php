@@ -87,25 +87,51 @@ class VideoManager extends BaseModel {
        
     }
     
-    public function getVideoFromDB($id) {
+    public function getVideoFromDB($id, $published = 1) {
         return self::$database->table(self::TABLE_NAME)
-                ->select("*")->where(self::COLUMN_ID, $id)->fetch();
+                ->select("*")
+                ->where(array(self::COLUMN_ID => $id, 
+                    self::COLUMN_PUBLISHED => $published))
+                ->fetch();
     }
     
-    public function getVideoFromDBbyHash($hash) {
-        return self::$database->table(self::TABLE_NAME)
-                ->select("*")->where(self::COLUMN_HASH, $hash)->fetch();
+    public function getVideoFromDBbyHash($hash, $published = 1) {
+        
+        if ($published != 2) {
+            return self::$database->table(self::TABLE_NAME)
+                    ->select("*")
+                    ->where(array(self::COLUMN_HASH => $hash,
+                        self::COLUMN_PUBLISHED => $published))
+                    ->fetch();
+        } else {
+            return self::$database->table(self::TABLE_NAME)
+                    ->select("*")
+                    ->where(array(self::COLUMN_HASH => $hash))
+                    ->fetch();
+        }
     }
     
     public function countVideos() {
         return self::$database->table(self::TABLE_NAME)->count("*");
     }
     
-    public function getVideosFromDB($from, $count, $order = self::COLUMN_DATE) {
-        return self::$database->table(self::TABLE_NAME)
+    public function getVideosFromDB($from, $count, $published = 1, 
+            $order = self::COLUMN_DATE) {
+        
+        if($published != 2) {
+            return self::$database->table(self::TABLE_NAME)
+                ->select('*')
+                ->where(array(self::COLUMN_PUBLISHED => $published))
+                ->limit($count, $from)
+                ->order($order);
+        } else {
+            return self::$database->table(self::TABLE_NAME)
                 ->select('*')
                 ->limit($count, $from)
                 ->order($order);
+        }
+        
+        
     }
     
     

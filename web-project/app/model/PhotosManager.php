@@ -89,9 +89,11 @@ class PhotosManager {
         $album->delete();
     }
     
-    public function getAlbumFromDB($id) {
+    public function getAlbumFromDB($id, $published = 1) {
         return $this->database->table(self::TABLE_NAME_ALBUMS)
-                ->select("*")->where(self::COLUMN_ID, $id)->fetch();
+                ->select("*")->where(array(self::COLUMN_ID=> $id, 
+                    self::COLUMN_PUBLISHED => $published))
+                ->fetch();
                 
     }
     
@@ -99,10 +101,20 @@ class PhotosManager {
         return $this->database->table(self::TABLE_NAME_ALBUMS)->count("*");
     }
     
-    public function getAlbumsFromDB($from, $count, $order) {
-        return $this->database->table(self::TABLE_NAME_ALBUMS)
-                ->limit($from, $count)
-                ->order($order);
+    public function getAlbumsFromDB($from, $count, $published = 1, 
+            $order = self::COLUMN_DATE) {
+        
+        if ($published != 2) {
+        
+            return $this->database->table(self::TABLE_NAME_ALBUMS)
+                    ->where(array(self::COLUMN_PUBLISHED => $published))
+                    ->limit($count, $from)
+                    ->order($order);
+        } else {
+            return $this->database->table(self::TABLE_NAME_ALBUMS)
+                    ->limit($count, $from)
+                    ->order($order);
+        }
     }
     
     public function savePhotoToDB($values) {
@@ -204,5 +216,39 @@ class PhotosManager {
         }
         
         return $maxOrderNum + 1;
+    }
+    
+    public function createLocalizedAlbumThumbObject($lang, $input) {
+        $album = Array();    
+        
+        switch($lang) {
+            case 'cs':
+                $day = date('d', strtotime($input[self::COLUMN_DATE]));
+                $month = date('n', strtotime($input[self::COLUMN_DATE]));
+                $year = date('Y', strtotime($input[self::COLUMN_DATE]));
+                
+                $album['name'] = $input[self::COLUMN_NAME_CS];
+                $album['date'] = StringUtils::formatCzechDate($year, $month, $day);
+                $album['desc'] = $input[self::COLUMN_DESCRIPTION_CS];
+                break;
+            case 'en':
+                $day = date('d', strtotime($input[self::COLUMN_DATE]));
+                $month = date('n', strtotime($input[self::COLUMN_DATE]));
+                $year = date('Y', strtotime($input[self::COLUMN_DATE]));
+                
+                $album['name'] = $input[self::COLUMN_NAME_EN];
+                $album['date'] = StringUtils::formatEnglishDate($year, $month, $day);
+                $album['desc'] = $input[self::COLUMN_DESCRIPTION_EN];
+                break;
+        }
+        
+        
+        $albumId = $input[self::COLUMN_ID];
+        $album['hash'] = $input['hash'];
+        $album['tags'] = $input[self::COLUMN_TAGS];
+        $album['days'] = $input[self::COLUMN_DAYS];
+        
+        
+        return $video;
     }
 }
