@@ -1173,8 +1173,8 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: inherit;
-  font-weight: 400;
+  font-family: "Roboto Slab", serif;
+  font-weight: 600;
   line-height: 1.1;
   color: #444444;
 }
@@ -1254,23 +1254,23 @@ h6 .small,
 }
 h1,
 .h1 {
-  font-size: 56px;
+  font-size: 38px;
 }
 h2,
 .h2 {
-  font-size: 45px;
+  font-size: 34px;
 }
 h3,
 .h3 {
-  font-size: 34px;
+  font-size: 30px;
 }
 h4,
 .h4 {
-  font-size: 24px;
+  font-size: 25px;
 }
 h5,
 .h5 {
-  font-size: 20px;
+  font-size: 18px;
 }
 h6,
 .h6 {

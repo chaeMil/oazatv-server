@@ -212,7 +212,7 @@ class VideoManager extends BaseModel {
                 $month = date('n', strtotime($input[self::COLUMN_DATE]));
                 $year = date('Y', strtotime($input[self::COLUMN_DATE]));
                 
-                $video['name'] = $input[self::COLUMN_NAME_CS];
+                $video['name'] = $input[self::COLUMN_NAME_EN];
                 $video['date'] = StringUtils::formatEnglishDate($year, $month, $day);
                 $video['desc'] = $input[self::COLUMN_DESCRIPTION_EN];
                 break;
