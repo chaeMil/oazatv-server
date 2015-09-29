@@ -14,18 +14,30 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
     
     public $database;
     public $lang;
+    public $container;
     
     public function __construct(Nette\DI\Container $container, 
             Nette\Database\Context $database) {
         parent::__construct();
         $this->database = $database;
-        $this->setupLanguage($container);
+        $this->container = $container;
+        
     }
     
-    public function setupLanguage($container) {
-        $langs = array('cs', 'en'); // app supported languages
-        $httpRequest = $container->getByType('Nette\Http\Request');
-        $this->lang = $httpRequest->detectLanguage($langs);
+    public function beforeRender() {
+        parent::beforeRender();
+        $routerLang = $this->getParameter('locale');
+        $this->setupLanguage($this->container, $routerLang);
+    }
+    
+    public function setupLanguage($container, $lang = null) {
+        if ($lang != null) {
+            $this->lang = $lang;
+        } else {
+            $langs = array('cs', 'en'); // app supported languages
+            $httpRequest = $container->getByType('Nette\Http\Request');
+            $this->lang = $httpRequest->detectLanguage($langs);
+        }
     }
     
     public function bootstrapFormRendering($form) {

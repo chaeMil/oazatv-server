@@ -38,7 +38,10 @@ services:
 
 translation:
     default: cs
+    whitelist: [cs, en]
     fallback: [cs_CZ, cs]
+    resolvers:
+        request: on
 
 constants:
     VERSION: "0.4 (2015-08-25)"
