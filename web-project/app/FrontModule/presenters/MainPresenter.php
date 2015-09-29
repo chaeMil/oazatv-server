@@ -30,7 +30,15 @@ class MainPresenter extends BasePresenter {
         }
         
         $newestAlbums = $this->photosManager->getAlbumsFromDB(0, 10);
+        
         dump($newestAlbums);
+        
+        foreach($newestAlbums as $album) {
+            $templateNewestAlbums[] = $this->photosManager
+                    ->createLocalizedAlbumThumbObject($this->lang, $album);
+        }
+        
+        dump($templateNewestAlbums);
         
         $this->template->newestVideos = $templateNewestVideos;
         $this->template->lang = $this->lang;

@@ -36,6 +36,7 @@ class PhotosManager {
             COLUMN_COVER_PHOTO_ID = 'cover_photo_id',
             COLUMN_DATE = 'date',
             COLUMN_DAYS = 'days',
+            COLUMN_TAGS = 'tags',
             THUMB_2048 = 2048,
             THUMB_1024 = 1024,
             THUMB_512 = 512,
@@ -104,16 +105,17 @@ class PhotosManager {
     public function getAlbumsFromDB($from, $count, $published = 1, 
             $order = self::COLUMN_DATE) {
         
-        if ($published != 2) {
-        
+        if($published != 2) {
             return $this->database->table(self::TABLE_NAME_ALBUMS)
-                    ->where(array(self::COLUMN_PUBLISHED => $published))
-                    ->limit($count, $from)
-                    ->order($order);
+                ->select('*')
+                ->where(array(self::COLUMN_PUBLISHED => $published))
+                ->limit($count, $from)
+                ->order($order);
         } else {
             return $this->database->table(self::TABLE_NAME_ALBUMS)
-                    ->limit($count, $from)
-                    ->order($order);
+                ->select('*')
+                ->limit($count, $from)
+                ->order($order);
         }
     }
     
@@ -248,7 +250,9 @@ class PhotosManager {
         $album['tags'] = $input[self::COLUMN_TAGS];
         $album['days'] = $input[self::COLUMN_DAYS];
         
+        $album['thumbs'] = $this->getPhotoThumbnails($input[self::COLUMN_COVER_PHOTO_ID]);
         
-        return $video;
+        
+        return $album;
     }
 }
