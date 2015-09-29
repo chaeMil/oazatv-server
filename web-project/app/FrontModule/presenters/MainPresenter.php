@@ -18,10 +18,15 @@ class MainPresenter extends BasePresenter {
     }
     
     public function renderDefault() {
-        $this->template->newestVideos = $this->videoManager->getVideosFromDB(0, 10);
+        $newestVideos = $this->videoManager->getVideosFromDB(0, 10);
+        $templateNewestVideos;
+        
+        foreach($newestVideos as $video) {
+            $templateNewestVideos[] = $video;
+        }
+        
+        $this->template->newestVideos = $templateNewestVideos;
         $this->template->lang = $this->lang;
-        dump($this->videoManager->createLocalizedVideoObject($this->lang, 
-                $this->videoManager->getVideoFromDB(43)));
     }
     
 }
