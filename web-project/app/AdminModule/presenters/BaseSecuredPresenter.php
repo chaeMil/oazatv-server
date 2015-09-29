@@ -16,10 +16,16 @@ namespace App\AdminModule;
 class BaseSecuredPresenter extends BasePresenter {
     
     function startup() {
-        parent::startup();
+        
+        $this->getUser()->getStorage()->setNamespace('admin');
+        
         if (!$this->getUser()->isLoggedIn()) {
-            $this->redirect('Sign:in');
+            if (!$this->getUser()->isInRole("administrator")) {
+                $this->redirect('Sign:in');
+            }
         }
+        
+        parent::startup();
     }
     
 }

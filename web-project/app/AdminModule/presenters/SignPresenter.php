@@ -56,7 +56,6 @@ class SignPresenter extends BasePresenter {
         $this->getUser()->setExpiration('20 minutes', TRUE);
 
         try {
-            $this->getUser()->login($values->username, $values->password);
             
             $user = $this->database->table("admin_users")->get($this->getUser()->getId());
             $user->update(Array(
@@ -64,6 +63,9 @@ class SignPresenter extends BasePresenter {
                 "lastlogin_ip" => $_SERVER['REMOTE_ADDR']
                 )
             );
+            
+            $this->getUser()->getStorage()->setNamespace('admin');
+            $this->getUser()->login($values->username, $values->password);
             
             EventLogger::log('user '.$values->username.' logged in', EventLogger::AUTH_LOG);
             
