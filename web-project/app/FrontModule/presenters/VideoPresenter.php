@@ -31,6 +31,8 @@ class VideoPresenter extends BasePresenter {
         $hash = $id; //id only in router, actualy its hash
         $video = $this->videoManager->getVideoFromDBbyHash($hash);
         
+        $this->videoManager->countView($video->id);
+        
         $this->template->video = $this->videoManager
                 ->createLocalizedVideoObject($this->lang, $video);
     }

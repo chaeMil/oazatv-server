@@ -34,6 +34,7 @@ class VideoManager extends BaseModel {
             COLUMN_NAME_CS = 'name_cs',
             COLUMN_NAME_EN = 'name_en',
             COLUMN_TAGS = 'tags',
+            COLUMN_VIEWS = 'views',
             COLUMN_CATEGORIES = 'categories',
             COLUMN_DESCRIPTION_CS = 'description_cs',
             COLUMN_DESCRIPTION_EN = 'description_en',
@@ -138,7 +139,6 @@ class VideoManager extends BaseModel {
                 ->order($order);
         }
         
-        
     }
     
     
@@ -232,6 +232,13 @@ class VideoManager extends BaseModel {
         }
     }
     
+    public function countView($id) {
+        $video = self::$database->table(self::TABLE_NAME)->get($id);
+        $views = $video['views'];
+        
+        $video->update(array(self::COLUMN_VIEWS => $views + 1));
+    }
+    
     public function createLocalizedVideoObject($lang, $input) {
         $video = Array();    
         
@@ -270,6 +277,7 @@ class VideoManager extends BaseModel {
             $video['webm'] = VIDEOS_FOLDER.$videoId.'/'.$input[self::COLUMN_WEBM_FILE];
         }
         $video['categories'] = $input[self::COLUMN_CATEGORIES];
+        $video['views'] = $input[self::COLUMN_VIEWS];
         $video['thumbs'] = $this->getThumbnails($videoId);
         
         return $video;
