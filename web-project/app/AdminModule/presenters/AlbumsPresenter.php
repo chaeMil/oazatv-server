@@ -98,7 +98,7 @@ class AlbumsPresenter extends BaseSecuredPresenter {
     }
     
     public function actionAjaxSetAlbumCover($albumId, $photoId) {
-        $album = $this->photosManager->getAlbumFromDB($albumId);
+        $album = $this->photosManager->getAlbumFromDB($albumId, 2);
         $album->update(array(PhotosManager::COLUMN_COVER_PHOTO_ID => $photoId));
         
         EventLogger::log('user '.$this->getUser()->getIdentity()->login.' changed album: '.$albumId. ' cover photo: '. $photoId, 
