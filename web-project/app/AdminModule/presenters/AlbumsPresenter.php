@@ -38,7 +38,7 @@ class AlbumsPresenter extends BaseSecuredPresenter {
     
     public function renderAlbumDetail($id) {
         $this->getTemplateVariables($this->getUser()->getId());
-        $album = $this->photosManager->getAlbumFromDB($id);
+        $album = $this->photosManager->getAlbumFromDB($id, 2);
         
         $this->template->album = $album;
         $this->template->photos = $this->photosManager->getPhotosFromAlbum($id);

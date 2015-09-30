@@ -91,10 +91,16 @@ class PhotosManager {
     }
     
     public function getAlbumFromDB($id, $published = 1) {
-        return $this->database->table(self::TABLE_NAME_ALBUMS)
-                ->select("*")->where(array(self::COLUMN_ID=> $id, 
-                    self::COLUMN_PUBLISHED => $published))
-                ->fetch();
+        if ($published != 2) {
+            return $this->database->table(self::TABLE_NAME_ALBUMS)
+                    ->select("*")->where(array(self::COLUMN_ID=> $id, 
+                        self::COLUMN_PUBLISHED => $published))
+                    ->fetch();
+        } else {
+            return $this->database->table(self::TABLE_NAME_ALBUMS)
+                    ->select("*")->where(array(self::COLUMN_ID=> $id))
+                    ->fetch();
+        }
                 
     }
     
