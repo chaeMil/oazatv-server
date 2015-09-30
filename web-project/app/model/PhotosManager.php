@@ -264,7 +264,9 @@ class PhotosManager {
         $album['tags'] = $input[self::COLUMN_TAGS];
         $album['days'] = $input[self::COLUMN_DAYS];
         
-        $album['thumbs'] = $this->getPhotoThumbnails($input[self::COLUMN_COVER_PHOTO_ID]);
+        if ($input[self::COLUMN_COVER_PHOTO_ID] != '') {
+            $album['thumbs'] = $this->getPhotoThumbnails($input[self::COLUMN_COVER_PHOTO_ID]);
+        }
         
         
         return $album;
