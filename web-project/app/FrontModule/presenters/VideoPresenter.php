@@ -29,10 +29,15 @@ class VideoPresenter extends BasePresenter {
     
     public function renderWatch($id) {
         $hash = $id; //id only in router, actualy its hash
-        $video = $this->videoManager->getVideoFromDBbyHash($hash);
+        $video = $this->videoManager->getVideoFromDBbyHash($hash); 
         
-        $this->videoManager->countView($video->id);
+        $httpResponse = $this->container->getByType('Nette\Http\Response');
         
+        if (!isset($_COOKIE[$hash])) {
+            $this->videoManager->countView($video->id);
+            $httpResponse->setCookie($hash, 'watched', '1 hour');
+        }
+
         $this->template->video = $this->videoManager
                 ->createLocalizedVideoObject($this->lang, $video);
     }

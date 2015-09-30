@@ -3,6 +3,7 @@
 <h1>{$video['name']}</h1>
 <p>{$video['desc']}</p>
 <p>{$video['date']}</p>
+<p>{$video['views']}</p>
 <video width="1280" height="720" controls>
     {if isset($video['mp4'])}
         <source src="{$basePath}/{$video['mp4']}" type="video/mp4">
