@@ -23,7 +23,7 @@ class MainPresenter extends BasePresenter {
     
     public function renderDefault() {
         $newestVideos = $this->videoManager->getVideosFromDB(0, 10);
-        $templatesNewestVideos;
+        $templatesNewestVideos = null;
         
         foreach($newestVideos as $video) {
             $templateNewestVideos[] = $this->videoManager
@@ -31,7 +31,7 @@ class MainPresenter extends BasePresenter {
         }
         
         $newestAlbums = $this->photosManager->getAlbumsFromDB(0, 10);
-        $templateNewestAlbums;
+        $templateNewestAlbums = null;
         
         foreach($newestAlbums as $album) {
             $templateNewestAlbums[] = $this->photosManager
