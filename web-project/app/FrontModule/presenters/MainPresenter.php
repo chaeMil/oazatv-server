@@ -23,7 +23,7 @@ class MainPresenter extends BasePresenter {
     
     public function renderDefault() {
         $newestVideos = $this->videoManager->getVideosFromDB(0, 10);
-        $templatesNewestVideos = null;
+        $templateNewestVideos = null;
         
         foreach($newestVideos as $video) {
             $templateNewestVideos[] = $this->videoManager
