@@ -1,11 +1,15 @@
 {block content}
 
+{if isset($newestVideos)}
 <h1>{_frontend.homepage.newest_videos}</h1>
-<div n:foreach="$newestVideos as $video">
-    <a n:href="Video:watch $video['hash']">{$video['name']}</a>
-</div>
-
-<h1>{_frontend.homepage.newest_albums}</h1>
-<div n:foreach="$newestAlbums as $album">
-    <a n:href="Album:watch $album['hash']">{$album['name']}</a>
-</div>
+    <div n:foreach="$newestVideos as $video">
+        <a n:href="Video:watch $video['hash']">{$video['name']}</a>
+    </div>
+{/if}
+    
+{if isset($newestAlbums)}
+    <h1>{_frontend.homepage.newest_albums}</h1>
+    <div n:foreach="$newestAlbums as $album">
+        <a n:href="Album:watch $album['hash']">{$album['name']}</a>
+    </div>
+{/if}
