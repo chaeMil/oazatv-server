@@ -35,6 +35,8 @@ class VideoPresenter extends BasePresenter {
         
         $watchedCookie = $this->getHttpRequest()->getCookie($hash);
         
+        dump($watchedCookie); exit;
+        
         if ($watchedCookie == '') {
             $this->videoManager->countView($video->id);
             $httpResponse->setCookie($hash, 'watched', '1 hour');
