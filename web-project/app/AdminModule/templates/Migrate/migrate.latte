@@ -43,53 +43,76 @@
     <tr>
         <td>mp4_file</td>
         <td>{$video->mp4_file}</td>
+        <td>{$videoNew['mp4_file']}</td>
     <tr>
     <tr>
         <td>webm_file</td>
         <td>{$video->webm_file}</td>
+        <td>{$videoNew['webm_file']}</td>
     <tr>
     <tr>
         <td>mp3_file</td>
         <td>{$video->mp3_file}</td>
+        <td>{$videoNew['mp3_file']}</td>
     <tr>
     <tr>
         <td>thumb_file</td>
         <td>{$video->thumb_file}</td>
+        <td>{$videoNew['thumb_file']}</td>
     <tr>
     <tr>
         <td>date</td>
         <td>{$video->date}</td>
+        <td>{$videoNew['date']}</td>
     <tr>
     <tr>
         <td>name_cs</td>
         <td>{$video->name_cs}</td>
+        <td>{$videoNew['name_cs']}</td>
     <tr>
     <tr>
         <td>name_en</td>
         <td>{$video->name_en}</td>
+        <td>{$videoNew['name_en']}</td>
     <tr>
     <tr>
         <td>tags</td>
         <td>{$video->tags}</td>
+        <td>{$videoNew['tags']}</td>
     <tr>
     <tr>
         <td>views</td>
         <td>{$video->views}</td>
+        <td>{$videoNew['views']}</td>
     <tr>
     <tr>
         <td>categories</td>
         <td>{$video->categories}</td>
+        <td>{$videoNew['categories']}</td>
     <tr>
     <tr>
         <td>description_cs</td>
         <td>{$video->description_cs}</td>
+        <td>{$videoNew['description_cs']}</td>
     <tr>
     <tr>
         <td>description_en</td>
         <td>{$video->description_en}</td>
+        <td>{$videoNew['description_en']}</td>
     <tr>
     <tr>
         <td>note</td>
         <td>{$video->note}</td>
+        <td>{$videoNew['note']}</td>
     <tr>
 </table>
+    
+<hr>
+    
+{if $previousVideoId != 0}
+    <a n:href="Migrate:migrate $previousVideoId">předchozí</a>
+{/if}
+ | 
+{if $maxVideoId != $nextVideoId}
+    <a n:href="Migrate:migrate $nextVideoId">další</a>
+{/if}
