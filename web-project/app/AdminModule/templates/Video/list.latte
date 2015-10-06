@@ -22,8 +22,8 @@
                     <th>id</th>
                     <th>název česky</th>
                     <th>název anglicky</th>
-                    <th>datum</th>
-                    <th class="hidden-xs">tagy</th>
+                    <th style="min-width: 100px">datum</th>
+                    {*<th class="hidden-xs">tagy</th>*}
                     <th class="hidden-xs">kategorie</th>
                     <th class="hidden-xs">poznámka</th>
                 </thead>
@@ -35,7 +35,7 @@
                         <td>{$video->name_cs}</td>
                         <td>{$video->name_en}</td>
                         <td>{$video->date|date:'j .n .Y'}</td>
-                        <td class="hidden-xs">{$video->tags}<td>
+                        {*<td class="hidden-xs">{$video->tags}<td>*}
                         <td class="hidden-xs">{$video->categories}</td>
                         <td class="hidden-xs">{$video->note}</td>
                     </tr>
