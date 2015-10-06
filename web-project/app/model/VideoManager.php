@@ -164,7 +164,7 @@ class VideoManager extends BaseModel {
     }
     
     public function deleteVideoFile($id, $file) {
-        $video = $this->getVideoFromDB($id);
+        $video = $this->getVideoFromDB($id, 2);
         $fileToDelete = VIDEOS_FOLDER . $id ."/". $video->$file;
         if (!empty($video->$file)) {
             if (file_exists($fileToDelete)) {
@@ -175,18 +175,18 @@ class VideoManager extends BaseModel {
     }
     
     public function deleteVideo($id) {
-        $video = $this->getVideoFromDB($id);
+        $video = $this->getVideoFromDB($id, 2);
         FileUtils::recursiveDelete(VIDEOS_FOLDER . $id ."/");
         $video->delete();
     }
     
     public function useOriginalFileAs($id, $target) {
-        $video = $this->getVideoFromDB($id);
+        $video = $this->getVideoFromDB($id, 2);
         $video->update(array(self::COLUMN_ORIGINAL_FILE => "", $target => $video->original_file));
     }
     
     public function useExternaFileAsThumb($id, $file) {
-        $video = $this->getVideoFromDB($id);
+        $video = $this->getVideoFromDB($id, 2);
         $this->deleteVideoFile($id, self::COLUMN_THUMB_FILE);
         $this->deleteThumbnails($id);
         $newThumbName = StringUtils::rand(6).".jpg";
@@ -220,8 +220,8 @@ class VideoManager extends BaseModel {
     }
     
     private function generateThumbnails($videoId) {
-        $video = $this->getVideoFromDB($videoId);
-        if ($video->thumb_file != '') {
+        $video = $this->getVideoFromDB($videoId, 2);
+        if (isset($video->thumb_file)) {
             $thumbFile = VIDEOS_FOLDER.$video->id."/".$video->thumb_file;
             if (file_exists($thumbFile)) {
                 \App\ImageUtils::resizeImage(VIDEOS_FOLDER.$video->id, $video->thumb_file, self::THUMB_1024, self::THUMB_1024, VIDEOS_FOLDER.$video->id."/thumbs/");
