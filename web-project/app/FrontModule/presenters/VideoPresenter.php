@@ -10,7 +10,8 @@ namespace App\FrontModule;
 
 use Nette,
 Nette\Database\Context,
-Model\VideoManager;
+Model\VideoManager,
+Model\AnalyticsManager;
 
 /**
  * Description of VideoPreseter
@@ -19,12 +20,17 @@ Model\VideoManager;
  */
 class VideoPresenter extends BasePresenter {
     
-    public $videoManager;
+    private $videoManager;
+    private $analyticsManager;
     
     public function __construct(Nette\DI\Container $container,
-            Context $database, VideoManager $videoManager) {
+            Context $database, VideoManager $videoManager,
+            AnalyticsManager $analyticsManager) {
+        
         parent::__construct($container, $database);
+        
         $this->videoManager = $videoManager;
+        $this->analyticsManager = $analyticsManager;
     }
     
     public function renderWatch($id) {
@@ -37,6 +43,7 @@ class VideoPresenter extends BasePresenter {
         
         if (!isset($watchedCookie)) {
             $this->videoManager->countView($video->id);
+            $this->analyticsManager->addVideoToPopular($video->id);
             $httpResponse->setCookie($hash, 'watched', '1 hour');
         }
 

@@ -29,6 +29,7 @@ services:
     - Model\ConversionManager
     - Model\ServerSettings
     - Model\PhotosManager
+    - Model\AnalyticsManager
     - App\RouterFactory
     router: @App\RouterFactory::createRouter
     nette.latteFactory:
