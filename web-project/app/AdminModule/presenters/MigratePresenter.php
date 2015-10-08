@@ -3,7 +3,8 @@
 namespace App\AdminModule;
 
 use Nette,
- Model\VideoManager;
+ Model\VideoManager,
+ App\StringUtils;
 
 /**
  * Description of VideoPresenter
@@ -42,28 +43,55 @@ class MigratePresenter extends BasePresenter {
         $hash = substr($video['original_file'], 11, 6);
         $videoNew['hash'] = $hash;
         
-        if (strpos($video['original_file'],'.flv') !== false) {
-            $videoNew['original_file'] = $video['original_file'];
+        if (!file_exists($this->videoFolderPrefix.$videoNew['id'])) {
+            mkdir($this->videoFolderPrefix.$videoNew['id']);
+            mkdir($this->videoFolderPrefix.$videoNew['id'].'/thumbs');
+            mkdir($this->videoFolderPrefix.$videoNew['id'].'/logs');
         }
         
-        if (strpos($video['original_file'],'.mp4') !== false) {
-            $videoNew['mp4_file'] = $video['original_file'];
-        } else {
-            $videoNew['mp4_file'] = '';
+        if (strpos($video['original_file'],'.flv') !== false) {
+            
+            $newFileName = StringUtils::rand(6).'.flv';
+            rename($this->videoFolderPrefix.$video['original_file'], 
+                    $this->videoFolderPrefix.$videoNew['id'].'/'.$newFileName);
+            
+            $videoNew['original_file'] = $newFileName;
+            $newFileName = null;
         }
         
         $mp4File = substr($video['original_file'], 0, -4).'.mp4';
         
-        if (file_exists($this->videoFolderPrefix.$mp4File)) {
-            $videoNew['mp4_file'] = $mp4File;
+        if (strpos($video['original_file'],'.mp4') !== false) {            
+            
+            $newFileName = StringUtils::rand(6).'.mp4';
+            rename($this->videoFolderPrefix.$mp4File, 
+                    $this->videoFolderPrefix.$videoNew['id'].'/'.$newFileName);
+            
+            $videoNew['mp4_file'] = $newFileName;
+            $videoNew['original_file'] = '';
+            $newFileName = null;
+            
+        } else if (file_exists ($this->videoFolderPrefix.$mp4File)){
+            $newFileName = StringUtils::rand(6).'.mp4';
+            rename($this->videoFolderPrefix.$mp4File, 
+                    $this->videoFolderPrefix.$videoNew['id'].'/'.$newFileName);
+            
+            $videoNew['mp4_file'] = $newFileName;
+            $newFileName = null;
         } else {
             $videoNew['mp4_file'] = '';
-        }
+        }       
         
         $webmFile = substr($video['original_file'], 0, -4).'.webm';
         
         if (file_exists($this->videoFolderPrefix.$webmFile)) {
-            $videoNew['webm_file'] = $webmFile;
+            
+            $newFileName = StringUtils::rand(6).'.webm';
+            rename($this->videoFolderPrefix.$webmFile, 
+                    $this->videoFolderPrefix.$videoNew['id'].'/'.$newFileName);
+            
+            $videoNew['webm_file'] = $newFileName;
+            $newFileName = null;
         } else {
             $videoNew['webm_file'] = '';
         }
@@ -71,7 +99,13 @@ class MigratePresenter extends BasePresenter {
         $mp3File = substr($video['original_file'], 0, -4).'.mp3';
         
         if (file_exists($this->videoFolderPrefix.$mp3File)) {
-            $videoNew['mp3_file'] = $mp3File;
+            
+            $newFileName = StringUtils::rand(6).'.mp3';
+            rename($this->videoFolderPrefix.$mp3File, 
+                    $this->videoFolderPrefix.$videoNew['id'].'/'.$newFileName);
+            
+            $videoNew['mp3_file'] = $newFileName;
+            $newFileName = null;
         } else {
             $videoNew['mp3_file'] = '';
         }
@@ -79,7 +113,13 @@ class MigratePresenter extends BasePresenter {
         $thumbFile = substr($video['original_file'], 0, -4).'.jpg';
         
         if (file_exists($this->videoFolderPrefix.$thumbFile)) {
-            $videoNew['thumb_file'] = $thumbFile;
+            
+            $newFileName = StringUtils::rand(6).'.jpg';
+            rename($this->videoFolderPrefix.$thumbFile, 
+                    $this->videoFolderPrefix.$videoNew['id'].'/'.$newFileName);
+            
+            $videoNew['thumb_file'] = $newFileName;
+            $newFileName = null;
         } else {
             $videoNew['thumb_file'] = '';
         }
@@ -95,8 +135,10 @@ class MigratePresenter extends BasePresenter {
         $videoNew['description_en'] = $video['description_en'];
         $videoNew['note'] = $video['note'];
         
-        
         $this->template->videoNew = $videoNew;
+        
+        $this->videoManager->saveVideoToDB($videoNew);
+        
     }
     
     function renderDefault() {
