@@ -15,13 +15,14 @@
     "tests"
   ],
   "dependencies": {
-    "startbootstrap-sb-admin-2": "~1.0.7",
-    "bootstrap-tagsinput": "timschlechter/bootstrap-tagsinput#~0.5.0",
-    "resumable.js": "~2.9.0",
-    "eonasdan-bootstrap-datetimepicker": "~4.15.35",
-    "resumablejs": "~1.0.2",
+    "WATable": "watable#~1.10.2",
     "bootbox": "~4.4.0",
+    "bootstrap-tagsinput": "timschlechter/bootstrap-tagsinput#~0.5.0",
     "caman": "~4.1.2",
-    "jquery-sortable": "~0.9.13"
+    "eonasdan-bootstrap-datetimepicker": "~4.15.35",
+    "jquery-sortable": "~0.9.13",
+    "resumable.js": "~2.9.0",
+    "resumablejs": "~1.0.2",
+    "startbootstrap-sb-admin-2": "~1.0.7"
   }
 }
