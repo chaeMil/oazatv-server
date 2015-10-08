@@ -42,6 +42,12 @@ class VideoPresenter extends BaseSecuredPresenter {
         if (!file_exists(VIDEOS_FOLDER.$id.'/'.$video['mp4_file'])) {
             $this->template->mp4FileMissing = true;
         }
+        if (!file_exists(VIDEOS_FOLDER.$id.'/'.$video['mp3_file'])) {
+            $this->template->mp3FileMissing = true;
+        }
+        if (!file_exists(VIDEOS_FOLDER.$id.'/'.$video['webm_file'])) {
+            $this->template->webmFileMissing = true;
+        }
         
         $this->template->originalFileInfo = $this->videoManager->getOriginalFileInfo($video->id);;
         $this->template->originalFile = VideoManager::COLUMN_ORIGINAL_FILE;

@@ -150,8 +150,13 @@
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4>MP3 soubor: <small>{$video->mp3_file}</small></h4>
-                                            <i onclick="openPlayer({$video->mp3_file});" 
+                                            {if isset($mp3FileMissing)}
+                                                <i onClick="fileMissing({$video->mp3_file});"
+                                                   class="file-missing fa fa-warning fa-3x pull-right"></i>
+                                            {else}
+                                                <i onclick="openPlayer({$video->mp3_file});" 
                                                class="open-player fa fa-play-circle-o fa-3x pull-right"></i>
+                                            {/if}
                                         </div>
                                         <div class="panel-body">
                                             <a n:href="Video:deleteVideoFile, $video->id, $mp3File"
@@ -167,8 +172,13 @@
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4>WEBM soubor: <small>{$video->webm_file}</small></h4>
-                                            <i onclick="openPlayer({$video->webm_file});" 
+                                            {if isset($webmFileMissing)}
+                                                <i onClick="fileMissing({$video->webm_file});"
+                                                   class="file-missing fa fa-warning fa-3x pull-right"></i>
+                                            {else}
+                                                <i onclick="openPlayer({$video->webm_file});" 
                                                class="open-player fa fa-play-circle-o fa-3x pull-right"></i>
+                                            {/if}
                                         </div>
                                         <div class="panel-body">
                                             <a n:href="Video:deleteVideoFile, $video->id, $webmFile"
