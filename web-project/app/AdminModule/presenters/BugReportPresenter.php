@@ -31,17 +31,12 @@ class BugReportPresenter extends BaseSecuredPresenter {
         $this->userManager = $userManager;
     }
     
-    function renderDefault() {
-        $paginator = new Nette\Utils\Paginator;
-        $paginator->setItemCount($this->bugReport->countBugs());
-        $paginator->setItemsPerPage(30);
-        $paginator->setPage(1);
-        
+    function renderDefault() {       
         $this->getTemplateVariables($this->getUser()->getId());
         $this->template->userManager = $this->userManager;
         
-        $this->template->bugs = $this->bugReport
-                ->getBugsFromDB($paginator->getLength(), $paginator->getOffset(), "id");
+        $this->template->unresolvedBugs = $this->bugReport->getBugsFromDB(2);
+        $this->template->resolvedBugs = $this->bugReport->getBugsFromDB(1);
     }
     
     public function actionAdd() {

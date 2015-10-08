@@ -21,6 +21,7 @@
         
         <br>
         
+        <h3>Nevyřešené chyby</h3><br>
         <div class="row">
             <table class="table table-hover">
                 <thead>
@@ -30,7 +31,34 @@
                     <th>priorita</th>
                 </thead>
                 <tbody>
-                    <tr n:foreach="$bugs as $bug" 
+                    <tr n:foreach="$unresolvedBugs as $bug" 
+                        class="clickable-row {if ($bug->solved == 1)}active{/if}"
+                        data-href="{$presenter->link('BugReport:Detail', $bug->id)}">
+                        <td>{$bug->id}</td>
+                        <td>{$userManager->getUserName($bug->user_id)}</td>
+                        <td>{$bug->bug_name}</td>
+                        <td>{if ($bug->priority == 0)}nízká{/if}
+                        {if ($bug->priority == 1)}normální{/if}
+                        {if ($bug->priority == 2)}vysoká{/if}
+                        {if ($bug->priority == 3)}urgentní{/if}</td>
+                    </tr>
+                </tbody>                
+            </table>
+        </div>
+        <br>
+        <hr>
+                    
+        <h3>Vyřešené chyby</h3><br>
+        <div class="row">
+            <table class="table table-hover">
+                <thead>
+                    <th>id</th>
+                    <th>uživatel</th>
+                    <th>název</th>
+                    <th>priorita</th>
+                </thead>
+                <tbody>
+                    <tr n:foreach="$resolvedBugs as $bug" 
                         class="clickable-row {if ($bug->solved == 1)}active{/if}"
                         data-href="{$presenter->link('BugReport:Detail', $bug->id)}">
                         <td>{$bug->id}</td>

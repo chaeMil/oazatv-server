@@ -50,13 +50,42 @@ class BugReport {
         return $this::$database->table(self::TABLE_NAME)->get($id);
     }
     
-    public function getBugsFromDB($from, $count, $order) {
-        return $this::$database->table(self::TABLE_NAME)
-                ->limit($from, $count)
-                ->order($order);
+    public function getBugsFromDB($solved = 0) {
+        switch($solved) {
+            case 0:
+                return $this::$database->table(self::TABLE_NAME)
+                    ->select('*')->fetchAll();
+                break;
+            case 1:
+                return $this::$database->table(self::TABLE_NAME)
+                    ->select('*')->where(self::COLUMN_SOLVED, 1)
+                    ->fetchAll();;
+                break;
+            case 2:
+                return $this::$database->table(self::TABLE_NAME)
+                    ->select('*')->where(self::COLUMN_SOLVED, 0)
+                    ->fetchAll();
+                break;
+        }
+        
     }
     
-    public function countBugs() {
-        return $this::$database->table(self::TABLE_NAME)->count("*");
+    public function countBugs($solved = 0) {
+        switch($solved) {
+            case 0:
+                return $this::$database->table(self::TABLE_NAME)
+                    ->select('*')->count();
+                break;
+            case 1:
+            return $this::$database->table(self::TABLE_NAME)
+                    ->select('*')->where(self::COLUMN_SOLVED, 1)
+                    ->count();
+                break;
+            case 2:
+                return $this::$database->table(self::TABLE_NAME)
+                    ->select('*')->where(self::COLUMN_SOLVED, 0)
+                    ->count();
+                break;
+        }
     }
 }
