@@ -47,10 +47,12 @@ class MainPresenter extends BasePresenter {
         
         $templatePopularVideos = null;
         
-        foreach($popularVideos as $video) {
-            $dbVideo = $this->videoManager->getVideoFromDB($video);
-            $templatePopularVideos[] = $this->videoManager
-                    ->createLocalizedVideoObject($this->lang, $dbVideo);
+        if($popularVideos != null) {
+            foreach($popularVideos as $video) {
+                $dbVideo = $this->videoManager->getVideoFromDB($video);
+                $templatePopularVideos[] = $this->videoManager
+                        ->createLocalizedVideoObject($this->lang, $dbVideo);
+            }
         }
         
         $this->template->popularVideos = $templatePopularVideos;
