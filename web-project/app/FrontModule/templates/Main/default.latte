@@ -13,3 +13,10 @@
         <a n:href="Album:watch $album['hash']">{$album['name']}</a>
     </div>
 {/if}
+
+{if isset($popularVideos)}
+    <h1>{_frontend.homepage.popular_videos}</h1>
+    <div n:foreach="$popularVideos as $video">
+        <a n:href="Video:watch $video['hash']">{$video['name']}</a>
+    </div>
+{/if}

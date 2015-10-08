@@ -5,20 +5,25 @@ namespace App\FrontModule;
 use Nette,
 Nette\Database\Context,
 Model\VideoManager,
-Model\PhotosManager;
+Model\PhotosManager,
+Model\AnalyticsManager;
 
 
 class MainPresenter extends BasePresenter {
     
-    public $videoManager;
-    public $photosManager;
+    private $videoManager;
+    private $photosManager;
+    private $analyticsManager;
     
     public function __construct(Nette\DI\Container $container,
             Context $database, VideoManager $videoManager,
-            PhotosManager $photosManager) {
+            PhotosManager $photosManager,
+            AnalyticsManager $analyticsManager) {
+        
         parent::__construct($container, $database);
         $this->videoManager = $videoManager;
         $this->photosManager = $photosManager;
+        $this->analyticsManager = $analyticsManager;
     }
     
     public function renderDefault() {
@@ -38,6 +43,17 @@ class MainPresenter extends BasePresenter {
                     ->createLocalizedAlbumThumbObject($this->lang, $album);
         }
         
+        $popularVideos = $this->analyticsManager->getPopularVideosIds();
+        
+        $templatePopularVideos = null;
+        
+        foreach($popularVideos as $video) {
+            $dbVideo = $this->videoManager->getVideoFromDB($video);
+            $templatePopularVideos[] = $this->videoManager
+                    ->createLocalizedVideoObject($this->lang, $dbVideo);
+        }
+        
+        $this->template->popularVideos = $templatePopularVideos;
         $this->template->newestVideos = $templateNewestVideos;
         $this->template->newestAlbums = $templateNewestAlbums;
         $this->template->lang = $this->lang;

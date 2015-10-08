@@ -9,7 +9,8 @@
 namespace Model;
 
 use Nette,
- Model\VideoManager;
+ Model\VideoManager,
+ Nette\Utils\Strings;
 
 /**
  * Description of BugReport
@@ -21,7 +22,8 @@ class AnalyticsManager {
     const
             TABLE_NAME = 'popular_videos',
             COLUMN_ID = 'id',
-            COLUMN_DATETIME = 'datetime';
+            COLUMN_DATETIME = 'datetime',
+            COUNT = 'count';
     
     /** @var Nette\Database\Context */
     private $database;
@@ -40,15 +42,25 @@ class AnalyticsManager {
         ));
     }
     
-    public function getPopularVideosIds($days = 7) {
+    public function getPopularVideosIds($days = 7, $limit = 10) {
         $date = strtotime("-".$days." day");
-        $slqDate = date('Y-m-d H:i:s', $date);
+        $sqlDate = date('Y-m-d H:i:s', $date);
         
-        return $this->database->table(self::TABLE_NAME)
-                ->select(self::COLUMN_ID)
-                ->where(self::COLUMN_DATETIME <= $slqDate)
-                ->group(self::COLUMN_ID)
-                ->fetchAll();
+        $videos = $this->database
+                ->query('SELECT '.self::COLUMN_ID.', COUNT(*) '.self::COUNT.
+                        ' FROM '.self::TABLE_NAME.
+                        ' WHERE '.self::COLUMN_DATETIME.' >= "'.$sqlDate.'"'.
+                        ' GROUP BY '.self::COLUMN_ID.
+                        ' ORDER BY '.self::COUNT.' DESC'.
+                        ' LIMIT '.Strings::webalize($limit))->fetchAll();
+        
+        $videosArray = null;
+        
+        foreach($videos as $video) {
+            $videosArray[] = $video->id;
+        }
+        
+        return $videosArray;
     }
     
 }
