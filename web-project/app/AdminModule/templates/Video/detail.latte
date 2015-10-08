@@ -305,69 +305,69 @@
 {block pageScripts}
 
 <script>
-// Javascript to enable link to tab
-var url = document.location.toString();
-if (url.match('#')) {
-    $('.nav-tabs a[href=#'+url.split('#')[1]+']').tab('show') ;
-} 
+    // Javascript to enable link to tab
+    var url = document.location.toString();
+    if (url.match('#')) {
+        $('.nav-tabs a[href=#'+url.split('#')[1]+']').tab('show') ;
+    } 
 
-// Change hash for page-reload
-$('.nav-tabs a').on('shown.bs.tab', function (e) {
-    window.location.hash = e.target.hash;
-})
+    // Change hash for page-reload
+    $('.nav-tabs a').on('shown.bs.tab', function (e) {
+        window.location.hash = e.target.hash;
+    })
 
-$(function () {
-    $('#datepicker').datetimepicker({
-        format: 'YYYY-MM-DD',
-        locale: 'cs'
+    $(function () {
+        $('#datepicker').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale: 'cs'
+        });
     });
-});
 </script>
 
 <script src="{$basePath}/admin_components/bower_components/resumablejs/resumable.js"></script>
 <script>
-var resumable = new Resumable({
-    target: '{$basePath|noescape}/uploaded/upload-and-merge-file.php',
-    chunkSize: 16*1024*1024,
-    maxFiles: 1
-});
-  
-resumable.assignBrowse($('#browseButton'));
+    var resumable = new Resumable({
+        target: '{$basePath|noescape}/uploaded/upload-and-merge-file.php',
+        chunkSize: 16*1024*1024,
+        maxFiles: 1
+    });
 
-resumable.on('fileSuccess', function(file, message){
-    console.debug(file);
-    console.debug(message);
-});
-resumable.on('fileProgress', function(file){
-    console.debug(file);
-});
+    resumable.assignBrowse($('#browseButton'));
 
-resumable.on('complete', function() {
-    window.location = ('{$basePath|noescape}/admin/upload/upload-original-file-succeeded?id={$video->id|noescape}&date={$video->date|noescape}');
-});
+    resumable.on('fileSuccess', function(file, message){
+        console.debug(file);
+        console.debug(message);
+    });
+    resumable.on('fileProgress', function(file){
+        console.debug(file);
+    });
 
-resumable.on('fileAdded', function(file, event){
-    $('#file-list').append('<li class="list-group-item">' + file.fileName + '</li>');
-});
+    resumable.on('complete', function() {
+        window.location = ('{$basePath|noescape}/admin/upload/upload-original-file-succeeded?id={$video->id|noescape}&date={$video->date|noescape}');
+    });
 
-$('#uploadButton').click(function() {
-    resumable.upload(); 
-    $('#spinner').removeClass('hidden');
-    $('#progress').removeClass('hidden');
-    getUploadProgress();
-});
+    resumable.on('fileAdded', function(file, event){
+        $('#file-list').append('<li class="list-group-item">' + file.fileName + '</li>');
+    });
 
-function getUploadProgress() {
-    var progress = Math.round(resumable.progress() * 100);
-    $('#progress .progress-bar').css('width', progress + "%").attr('aria-valuenow', progress).text(progress + "%");
-    setTimeout(getUploadProgress, 250);
-}
+    $('#uploadButton').click(function() {
+        resumable.upload(); 
+        $('#spinner').removeClass('hidden');
+        $('#progress').removeClass('hidden');
+        getUploadProgress();
+    });
 
-window.onbeforeunload = function(){
-    if (resumable.isUploading()) {
-        return "Probíhá nahrávání videa.";
+    function getUploadProgress() {
+        var progress = Math.round(resumable.progress() * 100);
+        $('#progress .progress-bar').css('width', progress + "%").attr('aria-valuenow', progress).text(progress + "%");
+        setTimeout(getUploadProgress, 250);
     }
-}
+
+    window.onbeforeunload = function(){
+        if (resumable.isUploading()) {
+            return "Probíhá nahrávání videa.";
+        }
+    }
 </script>
 
 <script>

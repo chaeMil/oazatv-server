@@ -16,6 +16,8 @@
         
         <br>
         
+        <input id="filter" type="text" class="form-control" placeholder="Vyhledávání...">
+        <br>
         <div class="row">
             <table class="table table-hover">
                 <thead>
@@ -27,14 +29,14 @@
                     <th class="hidden-xs">kategorie</th>
                     <th class="hidden-xs">poznámka</th>
                 </thead>
-                <tbody>
+                <tbody class="searchable">
                     <tr n:foreach="$videos as $video" 
                         class="clickable-row {if ($video->published == 1)}active{/if}"
                         data-href="{$presenter->link('Video:Detail', $video->id)}">
                         <td>{$video->id}</td>
                         <td>{$video->name_cs}</td>
                         <td>{$video->name_en}</td>
-                        <td>{$video->date|date:'j .n .Y'}</td>
+                        <td>{$video->date|date:'j.n.Y'}</td>
                         {*<td class="hidden-xs">{$video->tags}<td>*}
                         <td class="hidden-xs">{$video->categories}</td>
                         <td class="hidden-xs">{$video->note}</td>
@@ -47,4 +49,24 @@
     
     
 </div>
+{/block}
+
+{block pageScripts}
+    <script>
+        $(document).ready(function() {
+            (function ($) {
+
+                $('#filter').keyup(function () {
+
+                    var rex = new RegExp($(this).val(), 'i');
+                    $('.searchable tr').hide();
+                    $('.searchable tr').filter(function () {
+                        return rex.test($(this).text());
+                    }).show();
+
+                })
+
+            }(jQuery));
+        });
+    </script>
 {/block}
