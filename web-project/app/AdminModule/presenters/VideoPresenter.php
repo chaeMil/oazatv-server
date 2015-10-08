@@ -128,7 +128,8 @@ class VideoPresenter extends BaseSecuredPresenter {
         $status = $this->videoManager->saveVideoToDB($vals);
         
         if ($status) {
-            EventLogger::log('user '.$this->getUser()->getIdentity()->login.' updated video '.$vals->id, 
+            EventLogger::log('user '.$this->getUser()->getIdentity()
+                    ->login.' updated video '.$vals->id,
                 EventLogger::ACTIONS_LOG);
             
             $this->flashMessage("Změny úspěšně uloženy", "success");
@@ -140,7 +141,8 @@ class VideoPresenter extends BaseSecuredPresenter {
     public function actionUseOriginalFileAs($id, $target) {
         $this->videoManager->useOriginalFileAs($id, $target);
         
-        EventLogger::log('user '.$this->getUser()->getIdentity()->login.' used original file as '.$target.' in video '.$id, 
+        EventLogger::log('user '.$this->getUser()->getIdentity()
+                ->login.' used original file as '.$target.' in video '.$id,
                 EventLogger::ACTIONS_LOG);
         
         $this->flashMessage("Originání soubor použit jako: ".$target, "success");
@@ -152,7 +154,8 @@ class VideoPresenter extends BaseSecuredPresenter {
         if ($file == VideoManager::COLUMN_THUMB_FILE) {
             $this->videoManager->deleteThumbnails($id);
         }
-        EventLogger::log('user '.$this->getUser()->getIdentity()->login.' deleted '.$file.' from video '.$id, 
+        EventLogger::log('user '.$this->getUser()->getIdentity()
+                ->login.' deleted '.$file.' from video '.$id,
                 EventLogger::ACTIONS_LOG);
         $this->flashMessage("Soubor byl smazán", "danger");
         $this->redirect("Video:Detail#files", $id);
@@ -160,7 +163,9 @@ class VideoPresenter extends BaseSecuredPresenter {
     
     public function actionConvertFile($id, $input, $target) {
         $this->videoManager->addVideoToConvertQueue($id, $input, $target);
-        EventLogger::log('user '.$this->getUser()->getIdentity()->login.' aded '.$input.' from video '.$id.' to conversion queue, target format is '.$target, 
+        EventLogger::log('user '.$this->getUser()
+                ->getIdentity()->login.' aded '.$input.' from video '.$id.
+                    ' to conversion queue, target format is '.$target,
                 EventLogger::CONVERSION_LOG);
         $this->flashMessage("Soubor byl přidán do fronty", "info");
         $this->redirect("Video:Detail#files", $id);
