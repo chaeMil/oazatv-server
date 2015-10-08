@@ -39,7 +39,10 @@ class VideoPresenter extends BaseSecuredPresenter {
         $video = $this->videoManager->getVideoFromDB($id, 2);
         
         $this->template->video = $video;
-       
+        if (!file_exists(VIDEOS_FOLDER.$id.'/'.$video['mp4_file'])) {
+            $this->template->mp4FileMissing = true;
+        }
+        
         $this->template->originalFileInfo = $this->videoManager->getOriginalFileInfo($video->id);;
         $this->template->originalFile = VideoManager::COLUMN_ORIGINAL_FILE;
         $this->template->mp4File = VideoManager::COLUMN_MP4_FILE;

@@ -110,8 +110,13 @@
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4>MP4 soubor: <small>{$video->mp4_file}</small></h4>
-                                            <i onclick="openPlayer({$video->mp4_file});" 
+                                            {if isset($mp4FileMissing)}
+                                                <i onClick="fileMissing({$video->mp4_file});"
+                                                   class="file-missing fa fa-warning fa-3x pull-right"></i>
+                                            {else}
+                                                <i onclick="openPlayer({$video->mp4_file});" 
                                                class="open-player fa fa-play-circle-o fa-3x pull-right"></i>
+                                            {/if}
                                         </div>
                                         <div class="panel-body">
                                             <a n:href="Video:deleteVideoFile, $video->id, $mp4File"
@@ -378,6 +383,20 @@ window.onbeforeunload = function(){
             title: "zobrazuje se: " + file,
             message: '<img width="100%" class="img-responsive" src="{$basePath|noescape}/db/videos/{$video->id}/' +  file +'" />\n\
                         <a class="player-download btn btn-primary" href="{$basePath|noescape}/db/videos/{$video->id}/' +  file +'" download="' + downloadName + '">stáhnout</a>',
+            buttons: {
+                main: {
+                    label: "zavřít",
+                    className: "btn-primary"
+                }
+            },
+            className: "modal60"
+        });
+    }
+    
+    function fileMissing(file) {
+        bootbox.dialog({
+            title: "CHYBA: soubor nenalezen!",
+            message: '<h3>Soubor: <b>' + file + '</b> nebyl nalezen!</h3>',
             buttons: {
                 main: {
                     label: "zavřít",

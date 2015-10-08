@@ -33,6 +33,14 @@
   color: white;
   cursor: pointer;
 }
+.file-missing {
+  color: red;
+  margin-top: -40px;
+}
+.file-missing:hover {
+  color: #FF8888;
+  cursor: pointer;
+}
 .player-download {
   margin-bottom: -142px;
 }
