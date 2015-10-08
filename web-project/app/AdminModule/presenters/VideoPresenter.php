@@ -164,7 +164,7 @@ class VideoPresenter extends BaseSecuredPresenter {
     public function actionConvertFile($id, $input, $target) {
         $this->videoManager->addVideoToConvertQueue($id, $input, $target);
         EventLogger::log('user '.$this->getUser()
-                ->getIdentity()->login.' aded '.$input.' from video '.$id.
+                ->getIdentity()->login.' added '.$input.' from video '.$id.
                     ' to conversion queue, target format is '.$target,
                 EventLogger::CONVERSION_LOG);
         $this->flashMessage("Soubor byl přidán do fronty", "info");

@@ -4,6 +4,9 @@ app/config/config.local.neon
 logs
 *.log
 
+/.idea/workspace.xml
+/.idea
+
 # Runtime data
 pids
 *.pid
