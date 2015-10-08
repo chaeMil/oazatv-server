@@ -29,12 +29,8 @@ class MigratePresenter extends BasePresenter {
         $this->template->maxVideoId = $maxVideoId;
         $this->template->previousVideoId = $video['id'] - 1;
         $nextVideoId = $video['id'] + 1;
-        
-        if ($this->videoManager->getVideoFromDB($nextVideoId)) {
-            $this->template->nextVideoId = $nextVideoId;
-        } else {
-            $this->template->nextVideoId = $nextVideoId + 1;
-        }
+
+        $this->template->nextVideoId = $nextVideoId;
 
         $videoNew['id'] = $video['id'];
         $videoNew['published'] = $video['published'];
