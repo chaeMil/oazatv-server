@@ -22,21 +22,14 @@ class VideoPresenter extends BasePresenter {
     public function actionDefault($id) {
         $hash = $id;
         
-        dump($this->lang);
-        
         $video = $this->videoManager->getVideoFromDBbyHash($hash);
         
         if ($video != false) {
             
             $localizedVideo = $this->videoManager
                     ->createLocalizedVideoObject($this->lang, $video);
-            
-            dump($localizedVideo); exit;
-            
-            $response = array('apiVersion' => 2.0,
-                          'appVersion' => VERSION);
-        
-            $this->sendResponse(new JsonResponse($response));
+
+            $this->sendResponse(new JsonResponse($localizedVideo));
         }
         
         
