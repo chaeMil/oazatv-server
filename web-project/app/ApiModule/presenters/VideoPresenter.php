@@ -18,24 +18,18 @@ use Nette,
  * @author Michal Mlejnek <chaemil72 at gmail.com>
  */
 class VideoPresenter extends BasePresenter {
-
-    private $database;
-    private $videoManager;
-    
-    public function __construct(Nette\Database\Context $database, 
-            \Model\VideoManager $videoManager) {
-        $this->database = $database;
-        $this->videoManager = $videoManager;
-    }
    
-    public function actionDefault($id, $lang) {
+    public function actionDefault($id) {
         $hash = $id;
+        
+        dump($this->lang);
         
         $video = $this->videoManager->getVideoFromDBbyHash($hash);
         
         if ($video != false) {
             
-            $localizedVideo = $this->videoManager->createLocalizedVideoObject($lang, $video);
+            $localizedVideo = $this->videoManager
+                    ->createLocalizedVideoObject($this->lang, $video);
             
             dump($localizedVideo); exit;
             

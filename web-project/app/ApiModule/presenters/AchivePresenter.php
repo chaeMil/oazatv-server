@@ -19,15 +19,6 @@ use Nette,
  * @author Michal Mlejnek <chaemil72 at gmail.com>
  */
 class ArchivePresenter extends BasePresenter {
-    
-    public $database;
-    private $videoManager;
-    
-    public function __construct(Nette\Database\Context $database, VideoManager $videoManager) {
-        $this->database = $database;
-        $this->videoManager = $videoManager;
-        
-    }
    
     public function renderDefault() {
         $response = $this->videoManager->getVideosFromDB(0, 10, VideoManager::COLUMN_DATE);

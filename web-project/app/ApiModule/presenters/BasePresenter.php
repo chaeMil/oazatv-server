@@ -19,14 +19,32 @@ use Nette,
  */
 class BasePresenter extends \Nette\Application\UI\Presenter {
     
-    private $database;
-    private $videoManager;
+    public $container;
+    public $database;
+    public $videoManager;
+    public $lang;
     
-    public function __construct(Nette\Database\Context $database,
+    public function __construct(Nette\DI\Container $container,
+            Nette\Database\Context $database,
             VideoManager $videoManager) {
+        
+        parent::__construct();
         
         $this->database = $database;
         $this->videoManager = $videoManager;
+        $this->container = $container;
         
+        $routerLang = $this->getParameter('locale');
+        $this->setupLanguage($this->container, $routerLang);
+    }
+    
+    public function setupLanguage($container, $lang = null) {
+        if ($lang != null) {
+            $this->lang = $lang;
+        } else {
+            $langs = array('cs', 'en'); // app supported languages
+            $httpRequest = $container->getByType('Nette\Http\Request');
+            $this->lang = $httpRequest->detectLanguage($langs);
+        }
     }
 }

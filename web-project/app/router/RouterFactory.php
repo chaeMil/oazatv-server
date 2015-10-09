@@ -19,7 +19,7 @@ class RouterFactory
                
 		
                 //json api links
-                $router[] = new Route('api/v2/<presenter>/<id>/<action>', array(
+                $router[] = new Route('[<locale=cs cs|en>/]api/v2/<presenter>/<id>/<action>', array(
                     'module' => 'Api',
                     'presenter' => 'Main',
                     'action' => 'default',
