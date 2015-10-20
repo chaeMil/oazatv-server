@@ -162,7 +162,8 @@
 
 .navbar-brand {
   float: left;
-  padding: @navbar-padding-vertical @navbar-padding-horizontal;
+  //padding: @navbar-padding-vertical @navbar-padding-horizontal;
+  padding: 7px;
   font-size: @font-size-large;
   line-height: @line-height-computed;
   height: @navbar-height;
@@ -174,6 +175,19 @@
 
   > img {
     display: block;
+    
+    &.logo {
+        width: 50px;
+        height: 50px;
+        margin-top: 0px;
+        display: inline-block;
+    }
+  }
+  
+  .text {
+      margin-left: 10px;
+      font-size: 25px;
+      vertical-align: middle;
   }
 
   @media (min-width: @grid-float-breakpoint) {
@@ -573,6 +587,7 @@
 
   // Darken the responsive nav toggle
   .navbar-toggle {
+    margin-left: @navbar-padding-horizontal;
     border-color: @navbar-inverse-toggle-border-color;
     &:hover,
     &:focus {
@@ -656,5 +671,22 @@
         color: @navbar-inverse-link-disabled-color;
       }
     }
+  }
+  
+  .navbar-user-menu {
+      display: inline-block;
+      line-height: @navbar-height;
+      color: @navbar-inverse-brand-color;
+      font-size: 150%;
+      
+      &:hover {
+          color: @navbar-inverse-brand-hover-color;
+          cursor: pointer;
+          text-decoration: none;
+      }
+      
+      &:active {
+          text-decoration: none;
+      }
   }
 }

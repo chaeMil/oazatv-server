@@ -4305,7 +4305,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-brand {
   float: left;
-  padding: 18.5px 15px;
+  padding: 7px;
   font-size: 19px;
   line-height: 27px;
   height: 64px;
@@ -4316,6 +4316,17 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-brand > img {
   display: block;
+}
+.navbar-brand > img.logo {
+  width: 50px;
+  height: 50px;
+  margin-top: 0px;
+  display: inline-block;
+}
+.navbar-brand .text {
+  margin-left: 10px;
+  font-size: 25px;
+  vertical-align: middle;
 }
 @media (min-width: 768px) {
   .navbar > .container .navbar-brand,
@@ -4655,6 +4666,7 @@ fieldset[disabled] .navbar-default .btn-link:focus {
   background-color: transparent;
 }
 .navbar-inverse .navbar-toggle {
+  margin-left: 15px;
   border-color: transparent;
 }
 .navbar-inverse .navbar-toggle:hover,
@@ -4720,6 +4732,20 @@ fieldset[disabled] .navbar-inverse .btn-link:hover,
 .navbar-inverse .btn-link[disabled]:focus,
 fieldset[disabled] .navbar-inverse .btn-link:focus {
   color: #444444;
+}
+.navbar-inverse .navbar-user-menu {
+  display: inline-block;
+  line-height: 64px;
+  color: #d3e2fc;
+  font-size: 150%;
+}
+.navbar-inverse .navbar-user-menu:hover {
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: none;
+}
+.navbar-inverse .navbar-user-menu:active {
+  text-decoration: none;
 }
 .breadcrumb {
   padding: 8px 15px;
@@ -6556,6 +6582,14 @@ button.close {
 }
 .affix {
   position: fixed;
+}
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 @-ms-viewport {
   width: device-width;
