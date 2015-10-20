@@ -6891,10 +6891,17 @@ and open the template in the editor.
          // redefined
     }*/
 }
-@media (max-width: 480px) {
-  /*.navbar-fixed-top {
-        position: relative;
-        margin-bottom: -@navbar-height;
-    }*/
+/* ----------- Asus Nexus 7 ----------- */
+/* Portrait */
+@media screen and (max-device-width: 601px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.331) and (-webkit-max-device-pixel-ratio: 2) {
+  .col-xs-12 {
+    width: 50%;
+  }
+}
+/* Landscape */
+@media screen and (min-device-width: 602px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1.331) and (-webkit-max-device-pixel-ratio: 2) {
+  .col-sm-6 {
+    width: 33.33%;
+  }
 }
 /*# sourceMappingURL=bootstrap.css.map */

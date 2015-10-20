@@ -20,10 +20,30 @@ and open the template in the editor.
     }*/
 }
 
-@media (max-width: @screen-xs) {
+/* ----------- Asus Nexus 7 ----------- */
 
-    /*.navbar-fixed-top {
-        position: relative;
-        margin-bottom: -@navbar-height;
-    }*/
+/* Portrait */
+@media screen 
+    and (max-device-width: 601px)
+    and (orientation : portrait) 
+    and (-webkit-min-device-pixel-ratio: 1.331) 
+    and (-webkit-max-device-pixel-ratio: 2){
+
+        .col-xs-12 {
+            width: 50%;
+        }
+
+}
+
+/* Landscape */
+@media screen
+    and (min-device-width: 602px)
+    and (orientation : landscape) 
+    and (-webkit-min-device-pixel-ratio: 1.331) 
+    and (-webkit-max-device-pixel-ratio: 2){
+
+        .col-sm-6 {
+            width: 33.33%;
+        }
+
 }
