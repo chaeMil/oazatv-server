@@ -1,11 +1,18 @@
+ 
 .video-box {
-    
+
+    transition-duration: 500ms;
+    -webkit-ransition-duration: 500ms;
+    transition-delay: 350ms;
+    -webkit-transition-delay: 350ms;
+
     .thumb {
         width: 100%;
         display: inline-block;
         position: relative;
         background-size: cover;
-        
+        background-color: @gray-darker;
+
         &:after {
             padding-top: 56.25%;
             /* 16:9 ratio */
@@ -13,5 +20,6 @@
             content: '';
         }
     }
-    
+
 }
+

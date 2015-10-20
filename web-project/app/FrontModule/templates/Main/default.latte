@@ -1,30 +1,39 @@
 {block content}
 
-{if isset($newestVideos)}
-<h1>{_frontend.homepage.newest_videos}</h1>
-    <div class="row">
-        <a n:foreach="$newestVideos as $video"       
-           n:href="Video:watch $video['hash']">
-            <div class="video-box col-md-3">
-                <div class="thumb" 
-                     style="background-image: url({$basePath}/{$video['thumbs']['512']});"> 
-                </div>
-                <span class="name">{$video['name']}</span>
-            </div>
-        </a>
-    </div>
-{/if}
+<div class="container">
     
-{if isset($newestAlbums)}
-    <h1>{_frontend.homepage.newest_albums}</h1>
-    <div n:foreach="$newestAlbums as $album">
-        <a n:href="Album:watch $album['hash']">{$album['name']}</a>
-    </div>
-{/if}
+    {if isset($newestVideos)}  
+        
+        <h1>{_frontend.homepage.newest_videos}</h1>
+        <div class="row videos-box">
+            <a n:foreach="$newestVideos as $video"       
+               n:href="Video:watch $video['hash']">
+                <div class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="thumb" 
+                         style="background-image: url({$basePath}/{$video['thumbs']['512']});"> 
+                    </div>
+                    <div class="info">
+                        <span class="name">{$video['name']}</span>
+                        <span class="date">{$video['date']}</span>
+                        <span class="views">{$video['views']}</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    {/if}
 
-{if isset($popularVideos)}
-    <h1>{_frontend.homepage.popular_videos}</h1>
-    <div n:foreach="$popularVideos as $video">
-        <a n:href="Video:watch $video['hash']">{$video['name']}</a>
-    </div>
-{/if}
+    {if isset($newestAlbums)}
+        <h1>{_frontend.homepage.newest_albums}</h1>
+        <div n:foreach="$newestAlbums as $album">
+            <a n:href="Album:watch $album['hash']">{$album['name']}</a>
+        </div>
+    {/if}
+
+    {if isset($popularVideos)}
+        <h1>{_frontend.homepage.popular_videos}</h1>
+        <div n:foreach="$popularVideos as $video">
+            <a n:href="Video:watch $video['hash']">{$video['name']}</a>
+        </div>
+    {/if}
+
+</div>

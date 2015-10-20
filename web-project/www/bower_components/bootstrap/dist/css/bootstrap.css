@@ -6853,16 +6853,42 @@ button.close {
     display: none !important;
   }
 }
+.video-box {
+  transition-duration: 500ms;
+  -webkit-ransition-duration: 500ms;
+  transition-delay: 350ms;
+  -webkit-transition-delay: 350ms;
+}
 .video-box .thumb {
   width: 100%;
   display: inline-block;
   position: relative;
   background-size: cover;
+  background-color: #222222;
 }
 .video-box .thumb:after {
   padding-top: 56.25%;
   /* 16:9 ratio */
   display: block;
   content: '';
+}
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 20.10.2015, 19:01:19
+    Author     : Michal Mlejnek <chaemil72 at gmail.com>
+*/
+@media (min-width: 480px) and (orientation: landscape) {
+  .col-xs-12 {
+    width: 50%;
+  }
+}
+@media (min-width: 480px) and (orientation: portrait) {
+  /*.col-xs-1 {
+         // redefined
+    }*/
 }
 /*# sourceMappingURL=bootstrap.css.map */
