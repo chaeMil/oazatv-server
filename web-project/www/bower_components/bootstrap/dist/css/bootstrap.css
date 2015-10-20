@@ -6872,6 +6872,17 @@ button.close {
   display: block;
   content: '';
 }
+.video-box .info {
+  overflow: hidden;
+}
+.video-box .info .name {
+  font-family: "Roboto Slab", serif;
+  font-size: 115%;
+  color: #212121;
+  width: 100%;
+  display: inline-block;
+  white-space: nowrap;
+}
 /*
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
@@ -6881,15 +6892,10 @@ and open the template in the editor.
     Created on : 20.10.2015, 19:01:19
     Author     : Michal Mlejnek <chaemil72 at gmail.com>
 */
-@media (min-width: 480px) and (orientation: landscape) {
+@media (max-width: 480px) and (orientation: landscape) {
   .video-box.col-xs-12 {
     width: 50%;
   }
-}
-@media (min-width: 480px) and (orientation: portrait) {
-  /*.col-xs-1 {
-         // redefined
-    }*/
 }
 /* ----------- Asus Nexus 7 ----------- */
 /* Portrait */

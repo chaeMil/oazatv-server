@@ -10,7 +10,7 @@
                n:href="Video:watch $video['hash']">
                 <div class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
                     <div class="thumb" 
-                         style="background-image: url({$basePath}/{$video['thumbs']['512']});"> 
+                         style="background-image: url({$basePath|noescape}/{$video['thumbs']['512']|noescape});"> 
                     </div>
                     <div class="info">
                         <span class="name">{$video['name']}</span>
