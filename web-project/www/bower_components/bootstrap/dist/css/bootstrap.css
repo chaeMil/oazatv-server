@@ -3177,6 +3177,13 @@ fieldset[disabled] .btn-primary.active {
   color: #4285f4;
   background-color: #ffffff;
 }
+.btn-primary.btn-archive {
+  margin-top: 1px;
+  background-color: #2a75f3;
+}
+.btn-primary.btn-archive:hover {
+  background-color: #5a95f5;
+}
 .btn-success {
   color: #ffffff;
   background-color: #4caf50;
@@ -4674,7 +4681,7 @@ fieldset[disabled] .navbar-default .btn-link:focus {
   background-color: transparent;
 }
 .navbar-inverse .navbar-toggle .icon-bar {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #d3e2fc;
 }
 .navbar-inverse .navbar-collapse,
 .navbar-inverse .navbar-form {
@@ -4734,18 +4741,63 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   color: #444444;
 }
 .navbar-inverse .navbar-user-menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 15px;
   display: inline-block;
   line-height: 64px;
   color: #d3e2fc;
+}
+.navbar-inverse .navbar-user-menu .i {
   font-size: 150%;
 }
 .navbar-inverse .navbar-user-menu:hover {
   color: #ffffff;
   cursor: pointer;
-  text-decoration: none;
 }
 .navbar-inverse .navbar-user-menu:active {
   text-decoration: none;
+}
+.navbar-inverse .navbar-search {
+  display: inline-block;
+  border-top: none;
+  border-bottom: none;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+@media (min-width: 992px) {
+  .navbar-inverse .navbar-search {
+    margin-left: 15px;
+  }
+}
+.navbar-inverse .navbar-search .form-control {
+  color: #eeeeee;
+  background-color: #699ef6;
+}
+@media (min-width: 992px) {
+  .navbar-inverse .navbar-search .form-control:focus {
+    width: 400px;
+  }
+}
+.navbar-inverse .navbar-search .form-control::-webkit-input-placeholder {
+  color: #eeeeee;
+}
+.navbar-inverse .navbar-search .form-control:-moz-placeholder {
+  color: #eeeeee;
+}
+.navbar-inverse .navbar-search .form-control::-moz-placeholder {
+  color: #eeeeee;
+}
+.navbar-inverse .navbar-search .form-control:-ms-input-placeholder {
+  color: #eeeeee;
+}
+.navbar-inverse .navbar-search .btn-default {
+  background-color: #2a75f3;
+  color: #eeeeee;
+}
+.navbar-inverse .navbar-search .btn-default:hover {
+  background-color: #72a4f7;
 }
 .breadcrumb {
   padding: 8px 15px;

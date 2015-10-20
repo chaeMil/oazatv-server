@@ -59,6 +59,7 @@ class MainPresenter extends BasePresenter {
         $this->template->newestVideos = $templateNewestVideos;
         $this->template->newestAlbums = $templateNewestAlbums;
         $this->template->lang = $this->lang;
+        $this->template->user = $this->getUser();
     }
     
 }

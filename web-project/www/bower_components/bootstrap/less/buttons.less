@@ -68,6 +68,15 @@
 }
 .btn-primary {
   .button-variant(@btn-primary-color; @btn-primary-bg; @btn-primary-border);
+  
+  &.btn-archive {
+      margin-top: 1px;
+      background-color: lighten(@brand-primary, -5%);
+      
+      &:hover {
+          background-color: lighten(@brand-primary, 5%);
+      }
+  }
 }
 // Success appears as green
 .btn-success {

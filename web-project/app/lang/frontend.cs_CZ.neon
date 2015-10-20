@@ -1,3 +1,7 @@
+basic:
+    login: "Přihlásit se"
+    search: "Vyhledávání"
+    archive: "Archiv"
 homepage:
     newest_videos: "Nejnovější videa"
     newest_albums: "Nejnovější alba"
