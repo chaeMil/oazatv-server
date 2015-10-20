@@ -6853,4 +6853,16 @@ button.close {
     display: none !important;
   }
 }
+.video-box .thumb {
+  width: 100%;
+  display: inline-block;
+  position: relative;
+  background-size: cover;
+}
+.video-box .thumb:after {
+  padding-top: 56.25%;
+  /* 16:9 ratio */
+  display: block;
+  content: '';
+}
 /*# sourceMappingURL=bootstrap.css.map */
