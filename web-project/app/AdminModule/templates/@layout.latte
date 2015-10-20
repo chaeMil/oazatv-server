@@ -98,6 +98,8 @@
 
     <script src="{$basePath}/admin_components/bower_components/WATable/jquery.watable.js"></script>
     
+    <script src="{$basePath}/admin_components/js/jquery.bootstrap-autohidingnavbar.min.js"></script>
+    
     <script type="text/javascript">
         $(document).on("click", '.confirm', function(e) { 
             e.preventDefault();
@@ -146,6 +148,17 @@
     
     <script>
         moment.locale('cs');
+    </script>
+    
+    <script>
+        //autohidding navbar for mobile devices
+        $(window).on('scroll', function () {
+            if ($(window).width() <= 768) {
+                $('.navbar-fixed-top').autoHidingNavbar({
+                    showOnUpscroll: true
+                });
+            }
+        });
     </script>
     {/block}
     

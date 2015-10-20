@@ -214,7 +214,7 @@
                                             <h4>miniatura: <small>{$video->thumb_file}</small></h4>
                                             <img onclick="openImageViewer({$video->thumb_file});" 
                                                  src="{$basePath}/{$thumbs['128']}"
-                                                 class="thumb-clickable"/>
+                                                 class="img-responsive thumb-clickable"/>
                                         </div>
                                         <div class="panel-body">
                                             <a n:href="Video:deleteVideoFile, $video->id, $thumbFile"

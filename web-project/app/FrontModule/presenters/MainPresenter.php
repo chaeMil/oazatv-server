@@ -27,7 +27,7 @@ class MainPresenter extends BasePresenter {
     }
     
     public function renderDefault() {
-        $newestVideos = $this->videoManager->getVideosFromDB(0, 10);
+        $newestVideos = $this->videoManager->getVideosFromDB(0, 8);
         $templateNewestVideos = null;
         
         foreach($newestVideos as $video) {
@@ -35,7 +35,7 @@ class MainPresenter extends BasePresenter {
                     ->createLocalizedVideoObject($this->lang, $video);
         }
         
-        $newestAlbums = $this->photosManager->getAlbumsFromDB(0, 10);
+        $newestAlbums = $this->photosManager->getAlbumsFromDB(0, 8);
         $templateNewestAlbums = null;
         
         foreach($newestAlbums as $album) {
@@ -43,7 +43,7 @@ class MainPresenter extends BasePresenter {
                     ->createLocalizedAlbumThumbObject($this->lang, $album);
         }
         
-        $popularVideos = $this->analyticsManager->getPopularVideosIds();
+        $popularVideos = $this->analyticsManager->getPopularVideosIds(7, 8);
         
         $templatePopularVideos = null;
         
