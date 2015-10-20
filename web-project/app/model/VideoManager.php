@@ -124,7 +124,7 @@ class VideoManager extends BaseModel {
     }
     
     public function getVideosFromDB($from, $count, $published = 1, 
-            $order = self::COLUMN_DATE) {
+            $order = self::COLUMN_DATE." DESC") {
         
         if($published != 2) {
             return self::$database->table(self::TABLE_NAME)

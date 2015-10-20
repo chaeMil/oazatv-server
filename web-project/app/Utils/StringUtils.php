@@ -73,7 +73,7 @@ class StringUtils {
     }
     
     public static function formatCzechDate($year, $month, $day) {
-        return /*self::czechDay($day)." ".*/$day.". ".self::czechMonth($month)." ".$year;
+        return /*self::czechDay($day)." ".*/ltrim($day, '0').". ".self::czechMonth($month)." ".$year;
     }
     
     public static function czechMonth($mesic) {

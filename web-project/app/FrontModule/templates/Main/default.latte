@@ -32,7 +32,7 @@
     {if isset($popularVideos)}
         <h1>{_frontend.homepage.popular_videos}</h1>
         <div class="row videos-box video-boxes-limit limit-8">
-            <a n:foreach="$newestVideos as $video"       
+            <a n:foreach="$popularVideos as $video"       
                n:href="Video:watch $video['hash']">
                 <div class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
                     <div class="thumb" 
