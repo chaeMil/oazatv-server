@@ -20,9 +20,8 @@ class ArchivePresenter extends BasePresenter {
     
     
     public function renderDefault() {
-        $archive = $this->archiveManager->getVideosAndPhotoAlbumsFromDB(0, 10);
-        
-        dump($archive); exit;
+        $archive = $this->archiveManager->getVideosAndPhotoAlbumsFromDB(0, 16, $this->lang);
+        $this->template->archiveItems = $archive;
     }
     
 }

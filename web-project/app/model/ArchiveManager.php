@@ -19,14 +19,19 @@ class ArchiveManager extends BaseModel {
     
     /** @var Nette\Database\Context */
     public static $database;
+    private $videoManager;
+    private $photosManager;
 
-    public function __construct(Nette\Database\Context $database) {
+    public function __construct(Nette\Database\Context $database,
+            VideoManager $videoManager, PhotosManager $photosManager) {
         self::$database = $database;
+        $this->videoManager = $videoManager;
+        $this->photosManager = $photosManager;
     }
     
     
-    public function getVideosAndPhotoAlbumsFromDB($from, $count, $published = 1, 
-            $order = VideoManager::COLUMN_DATE." DESC") {
+    public function getVideosAndPhotoAlbumsFromDB($from, $count, $lang, 
+            $published = 1, $order = VideoManager::COLUMN_DATE." DESC") {
         
         if($published != 2) {
             $query = '(SELECT '.VideoManager::COLUMN_ID.
@@ -46,7 +51,8 @@ class ArchiveManager extends BaseModel {
                 " LIMIT ".$count.
                 " OFFSET ".$from;
 
-            return self::$database->query($query)->fetchAll();
+            $dbOutput = self::$database->query($query)->fetchAll();
+            
         } else {
             
             $query = '(SELECT '.VideoManager::COLUMN_ID.
@@ -62,9 +68,46 @@ class ArchiveManager extends BaseModel {
                 " LIMIT ".$count.
                 " OFFSET ".$from;
             
-            return self::$database->query($query)->fetchAll();
+            $dbOutput = self::$database->query($query)->fetchAll();
         }
         
-    }
-    
+        $outputArray = array();
+            
+        foreach($dbOutput as $output) {
+            
+            switch($output['type']) {
+                case 'video':
+
+                    $rawItemFromDB = $this->videoManager
+                        ->getVideoFromDB($output['id']);
+
+                    $video = $this->videoManager
+                            ->createLocalizedVideoObject($lang,
+                                    $rawItemFromDB);
+                    
+                    $video['type'] = 'video';
+
+                    $outputArray[] = $video;
+                    break;
+
+                case 'album':
+
+                    $rawItemFromDB = $this->photosManager
+                        ->getAlbumFromDB($output['id']);
+
+                    $album = $this->photosManager
+                            ->createLocalizedAlbumThumbObject($lang,
+                                    $rawItemFromDB);
+                    
+                    $album['type'] = 'album';
+
+                    $outputArray[] = $album;
+                    break;
+            }
+        
+        }
+        
+        return $outputArray;
+    } 
+   
 }
