@@ -1,6 +1,6 @@
 {block content}
 
-<div class="container">
+<div class="container container-without-padding">
     
     {if isset($newestVideos)}  
         
@@ -15,7 +15,7 @@
                     <div class="info">
                         <span class="name">{$video['name']}</span>
                         <span class="date">{$video['date']}</span>
-                        <span class="views">{$video['views']}</span>
+                        <span class="views">{$video['views']} {_frontend.basic.views}</span>
                     </div>
                 </div>
             </a>

@@ -2,6 +2,7 @@ basic:
     login: "Log in"
     search: "Search"
     archive: "Archive"
+    views: "views"
 homepage:
     newest_videos: "Newest videos"
     newest_albums: "Newest albums"

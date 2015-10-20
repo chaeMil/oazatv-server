@@ -6859,6 +6859,11 @@ button.close {
   transition-delay: 350ms;
   -webkit-transition-delay: 350ms;
 }
+@media (max-width: 768px) {
+  .video-box {
+    margin-bottom: 20px;
+  }
+}
 .video-box .thumb {
   width: 100%;
   display: inline-block;
@@ -6874,14 +6879,30 @@ button.close {
 }
 .video-box .info {
   overflow: hidden;
+  margin-bottom: 30px;
 }
 .video-box .info .name {
+  margin-top: -10px;
   font-family: "Roboto Slab", serif;
   font-size: 115%;
   color: #212121;
   width: 100%;
   display: inline-block;
   white-space: nowrap;
+}
+.video-box .info .date {
+  color: #666666;
+}
+.video-box .info .views {
+  color: #bbbbbb;
+  font-weight: bold;
+  float: right;
+}
+@media (max-width: 768px) {
+  .video-box .info .views {
+    float: left;
+    width: 100%;
+  }
 }
 /*
 To change this license header, choose License Headers in Project Properties.
@@ -6892,22 +6913,18 @@ and open the template in the editor.
     Created on : 20.10.2015, 19:01:19
     Author     : Michal Mlejnek <chaemil72 at gmail.com>
 */
-@media (max-width: 480px) and (orientation: landscape) {
+.container-without-padding {
+  padding-left: 0;
+  padding-right: 0;
+}
+@media (max-width: 768px) and (orientation: landscape) {
   .video-box.col-xs-12 {
     width: 50%;
   }
 }
-/* ----------- Asus Nexus 7 ----------- */
-/* Portrait */
-@media screen and (max-device-width: 601px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.331) and (-webkit-max-device-pixel-ratio: 2) {
+@media (max-width: 768px) and (min-device-width: 150mm) and (orientation: portrait) {
   .video-box.col-xs-12 {
     width: 50%;
-  }
-}
-/* Landscape */
-@media screen and (min-device-width: 602px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1.331) and (-webkit-max-device-pixel-ratio: 2) {
-  .video-box.col-sm-6 {
-    width: 33.33%;
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */

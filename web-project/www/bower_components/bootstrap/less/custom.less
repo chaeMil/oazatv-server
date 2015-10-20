@@ -5,6 +5,10 @@
     -webkit-ransition-duration: 500ms;
     transition-delay: 350ms;
     -webkit-transition-delay: 350ms;
+    
+    @media (max-width: @screen-sm) {
+        margin-bottom: 20px;
+    }
 
     .thumb {
         width: 100%;
@@ -22,10 +26,13 @@
     }
     
     .info {
-        
+
         overflow: hidden;
-        
+        margin-bottom: 30px;
+
         .name {
+            
+            margin-top: -10px;
             font-family: @font-family-serif;
             font-size: 115%;
             color: @gray-dark;
@@ -33,7 +40,21 @@
             display: inline-block;
             white-space: nowrap;
         }
-        
+
+        .date {
+            color: @gray;
+        }
+
+        .views {
+            color: @gray-light;
+            font-weight: bold;
+            float: right;
+            
+            @media (max-width: @screen-sm) {
+                float: left;
+                width: 100%;
+            }
+        }
     }
 
 }
