@@ -6891,4 +6891,10 @@ and open the template in the editor.
          // redefined
     }*/
 }
+@media (max-width: 480px) {
+  /*.navbar-fixed-top {
+        position: relative;
+        margin-bottom: -@navbar-height;
+    }*/
+}
 /*# sourceMappingURL=bootstrap.css.map */

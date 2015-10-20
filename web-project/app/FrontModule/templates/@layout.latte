@@ -92,6 +92,18 @@
     {block scripts}
         <script src="{$basePath}/bower_components/jquery/dist/jquery.min.js"></script>
         <script src="{$basePath}/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="{$basePath}/js/jquery.bootstrap-autohidingnavbar.min.js"></script>
+        
+        <script>
+            //autohidding navbar for mobile devices
+            $(window).on('scroll', function () {
+                if ($(window).width() <= 768) {
+                    $('.navbar-fixed-top').autoHidingNavbar({
+                        showOnUpscroll: true
+                    });
+                }
+            });
+        </script>
     {/block}
 </body>
 </html>
