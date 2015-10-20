@@ -30,6 +30,7 @@ services:
     - Model\ServerSettings
     - Model\PhotosManager
     - Model\AnalyticsManager
+    - Model\ArchiveManager
     - App\RouterFactory
     router: @App\RouterFactory::createRouter
     nette.latteFactory:
