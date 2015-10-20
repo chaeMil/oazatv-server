@@ -31,7 +31,7 @@ class ArchiveManager extends BaseModel {
     
     
     public function getVideosAndPhotoAlbumsFromDB($from, $count, $lang, 
-            $published = 1, $order = VideoManager::COLUMN_DATE." DESC") {
+            $published = 1, $order = "date DESC") {
         
         if($published != 2) {
             $query = '(SELECT '.VideoManager::COLUMN_ID.
