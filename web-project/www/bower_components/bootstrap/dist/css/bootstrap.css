@@ -6882,7 +6882,7 @@ and open the template in the editor.
     Author     : Michal Mlejnek <chaemil72 at gmail.com>
 */
 @media (min-width: 480px) and (orientation: landscape) {
-  .col-xs-12 {
+  .video-box.col-xs-12 {
     width: 50%;
   }
 }
@@ -6894,13 +6894,13 @@ and open the template in the editor.
 /* ----------- Asus Nexus 7 ----------- */
 /* Portrait */
 @media screen and (max-device-width: 601px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.331) and (-webkit-max-device-pixel-ratio: 2) {
-  .col-xs-12 {
+  .video-box.col-xs-12 {
     width: 50%;
   }
 }
 /* Landscape */
 @media screen and (min-device-width: 602px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1.331) and (-webkit-max-device-pixel-ratio: 2) {
-  .col-sm-6 {
+  .video-box.col-sm-6 {
     width: 33.33%;
   }
 }
