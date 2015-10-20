@@ -16,6 +16,12 @@
         position: relative;
         background-size: cover;
         background-color: @gray-darker;
+        
+        @media (max-width: @screen-sm) {
+            max-width: 130px;
+            float: left;
+            display: block;
+        }
 
         &:after {
             padding-top: 56.25%;
@@ -29,8 +35,19 @@
 
         overflow: hidden;
         margin-bottom: 30px;
+        
+        @media (max-width: @screen-sm) {
+            margin-top: -3px;
+            width:  calc(100% - 130px);
+            padding-left: @padding-small-horizontal;
+            font-size: 90%;
+        }
 
         .name {
+            
+            @media (max-width: @screen-sm) {
+                line-height: 15px;
+            }
             
             margin-top: -10px;
             font-family: @font-family-serif;
@@ -58,4 +75,3 @@
     }
 
 }
-
