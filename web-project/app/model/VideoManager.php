@@ -205,10 +205,18 @@ class VideoManager extends BaseModel {
         if (!file_exists($thumb)) {
             $this->generateThumbnails($id);
         }
-        return array(self::THUMB_1024 => $thumbfile."_".self::THUMB_1024.".jpg",
+        if (file_exists($thumb)) {
+            return array(self::THUMB_1024 => $thumbfile."_".self::THUMB_1024.".jpg",
                 self::THUMB_512 => $thumbfile."_".self::THUMB_512.".jpg",
                 self::THUMB_256 => $thumbfile."_".self::THUMB_256.".jpg",
                 self::THUMB_128 => $thumbfile."_".self::THUMB_128.".jpg");
+        } else {
+            return array(self::THUMB_1024 => "img/missing-thumb.png",
+                self::THUMB_512 => "img/missing-thumb.png",
+                self::THUMB_256 => "img/missing-thumb.png",
+                self::THUMB_128 => "img/missing-thumb.png");
+        }
+        
     }
     
     public function deleteThumbnails($id) {
