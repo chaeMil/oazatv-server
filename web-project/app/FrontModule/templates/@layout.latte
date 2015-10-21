@@ -44,6 +44,14 @@
                         <input type="text" class="form-control" 
                                placeholder="{_frontend.basic.search}" name="q" 
                                id="search">
+                        
+                        <span class="search-animation glyphicon glyphicon-refresh 
+                              glyphicon-refresh-animate" id="search-animation"></span>
+                        
+                        <ul class="dropdown-menu dropdown-search" id="dropdown-search">
+                            {*<li><a href="#">Test</a></li>*}
+                        </ul>
+                        
                         <div class="input-group-btn">
                             <button class="btn btn-default" type="submit">
                                 <i class="glyphicon glyphicon-search"></i>
@@ -103,6 +111,49 @@
                     });
                 }
             });
+        </script>
+        
+        <script>
+            
+            $(document).ready(function() {
+                
+                var oldSearch;
+                var input;
+                
+                $('#search').on('focus', function() {
+                    $('#dropdown-search').slideDown();
+                });
+
+                $('#search').on('focusout', function() {
+                    $('#dropdown-search').slideUp();
+                });
+
+                $('#search').on('input', function() {
+                    
+                    input = $(this).val();
+                    
+                    if (input.length >= 3) {
+                        $('#search-animation').show();
+                    }
+
+                    if (oldSearch !== input) {
+                        
+                        setTimeout(function() {
+                            
+                            console.log('doing search: ' + input);
+                            
+                            $('#dropdown-search').load({$basePath} 
+                                + "/search/inline-search/" + input);
+                                
+                            $('#search-animation').hide();
+                        }, 2500);
+                        
+                    }
+
+                    
+                });
+            });
+
         </script>
     {/block}
 </body>

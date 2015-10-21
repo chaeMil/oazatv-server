@@ -35,45 +35,52 @@ class SearchManager extends BaseModel {
     
     public function search($userInput, $lang) {
         
-        $videoSearch = self::$database->table(VideoManager::TABLE_NAME)
-                ->select('*')
-                ->where(VideoManager::COLUMN_PUBLISHED, 1)
-                ->where("(".VideoManager::COLUMN_NAME_CS." LIKE ? OR ".
-                        VideoManager::COLUMN_NAME_EN." LIKE ? ) OR (".
-                        VideoManager::COLUMN_TAGS." LIKE ? )", 
-                        $userInput . "%", $userInput . "%", $userInput ."%")
-                ->limit(10)
-                ->fetchAll();
+        if (strlen($userInput) >= 3) {
         
-        $videoSearchOut = array();
-        
-        foreach($videoSearch as $video) {
-            $videoSearchOut[] = $this->videoManager
-                    ->createLocalizedVideoObject($lang, $video);
-        }
-              
-        $output['videos'] = $videoSearchOut;
-        
-        $albumsSearch = self::$database->table(PhotosManager::TABLE_NAME_ALBUMS)
-                ->select('*')
-                ->where(PhotosManager::COLUMN_PUBLISHED, 1)
-                ->where("(".PhotosManager::COLUMN_NAME_CS." LIKE ? OR ".
-                        PhotosManager::COLUMN_NAME_EN." LIKE ? ) OR (".
-                        PhotosManager::COLUMN_TAGS." LIKE ? )", 
-                        $userInput . "%", $userInput . "%", $userInput ."%")
-                ->limit(10)
-                ->fetchAll();
-        
-        $albumsSearchOut = array();
-        
-        foreach($albumsSearch as $album) {
-            $albumsSearchOut[] = $this->photosManager
-                    ->createLocalizedAlbumThumbObject($lang, $album);
-        }
+            $videoSearch = self::$database->table(VideoManager::TABLE_NAME)
+                    ->select('*')
+                    ->where(VideoManager::COLUMN_PUBLISHED, 1)
+                    ->where("(".VideoManager::COLUMN_NAME_CS." LIKE ? OR ".
+                            VideoManager::COLUMN_NAME_EN." LIKE ? ) OR (".
+                            VideoManager::COLUMN_TAGS." LIKE ? )", 
+                            "%".$userInput."%", "%".$userInput."%", "%".$userInput ."%")
+                    ->limit(10)
+                    ->fetchAll();
 
-        $output['albums'] = $albumsSearchOut;
+            $videoSearchOut = array();
+
+            foreach($videoSearch as $video) {
+                $videoSearchOut[] = $this->videoManager
+                        ->createLocalizedVideoObject($lang, $video);
+            }
+
+            $output['videos'] = $videoSearchOut;
+
+            $albumsSearch = self::$database->table(PhotosManager::TABLE_NAME_ALBUMS)
+                    ->select('*')
+                    ->where(PhotosManager::COLUMN_PUBLISHED, 1)
+                    ->where("(".PhotosManager::COLUMN_NAME_CS." LIKE ? OR ".
+                            PhotosManager::COLUMN_NAME_EN." LIKE ? ) OR (".
+                            PhotosManager::COLUMN_TAGS." LIKE ? )", 
+                            "%".$userInput."%", "%".$userInput."%", "%".$userInput ."%")
+                    ->limit(10)
+                    ->fetchAll();
+
+            $albumsSearchOut = array();
+
+            foreach($albumsSearch as $album) {
+                $albumsSearchOut[] = $this->photosManager
+                        ->createLocalizedAlbumThumbObject($lang, $album);
+            }
+
+            $output['albums'] = $albumsSearchOut;
+
+            return $output;
+        }
         
-        return $output;
+        else {
+            return "";
+        }
     }
     
 }
