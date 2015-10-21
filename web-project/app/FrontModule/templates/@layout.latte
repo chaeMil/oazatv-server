@@ -149,6 +149,8 @@
                                 + encodeURIComponent(input), 
                                 function() {
                                     
+                                    highlightSearch(input);
+                                    
                                     $('#dropdown-search').slideDown(); 
                                     $('#search-animation').hide();
                                 }
@@ -157,10 +159,20 @@
                         }, 2500);
                         
                     }
-
                     
                 });
             });
+            
+            function highlightSearch(input) {
+                $('#dropdown-search .tag').each(function() {
+                    var text = $(this).text();
+                    
+                    if (text.toLowerCase().indexOf(input) >= 0) {
+                        
+                        $(this).addClass('highlight');
+                    }
+                });
+            }
 
         </script>
     {/block}

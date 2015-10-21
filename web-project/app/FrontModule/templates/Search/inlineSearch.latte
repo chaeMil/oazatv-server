@@ -1,12 +1,36 @@
 {if $search != ""}
-    <ul>
-        <li n:foreach="$search['videos'] as $video">
-            <a>{$video['name']}</a>
-        </li>
-    </ul>
-    <ul>
-        <li n:foreach="$search['albums'] as $album">
-            <a>{$album['name']}</a>
-        </li>
-    </ul>
+    <div class="search-results">
+        <span>
+            {_frontend.basic.videos}
+        </span>
+        <ul>
+            <li n:foreach="$search['videos'] as $video">
+                <a><span class="name">{$video['name']}</span>
+                    <br>
+                    <span class="tags">
+                        {var $tags = explode(',', str_replace(' ', '', trim($video['tags'])))}
+                        {foreach $tags as $tag}
+                            <span class="tag">#{$tag}</span>
+                        {/foreach}
+                    </span>
+                </a>
+            </li>
+        </ul>
+        <span>
+            {_frontend.basic.albums}
+        </span>
+        <ul>
+            <li n:foreach="$search['albums'] as $album">
+                <a><span class="name">{$album['name']}</span>
+                    <br>
+                    <span class="tags">
+                        {var $tags = explode(',', str_replace(' ', '', trim($album['tags'])))}
+                        {foreach $tags as $tag}
+                            <span class="tag">#{$tag}</span>
+                        {/foreach}
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </div>
 {/if}

@@ -39,7 +39,6 @@ class SearchManager extends BaseModel {
             
             $userInput = preg_replace('!\s+!', ' ', $userInput);
             $userInput = str_replace(' ', '%', $userInput);
-            dump($userInput);
         
             $videoSearch = self::$database->table(VideoManager::TABLE_NAME)
                     ->select('*')
@@ -48,7 +47,7 @@ class SearchManager extends BaseModel {
                             VideoManager::COLUMN_NAME_EN." LIKE ? ) OR (".
                             VideoManager::COLUMN_TAGS." LIKE ? )", 
                             "%".$userInput."%", "%".$userInput."%", "%".$userInput ."%")
-                    ->limit(10)
+                    ->limit(5)
                     ->fetchAll();
 
             $videoSearchOut = array();
@@ -67,7 +66,7 @@ class SearchManager extends BaseModel {
                             PhotosManager::COLUMN_NAME_EN." LIKE ? ) OR (".
                             PhotosManager::COLUMN_TAGS." LIKE ? )", 
                             "%".$userInput."%", "%".$userInput."%", "%".$userInput ."%")
-                    ->limit(10)
+                    ->limit(5)
                     ->fetchAll();
 
             $albumsSearchOut = array();

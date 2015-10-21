@@ -5,6 +5,8 @@ basic:
     views: "zhlédnutí"
     previous: "předchozí"
     next: "další"
+    videos: "videa"
+    albums: "fotoalba"
 homepage:
     newest_videos: "Nejnovější videa"
     newest_albums: "Nejnovější alba"

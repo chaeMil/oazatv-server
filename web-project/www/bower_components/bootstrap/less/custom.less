@@ -89,6 +89,46 @@
     color: @navbar-inverse-brand-color;
 }
 
+.search-results {
+    
+    li {
+        list-style: none;
+        margin-left: -30px;
+        overflow: hidden;
+    }
+    
+    padding: 12px;
+    overflow: hidden;
+    
+    a:hover {
+        cursor: pointer;
+        display: block;
+        text-decoration: none;
+        
+        .name {
+            text-decoration: underline;
+        }
+    }
+    
+    .name {
+        color: @gray-dark;
+        font-weight: bold;
+    }
+    
+    .tags {
+        white-space: nowrap;
+        
+        .tag {
+            
+            &.highlight {
+                background-color: yellow;
+            }
+            
+        }
+    }
+    
+}
+
 .glyphicon-refresh-animate {
     -animation: spin .7s infinite linear;
     -webkit-animation: spin2 .7s infinite linear;

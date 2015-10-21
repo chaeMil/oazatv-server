@@ -5,6 +5,8 @@ basic:
     views: "views"
     previous: "previous"
     next: "next"
+    videos: "videos"
+    albums: "photoalbums"
 homepage:
     newest_videos: "Newest videos"
     newest_albums: "Newest albums"

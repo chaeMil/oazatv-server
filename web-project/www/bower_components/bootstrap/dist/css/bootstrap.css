@@ -6940,6 +6940,33 @@ button.close {
   z-index: 5;
   color: #d3e2fc;
 }
+.search-results {
+  padding: 12px;
+  overflow: hidden;
+}
+.search-results li {
+  list-style: none;
+  margin-left: -30px;
+  overflow: hidden;
+}
+.search-results a:hover {
+  cursor: pointer;
+  display: block;
+  text-decoration: none;
+}
+.search-results a:hover .name {
+  text-decoration: underline;
+}
+.search-results .name {
+  color: #212121;
+  font-weight: bold;
+}
+.search-results .tags {
+  white-space: nowrap;
+}
+.search-results .tags .tag.highlight {
+  background-color: yellow;
+}
 .glyphicon-refresh-animate {
   -animation: spin .7s infinite linear;
   -webkit-animation: spin2 .7s infinite linear;
