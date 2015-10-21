@@ -172,6 +172,15 @@
                         $(this).addClass('highlight');
                     }
                 });
+                
+                $('#dropdown-search .name').each(function() {
+                    var text = $(this).text();
+                    
+                    if (text.toLowerCase().indexOf(input) >= 0) {
+                        
+                        $(this).addClass('highlight');
+                    }
+                });
             }
 
         </script>

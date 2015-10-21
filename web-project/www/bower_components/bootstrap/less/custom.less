@@ -91,39 +91,78 @@
 
 .search-results {
     
+    padding: 8px;
+    overflow: hidden;
+    
+    .heading {
+        display: block;
+        font-weight: bold;
+        text-transform: uppercase;
+        line-height: 42px;
+        vertical-align: bottom;
+    }
+    
     li {
         list-style: none;
         margin-left: -30px;
-        overflow: hidden;
-    }
-    
-    padding: 12px;
-    overflow: hidden;
-    
-    a:hover {
-        cursor: pointer;
-        display: block;
-        text-decoration: none;
+        overflow: hidden;    
         
-        .name {
-            text-decoration: underline;
-        }
-    }
-    
-    .name {
-        color: @gray-dark;
-        font-weight: bold;
-    }
-    
-    .tags {
-        white-space: nowrap;
-        
-        .tag {
-            
-            &.highlight {
-                background-color: yellow;
+        a {
+            &:hover {
+                cursor: pointer;
+                display: block;
+                text-decoration: none;
+                background-color: @gray-lighter;
+                
+                .row {
+                    .thumb {
+                        filter: brightness(1.2);
+                        -webkit-filter: brightness(1.2);
+                    }
+                }
             }
-            
+
+            .row {
+                .thumb {
+                    display: inline-block;
+                    position: relative;
+                    width: 95px;
+                    float: left;
+                    background-size: cover;
+
+                    &:after {
+                        padding-top: 56.25%;
+                        /* 16:9 ratio */
+                        display: block;
+                        content: '';
+                    }
+                }
+                
+                .text-info {
+                    padding-left: 20px;
+
+                    .name {
+                        color: @gray-dark;
+                        font-weight: bold;
+                        
+                        &.highlight {
+                            background-color: yellow;
+                        }
+                    }
+
+                    .tags {
+                        color: @brand-primary;
+                        white-space: nowrap;
+
+                        .tag {
+
+                            &.highlight {
+                                background-color: yellow;
+                            }
+                        }
+                    }
+                } 
+            }    
         }
     }
     
