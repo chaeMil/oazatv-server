@@ -36,6 +36,10 @@ class SearchManager extends BaseModel {
     public function search($userInput, $lang) {
         
         if (strlen($userInput) >= 3) {
+            
+            $userInput = preg_replace('!\s+!', ' ', $userInput);
+            $userInput = str_replace(' ', '%', $userInput);
+            dump($userInput);
         
             $videoSearch = self::$database->table(VideoManager::TABLE_NAME)
                     ->select('*')

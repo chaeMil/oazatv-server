@@ -120,17 +120,17 @@
                 var oldSearch;
                 var input;
                 
-                $('#search').on('focus', function() {
+                $('#search').bind('focus', function() {
                     if ($(this).val().length >= 3) {
                         $('#dropdown-search').slideDown();
                     }
                 });
 
-                $('#search').on('focusout', function() {
+                $('#search').bind('focusout', function() {
                     $('#dropdown-search').slideUp();
                 });
 
-                $('#search').on('input', function() {
+                $('#search').bind('input', function() {
                     
                     input = $(this).val();
                     
@@ -145,7 +145,8 @@
                             console.log('doing search: ' + input);
                             
                             $('#dropdown-search').load({$basePath} 
-                                + "/search/inline-search/" + input, 
+                                + "/search/inline-search/"
+                                + encodeURIComponent(input), 
                                 function() {
                                     
                                     $('#dropdown-search').slideDown(); 
