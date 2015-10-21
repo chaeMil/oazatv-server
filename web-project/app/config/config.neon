@@ -20,7 +20,6 @@ session:
 
 extensions:
     translation: Kdyby\Translation\DI\TranslationExtension
-    visualPaginator: IPub\VisualPaginator\DI\VisualPaginatorExtension
 
 services:
     - Model\BugReport

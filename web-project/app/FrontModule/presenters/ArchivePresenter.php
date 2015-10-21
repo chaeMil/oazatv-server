@@ -11,6 +11,8 @@ IPub\VisualPaginator\Components as VisualPaginator;
 class ArchivePresenter extends BasePresenter {
     
     private $archiveManager;
+    public $lang;
+    public $container;
     
     public function __construct(Nette\DI\Container $container,
             Context $database, ArchiveManager $archiveManager) {
@@ -19,21 +21,28 @@ class ArchivePresenter extends BasePresenter {
         $this->archiveManager = $archiveManager;
     }
     
-    
     public function renderDefault() {
+        $this->redirect('Archive:Page');
+    }
+    
+    public function renderPage($id = 1) {
         
-        $visualPaginator = $this['visualPaginator'];
-        $paginator = $visualPaginator->getPaginator();
-        $paginator->itemsPerPage = 16;
-        $paginator->itemCount = $this->archiveManager->countArchive();
+        $page = $id;
         
-        
+        $paginator = new Nette\Utils\Paginator;
+        $paginator->setItemCount($this->archiveManager->countArchive());
+        $paginator->setItemsPerPage(16);
+        $paginator->setPage($page);
+
         $archive = $this->archiveManager
-                ->getVideosAndPhotoAlbumsFromDB($paginator->offset, 
-                        $paginator->itemsPerPage, 
+                ->getVideosAndPhotoAlbumsFromDB($paginator->getOffset(), 
+                        $paginator->getItemsPerPage(), 
                         $this->lang);
+        
         $this->template->archiveItems = $archive;
         $this->template->paginator = $paginator;
+        $this->template->page = $paginator->getPage();
+        $this->template->pages = $paginator->getPageCount();
     }
     
 }
