@@ -5,7 +5,7 @@
         </span>
         <ul>
             <li n:foreach="$search['videos'] as $video">
-                <a>
+                <a n:href="Video:watch $video['hash']">
                     <div class="row">
                         <div class="col-xs-3">
                             <div style="background-image: url('{$basePath}/{$video['thumbs']['128']}');" 
@@ -34,7 +34,7 @@
         </span>
         <ul>
             <li n:foreach="$search['albums'] as $album">
-                <a>
+                <a n:href="Album:watch $album['hash']">
                     <div class="row">
                         <div class="col-xs-3">
                             <div style="background-image: url('{$basePath}/{$album['thumbs']['128']}');" 
