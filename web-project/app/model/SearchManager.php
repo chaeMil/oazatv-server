@@ -22,13 +22,18 @@ class SearchManager extends BaseModel {
     
     /** @var Nette\Database\Context */
     public static $database;
+    private $videoManager;
+    private $photosManager;
 
-    public function __construct(Nette\Database\Context $database) {
+    public function __construct(Nette\Database\Context $database,
+            VideoManager $videoManager, PhotosManager $photosManager) {
         self::$database = $database;
+        $this->videoManager = $videoManager;
+        $this->photosManager = $photosManager;
     }
     
     
-    public function search($userInput) {
+    public function search($userInput, $lang) {
         
         $videoSearch = self::$database->table(VideoManager::TABLE_NAME)
                 ->select('*')
@@ -40,8 +45,14 @@ class SearchManager extends BaseModel {
                 ->limit(10)
                 ->fetchAll();
         
+        $videoSearchOut = array();
         
-        $output['videoSearch'] = $videoSearch;
+        foreach($videoSearch as $video) {
+            $videoSearchOut[] = $this->videoManager
+                    ->createLocalizedVideoObject($lang, $video);
+        }
+              
+        $output['videos'] = $videoSearchOut;
         
         $albumsSearch = self::$database->table(PhotosManager::TABLE_NAME_ALBUMS)
                 ->select('*')
@@ -52,8 +63,15 @@ class SearchManager extends BaseModel {
                         $userInput . "%", $userInput . "%", $userInput ."%")
                 ->limit(10)
                 ->fetchAll();
+        
+        $albumsSearchOut = array();
+        
+        foreach($albumsSearch as $album) {
+            $albumsSearchOut[] = $this->photosManager
+                    ->createLocalizedAlbumThumbObject($lang, $album);
+        }
 
-        $output['albumsSearch'] = $albumsSearch;
+        $output['albums'] = $albumsSearchOut;
         
         return $output;
     }

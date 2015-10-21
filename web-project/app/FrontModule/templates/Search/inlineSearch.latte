@@ -1,1 +1,10 @@
-{dump($search)}
+<ul>
+    <li n:foreach="$search['videos'] as $video">
+        <a>{$video['name']}</a>
+    </li>
+</ul>
+<ul>
+    <li n:foreach="$search['albums'] as $album">
+        <a>{$album['name']}</a>
+    </li>
+</ul>
