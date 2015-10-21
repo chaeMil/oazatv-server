@@ -121,7 +121,9 @@
                 var input;
                 
                 $('#search').on('focus', function() {
-                    $('#dropdown-search').slideDown();
+                    if ($(this).val().length >= 3) {
+                        $('#dropdown-search').slideDown();
+                    }
                 });
 
                 $('#search').on('focusout', function() {
@@ -143,9 +145,14 @@
                             console.log('doing search: ' + input);
                             
                             $('#dropdown-search').load({$basePath} 
-                                + "/search/inline-search/" + input);
-                                
-                            $('#search-animation').hide();
+                                + "/search/inline-search/" + input, 
+                                function() {
+                                    
+                                    $('#dropdown-search').slideDown(); 
+                                    $('#search-animation').hide();
+                                }
+                            );
+                            
                         }, 2500);
                         
                     }
