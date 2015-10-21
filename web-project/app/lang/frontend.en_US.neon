@@ -3,6 +3,8 @@ basic:
     search: "Search"
     archive: "Archive"
     views: "views"
+    previous: "previous"
+    next: "next"
 homepage:
     newest_videos: "Newest videos"
     newest_albums: "Newest albums"

@@ -4,7 +4,8 @@ namespace App\FrontModule;
 
 use Nette,
 Nette\Database\Context,
-Model\ArchiveManager;
+Model\ArchiveManager,
+IPub\VisualPaginator\Components as VisualPaginator;
 
 
 class ArchivePresenter extends BasePresenter {
@@ -20,8 +21,19 @@ class ArchivePresenter extends BasePresenter {
     
     
     public function renderDefault() {
-        $archive = $this->archiveManager->getVideosAndPhotoAlbumsFromDB(0, 16, $this->lang);
+        
+        $visualPaginator = $this['visualPaginator'];
+        $paginator = $visualPaginator->getPaginator();
+        $paginator->itemsPerPage = 16;
+        $paginator->itemCount = $this->archiveManager->countArchive();
+        
+        
+        $archive = $this->archiveManager
+                ->getVideosAndPhotoAlbumsFromDB($paginator->offset, 
+                        $paginator->itemsPerPage, 
+                        $this->lang);
         $this->template->archiveItems = $archive;
+        $this->template->paginator = $paginator;
     }
     
 }

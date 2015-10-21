@@ -4,7 +4,8 @@ namespace App\FrontModule;
 
 use Nette,
     App\StringUtils,
-    App\Presenters\ErrorPresenter;
+    App\Presenters\ErrorPresenter,
+    IPub\VisualPaginator\Components as VisualPaginator;
 
 
 /**
@@ -61,6 +62,14 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
                         $control->getSeparatorPrototype()->setName('div')->addClass($control->getControlPrototype()->type);
                 }
         }
+    }
+    
+    public function createComponentVisualPaginator() {
+        // Init visual paginator
+        $control = new VisualPaginator\Control;
+        $control->setTemplateFile(__DIR__.'/../templates/paginator.latte');
+
+        return $control;
     }
 
 }

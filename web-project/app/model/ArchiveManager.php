@@ -109,5 +109,23 @@ class ArchiveManager extends BaseModel {
         
         return $outputArray;
     } 
+    
+    
+    public function countArchive($published = 1) {
+        if($published != 2) {
+            
+            $videoCount = $this->videoManager->countVideos();
+            $albumCount = $this->photosManager->countAlbums();
+            
+            
+        } else {
+            
+            $videoCount = $this->videoManager->countVideos(2);
+            $albumCount = $this->photosManager->countAlbums(2);
+            
+        }
+        
+        return $videoCount + $albumCount;
+    }
    
 }

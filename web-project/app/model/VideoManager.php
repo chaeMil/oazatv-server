@@ -119,8 +119,16 @@ class VideoManager extends BaseModel {
         }
     }
     
-    public function countVideos() {
-        return self::$database->table(self::TABLE_NAME)->count("*");
+    public function countVideos($published = 1) {
+        
+        if ($published != 2) {
+            return self::$database->table(self::TABLE_NAME)
+                    ->where(self::COLUMN_PUBLISHED, $published)->count("*");
+        } else {
+            return self::$database->table(self::TABLE_NAME)->count("*");
+        }
+        
+        
     }
     
     public function getVideosFromDB($from, $count, $published = 1, 

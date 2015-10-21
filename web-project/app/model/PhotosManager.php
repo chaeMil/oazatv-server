@@ -112,8 +112,21 @@ class PhotosManager {
                 
     }
     
-    public function countAlbums() {
-        return $this->database->table(self::TABLE_NAME_ALBUMS)->count("*");
+    public function countAlbums($published = 1) {
+        
+        if ($published != 2) {
+            
+            return $this->database->table(self::TABLE_NAME_ALBUMS)
+                    ->where(self::COLUMN_PUBLISHED, $published)
+                    ->count("*");
+            
+        } else {
+            
+            return $this->database->table(self::TABLE_NAME_ALBUMS)->count("*");
+            
+        }
+        
+        
     }
     
     public function getAlbumsFromDB($from, $count, $published = 1, 

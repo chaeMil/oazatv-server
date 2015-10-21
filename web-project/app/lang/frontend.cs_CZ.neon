@@ -3,6 +3,8 @@ basic:
     search: "Vyhledávání"
     archive: "Archiv"
     views: "zhlédnutí"
+    previous: "předchozí"
+    next: "další"
 homepage:
     newest_videos: "Nejnovější videa"
     newest_albums: "Nejnovější alba"
