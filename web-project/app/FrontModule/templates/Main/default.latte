@@ -23,9 +23,20 @@
     {/if}
 
     {if isset($newestAlbums)}
-        <h1>{_frontend.homepage.newest_albums}</h1>
-        <div n:foreach="$newestAlbums as $album">
-            <a n:href="Album:watch $album['hash']">{$album['name']}</a>
+        <h1>{_frontend.homepage.newest_albums}</h1>        
+        <div class="row videos-box">
+            <a n:foreach="$newestAlbums as $album"       
+               n:href="Album:watch $album['hash']">
+                <div class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="thumb" 
+                         style="background-image: url({$basePath|noescape}/{$album['thumbs']['512']|noescape});"> 
+                    </div>
+                    <div class="info">
+                        <span class="name">{$album['name']}</span>
+                        <span class="date">{$album['date']}</span>
+                    </div>
+                </div>
+            </a>
         </div>
     {/if}
 
