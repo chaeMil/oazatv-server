@@ -119,6 +119,7 @@
                 
                 var oldSearch;
                 var input;
+                var timer;
                 
                 $('#search').bind('focus', function() {
                     if ($(this).val().length >= 3) {
@@ -130,37 +131,46 @@
                     $('#dropdown-search').slideUp();
                 });
 
-                $('#search').bind('input', function() {
+                $('#search').bind('keyup', function(e) {
                     
                     input = $(this).val();
                     
                     if (input.length >= 3) {
                         $('#search-animation').show();
                     }
-
-                    if (oldSearch !== input) {
-                        
-                        setTimeout(function() {
-                            
-                            console.log('doing search: ' + input);
-                            
-                            $('#dropdown-search').load({$basePath} 
-                                + "/search/inline-search/"
-                                + encodeURIComponent(input), 
-                                function() {
-                                    
-                                    highlightSearch(input);
-                                    
-                                    $('#dropdown-search').slideDown(); 
-                                    $('#search-animation').hide();
-                                }
-                            );
-                            
-                        }, 2500);
-                        
-                    }
                     
+                    timer = setTimeout(function() {
+                            
+                        if (input !== oldSearch) {
+
+                                console.log('doing search: ' + input);
+
+                                $('#dropdown-search').load({$basePath} 
+                                    + "/search/inline-search/"
+                                    + encodeURIComponent(input), 
+                                    function() {
+
+                                        highlightSearch(input);
+
+                                        $('#dropdown-search').slideDown(); 
+                                        $('#search-animation').hide();
+                                        
+                                        oldSearch = input;
+                                    }
+                                );
+
+                        } else {
+                            $('#search-animation').hide();
+                        }
+                        
+                    }, 2000);
+                   
                 });
+                
+                $('#search').bind('keydown', function(e) {
+                    clearTimeout(timer);
+                });  
+                
             });
             
             function highlightSearch(input) {
