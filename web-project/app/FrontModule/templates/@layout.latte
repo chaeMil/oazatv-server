@@ -178,8 +178,7 @@
             
                 var input = input.toLowerCase();;
                 var inputWithoutDiacritics = removeDiacritics(input).toLowerCase();
-                
-            
+
                 $('#dropdown-search .tag').each(function() {
                     var text = $(this).text();
                     
@@ -191,6 +190,14 @@
                     if (text.toLowerCase().indexOf(inputWithoutDiacritics) >= 0) {
                         $(this).addClass('highlight');
                         $(this).prependTo($(this).parent());
+                    }
+                });
+                
+                $('#dropdown-search .name').each(function() {
+                    var text = $(this).text();
+                    
+                    if (text.toLowerCase().indexOf(input) >= 0) {
+                        $(this).addClass('highlight');
                     }
                 });
             }
