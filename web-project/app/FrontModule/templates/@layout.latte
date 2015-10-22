@@ -101,6 +101,7 @@
         <script src="{$basePath}/bower_components/jquery/dist/jquery.min.js"></script>
         <script src="{$basePath}/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="{$basePath}/js/jquery.bootstrap-autohidingnavbar.min.js"></script>
+        <script src="{$basePath}/js/utils.js"></script>
         
         <script>
             //autohidding navbar for mobile devices
@@ -174,12 +175,16 @@
             });
             
             function highlightSearch(input) {
+            
+                var input = removeDiacritics(input);
+            
                 $('#dropdown-search .tag').each(function() {
                     var text = $(this).text();
                     
                     if (text.toLowerCase().indexOf(input) >= 0) {
                         
                         $(this).addClass('highlight');
+                        $(this).prependTo($(this).parent());
                     }
                 });
             }
