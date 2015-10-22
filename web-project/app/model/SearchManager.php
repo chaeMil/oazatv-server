@@ -33,7 +33,7 @@ class SearchManager extends BaseModel {
     }
     
     
-    public function search($userInput, $lang) {
+    public function search($userInput, $lang, $limit = 5) {
         
         if (strlen($userInput) >= 3) {
             
@@ -47,7 +47,7 @@ class SearchManager extends BaseModel {
                             VideoManager::COLUMN_NAME_EN." LIKE ? ) OR (".
                             VideoManager::COLUMN_TAGS." LIKE ? )", 
                             "%".$userInput."%", "%".$userInput."%", "%".$userInput ."%")
-                    ->limit(5)
+                    ->limit($limit)
                     ->fetchAll();
 
             $videoSearchOut = array();
@@ -66,7 +66,7 @@ class SearchManager extends BaseModel {
                             PhotosManager::COLUMN_NAME_EN." LIKE ? ) OR (".
                             PhotosManager::COLUMN_TAGS." LIKE ? )", 
                             "%".$userInput."%", "%".$userInput."%", "%".$userInput ."%")
-                    ->limit(5)
+                    ->limit($limit)
                     ->fetchAll();
 
             $albumsSearchOut = array();

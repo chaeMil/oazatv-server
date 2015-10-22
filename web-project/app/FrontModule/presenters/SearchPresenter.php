@@ -22,7 +22,7 @@ class SearchPresenter extends BasePresenter {
     public function renderInlineSearch($id = '') {
         
         $q = $id;
-        $search = $this->searchManager->search($q, $this->lang);
+        $search = $this->searchManager->search($q, $this->lang, 7);
         $this->template->search = $search;
         
     }

@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{$basePath}/bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="{$basePath}/bower_components/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="{$basePath}/css/BootstrapXL.css">
+    <link rel="stylesheet" href="{$basePath}/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css" />
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,300,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 </head>
@@ -49,7 +50,7 @@
                               glyphicon-refresh-animate" id="search-animation"></span>
                         
                         <ul class="dropdown-menu dropdown-search" id="dropdown-search">
-                            {*<li><a href="#">Test</a></li>*}
+                            
                         </ul>
                         
                         <div class="input-group-btn">
@@ -101,6 +102,7 @@
         <script src="{$basePath}/bower_components/jquery/dist/jquery.min.js"></script>
         <script src="{$basePath}/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="{$basePath}/js/jquery.bootstrap-autohidingnavbar.min.js"></script>
+        <script src="{$basePath}/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
         <script src="{$basePath}/js/utils.js"></script>
         
         <script>
@@ -125,6 +127,10 @@
                 $('#search').bind('focus', function() {
                     if ($(this).val().length >= 3) {
                         $('#dropdown-search').slideDown();
+                        
+                        if ($(window).width() <= 768) {
+                            $("body").css("overflow", "hidden");
+                        }
                     }
                 });
 
