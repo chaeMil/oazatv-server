@@ -19,6 +19,7 @@
     "flexslider": "~2.5.0",
     "font-awesome": "~4.4.0",
     "jquery": "~2.1.4",
-    "mixitup": "~2.1.10"
+    "mixitup": "~2.1.10",
+    "malihu-custom-scrollbar-plugin": "~3.1.0"
   }
 }
