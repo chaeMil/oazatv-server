@@ -78,6 +78,7 @@
 
 .dropdown-search {
     width: 400px;
+    max-width: 100%;
 }
 
 .search-animation {
@@ -93,6 +94,8 @@
     
     padding: 8px;
     overflow: hidden;
+    max-height: 70vh;
+    overflow-y: scroll;
     
     .heading {
         display: block;
@@ -129,6 +132,7 @@
                     width: 95px;
                     float: left;
                     background-size: cover;
+                    background-color: #111111;
 
                     &:after {
                         padding-top: 56.25%;
@@ -165,7 +169,6 @@
             }    
         }
     }
-    
 }
 
 .glyphicon-refresh-animate {

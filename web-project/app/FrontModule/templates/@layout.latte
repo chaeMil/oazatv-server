@@ -130,6 +130,10 @@
 
                 $('#search').bind('focusout', function() {
                     $('#dropdown-search').slideUp();
+                    
+                    if ($(window).width() <= 768) {
+                        $("body").css("overflow", "auto");
+                    }
                 });
 
                 $('#search').bind('keyup', function(e) {
@@ -152,7 +156,11 @@
                                     function() {
 
                                         highlightSearch(input);
-
+                                        
+                                        if ($(window).width() <= 768) {
+                                            $("body").css("overflow", "hidden");
+                                        }
+                                        
                                         $('#dropdown-search').slideDown(); 
                                         $('#search-animation').hide();
                                         

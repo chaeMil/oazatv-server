@@ -4236,6 +4236,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-collapse.in {
   overflow-y: auto;
+  overflow: visible;
 }
 @media (min-width: 768px) {
   .navbar-collapse {
@@ -6931,6 +6932,7 @@ button.close {
 }
 .dropdown-search {
   width: 400px;
+  max-width: 100%;
 }
 .search-animation {
   display: none;
@@ -6943,6 +6945,8 @@ button.close {
 .search-results {
   padding: 8px;
   overflow: hidden;
+  max-height: 70vh;
+  overflow-y: scroll;
 }
 .search-results .heading {
   display: block;
@@ -6972,6 +6976,7 @@ button.close {
   width: 95px;
   float: left;
   background-size: cover;
+  background-color: #111111;
 }
 .search-results li a .row .thumb:after {
   padding-top: 56.25%;
@@ -7034,7 +7039,7 @@ and open the template in the editor.
     width: 50%;
   }
 }
-@media (max-width: 768px) and (min-device-width: 150mm) and (orientation: portrait) {
+@media (max-width: 768px) and (min-device-width: 200mm) and (orientation: portrait) {
   .video-box.col-xs-12 {
     width: 50%;
   }
