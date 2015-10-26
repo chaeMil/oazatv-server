@@ -4,8 +4,7 @@ namespace App\FrontModule;
 
 use Nette,
 Nette\Database\Context,
-Model\ArchiveManager,
-IPub\VisualPaginator\Components as VisualPaginator;
+Model\ArchiveManager;
 
 
 class ArchivePresenter extends BasePresenter {

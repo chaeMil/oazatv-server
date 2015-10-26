@@ -7,6 +7,8 @@ basic:
     next: "next"
     videos: "videos"
     albums: "photoalbums"
+search:
+    more: "more results"
 homepage:
     newest_videos: "Newest videos"
     newest_albums: "Newest albums"

@@ -7,6 +7,8 @@ basic:
     next: "další"
     videos: "videa"
     albums: "fotoalba"
+search: 
+    more: "další výsledky"
 homepage:
     newest_videos: "Nejnovější videa"
     newest_albums: "Nejnovější alba"

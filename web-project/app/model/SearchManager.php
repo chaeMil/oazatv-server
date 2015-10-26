@@ -33,7 +33,7 @@ class SearchManager extends BaseModel {
     }
     
     
-    public function search($userInput, $lang, $limit = 5) {
+    public function search($userInput, $lang, $limit = 5, $offset = 0) {
         
         if (strlen($userInput) >= 3) {
             
@@ -55,14 +55,16 @@ class SearchManager extends BaseModel {
                             
                             "%".$userInput."%", "%".$userInput."%", "%".$userInput ."%",
                             "%".$userInputAscii."%", "%".$userInputAscii."%", "%".$userInputAscii ."%")
-                    ->limit($limit)
+                    ->limit($limit, $offset)
                     ->fetchAll();
 
             $videoSearchOut = array();
 
             foreach($videoSearch as $video) {
-                $videoSearchOut[] = $this->videoManager
+                $videoOut = $this->videoManager
                         ->createLocalizedVideoObject($lang, $video);
+                $videoOut['type'] = 'video';
+                $videoSearchOut[] = $videoOut;
             }
 
             $output['videos'] = $videoSearchOut;
@@ -81,14 +83,16 @@ class SearchManager extends BaseModel {
                             
                             "%".$userInput."%", "%".$userInput."%", "%".$userInput ."%",
                             "%".$userInputAscii."%", "%".$userInputAscii."%", "%".$userInputAscii ."%")
-                    ->limit($limit)
+                    ->limit($limit, $offset)
                     ->fetchAll();
 
             $albumsSearchOut = array();
 
             foreach($albumsSearch as $album) {
-                $albumsSearchOut[] = $this->photosManager
+                $albumOut = $this->photosManager
                         ->createLocalizedAlbumThumbObject($lang, $album);
+                $albumOut['type'] = 'album';
+                $albumsSearchOut[] = $albumOut;
             }
 
             $output['albums'] = $albumsSearchOut;
