@@ -1,62 +1,66 @@
 {if $search != ""}
     <div class="search-results">
-        <span class="heading">
-            {_frontend.basic.videos}
-        </span>
-        <ul>
-            <li n:foreach="$search['videos'] as $video">
-                <a n:href="Video:watch $video['hash']">
-                    <div class="row">
-                        <div class="col-xs-4 col-sm-3">
-                            <div style="background-image: url('{$basePath}/{$video['thumbs']['128']}');" 
-                                 class="thumb">
+        {if count($search['videos']) > 0}
+            <span class="heading">
+                {_frontend.basic.videos}
+            </span>
+            <ul>
+                <li n:foreach="$search['videos'] as $video">
+                    <a n:href="Video:watch $video['hash']">
+                        <div class="row">
+                            <div class="col-xs-4 col-sm-3">
+                                <div style="background-image: url('{$basePath}/{$video['thumbs']['128']}');" 
+                                     class="thumb">
+                                </div>
+                            </div>
+                            <div class="col-xs-8 col-sm-9 text-info">
+                                {var $nameArray = explode(' ', $video['name'])}
+                                {foreach $nameArray as $name}
+                                    <span class="name">{$name}</span>
+                                {/foreach}
+                                <br>
+                                <span class="tags">
+                                    {var $tags = explode(',', str_replace(' ', '', trim($video['tags'])))}
+                                    {foreach $tags as $tag}
+                                        <span class="tag">#{$tag}</span>
+                                    {/foreach}
+                                </span>
                             </div>
                         </div>
-                        <div class="col-xs-8 col-sm-9 text-info">
-                            {var $nameArray = explode(' ', $video['name'])}
-                            {foreach $nameArray as $name}
-                                <span class="name">{$name}</span>
-                            {/foreach}
-                            <br>
-                            <span class="tags">
-                                {var $tags = explode(',', str_replace(' ', '', trim($video['tags'])))}
-                                {foreach $tags as $tag}
-                                    <span class="tag">#{$tag}</span>
+                    </a>
+                </li>
+            </ul>
+        {/if}
+        {if count($search['albums']) > 0}
+            <span class="heading">
+                {_frontend.basic.albums}
+            </span>
+            <ul>
+                <li n:foreach="$search['albums'] as $album">
+                    <a n:href="Album:watch $album['hash']">
+                        <div class="row">
+                            <div class="col-xs-4 col-sm-3">
+                                <div style="background-image: url('{$basePath}/{$album['thumbs']['128']}');" 
+                                     class="thumb">
+                                </div>
+                            </div>
+                            <div class="col-xs-8 col-sm-9 text-info">
+                                {var $nameArray = explode(' ', $album['name'])}
+                                {foreach $nameArray as $name}
+                                    <span class="name">{$name}</span>
                                 {/foreach}
-                            </span>
-                        </div>
-                    </div>
-                </a>
-            </li>
-        </ul>
-        <span class="heading">
-            {_frontend.basic.albums}
-        </span>
-        <ul>
-            <li n:foreach="$search['albums'] as $album">
-                <a n:href="Album:watch $album['hash']">
-                    <div class="row">
-                        <div class="col-xs-4 col-sm-3">
-                            <div style="background-image: url('{$basePath}/{$album['thumbs']['128']}');" 
-                                 class="thumb">
+                                <br>
+                                <span class="tags">
+                                    {var $tags = explode(',', str_replace(' ', '', trim($album['tags'])))}
+                                    {foreach $tags as $tag}
+                                        <span class="tag">#{$tag}</span>
+                                    {/foreach}
+                                </span>
                             </div>
                         </div>
-                        <div class="col-xs-8 col-sm-9 text-info">
-                            {var $nameArray = explode(' ', $album['name'])}
-                            {foreach $nameArray as $name}
-                                <span class="name">{$name}</span>
-                            {/foreach}
-                            <br>
-                            <span class="tags">
-                                {var $tags = explode(',', str_replace(' ', '', trim($album['tags'])))}
-                                {foreach $tags as $tag}
-                                    <span class="tag">#{$tag}</span>
-                                {/foreach}
-                            </span>
-                        </div>
-                    </div>
-                </a>
-            </li>
-        </ul>
-    </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    {/if}
 {/if}

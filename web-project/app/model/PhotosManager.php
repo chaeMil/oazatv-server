@@ -279,6 +279,8 @@ class PhotosManager {
         
         if ($input[self::COLUMN_COVER_PHOTO_ID] != '') {
             $album['thumbs'] = $this->getPhotoThumbnails($input[self::COLUMN_COVER_PHOTO_ID]);
+        } else {
+            $album['thumbs'] = null;
         }
         
         
