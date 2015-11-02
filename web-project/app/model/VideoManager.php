@@ -298,4 +298,33 @@ class VideoManager extends BaseModel {
         
         return $video;
     }
+    
+    public function generateVideoTimeThumbs($id) {
+        $video = $this->getVideoFromDB($id, 2);
+        
+        if(!file_exists(VIDEOS_FOLDER.$id.'/time-thumbs')) {
+            mkdir(VIDEOS_FOLDER.$id.'/time-thumbs/');
+            chmod(VIDEOS_FOLDER.$id.'/time-thumbs/', 0777);
+        }
+        
+        if($video['mp4_file'] != '') {
+            $file = $video['mp4_file'];
+        } else if ($video['webm_file'] != '') {
+            $file = $video['webm_file'];
+        } else if ($video['original_file'] != '') {
+            $file = $video['original_file'];
+        } else {
+            $file = null;
+        }
+        
+        if ($file != null) {
+            
+            $command = PATH_TO_FFMPEG." -i ".
+                CONVERSION_FOLDER_ROOT.$id."/".$file.
+                " -vf fps=1/30 ".CONVERSION_FOLDER_ROOT.$id."/time-thumbs/time-thumb-%04d.jpg".
+                ' -y ';
+            
+            shell_exec($command);
+        }
+    }
 }

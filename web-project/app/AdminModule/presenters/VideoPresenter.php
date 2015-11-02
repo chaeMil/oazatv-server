@@ -10,6 +10,7 @@ namespace App\AdminModule;
 
 use Nette,
  Model\VideoManager,
+ Model\VideoConvertQueueManager,
  App\EventLogger;
 
 /**
@@ -21,10 +22,13 @@ class VideoPresenter extends BaseSecuredPresenter {
     
     public $database;
     private $videoManager;
+    private $convertQueueManager;
 
-    function __construct(Nette\Database\Context $database, VideoManager $videoManager) {
+    function __construct(Nette\Database\Context $database, VideoManager $videoManager,
+     VideoConvertQueueManager $convertQueueManager) {
         $this->database = $database;
         $this->videoManager = $videoManager;
+        $this->convertQueueManager = $convertQueueManager;
     }
     
     public function renderList() {       
@@ -60,7 +64,9 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->template->webmFile = VideoManager::COLUMN_WEBM_FILE;
         $this->template->thumbFile = VideoManager::COLUMN_THUMB_FILE;
         $this->template->thumbs = $this->videoManager->getThumbnails($id);
+        $this->template->convertQueueManager = $this->convertQueueManager;
         $this['videoBasicInfoForm']->setDefaults($video->toArray());
+        
     }
     
     public function createComponentVideoBasicInfoForm() {        
@@ -177,5 +183,11 @@ class VideoPresenter extends BaseSecuredPresenter {
                 EventLogger::ACTIONS_LOG);
         $this->flashMessage("Video bylo smazáno!", "danger");
         $this->redirect("Video:List");
+    }
+    
+    public function actionGenerateVideoTimeThumbs($id) {
+        $this->videoManager->generateVideoTimeThumbs($id);
+        exit;
+        $this->redirect("Video:Detail#tools", $id);
     }
 }

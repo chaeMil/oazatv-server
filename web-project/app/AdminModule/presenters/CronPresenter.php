@@ -68,6 +68,8 @@ class CronPresenter extends BasePresenter {
         $convertedVideo = $this->queueManager->getCurrentlyConvertedVideo();
         if (!empty($convertedVideo)) {
             $convertedVideoFromDB = $this->videoManager->getVideoFromDB($convertedVideo->video_id, 2);
+            
+            $this->videoManager->generateVideoTimeThumbs($convertedVideo->video_id);
 
             $convertedVideo->update(array(VideoConvertQueueManager::COLUMN_FINISHED_AT => date('Y-m-d H:i:s'),
                                     VideoConvertQueueManager::COLUMN_STATUS => VideoConvertQueueManager::STATUS_FINISHED));
