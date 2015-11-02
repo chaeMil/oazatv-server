@@ -37,6 +37,10 @@ class VideoPresenter extends BasePresenter {
         $hash = $id; //id only in router, actualy its hash
         $video = $this->videoManager->getVideoFromDBbyHash($hash); 
         
+        if(!file_exists(VIDEOS_FOLDER.$video['id']."/time-thumbs/time-thumb-0001.jpg")) {
+            $this->videoManager->generateVideoTimeThumbs($video['id']);
+        }
+        
         $httpResponse = $this->container->getByType('Nette\Http\Response');
         
         $watchedCookie = $this->getHttpRequest()->getCookie($hash);
