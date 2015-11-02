@@ -1,0 +1,23 @@
+{
+  "name": "videojs-sublime-skin",
+  "version": "1.0.3",
+  "authors": [
+    "Zak Johnson <zak@madebycabin.com>"
+  ],
+  "description": "A Video.js skin modeled on SublimeVideo.",
+  "main": "dist/videojs-sublime-skin.css",
+  "keywords": [
+    "videojs",
+    "video"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "gulpfile.coffee",
+    "screenshot.png",
+    "src"
+  ],
+  "devDependencies": {
+    "bourbon": "~4.0.1"
+  }
+}

@@ -20,6 +20,7 @@
     "font-awesome": "~4.4.0",
     "jquery": "~2.1.4",
     "mixitup": "~2.1.10",
-    "video.js": "videojs#~5.0.2"
+    "video.js": "videojs#~5.0.2",
+    "videojs-sublime-skin": "~1.0.3"
   }
 }
