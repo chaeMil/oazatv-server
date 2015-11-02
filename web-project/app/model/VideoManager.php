@@ -206,6 +206,13 @@ class VideoManager extends BaseModel {
         self::$queueManager->addVideoToQueue($id, $input, $target);
     }
     
+    public function returnMissingThumbs() {
+        return array(self::THUMB_1024 => "img/missing-thumb.png",
+                self::THUMB_512 => "img/missing-thumb.png",
+                self::THUMB_256 => "img/missing-thumb.png",
+                self::THUMB_128 => "img/missing-thumb.png");
+    }
+    
     public function getThumbnails($id) {
         $video = $this->getVideoFromDB($id, 2);
         if ($video['thumb_file'] != null) {
@@ -220,11 +227,10 @@ class VideoManager extends BaseModel {
                     self::THUMB_256 => $thumbfile."_".self::THUMB_256.".jpg",
                     self::THUMB_128 => $thumbfile."_".self::THUMB_128.".jpg");
             } else {
-                return array(self::THUMB_1024 => "img/missing-thumb.png",
-                    self::THUMB_512 => "img/missing-thumb.png",
-                    self::THUMB_256 => "img/missing-thumb.png",
-                    self::THUMB_128 => "img/missing-thumb.png");
+                return $this->returnMissingThumbs();
             }
+        } else {
+            return $this->returnMissingThumbs();
         }
         
     }
