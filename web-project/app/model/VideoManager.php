@@ -208,21 +208,23 @@ class VideoManager extends BaseModel {
     
     public function getThumbnails($id) {
         $video = $this->getVideoFromDB($id, 2);
-        $thumb = VIDEOS_FOLDER.$video->id."/thumbs/".str_replace(".jpg", "_".self::THUMB_1024.".jpg", $video->thumb_file);
-        $thumbfile = VIDEOS_FOLDER.$video->id."/thumbs/".str_replace(".jpg", "", $video->thumb_file);
-        if (!file_exists($thumb)) {
-            $this->generateThumbnails($id);
-        }
-        if (file_exists($thumb)) {
-            return array(self::THUMB_1024 => $thumbfile."_".self::THUMB_1024.".jpg",
-                self::THUMB_512 => $thumbfile."_".self::THUMB_512.".jpg",
-                self::THUMB_256 => $thumbfile."_".self::THUMB_256.".jpg",
-                self::THUMB_128 => $thumbfile."_".self::THUMB_128.".jpg");
-        } else {
-            return array(self::THUMB_1024 => "img/missing-thumb.png",
-                self::THUMB_512 => "img/missing-thumb.png",
-                self::THUMB_256 => "img/missing-thumb.png",
-                self::THUMB_128 => "img/missing-thumb.png");
+        if ($video['thumb_file'] != null) {
+            $thumb = VIDEOS_FOLDER.$video->id."/thumbs/".str_replace(".jpg", "_".self::THUMB_1024.".jpg", $video['thumb_file']);
+            $thumbfile = VIDEOS_FOLDER.$video->id."/thumbs/".str_replace(".jpg", "", $video['thumb_file']);
+            if (!file_exists($thumb)) {
+                $this->generateThumbnails($id);
+            }
+            if (file_exists($thumb)) {
+                return array(self::THUMB_1024 => $thumbfile."_".self::THUMB_1024.".jpg",
+                    self::THUMB_512 => $thumbfile."_".self::THUMB_512.".jpg",
+                    self::THUMB_256 => $thumbfile."_".self::THUMB_256.".jpg",
+                    self::THUMB_128 => $thumbfile."_".self::THUMB_128.".jpg");
+            } else {
+                return array(self::THUMB_1024 => "img/missing-thumb.png",
+                    self::THUMB_512 => "img/missing-thumb.png",
+                    self::THUMB_256 => "img/missing-thumb.png",
+                    self::THUMB_128 => "img/missing-thumb.png");
+            }
         }
         
     }

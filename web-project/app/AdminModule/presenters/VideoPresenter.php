@@ -187,7 +187,6 @@ class VideoPresenter extends BaseSecuredPresenter {
     
     public function actionGenerateVideoTimeThumbs($id) {
         $this->videoManager->generateVideoTimeThumbs($id);
-        exit;
         $this->redirect("Video:Detail#tools", $id);
     }
 }
