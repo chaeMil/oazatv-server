@@ -314,6 +314,8 @@ class VideoManager extends BaseModel {
     }
     
     public function generateVideoTimeThumbs($id) {
+        $this->deleteTimeThumbs($id);
+        
         $video = $this->getVideoFromDB($id, 2);
         
         if(!file_exists(VIDEOS_FOLDER.$id.'/time-thumbs')) {
@@ -335,7 +337,7 @@ class VideoManager extends BaseModel {
             
             $command = PATH_TO_FFMPEG." -i ".
                 CONVERSION_FOLDER_ROOT.$id."/".$file.
-                ' -threads 4 -an -sn -vsync 0 -vf fps=fps=1/10 '.CONVERSION_FOLDER_ROOT.$id."/time-thumbs/time-thumb-%04d.jpg".
+                ' -threads 4 -an -sn -vsync 0 -vf fps=fps=1/30,scale=150:-1 '.CONVERSION_FOLDER_ROOT.$id."/time-thumbs/time-thumb-%04d.jpg".
                 ' -y ';
             
             shell_exec($command);
@@ -348,6 +350,15 @@ class VideoManager extends BaseModel {
             return iterator_count($fi);
         } else {
             return 0;
+        }
+    }
+    
+    public function deleteTimeThumbs($id) {
+        $files = glob(VIDEOS_FOLDER.$id.'/time-thumbs/*'); 
+        foreach($files as $file){
+            if(is_file($file)) {
+                 unlink($file);
+            }
         }
     }
 }

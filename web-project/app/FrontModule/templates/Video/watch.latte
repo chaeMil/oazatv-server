@@ -51,7 +51,7 @@ $('document').ready(function() {
     
     video.thumbnails({
         {for $c = 0; $c < $video['time_thumbs_count']; $c++}
-            {$c * 10}: {
+            {$c * 30}: {
                 src: '{$basePath|noescape}/{$video['time_thumbs'][$c]|noescape}',
                 width: '100px'
             },
