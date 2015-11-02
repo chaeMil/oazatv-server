@@ -230,17 +230,18 @@ class VideoManager extends BaseModel {
                 return $this->returnMissingThumbs();
             }
         } else {
-            return $this->returnMissingThumbs();
+            return null;
         }
         
     }
     
-    public function deleteThumbnails($id) {
-        foreach($this->getThumbnails($id) as $thumbnail) {
-            if (file_exists($thumbnail)) {
-                unlink($thumbnail);
+    public function deleteThumbnails($id) {      
+        $files = glob(VIDEOS_FOLDER.$id.'/thumbs/*'); 
+        foreach($files as $file){
+            if(is_file($file)) {
+                 unlink($file);
             }
-        } 
+        }
     }
     
     private function generateThumbnails($videoId) {
@@ -303,6 +304,11 @@ class VideoManager extends BaseModel {
         $video['categories'] = $input[self::COLUMN_CATEGORIES];
         $video['views'] = $input[self::COLUMN_VIEWS];
         $video['thumbs'] = $this->getThumbnails($videoId);
+        $video['time_thumbs_count'] = $this->countTimeThumbs($input['id']);
+        
+        for($c = 1; $c <= $video['time_thumbs_count']; $c++) {
+            $video['time_thumbs'][] = VIDEOS_FOLDER.$input['id'].'/time-thumbs/time-thumb-'.StringUtils::addLeadingZero($c, 4).'.jpg';
+        }
         
         return $video;
     }
@@ -329,10 +335,15 @@ class VideoManager extends BaseModel {
             
             $command = PATH_TO_FFMPEG." -i ".
                 CONVERSION_FOLDER_ROOT.$id."/".$file.
-                " -vf fps=1/30 ".CONVERSION_FOLDER_ROOT.$id."/time-thumbs/time-thumb-%04d.jpg".
+                ' -threads 4 -an -sn -vsync 0 -vf fps=fps=1/10 '.CONVERSION_FOLDER_ROOT.$id."/time-thumbs/time-thumb-%04d.jpg".
                 ' -y ';
             
             shell_exec($command);
         }
+    }
+    
+    public function countTimeThumbs($id) {
+        $fi = new \FilesystemIterator(VIDEOS_FOLDER.$id.'/time-thumbs/', \FilesystemIterator::SKIP_DOTS);
+        return iterator_count($fi);
     }
 }

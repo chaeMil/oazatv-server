@@ -49,6 +49,15 @@ $('document').ready(function() {
         });
     });
     
+    video.thumbnails({
+        {for $c = 0; $c < $video['time_thumbs_count']; $c++}
+            {$c * 10}: {
+                src: '{$basePath|noescape}/{$video['time_thumbs'][$c]|noescape}',
+                width: '100px'
+            },
+        {/for}
+      });
+    
     if (getSavedVideoTime() !== undefined) {
         video.currentTime(getSavedVideoTime());
     }
