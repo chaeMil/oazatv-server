@@ -40,7 +40,7 @@ class ThumbnailGeneratorPresenter extends BaseSecuredPresenter {
     
     public function renderCreate($videoId) {
         $this->getTemplateVariables($this->getUser()->getId());
-        $this->template->video = $this->videoManager->getVideoFromDB($videoId);
+        $this->template->video = $this->videoManager->getVideoFromDB($videoId, 2);
         $this->template->userId = $this->getUser()->getId();
     }
     

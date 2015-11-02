@@ -38,7 +38,7 @@ class CronPresenter extends BasePresenter {
         
         if ($this->queueManager->isConvertingNow() && $this->queueManager->isFFMPEGRunning()) {
             $convertedVideo = $this->queueManager->getCurrentlyConvertedVideo();
-            $convertedVideoFromDB = $this->videoManager->getVideoFromDB($convertedVideo->video_id);
+            $convertedVideoFromDB = $this->videoManager->getVideoFromDB($convertedVideo->video_id, 2);
 
             $this->flashMessage("now converting video: [".$convertedVideoFromDB->id."] ".
                     $convertedVideoFromDB->name_cs." / ".$convertedVideoFromDB->name_en."  |  conversion: ".
@@ -52,7 +52,7 @@ class CronPresenter extends BasePresenter {
             
             $videoToConvert = $this->queueManager->getFirstVideoToConvert();
             if ($videoToConvert) {
-                $videoToConvertFromDB = $this->videoManager->getVideoFromDB($videoToConvert->video_id);
+                $videoToConvertFromDB = $this->videoManager->getVideoFromDB($videoToConvert->video_id, 2);
                 $this->flashMessage("found video to convert: [".$videoToConvertFromDB->id."] ".
                         $videoToConvertFromDB->name_cs." / ".$videoToConvertFromDB->name_en."  |  conversion: ".
                         $videoToConvert->input." > ".$videoToConvert->target, "info");
@@ -67,7 +67,7 @@ class CronPresenter extends BasePresenter {
     public function actionConversionCompleteCallback() {
         $convertedVideo = $this->queueManager->getCurrentlyConvertedVideo();
         if (!empty($convertedVideo)) {
-            $convertedVideoFromDB = $this->videoManager->getVideoFromDB($convertedVideo->video_id);
+            $convertedVideoFromDB = $this->videoManager->getVideoFromDB($convertedVideo->video_id, 2);
 
             $convertedVideo->update(array(VideoConvertQueueManager::COLUMN_FINISHED_AT => date('Y-m-d H:i:s'),
                                     VideoConvertQueueManager::COLUMN_STATUS => VideoConvertQueueManager::STATUS_FINISHED));

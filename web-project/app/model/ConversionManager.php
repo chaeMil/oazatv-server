@@ -37,7 +37,7 @@ class ConversionManager {
     
     public function startConversion($queueId) {
         $queueItem = $this->queueManager->getVideoFromQueueByQueueId($queueId);
-        $video = $this->videoManager->getVideoFromDB($queueItem->video_id);
+        $video = $this->videoManager->getVideoFromDB($queueItem->video_id, 2);
         
         //setup bitrate
         switch ($queueItem->target) {
@@ -126,7 +126,7 @@ class ConversionManager {
     
     public function getConversionStatus($queueId) {
         $queueItem = $this->queueManager->getVideoFromQueueByQueueId($queueId);
-        $video = $this->videoManager->getVideoFromDB($queueItem->video_id);
+        $video = $this->videoManager->getVideoFromDB($queueItem->video_id, 2);
         
         $logfileDir = VIDEOS_FOLDER.$video->id."/logs/";
         $logfiles = scandir($logfileDir, SCANDIR_SORT_DESCENDING);

@@ -32,7 +32,7 @@ class ThumbnailGenerator {
     }
     
     public function generate($videoId, $userId, $file, $hour, $minute, $second) {
-        $video = $this->videoManager->getVideoFromDB($videoId);
+        $video = $this->videoManager->getVideoFromDB($videoId, 2);
         
         $hour = \App\StringUtils::addLeadingZero($hour, 2);
         $minute = \App\StringUtils::addLeadingZero($minute, 2);
