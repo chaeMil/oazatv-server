@@ -11,7 +11,7 @@ Text Tracks are a function of HTML5 video for providing time triggered text to t
 
 Creating the Text File
 ----------------------
-Timed text requires a text file in [WebVTT](http://dev.w3.org/html5/webvtt/) format. This format defines a list of "cues" that have a start time, and end time, and text to display.
+Timed text requires a text file in [WebVTT](http://dev.w3.org/html5/webvtt/) format. This format defines a list of "cues" that have a start time, and end time, and text to display. [Microsoft has a builder](http://ie.microsoft.com/testdrive/Graphics/CaptionMaker/) that can help you get started on the file.
 
 When creating captions, there's also additional [caption formatting techniques] (http://www.theneitherworld.com/mcpoodle/SCC_TOOLS/DOCS/SCC_FORMAT.HTML#style) that would be good to use, like brackets around sound effects: [ sound effect ]. If you'd like a more in depth style guide for captioning, you can reference the [Captioning Key](http://www.dcmp.org/captioningkey/), but keep in mind not all features are supported by WebVTT or (more likely) the Video.js WebVTT implementation.
 
@@ -31,11 +31,6 @@ Once you have your WebVTT file created, you can add it to Video.js using the tra
 
 </video>
 ```
-
-Subtitles from Another Domain
------------------------------
-Because we're pulling in the text track file via Javascript, the [same-origin policy](http://en.wikipedia.org/wiki/Same_origin_policy) applies. If you'd like to have a player served from one domain,
-but the text track served from another, you'll need to [enable CORS](http://enable-cors.org/) in order to do so.
 
 Track Attributes
 ----------------
@@ -97,10 +92,10 @@ The two-letter code (valid BCP 47 language tag) for the language of the text tra
         <tr><th>fj<th><td>Fiji</td></tr>
         <tr><th>fi<th><td>Finnish</td></tr>
       </table>
-
+      
     </td>
     <td>
-
+      
       <table>
         <tr><th>fr<th><td>French</td></tr>
         <tr><th>fy<th><td>Frisian</td></tr>
@@ -140,10 +135,10 @@ The two-letter code (valid BCP 47 language tag) for the language of the text tra
         <tr><th>lo<th><td>Laothian</td></tr>
         <tr><th>la<th><td>Latin</td></tr>
       </table>
-
+      
     </td>
     <td>
-
+      
       <table>
         <tr><th>lv<th><td>Latvian (Lettish)</td></tr>
         <tr><th>li<th><td>Limburgish ( Limburger)</td></tr>
@@ -183,10 +178,10 @@ The two-letter code (valid BCP 47 language tag) for the language of the text tra
         <tr><th>ii<th><td>Sichuan Yi</td></tr>
         <tr><th>sd<th><td>Sindhi</td></tr>
       </table>
-
+      
     </td>
     <td>
-
+      
       <table>
         <tr><th>si<th><td>Sinhalese</td></tr>
         <tr><th>ss<th><td>Siswati</td></tr>
@@ -224,7 +219,7 @@ The two-letter code (valid BCP 47 language tag) for the language of the text tra
         <tr><th>yo<th><td>Yoruba</td></tr>
         <tr><th>zu<th><td>Zulu</td></tr>
       </table>
-
+      
     </td>
   </tr>
 </table>

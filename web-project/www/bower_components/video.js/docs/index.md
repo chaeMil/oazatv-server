@@ -10,9 +10,9 @@ There are two categories of docs: [Guides](./guides/) and [API docs](./api/). Gu
 
 ### Getting Started
 
-* [Setup](./guides/setup.md) - The setup documentation gives a deeper view of the additional methods you can use to trigger the player setup.
+* [Setup](./guides/setup.md) - Check out the [5 second setup](http://videojs.com/#section5) if you're just getting started. The setup documentation gives a deeper view of the additional methods you can use to trigger the player setup.
 
-* [Options](./guides/options.md) - There are a number of options that can be used to change how the player behaves, starting with the HTML5 media options like autoplay and preload, and expanding to Video.js specific options.
+* [Options](./guides/options.md) - There are a number of options that can be used to change how the player behaves, starting with the HTML5 media options like autoplay and preload, and expanding to Video.JS specific options.
 
 * [Tracks](./guides/tracks.md) - Text Tracks are used to display subtitles and captions, and add a menu for navigating between chapters in a video.
 
@@ -29,8 +29,6 @@ There are two categories of docs: [Guides](./guides/) and [API docs](./api/). Gu
 ### Resources
 
 * [Glossary](./guides/glossary.md) - Some helpful definitions.
-
-* [Removing Players](./guides/removing-players.md) - Helpful for using VideoJS in single page apps.
 
 ## API Docs
 - The most relevant API doc is the [player API doc](./api/vjs.Player.md).

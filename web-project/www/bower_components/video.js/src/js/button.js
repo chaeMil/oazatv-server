@@ -1,134 +1,83 @@
-/**
- * @file button.js
- */
-import Component from './component';
-import * as Dom from './utils/dom.js';
-import * as Events from './utils/events.js';
-import * as Fn from './utils/fn.js';
-import document from 'global/document';
-import assign from 'object.assign';
-
+/* Button - Base class for all buttons
+================================================================================ */
 /**
  * Base class for all buttons
- *
- * @param {Object} player  Main Player
- * @param {Object=} options Object of option names and values
- * @extends Component
- * @class Button
+ * @param {vjs.Player|Object} player
+ * @param {Object=} options
+ * @class
+ * @constructor
  */
-class Button extends Component {
-
-  constructor(player, options) {
-    super(player, options);
+vjs.Button = vjs.Component.extend({
+  /**
+   * @constructor
+   * @inheritDoc
+   */
+  init: function(player, options){
+    vjs.Component.call(this, player, options);
 
     this.emitTapEvents();
 
-    this.on('tap', this.handleClick);
-    this.on('click', this.handleClick);
-    this.on('focus', this.handleFocus);
-    this.on('blur', this.handleBlur);
+    this.on('tap', this.onClick);
+    this.on('click', this.onClick);
+    this.on('focus', this.onFocus);
+    this.on('blur', this.onBlur);
   }
+});
 
-  /**
-   * Create the component's DOM element
-   *
-   * @param {String=} type Element's node type. e.g. 'div'
-   * @param {Object=} props An object of element attributes that should be set on the element Tag name
-   * @return {Element}
-   * @method createEl
-   */
-  createEl(tag='button', props={}, attributes={}) {
-    props = assign({
-      className: this.buildCSSClass(),
-      tabIndex: 0
-    }, props);
+vjs.Button.prototype.createEl = function(type, props){
+  var el;
 
-    // Add standard Aria info
-    attributes = assign({
-      role: 'button',
-      type: 'button', // Necessary since the default button type is "submit"
-      'aria-live': 'polite' // let the screen reader user know that the text of the button may change
-    }, attributes);
+  // Add standard Aria and Tabindex info
+  props = vjs.obj.merge({
+    className: this.buildCSSClass(),
+    'role': 'button',
+    'aria-live': 'polite', // let the screen reader user know that the text of the button may change
+    tabIndex: 0
+  }, props);
 
-    let el = super.createEl(tag, props, attributes);
+  el = vjs.Component.prototype.createEl.call(this, type, props);
 
-    this.controlTextEl_ = Dom.createEl('span', {
-      className: 'vjs-control-text'
+  // if innerHTML hasn't been overridden (bigPlayButton), add content elements
+  if (!props.innerHTML) {
+    this.contentEl_ = vjs.createEl('div', {
+      className: 'vjs-control-content'
     });
 
-    el.appendChild(this.controlTextEl_);
+    this.controlText_ = vjs.createEl('span', {
+      className: 'vjs-control-text',
+      innerHTML: this.localize(this.buttonText) || 'Need Text'
+    });
 
-    this.controlText(this.controlText_);
-
-    return el;
+    this.contentEl_.appendChild(this.controlText_);
+    el.appendChild(this.contentEl_);
   }
 
-  /**
-   * Controls text - both request and localize
-   *
-   * @param {String} text Text for button
-   * @return {String}
-   * @method controlText
-   */
-  controlText(text) {
-    if (!text) return this.controlText_ || 'Need Text';
+  return el;
+};
 
-    this.controlText_ = text;
-    this.controlTextEl_.innerHTML = this.localize(this.controlText_);
+vjs.Button.prototype.buildCSSClass = function(){
+  // TODO: Change vjs-control to vjs-button?
+  return 'vjs-control ' + vjs.Component.prototype.buildCSSClass.call(this);
+};
 
-    return this;
+  // Click - Override with specific functionality for button
+vjs.Button.prototype.onClick = function(){};
+
+  // Focus - Add keyboard functionality to element
+vjs.Button.prototype.onFocus = function(){
+  vjs.on(document, 'keydown', vjs.bind(this, this.onKeyPress));
+};
+
+  // KeyPress (document level) - Trigger click when keys are pressed
+vjs.Button.prototype.onKeyPress = function(event){
+  // Check for space bar (32) or enter (13) keys
+  if (event.which == 32 || event.which == 13) {
+    event.preventDefault();
+    this.onClick();
   }
+};
 
-  /**
-   * Allows sub components to stack CSS class names
-   *
-   * @return {String}
-   * @method buildCSSClass
-   */
-  buildCSSClass() {
-    return `vjs-control vjs-button ${super.buildCSSClass()}`;
-  }
-
-  /**
-   * Handle Click - Override with specific functionality for button
-   *
-   * @method handleClick
-   */
-  handleClick() {}
-
-  /**
-   * Handle Focus - Add keyboard functionality to element
-   *
-   * @method handleFocus
-   */
-  handleFocus() {
-    Events.on(document, 'keydown', Fn.bind(this, this.handleKeyPress));
-  }
-
-  /**
-   * Handle KeyPress (document level) - Trigger click when keys are pressed
-   *
-   * @method handleKeyPress
-   */
-  handleKeyPress(event) {
-    // Check for space bar (32) or enter (13) keys
-    if (event.which === 32 || event.which === 13) {
-      event.preventDefault();
-      this.handleClick(event);
-    }
-  }
-
-  /**
-   * Handle Blur - Remove keyboard triggers
-   *
-   * @method handleBlur
-   */
-  handleBlur() {
-    Events.off(document, 'keydown', Fn.bind(this, this.handleKeyPress));
-  }
-
-}
-
-
-Component.registerComponent('Button', Button);
-export default Button;
+// Blur - Remove keyboard triggers
+vjs.Button.prototype.onBlur = function(){
+  vjs.off(document, 'keydown', vjs.bind(this, this.onKeyPress));
+};

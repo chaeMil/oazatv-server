@@ -296,7 +296,8 @@
                         
                         {if ($convertQueueManager->getCurrentlyConvertedVideo()['video_id'] != $video['id'])}
                             <a n:href="Video:GenerateVideoTimeThumbs $video->id"
-                                class="btn btn-lg btn-primary">
+                                class="btn btn-lg btn-primary confirm"
+                                data-confirm="Spustí asynchronní vytváření časových náhledů na dvou vláknech procesoru. <br><br>Doba konání zývisí na délce videa, obvykle pár minut.<br><br> Pokračovat?">
                                 <i class="fa fa-gears fa-fw"></i> Vytvořit časové miniatury
                             </a>
                         {else}

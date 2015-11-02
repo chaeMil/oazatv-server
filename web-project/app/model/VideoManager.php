@@ -337,8 +337,8 @@ class VideoManager extends BaseModel {
             
             $command = PATH_TO_FFMPEG." -i ".
                 CONVERSION_FOLDER_ROOT.$id."/".$file.
-                ' -threads 4 -an -sn -vsync 0 -vf fps=fps=1/30,scale=150:-1 '.CONVERSION_FOLDER_ROOT.$id."/time-thumbs/time-thumb-%04d.jpg".
-                ' -y ';
+                ' -threads 2 -an -sn -vsync 0 -vf fps=fps=1/30,scale=150:-1 '.CONVERSION_FOLDER_ROOT.$id."/time-thumbs/time-thumb-%04d.jpg".
+                ' -y > /dev/null 2>/dev/null &';
             
             shell_exec($command);
         }

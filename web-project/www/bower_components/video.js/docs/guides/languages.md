@@ -1,51 +1,51 @@
 Languages
 =========
 
-Multiple language support allows for users of non-English locales to natively interact with the displayed player. Video.js will compile multiple language files (see below) and instantiate with a global dictionary of language key/value support. Video.js player instances can be created with per-player language support that amends/overrides these default values. Player instances can also hard-set default languages to values other than English as of version 4.7.
+Multiple language support allows for users of non-English locales to natively interact with the displayed player. Video.js will compile multiple langauge files (see below) and instantiate with a global dictionary of language key/value support. Video.js player instances can be created with per-player language support that amends/overrides this default values. Player instances can also hard-set default languges to values other than English as of version 4.7.
 
 Creating the Language File
 --------------------------
-Video.js uses key/value object dictionaries in JSON form. A sample dictionary for Spanish `['es']` would look as follows;
+Video.js uses key/value object dictionaries in JSON form. A sample dictionary for Spanish ['es'] would look as follows;
 
 ```JSON
 {
-  "Play": "Reproducción",
+  "Play": "Juego",
   "Pause": "Pausa",
-  "Current Time": "Tiempo reproducido",
-  "Duration Time": "Duración total",
-  "Remaining Time": "Tiempo restante",
-  "Stream Type": "Tipo de secuencia",
-  "LIVE": "DIRECTO",
+  "Current Time": "Tiempo Actual",
+  "Duration Time": "Tiempo de Duracion",
+  "Remaining Time": "Tiempo Restante",
+  "Stream Type": "Tipo de Transmision",
+  "LIVE": "En Vivo",
   "Loaded": "Cargado",
   "Progress": "Progreso",
-  "Fullscreen": "Pantalla completa",
-  "Non-Fullscreen": "Pantalla no completa",
-  "Mute": "Silenciar",
-  "Unmuted": "No silenciado",
-  "Playback Rate": "Velocidad de reproducción",
-  "Subtitles": "Subtítulos",
-  "subtitles off": "Subtítulos desactivados",
-  "Captions": "Subtítulos especiales",
-  "captions off": "Subtítulos especiales desactivados",
-  "Chapters": "Capítulos",
-  "You aborted the video playback": "Ha interrumpido la reproducción del vídeo.",
-  "A network error caused the video download to fail part-way.": "Un error de red ha interrumpido la descarga del vídeo.",
-  "The video could not be loaded, either because the server or network failed or because the format is not supported.": "No se ha podido cargar el vídeo debido a un fallo de red o del servidor o porque el formato es incompatible.",
-  "The video playback was aborted due to a corruption problem or because the video used features your browser did not support.": "La reproducción de vídeo se ha interrumpido por un problema de corrupción de datos o porque el vídeo precisa funciones que su navegador no ofrece.",
-  "No compatible source was found for this video.": "No se ha encontrado ninguna fuente compatible con este vídeo."
+  "Fullscreen": "Pantalla Completa",
+  "Non-Fullscreen": "No Pantalla Completa",
+  "Mute": "Mudo",
+  "Unmuted": "Activar sonido",
+  "Playback Rate": "Reproduccion Cambio",
+  "Subtitles": "Subtitulos",
+  "subtitles off": "subtitulos fuera",
+  "Captions": "Subtitulos",
+  "captions off": "subtitulos fuera",
+  "Chapters": "Capitulos",
+  "You aborted the video playback": "Ha anulado la reproduccion de video",
+  "A network error caused the video download to fail part-way.": "Un error en la red hizo que la descarga de video falle parte del camino.",
+  "The video could not be loaded, either because the server or network failed or because the format is not supported.": "El video no se puede cargar, ya sea porque el servidor o la red fracasaron o porque el formato no es compatible.",
+  "The video playback was aborted due to a corruption problem or because the video used features your browser did not support.": "La reproduccion de video se ha cancelado debido a un problema de corrupcion o porque el video utilizado cuenta con su navegador no soporta.",
+  "No compatible source was found for this video.": "Ninguna fuente compatible se encontro para este video."
 }
 ```
 
 Notes:
-
-- The file name should always be in the format `XX.json`, where `XX` is the two letter value of the language reported to the browser (for options see the bottom of this document).
-- For automatic inclusion at build time, add your language file to the `/lang` directory (see 'Adding Languages to Video.js below').
+ 
+- The file name should always be in the format XX.json, where XX is the two letter value of the language reported to the browser (for options see the bottom of this document).
+- For automatic inclusion at build time, add your language file to the /lang directory (see 'Adding Languages to Video.js below').
 
 Adding Languages to Video.js
 ----------------------------
 Additional language support can be added to Video.js in multiple ways.
 
-1. Create language scripts out of your JSON objects by using our custom grunt task `vjslanguages`. This task is automatically run as part of the default grunt task in Video.JS, but can be configured to match your `src`/`dist` directories if different. Once these scripts are created, just add them to your DOM like any other script.
+1. Create language scripts out of your JSON objects by using our custom grunt task `vjslanguages`. This task is automatically run as part of the default grunt task in Video.JS, but can be configured to match your src/dist directories if different. Once these scripts are created, just add them to your DOM like any other script. 
 
 NOTE: These need to be added after the core Video.js script.
 
@@ -57,36 +57,36 @@ NOTE: These need to be added after the core Video.js script.
 <script>
   videojs.options.flash.swf = '../node_modules/videojs-swf/dist/video-js.swf';
   videojs.addLanguage('es', {
-    "Play": "Reproducción",
+    "Play": "Juego",
     "Pause": "Pausa",
-    "Current Time": "Tiempo reproducido",
-    "Duration Time": "Duración total",
-    "Remaining Time": "Tiempo restante",
-    "Stream Type": "Tipo de secuencia",
-    "LIVE": "DIRECTO",
+    "Current Time": "Tiempo Actual",
+    "Duration Time": "Tiempo de Duracion",
+    "Remaining Time": "Tiempo Restante",
+    "Stream Type": "Tipo de Transmision",
+    "LIVE": "En Vivo",
     "Loaded": "Cargado",
     "Progress": "Progreso",
-    "Fullscreen": "Pantalla completa",
-    "Non-Fullscreen": "Pantalla no completa",
-    "Mute": "Silenciar",
-    "Unmuted": "No silenciado",
-    "Playback Rate": "Velocidad de reproducción",
-    "Subtitles": "Subtítulos",
-    "subtitles off": "Subtítulos desactivados",
-    "Captions": "Subtítulos especiales",
-    "captions off": "Subtítulos especiales desactivados",
-    "Chapters": "Capítulos",
-    "You aborted the video playback": "Ha interrumpido la reproducción del vídeo.",
-    "A network error caused the video download to fail part-way.": "Un error de red ha interrumpido la descarga del vídeo.",
-    "The video could not be loaded, either because the server or network failed or because the format is not supported.": "No se ha podido cargar el vídeo debido a un fallo de red o del servidor o porque el formato es incompatible.",
-    "The video playback was aborted due to a corruption problem or because the video used features your browser did not support.": "La reproducción de vídeo se ha interrumpido por un problema de corrupción de datos o porque el vídeo precisa funciones que su navegador no ofrece.",
-    "No compatible source was found for this video.": "No se ha encontrado ninguna fuente compatible con este vídeo."
-});
+    "Fullscreen": "Pantalla Completa",
+    "Non-Fullscreen": "No Pantalla Completa",
+    "Mute": "Mudo",
+    "Unmuted": "Activar sonido",
+    "Playback Rate": "Reproduccion Cambio",
+    "Subtitles": "Subtitulos",
+    "subtitles off": "subtitulos fuera",
+    "Captions": "Subtitulos",
+    "captions off": "subtitulos fuera",
+    "Chapters": "Capitulos",
+    "You aborted the video playback": "Ha anulado la reproduccion de video",
+    "A network error caused the video download to fail part-way.": "Un error en la red hizo que la descarga de video falle parte del camino.",
+    "The video could not be loaded, either because the server or network failed or because the format is not supported.": "El video no se puede cargar, ya sea porque el servidor o la red fracasaron o porque el formato no es compatible.",
+    "The video playback was aborted due to a corruption problem or because the video used features your browser did not support.": "La reproduccion de video se ha cancelado debido a un problema de corrupcion o porque el video utilizado cuenta con su navegador no soporta.",
+    "No compatible source was found for this video.": "Ninguna fuente compatible se encontro para este video."
+  });
 </script>
 </head>
 ```
 
-3. During a Video.js player instantiation. Adding the languages to the configuration object provided in the `data-setup` attribute.
+3. During a Video.js player instantiation. Adding the languages to the configuration object provided in the data-setup attribute.
 
 ```html
 <video id="example_video_1" class="video-js vjs-default-skin"  
@@ -102,12 +102,12 @@ NOTE: These need to be added after the core Video.js script.
 ```
 
 Notes:
-- This will add your language key/values to the Video.js player instances individually. If these values already exist in the global dictionary via the process above, those will be overridden for the player instance in question.
+- This will add your language key/values to the videojs player instances individually. If these values already exist in the global dictionary via the process above, those will be overridden for the player instance in question.
 
 
 Setting Default Language in a Video.js Player
 ---------------------------------------------
-During a Video.js player instantiation you can force it to localize to a specific language by including the locale value into the configuration object via the `data-setup` attribute. Valid options listed at the bottom of the page for reference.
+During a Video.js player instantiation you can force it to localize to a specific language by including the locale value into the configuration object via the data-setup attribute. Valid options listed at the bottom of the page for reference.
 
 ```html
 <video id="example_video_1" class="video-js vjs-default-skin"  
@@ -122,36 +122,9 @@ During a Video.js player instantiation you can force it to localize to a specifi
 </video>
 ```
 
-Determining Player Language
----------------------------
-
-The player language is set to one of the following in descending priority
-
-* The language set in setup options as above
-* The document language (`lang` attribute of the `html` element)
-* Browser language preference
-* 'en'
-
-That can be overridden after instantiation with `language('fr')`.
-
-Language selection
-------------------
-
-* Language codes are considered case-insensitively (`en-US` == `en-us`).
-* If there is no match for a language code with a subcode (`en-us`), a match for the primary code (`en`) is used if available.
-
-Localization in Plugins
------------------------
-
-When you're developing a plugin, you can also introduce new localized strings. Simply wrap the string with the player's `localize` function:
-
-```javascript
-var details = '<div class="vjs-errors-details">' + player.localize('Technical details') + '</div>';
-```
-
 Language Codes
 --------------
-The following is a list of official language codes.
+The following is a list of official language codes. 
 
 **NOTE:** For supported language translations, please see the [Languages Folder (/lang)](../../lang) folder located in the project root.
 
@@ -198,10 +171,10 @@ The following is a list of official language codes.
         <tr><th>fj<th><td>Fiji</td></tr>
         <tr><th>fi<th><td>Finnish</td></tr>
       </table>
-
+      
     </td>
     <td>
-
+      
       <table>
         <tr><th>fr<th><td>French</td></tr>
         <tr><th>fy<th><td>Frisian</td></tr>
@@ -241,10 +214,10 @@ The following is a list of official language codes.
         <tr><th>lo<th><td>Laothian</td></tr>
         <tr><th>la<th><td>Latin</td></tr>
       </table>
-
+      
     </td>
     <td>
-
+      
       <table>
         <tr><th>lv<th><td>Latvian (Lettish)</td></tr>
         <tr><th>li<th><td>Limburgish ( Limburger)</td></tr>
@@ -284,10 +257,10 @@ The following is a list of official language codes.
         <tr><th>ii<th><td>Sichuan Yi</td></tr>
         <tr><th>sd<th><td>Sindhi</td></tr>
       </table>
-
+      
     </td>
     <td>
-
+      
       <table>
         <tr><th>si<th><td>Sinhalese</td></tr>
         <tr><th>ss<th><td>Siswati</td></tr>
@@ -325,7 +298,7 @@ The following is a list of official language codes.
         <tr><th>yo<th><td>Yoruba</td></tr>
         <tr><th>zu<th><td>Zulu</td></tr>
       </table>
-
+      
     </td>
   </tr>
 </table>
