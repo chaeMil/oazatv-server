@@ -343,7 +343,11 @@ class VideoManager extends BaseModel {
     }
     
     public function countTimeThumbs($id) {
-        $fi = new \FilesystemIterator(VIDEOS_FOLDER.$id.'/time-thumbs/', \FilesystemIterator::SKIP_DOTS);
-        return iterator_count($fi);
+        if (file_exists(VIDEOS_FOLDER.$id.'/time-thumbs/')) {
+            $fi = new \FilesystemIterator(VIDEOS_FOLDER.$id.'/time-thumbs/', \FilesystemIterator::SKIP_DOTS);
+            return iterator_count($fi);
+        } else {
+            return 0;
+        }
     }
 }
