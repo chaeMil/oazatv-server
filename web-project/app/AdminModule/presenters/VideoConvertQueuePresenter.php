@@ -57,7 +57,7 @@ class VideoConvertQueuePresenter extends BaseSecuredPresenter {
         $queueItem = $this->queueManager->getVideoFromQueueByQueueId($id);
         $this->template->queueItem = $queueItem;
         $this->template->conversionManager = $this->conversionManager;
-        $this->template->video = $this->videoManager->getVideoFromDB($queueItem->video_id);
+        $this->template->video = $this->videoManager->getVideoFromDB($queueItem->video_id, 2);
         $this->template->thumbs = $this->videoManager->getThumbnails($queueItem->video_id);
     }
     

@@ -8,7 +8,7 @@
     <a>
         <div>
             <p>
-                <strong>{var $videoFromDB = $videoManager->getVideoFromDB($video->video_id)}
+                <strong>{var $videoFromDB = $videoManager->getVideoFromDB($video->video_id, 2)}
                     {$videoFromDB->name_cs} / 
                     {$videoFromDB->name_en}</strong>
                 <small>{$video->input} > {$video->target}</small>
