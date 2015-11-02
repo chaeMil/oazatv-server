@@ -97,9 +97,11 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
         ));
     }
 
-    public function getUserName($user_id) {
+    public function getUserFromDB($user_id) {
         return $this->database->table(self::TABLE_NAME)
-                        ->where(self::COLUMN_ID, $user_id)->get(self::COLUMN_NAME);
+                ->select('*')
+                ->where(self::COLUMN_ID, $user_id)
+                ->fetch();
     }
 
     /**

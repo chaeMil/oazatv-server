@@ -76,9 +76,10 @@ class SignPresenter extends BasePresenter {
         }
     }
 
-    public function actionOut() {
-        $this->userManager->emptyUserTempFolder($this->getUser()->getId());
-        EventLogger::log('user '.$this->getUser()->storage->identity->login.' logged out', EventLogger::AUTH_LOG);
+    public function actionOut($userId) {
+        $user = $this->userManager->getUserFromDB($userId);
+        $this->userManager->emptyUserTempFolder($userId);
+        EventLogger::log('user '.$user->login.' logged out', EventLogger::AUTH_LOG);
         $this->getUser()->logout();
         $this->flashMessage('You have been signed out.');
         $this->redirect('Sign:in');

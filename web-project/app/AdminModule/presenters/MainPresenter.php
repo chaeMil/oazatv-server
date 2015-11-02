@@ -33,7 +33,6 @@ class MainPresenter extends BaseSecuredPresenter {
     }
     
     function renderDefault() {
-        
         $this->getTemplateVariables($this->getUser()->getId());
         $this->template->lastloginString = StringUtils::
             timeElapsedString($this->getUser()->getIdentity()->data['lastlogin_time']);
