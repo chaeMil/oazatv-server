@@ -1,14 +1,83 @@
 {block content}
 
+<div class="row video-player">
+    
+    <div class="col-md-8 col-lg-9">
+
+        <video id="video" class="video-js vjs-sublime-skin" controls preload="auto"
+             {if isset($video['thumbs']['512'])}
+                 poster="{$basePath}/{$video['thumbs']['512']}"
+             {/if}
+        >
+
+        {if isset($video['mp4'])}
+            <source src="{$basePath}/{$video['mp4']}" type='video/mp4'>
+        {/if}
+        {if isset($video['webm'])}
+            <source src="{$basePath}/{$video['webm']}" type='video/webm'>
+        {/if}
+
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a web browser that
+          <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+        </p>
+      </video>
+        
+    </div>
+    
+</div>
+
 <h1>{$video['name']}</h1>
 <p>{$video['desc']}</p>
 <p>{$video['date']}</p>
 <p>{$video['views']}</p>
-<video width="1280" height="720" controls>
-    {if isset($video['mp4'])}
-        <source src="{$basePath}/{$video['mp4']}" type="video/mp4">
-    {/if}
-    {if isset($video['webm'])}
-        <source src="{$basePath}/{$video['webm']}" type="video/webm">
-    {/if}
-</video>
+
+{/block}
+
+{block pageScripts}
+
+<script>
+    
+$('document').ready(function() {
+    
+    var video = videojs('video').ready(function(){
+        var player = this;
+
+        player.on('pause', function() {
+           saveVideoTime(player.currentTime());
+           savePlayerVolume(player.volume().toString().substr(0,5));
+        });
+    });
+    
+    if (getSavedVideoTime() !== undefined) {
+        video.currentTime(getSavedVideoTime());
+    }
+    
+    if (getSavedPlayerVolume() !== undefined) {
+        video.volume(getSavedPlayerVolume());
+    }
+    
+    $(window).bind('beforeunload', function(){
+        player.pause();
+    });
+});
+
+function saveVideoTime(time) {
+    setCookie({$video['hash']} + '_time', time);
+}
+
+function getSavedVideoTime() {
+    return getCookie({$video['hash']} + '_time');
+}
+
+function savePlayerVolume(volume) {
+    setCookie('player_volume', volume);
+}
+
+function getSavedPlayerVolume() {
+    return getCookie('player_volume');
+}
+
+</script>
+
+{/block}

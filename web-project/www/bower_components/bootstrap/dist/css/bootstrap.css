@@ -7006,6 +7006,34 @@ button.close {
   -animation: spin .7s infinite linear;
   -webkit-animation: spin2 .7s infinite linear;
 }
+.video-player #video {
+  width: 100%;
+  position: relative;
+  max-height: 60vh;
+  height: auto;
+}
+.video-player #video.vjs-fullscreen {
+  height: 100%;
+  max-height: 100vh;
+}
+.video-player #video .vjs-big-play-button {
+  top: 50%;
+  left: 50%;
+  margin: -60px 0 0 -120px;
+  border: none;
+  background: none;
+  font-size: 8em;
+  text-shadow: 0px 0px 28px rgba(0, 0, 0, 0.45);
+}
+.video-player #video.vjs-paused .vjs-big-play-button {
+  display: block;
+}
+.video-player #video:after {
+  padding-top: 56.25%;
+  /* 16:9 ratio */
+  display: block;
+  content: '';
+}
 @-webkit-keyframes spin2 {
   from {
     -webkit-transform: rotate(0deg);
