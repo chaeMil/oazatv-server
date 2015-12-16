@@ -47,7 +47,6 @@ translation:
         request: on
 
 constants:
-    SERVER: "http://oaza.tv"
     VERSION: "0.8.1 (2015-10-22)"
     DB_PREFIX: ""
     DB_ADMIN_PREFIX: "admin_"
