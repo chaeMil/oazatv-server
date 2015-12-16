@@ -42,16 +42,15 @@ class SearchManager extends BaseModel {
             $userInputAscii = \Nette\Utils\Strings::toAscii($userInput);
         
             $videoSearch = self::$database->table(VideoManager::TABLE_NAME)
-                    ->select('*')
-                    ->where(VideoManager::COLUMN_PUBLISHED, 1)
-                    
-                    ->where(VideoManager::COLUMN_NAME_CS." LIKE ? OR ".
+                    ->select('*')                    
+                    ->where(VideoManager::COLUMN_PUBLISHED." = 1 AND ((".
+                            VideoManager::COLUMN_NAME_CS." LIKE ? OR ".
                             VideoManager::COLUMN_NAME_EN." LIKE ? ) OR (".
                             VideoManager::COLUMN_TAGS." LIKE ? ) OR (".
                             
                             VideoManager::COLUMN_NAME_CS." LIKE ? OR ".
                             VideoManager::COLUMN_NAME_EN." LIKE ? ) OR (".
-                            VideoManager::COLUMN_TAGS." LIKE ? ",
+                            VideoManager::COLUMN_TAGS." LIKE ? ))",
                             
                             "%".$userInput."%", "%".$userInput."%", "%".$userInput ."%",
                             "%".$userInputAscii."%", "%".$userInputAscii."%", "%".$userInputAscii ."%")
@@ -70,16 +69,15 @@ class SearchManager extends BaseModel {
             $output['videos'] = $videoSearchOut;
 
             $albumsSearch = self::$database->table(PhotosManager::TABLE_NAME_ALBUMS)
-                    ->select('*')
-                    ->where(PhotosManager::COLUMN_PUBLISHED, 1)
-                    
-                    ->where(VideoManager::COLUMN_NAME_CS." LIKE ? OR ".
+                    ->select('*')                    
+                    ->where(VideoManager::COLUMN_PUBLISHED." = 1 AND ((".
+                            VideoManager::COLUMN_NAME_CS." LIKE ? OR ".
                             VideoManager::COLUMN_NAME_EN." LIKE ? ) OR (".
                             VideoManager::COLUMN_TAGS." LIKE ? ) OR (".
                             
                             VideoManager::COLUMN_NAME_CS." LIKE ? OR ".
                             VideoManager::COLUMN_NAME_EN." LIKE ? ) OR (".
-                            VideoManager::COLUMN_TAGS." LIKE ? ",
+                            VideoManager::COLUMN_TAGS." LIKE ? ))",
                             
                             "%".$userInput."%", "%".$userInput."%", "%".$userInput ."%",
                             "%".$userInputAscii."%", "%".$userInputAscii."%", "%".$userInputAscii ."%")

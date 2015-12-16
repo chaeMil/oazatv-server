@@ -31,10 +31,6 @@
                 </li>
             </ul>
         {/if}
-        {if count($search['videos'] > $limit)}
-            <br>
-            <a class="btn btn-info pull-right" n:href="Search:search $q">{_frontend.search.more}</a>
-        {/if}
         {if count($search['albums']) > 0}
             <span class="heading">
                 {_frontend.basic.albums}
@@ -67,4 +63,8 @@
             </ul>
         </div>
     {/if}
+    {*if count($search['videos'] > $limit)}
+        <br>
+        <a class="btn btn-info pull-right" href="{$basePath}/search/?q={$q}">{_frontend.search.more}</a>
+    {/if*}
 {/if}
