@@ -44,12 +44,15 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
         }
     }
     
-    public function createJsonError($errorName, $errorCS, $errorEN) {
+    public function createJsonError($errorName, $errorCode, $errorCS, $errorEN) {
         
         $error = array();
         $error['error'] = $errorName;
         $error['error_cs'] = $errorCS;
         $error['error_en'] = $errorEN;
+        
+        $httpResponse = $this->container->getByType('Nette\Http\Response');
+        $httpResponse->setCode($errorCode);
         
         $this->sendResponse(new JsonResponse($error));
         

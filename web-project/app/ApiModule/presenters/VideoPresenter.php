@@ -48,9 +48,10 @@ class VideoPresenter extends BasePresenter {
             $this->sendResponse(new JsonResponse($videoArray));
         } else {
             
-            $httpResponse = $this->container->getByType('Nette\Http\Response');
-            $httpResponse->setCode(Nette\Http\Response::S404_NOT_FOUND);
-            $this->createJsonError('videoFileNotFound', "Video neexistuje", "This video does not exist");
+            $this->createJsonError('videoFileNotFound', 
+                    Nette\Http\Response::S404_NOT_FOUND, 
+                    "Video neexistuje", 
+                    "This video does not exist");
             
         }
         
