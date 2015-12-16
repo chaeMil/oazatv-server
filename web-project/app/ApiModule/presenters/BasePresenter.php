@@ -9,7 +9,7 @@
 namespace App\ApiModule;
 
 use Nette,
- App\ApiModule\JsonApi;
+ Nette\Application\Responses\JsonResponse;
 
 /**
  * Description of MainPresenter
@@ -42,5 +42,16 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
             $httpRequest = $container->getByType('Nette\Http\Request');
             $this->lang = $httpRequest->detectLanguage($langs);
         }
+    }
+    
+    public function createJsonError($errorName, $errorCS, $errorEN) {
+        
+        $error = array();
+        $error['error'] = $errorName;
+        $error['error_cs'] = $errorCS;
+        $error['error_en'] = $errorEN;
+        
+        $this->sendResponse(new JsonResponse($error));
+        
     }
 }

@@ -10,7 +10,8 @@ namespace App\ApiModule;
 
 use Nette,
  Nette\Application\Responses\JsonResponse,
- App\ApiModule\JsonApi;
+ Nette\Database\Context,
+ Model\VideoManager;
 
 /**
  * Description of MainPresenter
@@ -18,6 +19,15 @@ use Nette,
  * @author Michal Mlejnek <chaemil72 at gmail.com>
  */
 class VideoPresenter extends BasePresenter {
+    
+    private $videoManager;
+    
+    public function __construct(Nette\DI\Container $container,
+            Context $database, VideoManager $videoManager) {
+        
+        parent::__construct($container, $database);
+        $this->videoManager = $videoManager;
+    }
    
     public function actionDefault($id) {
         $hash = $id;
@@ -25,11 +35,23 @@ class VideoPresenter extends BasePresenter {
         $video = $this->videoManager->getVideoFromDBbyHash($hash);
         
         if ($video != false) {
-            
-            $localizedVideo = $this->videoManager
-                    ->createLocalizedVideoObject($this->lang, $video);
 
-            $this->sendResponse(new JsonResponse($localizedVideo));
+            $videoArray = $video->toArray();
+            
+            $videoUrlPrefix = SERVER . "/". VIDEOS_FOLDER . $videoArray[VideoManager::COLUMN_ID] . "/";
+            
+            $videoArray[VideoManager::COLUMN_MP3_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_MP3_FILE];
+            $videoArray[VideoManager::COLUMN_MP4_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_MP4_FILE];
+            $videoArray[VideoManager::COLUMN_WEBM_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_WEBM_FILE];
+            $videoArray[VideoManager::COLUMN_THUMB_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_THUMB_FILE];
+            
+            $this->sendResponse(new JsonResponse($videoArray));
+        } else {
+            
+            $httpResponse = $this->container->getByType('Nette\Http\Response');
+            $httpResponse->setCode(Nette\Http\Response::S404_NOT_FOUND);
+            $this->createJsonError('videoFileNotFound', "Video neexistuje", "This video does not exist");
+            
         }
         
         
