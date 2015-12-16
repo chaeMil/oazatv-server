@@ -21,8 +21,22 @@ use Nette,
 class ArchivePresenter extends BasePresenter {
    
     public function renderDefault() {
-        $response = $this->videoManager->getVideosFromDB(0, 10, VideoManager::COLUMN_DATE);
+        $db = $this->videoManager->getVideosFromDB(0, 10)->fetchAll();
         
-        $this->sendResponse(new JsonResponse($response));
+        $videosArray = array();
+        
+        foreach($db as $video) {
+            $videoArray = $video->toArray();
+            $videoUrlPrefix = SERVER . "/". VIDEOS_FOLDER . $videoArray[VideoManager::COLUMN_ID] . "/";
+            
+            $videoArray[VideoManager::COLUMN_MP3_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_MP3_FILE];
+            $videoArray[VideoManager::COLUMN_MP4_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_MP4_FILE];
+            $videoArray[VideoManager::COLUMN_WEBM_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_WEBM_FILE];
+            $videoArray[VideoManager::COLUMN_THUMB_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_THUMB_FILE];
+            
+            $videosArray[] = $videoArray;
+        }
+        
+        $this->sendResponse(new JsonResponse($videosArray));
     }
 }
