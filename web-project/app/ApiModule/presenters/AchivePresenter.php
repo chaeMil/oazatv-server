@@ -10,7 +10,8 @@ namespace App\ApiModule;
 
 use Nette,
  Nette\Application\Responses\JsonResponse,
- App\ApiModule\JsonApi,
+ Nette\Database\Context,
+ Model\ArchiveManager,
  Model\VideoManager;
 
 /**
@@ -19,9 +20,32 @@ use Nette,
  * @author Michal Mlejnek <chaemil72 at gmail.com>
  */
 class ArchivePresenter extends BasePresenter {
+    
+    private $archiveManager;
+    private $videoManager;
+    
+    public function __construct(Nette\DI\Container $container,
+            Context $database, ArchiveManager $archiveManager, 
+            VideoManager $videoManager) {
+        
+        parent::__construct($container, $database);
+        $this->archiveManager = $archiveManager;
+        $this->videoManager = $videoManager;
+    }
    
-    public function renderDefault() {
-        $db = $this->videoManager->getVideosFromDB(0, 10)->fetchAll();
+    public function renderDefault($id = 1) {
+        $page = $id;
+        
+        $paginator = new Nette\Utils\Paginator;
+        $paginator->setItemCount($this->archiveManager->countArchive());
+        $paginator->setItemsPerPage(16);
+        $paginator->setPage($page);
+
+        $db = $this->videoManager
+                ->getVideosFromDB(
+                        $paginator->getOffset(), 
+                        $paginator->getItemsPerPage())
+                ->fetchAll();
         
         $videosArray = array();
         

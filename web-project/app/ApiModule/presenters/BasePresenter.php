@@ -9,8 +9,7 @@
 namespace App\ApiModule;
 
 use Nette,
- App\ApiModule\JsonApi,
- Model\VideoManager;
+ App\ApiModule\JsonApi;
 
 /**
  * Description of MainPresenter
@@ -21,17 +20,14 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
     
     public $container;
     public $database;
-    public $videoManager;
     public $lang;
     
     public function __construct(Nette\DI\Container $container,
-            Nette\Database\Context $database,
-            VideoManager $videoManager) {
+            Nette\Database\Context $database) {
         
         parent::__construct();
         
         $this->database = $database;
-        $this->videoManager = $videoManager;
         $this->container = $container;
         
         $routerLang = $this->getParameter('locale');
