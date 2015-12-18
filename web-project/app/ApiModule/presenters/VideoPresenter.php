@@ -45,7 +45,9 @@ class VideoPresenter extends BasePresenter {
             $videoArray[VideoManager::COLUMN_WEBM_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_WEBM_FILE];
             $videoArray[VideoManager::COLUMN_THUMB_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_THUMB_FILE];
             
-            $this->sendResponse(new JsonResponse($videoArray));
+            $jsonArray['video'] = $videoArray;
+            
+            $this->sendJson($jsonArray);
         } else {
             
             $this->createJsonError('videoFileNotFound', 

@@ -40,7 +40,9 @@ class SearchPresenter extends BasePresenter {
         
         $response = $this->searchManager->search($input, $this->lang, $limit, 0, true);
                        
-        $this->sendResponse(new JsonResponse($response));
+        $jsonArray['search'] = $response;
+        
+        $this->sendJson($jsonArray);
         
     }
     
