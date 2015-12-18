@@ -33,7 +33,7 @@ class SearchManager extends BaseModel {
     }
     
     
-    public function search($userInput, $lang, $limit = 5, $offset = 0) {
+    public function search($userInput, $lang, $limit = 5, $offset = 0, $jsonApi = false) {
         
         if (strlen($userInput) >= 3) {
             
@@ -60,8 +60,21 @@ class SearchManager extends BaseModel {
             $videoSearchOut = array();
 
             foreach($videoSearch as $video) {
-                $videoOut = $this->videoManager
-                        ->createLocalizedVideoObject($lang, $video);
+                if ($jsonApi) {
+                    
+                    $videoOut = $video->toArray();
+                    
+                    $videoUrlPrefix = SERVER . "/". VIDEOS_FOLDER . $videoOut[VideoManager::COLUMN_ID] . "/";
+            
+                    $videoOut[VideoManager::COLUMN_MP3_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_MP3_FILE];
+                    $videoOut[VideoManager::COLUMN_MP4_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_MP4_FILE];
+                    $videoOut[VideoManager::COLUMN_WEBM_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_WEBM_FILE];
+                    $videoOut[VideoManager::COLUMN_THUMB_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_THUMB_FILE];
+                    
+                } else {
+                    $videoOut = $this->videoManager->createLocalizedVideoObject($lang, $video);
+                } 
+                
                 $videoOut['type'] = 'video';
                 $videoSearchOut[] = $videoOut;
             }
@@ -87,8 +100,15 @@ class SearchManager extends BaseModel {
             $albumsSearchOut = array();
 
             foreach($albumsSearch as $album) {
-                $albumOut = $this->photosManager
-                        ->createLocalizedAlbumThumbObject($lang, $album);
+                if ($jsonApi) {
+                    
+                    $albumOut = $album->toArray();
+                
+                } else {
+                    $albumOut = $this->photosManager
+                            ->createLocalizedAlbumThumbObject($lang, $album);
+                }
+                
                 $albumOut['type'] = 'album';
                 $albumsSearchOut[] = $albumOut;
             }

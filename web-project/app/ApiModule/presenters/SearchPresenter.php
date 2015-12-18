@@ -30,11 +30,15 @@ class SearchPresenter extends BasePresenter {
         $this->searchManager = $searchManager;
     }
     
-    public function renderDefault($id) {
+    public function renderDefault($id, $limit) {
+        
+        if ($limit == null) {
+            $limit = 5;
+        }
         
         $input = $id;
         
-        $response = $this->searchManager->search($input, $this->lang);
+        $response = $this->searchManager->search($input, $this->lang, $limit, 0, true);
                        
         $this->sendResponse(new JsonResponse($response));
         
