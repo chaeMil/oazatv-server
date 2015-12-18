@@ -61,6 +61,6 @@ class ArchivePresenter extends BasePresenter {
             $videosArray[] = $videoArray;
         }
         
-        $this->sendResponse(new JsonResponse($videosArray));
+        $this->sendJson($videosArray);
     }
 }
