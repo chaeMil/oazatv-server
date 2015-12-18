@@ -29,6 +29,57 @@ class ArchiveManager extends BaseModel {
         $this->photosManager = $photosManager;
     }
     
+    public function getVideoAndPhotoAlbumsFromDBtoAPI($from, $count, $order = "date DESC") {
+        
+        $query = '(SELECT '.VideoManager::COLUMN_ID.
+                ", ".VideoManager::COLUMN_DATE.
+                ", ".VideoManager::COLUMN_PUBLISHED.
+                ", 'video' AS type  FROM ".
+                VideoManager::TABLE_NAME.
+                " WHERE ".VideoManager::COLUMN_PUBLISHED." = 1 ".
+                ") UNION ALL (SELECT ".
+                PhotosManager::COLUMN_ID.
+                ", ".PhotosManager::COLUMN_DATE.
+                ", ".PhotosManager::COLUMN_PUBLISHED.
+                ", 'album' AS type FROM ".
+                PhotosManager::TABLE_NAME_ALBUMS.
+                " WHERE ".PhotosManager::COLUMN_PUBLISHED." = 1 ".
+                ") ORDER BY ".$order.
+                " LIMIT ".$count.
+                " OFFSET ".$from;
+
+            $dbOutput = self::$database->query($query)->fetchAll();
+            
+            $outputArray = array();
+            
+            foreach($dbOutput as $output) {
+            
+                switch($output['type']) {
+                    case 'video':
+
+                        $arrayItemFromDB = $this->videoManager
+                            ->getVideoFromDB($output['id'])->toArray();
+
+                        $arrayItemFromDB['type'] = 'video';
+
+                        $outputArray[] = $arrayItemFromDB;
+                        break;
+
+                    case 'album':
+
+                        $arrayItemFromDB = $this->photosManager
+                            ->getAlbumFromDB($output['id'])->toArray();
+
+                        $arrayItemFromDB['type'] = 'album';
+
+                        $outputArray[] = $arrayItemFromDB;
+                        break;
+                }
+            }
+            
+        return $outputArray; 
+        
+    }
     
     public function getVideosAndPhotoAlbumsFromDB($from, $count, $lang, 
             $published = 1, $order = "date DESC") {

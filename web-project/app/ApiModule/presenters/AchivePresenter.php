@@ -42,10 +42,9 @@ class ArchivePresenter extends BasePresenter {
         $paginator->setPage($page);
 
         $db = $this->archiveManager
-                ->getVideosAndPhotoAlbumsFromDB(
+                ->getVideoAndPhotoAlbumsFromDBtoAPI(
                         $paginator->getOffset(), 
-                        $paginator->getItemsPerPage(),
-                        $this->lang);
+                        $paginator->getItemsPerPage());
         
         $archiveArray = array();
         
