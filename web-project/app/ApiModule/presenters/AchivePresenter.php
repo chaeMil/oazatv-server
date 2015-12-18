@@ -50,6 +50,18 @@ class ArchivePresenter extends BasePresenter {
         
         foreach($db as $item) {
             
+            
+            if ($item['type'] == "video") {
+                
+                $videoUrlPrefix = SERVER . "/". VIDEOS_FOLDER . $item[VideoManager::COLUMN_ID] . "/";
+            
+                $item[VideoManager::COLUMN_MP3_FILE] = $videoUrlPrefix . $item[VideoManager::COLUMN_MP3_FILE];
+                $item[VideoManager::COLUMN_MP4_FILE] = $videoUrlPrefix . $item[VideoManager::COLUMN_MP4_FILE];
+                $item[VideoManager::COLUMN_WEBM_FILE] = $videoUrlPrefix . $item[VideoManager::COLUMN_WEBM_FILE];
+                $item[VideoManager::COLUMN_THUMB_FILE] = $videoUrlPrefix . $item[VideoManager::COLUMN_THUMB_FILE];
+                
+            }
+            
             $archiveArray[] = $item;
  
         }
