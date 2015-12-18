@@ -61,7 +61,7 @@ class ArchivePresenter extends BasePresenter {
             $videosArray[] = $videoArray;
         }
         
-        $jsonArray['videos'] = $videosArray;
+        $jsonArray['archive'] = $videosArray;
         
         $this->sendJson($jsonArray);
     }
