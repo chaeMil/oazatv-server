@@ -61,9 +61,8 @@ class ArchivePresenter extends BasePresenter {
             $videosArray[] = $videoArray;
         }
         
-        $httpResponse = $this->container->getByType('Nette\Http\Response');
-        $httpResponse->setCode(Nette\Http\Response::S200_OK);
+        $jsonArray['videos'] = $videoArray;
         
-        $this->sendJson($videosArray);
+        $this->sendJson($jsonArray);
     }
 }
