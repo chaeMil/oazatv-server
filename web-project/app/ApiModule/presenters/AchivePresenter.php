@@ -41,27 +41,21 @@ class ArchivePresenter extends BasePresenter {
         $paginator->setItemsPerPage(16);
         $paginator->setPage($page);
 
-        $db = $this->videoManager
-                ->getVideosFromDB(
+        $db = $this->archiveManager
+                ->getVideosAndPhotoAlbumsFromDB(
                         $paginator->getOffset(), 
-                        $paginator->getItemsPerPage())
-                ->fetchAll();
+                        $paginator->getItemsPerPage(),
+                        $this->lang);
         
-        $videosArray = array();
+        $archiveArray = array();
         
-        foreach($db as $video) {
-            $videoArray = $video->toArray();
-            $videoUrlPrefix = SERVER . "/". VIDEOS_FOLDER . $videoArray[VideoManager::COLUMN_ID] . "/";
+        foreach($db as $item) {
             
-            $videoArray[VideoManager::COLUMN_MP3_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_MP3_FILE];
-            $videoArray[VideoManager::COLUMN_MP4_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_MP4_FILE];
-            $videoArray[VideoManager::COLUMN_WEBM_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_WEBM_FILE];
-            $videoArray[VideoManager::COLUMN_THUMB_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_THUMB_FILE];
-            
-            $videosArray[] = $videoArray;
+            $archiveArray[] = $item;
+ 
         }
         
-        $jsonArray['archive'] = $videosArray;
+        $jsonArray['archive'] = $archiveArray;
         
         $this->sendJson($jsonArray);
     }

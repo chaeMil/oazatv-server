@@ -290,6 +290,7 @@ class VideoManager extends BaseModel {
         
         
         $videoId = $input[self::COLUMN_ID];
+        $video['id'] = $videoId;
         $video['hash'] = $input['hash'];
         $video['tags'] = $input[self::COLUMN_TAGS];
         if ($input[self::COLUMN_MP3_FILE] != '') {
@@ -304,11 +305,6 @@ class VideoManager extends BaseModel {
         $video['categories'] = $input[self::COLUMN_CATEGORIES];
         $video['views'] = $input[self::COLUMN_VIEWS];
         $video['thumbs'] = $this->getThumbnails($videoId);
-        $video['time_thumbs_count'] = $this->countTimeThumbs($input['id']);
-        
-        for($c = 1; $c <= $video['time_thumbs_count']; $c++) {
-            $video['time_thumbs'][] = VIDEOS_FOLDER.$input['id'].'/time-thumbs/time-thumb-'.StringUtils::addLeadingZero($c, 4).'.jpg';
-        }
         
         return $video;
     }
