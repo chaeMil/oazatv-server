@@ -293,18 +293,6 @@
                             class="btn btn-lg btn-primary">
                             <i class="fa fa-image fa-fw"></i> Vytvářeč miniatur
                         </a>
-                        
-                        {if ($convertQueueManager->getCurrentlyConvertedVideo()['video_id'] != $video['id'])}
-                            <a n:href="Video:GenerateVideoTimeThumbs $video->id"
-                                class="btn btn-lg btn-primary confirm"
-                                data-confirm="Spustí asynchronní vytváření časových náhledů na dvou vláknech procesoru. <br><br>Doba konání zývisí na délce videa, obvykle pár minut.<br><br> Pokračovat?">
-                                <i class="fa fa-gears fa-fw"></i> Vytvořit časové miniatury
-                            </a>
-                        {else}
-                            <a class="btn btn-lg btn-primary disabled">
-                                <i class="fa fa-gears fa-fw"></i> Vytvořit časové miniatury
-                            </a>
-                        {/if}
                     </div>
                 </div>
             </div>

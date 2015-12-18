@@ -184,9 +184,4 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->flashMessage("Video bylo smazáno!", "danger");
         $this->redirect("Video:List");
     }
-    
-    public function actionGenerateVideoTimeThumbs($id) {
-        $this->videoManager->generateVideoTimeThumbs($id);
-        $this->redirect("Video:Detail#tools", $id);
-    }
 }
