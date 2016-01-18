@@ -6962,6 +6962,9 @@ button.close {
   padding: 8px;
   overflow: hidden;
 }
+.search-results .btn-more-inline-search {
+  width: 100%;
+}
 .search-results .heading {
   padding-left: 8px;
   display: block;

@@ -122,7 +122,7 @@
                 var input;
                 var timer;
 
-                $('#search').bind('focus', function() {
+                /*$('#search').bind('focus', function() {
                     if ($(this).val().length >= 3) {
                         $('#dropdown-search').slideDown();
 
@@ -130,15 +130,7 @@
                             $("body").css("overflow", "hidden");
                         }
                     }
-                });
-
-                $('.dropdown-search').bind('focusout', function() {
-                    $('#dropdown-search').slideUp();
-
-                    if ($(window).width() <= 768) {
-                        $("body").css("overflow", "auto");
-                    }
-                });
+                });*/
 
                 $('#search').bind('keyup', function(e) {
 
@@ -146,6 +138,9 @@
 
                     if (input.length >= 3) {
                         $('#search-animation').show();
+                    } else {
+                        $('#search-animation').hide();
+                        $('#dropdown-search').slideUp();
                     }
 
                     timer = setTimeout(function() {

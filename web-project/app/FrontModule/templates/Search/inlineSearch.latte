@@ -9,7 +9,7 @@
                     <a n:href="Video:watch $video['hash']">
                         <div class="row">
                             <div class="col-xs-4 col-sm-3">
-                                <div style="background-image: url('{$basePath}/{$video['thumbs']['128']}');" 
+                                <div style="background-image: url('{$basePath}/{$video['thumbs']['128']}');"
                                      class="thumb">
                                 </div>
                             </div>
@@ -40,7 +40,7 @@
                     <a n:href="Album:watch $album['hash']">
                         <div class="row">
                             <div class="col-xs-4 col-sm-3">
-                                <div style="background-image: url('{$basePath}/{$album['thumbs']['128']}');" 
+                                <div style="background-image: url('{$basePath}/{$album['thumbs']['128']}');"
                                      class="thumb">
                                 </div>
                             </div>
@@ -61,10 +61,10 @@
                     </a>
                 </li>
             </ul>
-        </div>
-    {/if}
-    {*if count($search['videos'] > $limit)}
-        <br>
-        <a class="btn btn-info pull-right" href="{$basePath}/search/?q={$q}">{_frontend.search.more}</a>
-    {/if*}
+            {if count($search['videos'] > $limit)}
+                <br>
+                <a class="btn btn-info btn-more-inline-search" href="{$basePath}/search/?q={$q}">{_frontend.search.more}</a>
+            {/if}
+        {/if}
+    </div>
 {/if}
