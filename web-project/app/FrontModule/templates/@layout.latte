@@ -91,10 +91,9 @@
 
         <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
-        {include content}
-
     </div>
-    <!-- /.container -->
+
+    {include content}
 
     {block scripts}
         <script src="{$basePath}/bower_components/jquery/dist/jquery.min.js"></script>

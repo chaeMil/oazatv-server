@@ -1,37 +1,42 @@
 {block content}
 
-<div class="row video-player">
+<div class="container-fluid video-player-bg">
+    <div class="container">
+        <div class="row video-player">
+            <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2 col-xl-10 col-xl-offset-1">
 
-    <div class="col-md-7 col-md-offset-2 col-lg-9">
+                <video id="video" class="video-js vjs-default-skin"
+                       controls preload="auto"
+                     {if isset($video['thumbs']['1024'])}
+                         poster="{$basePath}/{$video['thumbs']['1024']}"
+                     {/if}
+                >
 
-        <video id="video" class="video-js vjs-default-skin"
-               controls preload="auto"
-             {if isset($video['thumbs']['1024'])}
-                 poster="{$basePath}/{$video['thumbs']['1024']}"
-             {/if}
-        >
+                {if isset($video['mp4'])}
+                    <source src="{$basePath}/{$video['mp4']}" type='video/mp4'>
+                {/if}
+                {if isset($video['webm'])}
+                    <source src="{$basePath}/{$video['webm']}" type='video/webm'>
+                {/if}
 
-        {if isset($video['mp4'])}
-            <source src="{$basePath}/{$video['mp4']}" type='video/mp4'>
-        {/if}
-        {if isset($video['webm'])}
-            <source src="{$basePath}/{$video['webm']}" type='video/webm'>
-        {/if}
+                <p class="vjs-no-js">
+                  To view this video please enable JavaScript, and consider upgrading to a web browser that
+                  <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                </p>
+              </video>
 
-        <p class="vjs-no-js">
-          To view this video please enable JavaScript, and consider upgrading to a web browser that
-          <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-        </p>
-      </video>
-
+            </div>
+        </div>
     </div>
-
 </div>
 
-<h1>{$video['name']}</h1>
-<p>{$video['desc']}</p>
-<p>{$video['date']}</p>
-<p>{$video['views']}</p>
+<div class="container">
+    <h1>{$video['name']}</h1>
+    <p>{$video['desc']}</p>
+    <p>{$video['date']}</p>
+    <p>{$video['views']}</p>
+</div>
+
 
 {/block}
 
@@ -41,14 +46,21 @@
 
 $('document').ready(function() {
 
+    var player;
+
     var video = videojs('video').ready(function(){
-        var player = this;
+        player = this;
 
         player.on('pause', function() {
            saveVideoTime(player.currentTime());
            savePlayerVolume(player.volume().toString().substr(0,5));
         });
     });
+
+    setInterval(function() {
+        saveVideoTime(player.currentTime());
+        savePlayerVolume(player.volume().toString().substr(0,5));
+    }, 10000);
 
     if (getSavedVideoTime() !== undefined) {
         video.currentTime(getSavedVideoTime());
@@ -58,8 +70,9 @@ $('document').ready(function() {
         video.volume(getSavedPlayerVolume());
     }
 
-    $(window).bind('beforeunload', function(){
-        player.pause();
+    $(window).unload(function(){
+        saveVideoTime(player.currentTime());
+        savePlayerVolume(player.volume().toString().substr(0,5));
     });
 });
 

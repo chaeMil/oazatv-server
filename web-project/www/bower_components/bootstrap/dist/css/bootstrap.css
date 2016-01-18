@@ -6861,6 +6861,11 @@ button.close {
     display: none !important;
   }
 }
+.video-player-bg {
+  margin-top: -20px;
+  background-color: #000000;
+  padding-bottom: 5px;
+}
 .video-box {
   transition-duration: 500ms;
   -webkit-ransition-duration: 500ms;
