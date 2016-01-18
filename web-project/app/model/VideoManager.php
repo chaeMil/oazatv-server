@@ -19,7 +19,7 @@ use Nette,
  * @author chaemil
  */
 class VideoManager extends BaseModel {
-    
+
     const
             TABLE_NAME = 'db_video_files',
             COLUMN_ID = 'id',
@@ -43,7 +43,7 @@ class VideoManager extends BaseModel {
             THUMB_512 = 512,
             THUMB_256 = 256,
             THUMB_128 = 128;
-    
+
     /** @var Nette\Database\Context */
     public static $database;
     public static $queueManager;
@@ -52,20 +52,20 @@ class VideoManager extends BaseModel {
         self::$database = $database;
         self::$queueManager = $queueManager;
     }
-    
+
     private function checkIfVideoExists($id) {
         return self::$database->table(self::TABLE_NAME)
                 ->where(self::COLUMN_ID, $id)->count();
     }
 
     public function saveVideoToDB($values) {
-        
+
         if(isset($values['id'])) {
             $videoId = \Nette\Utils\Strings::webalize($values['id']);
         } else {
             $videoId = 0;
         }
-        
+
         if ($videoId != 0 && $this->checkIfVideoExists($videoId) > 0) {
             $video = self::$database->table(self::TABLE_NAME)->get($videoId);
             $sql = $video->update($values);
@@ -83,16 +83,16 @@ class VideoManager extends BaseModel {
             chmod($newVideoThumbsDir, 0777);
             chmod($vewVideoLogsDir, 0777);
         }
-        
+
         return $sql->id;
-       
+
     }
-    
+
     public function getVideoFromDB($id, $published = 1) {
         if ($published != 2) {
             return self::$database->table(self::TABLE_NAME)
                     ->select("*")
-                    ->where(array(self::COLUMN_ID => $id, 
+                    ->where(array(self::COLUMN_ID => $id,
                         self::COLUMN_PUBLISHED => $published))
                     ->fetch();
         } else {
@@ -102,9 +102,9 @@ class VideoManager extends BaseModel {
                     ->fetch();
         }
     }
-    
+
     public function getVideoFromDBbyHash($hash, $published = 1) {
-        
+
         if ($published != 2) {
             return self::$database->table(self::TABLE_NAME)
                     ->select("*")
@@ -118,22 +118,22 @@ class VideoManager extends BaseModel {
                     ->fetch();
         }
     }
-    
+
     public function countVideos($published = 1) {
-        
+
         if ($published != 2) {
             return self::$database->table(self::TABLE_NAME)
                     ->where(self::COLUMN_PUBLISHED, $published)->count("*");
         } else {
             return self::$database->table(self::TABLE_NAME)->count("*");
         }
-        
-        
+
+
     }
-    
-    public function getVideosFromDB($from, $count, $published = 1, 
+
+    public function getVideosFromDB($from, $count, $published = 1,
             $order = "date DESC") {
-        
+
         if($published != 2) {
             return self::$database->table(self::TABLE_NAME)
                 ->select('*')
@@ -146,10 +146,10 @@ class VideoManager extends BaseModel {
                 ->limit($count, $from)
                 ->order($order);
         }
-        
+
     }
-    
-    
+
+
     public function getVideosFromDBbyTags($tags, $limit = 10, $published = 1) {
         return self::$database->table(self::TABLE_NAME)
                 ->select('*')
@@ -157,7 +157,7 @@ class VideoManager extends BaseModel {
                         self::COLUMN_PUBLISHED => $published))
                 ->limit($limit);
     }
-    
+
     public function getOriginalFileInfo($id) {
         $video = $this->getVideoFromDB($id, 2);
         $finfo = finfo_open();
@@ -170,7 +170,7 @@ class VideoManager extends BaseModel {
             return false;
         }
     }
-    
+
     public function deleteVideoFile($id, $file) {
         $video = $this->getVideoFromDB($id, 2);
         $fileToDelete = VIDEOS_FOLDER . $id ."/". $video->$file;
@@ -181,38 +181,38 @@ class VideoManager extends BaseModel {
         }
         $video->update(array($file => ""));
     }
-    
+
     public function deleteVideo($id) {
         $video = $this->getVideoFromDB($id, 2);
         FileUtils::recursiveDelete(VIDEOS_FOLDER . $id ."/");
         $video->delete();
     }
-    
+
     public function useOriginalFileAs($id, $target) {
         $video = $this->getVideoFromDB($id, 2);
         $video->update(array(self::COLUMN_ORIGINAL_FILE => "", $target => $video->original_file));
     }
-    
+
     public function useExternaFileAsThumb($id, $file) {
         $video = $this->getVideoFromDB($id, 2);
         $this->deleteVideoFile($id, self::COLUMN_THUMB_FILE);
         $this->deleteThumbnails($id);
         $newThumbName = StringUtils::rand(6).".jpg";
         copy($file, VIDEOS_FOLDER.$id."/".$newThumbName);
-        $video->update(array(self::COLUMN_THUMB_FILE => $newThumbName));        
+        $video->update(array(self::COLUMN_THUMB_FILE => $newThumbName));
     }
-    
+
     public function addVideoToConvertQueue($id, $input, $target) {
         self::$queueManager->addVideoToQueue($id, $input, $target);
     }
-    
+
     public function returnMissingThumbs() {
         return array(self::THUMB_1024 => "img/missing-thumb.png",
                 self::THUMB_512 => "img/missing-thumb.png",
                 self::THUMB_256 => "img/missing-thumb.png",
                 self::THUMB_128 => "img/missing-thumb.png");
     }
-    
+
     public function getThumbnails($id) {
         $video = $this->getVideoFromDB($id, 2);
         if ($video['thumb_file'] != null) {
@@ -232,18 +232,18 @@ class VideoManager extends BaseModel {
         } else {
             return null;
         }
-        
+
     }
-    
-    public function deleteThumbnails($id) {      
-        $files = glob(VIDEOS_FOLDER.$id.'/thumbs/*'); 
+
+    public function deleteThumbnails($id) {
+        $files = glob(VIDEOS_FOLDER.$id.'/thumbs/*');
         foreach($files as $file){
             if(is_file($file)) {
                  unlink($file);
             }
         }
     }
-    
+
     private function generateThumbnails($videoId) {
         $video = $this->getVideoFromDB($videoId, 2);
         if (isset($video->thumb_file)) {
@@ -256,23 +256,23 @@ class VideoManager extends BaseModel {
             }
         }
     }
-    
+
     public function countView($id) {
         $video = self::$database->table(self::TABLE_NAME)->get($id);
         $views = $video['views'];
-        
+
         $video->update(array(self::COLUMN_VIEWS => $views + 1));
     }
-    
+
     public function createLocalizedVideoObject($lang, $input) {
-        $video = Array();    
-        
+        $video = Array();
+
         switch($lang) {
             case 'cs':
                 $day = date('d', strtotime($input[self::COLUMN_DATE]));
                 $month = date('n', strtotime($input[self::COLUMN_DATE]));
                 $year = date('Y', strtotime($input[self::COLUMN_DATE]));
-                
+
                 $video['name'] = $input[self::COLUMN_NAME_CS];
                 $video['date'] = StringUtils::formatCzechDate($year, $month, $day);
                 $video['desc'] = $input[self::COLUMN_DESCRIPTION_CS];
@@ -281,14 +281,14 @@ class VideoManager extends BaseModel {
                 $day = date('d', strtotime($input[self::COLUMN_DATE]));
                 $month = date('n', strtotime($input[self::COLUMN_DATE]));
                 $year = date('Y', strtotime($input[self::COLUMN_DATE]));
-                
+
                 $video['name'] = $input[self::COLUMN_NAME_EN];
                 $video['date'] = StringUtils::formatEnglishDate($year, $month, $day);
                 $video['desc'] = $input[self::COLUMN_DESCRIPTION_EN];
                 break;
         }
-        
-        
+
+
         $videoId = $input[self::COLUMN_ID];
         $video['id'] = $videoId;
         $video['hash'] = $input['hash'];
@@ -305,20 +305,15 @@ class VideoManager extends BaseModel {
         $video['categories'] = $input[self::COLUMN_CATEGORIES];
         $video['views'] = $input[self::COLUMN_VIEWS];
         $video['thumbs'] = $this->getThumbnails($videoId);
-        
+
         return $video;
     }
-    
+
     public function generateVideoTimeThumbs($id) {
         $this->deleteTimeThumbs($id);
-        
+
         $video = $this->getVideoFromDB($id, 2);
-        
-        if(!file_exists(VIDEOS_FOLDER.$id.'/time-thumbs')) {
-            mkdir(VIDEOS_FOLDER.$id.'/time-thumbs/');
-            chmod(VIDEOS_FOLDER.$id.'/time-thumbs/', 0777);
-        }
-        
+
         if($video['mp4_file'] != '') {
             $file = $video['mp4_file'];
         } else if ($video['webm_file'] != '') {
@@ -328,18 +323,18 @@ class VideoManager extends BaseModel {
         } else {
             $file = null;
         }
-        
+
         if ($file != null) {
-            
+
             $command = PATH_TO_FFMPEG." -i ".
                 CONVERSION_FOLDER_ROOT.$id."/".$file.
                 ' -threads 2 -an -sn -vsync 0 -vf fps=fps=1/30,scale=150:-1 '.CONVERSION_FOLDER_ROOT.$id."/time-thumbs/time-thumb-%04d.jpg".
                 ' -y > /dev/null 2>/dev/null &';
-            
+
             shell_exec($command);
         }
     }
-    
+
     public function countTimeThumbs($id) {
         if (file_exists(VIDEOS_FOLDER.$id.'/time-thumbs/')) {
             $fi = new \FilesystemIterator(VIDEOS_FOLDER.$id.'/time-thumbs/', \FilesystemIterator::SKIP_DOTS);
@@ -348,9 +343,9 @@ class VideoManager extends BaseModel {
             return 0;
         }
     }
-    
+
     public function deleteTimeThumbs($id) {
-        $files = glob(VIDEOS_FOLDER.$id.'/time-thumbs/*'); 
+        $files = glob(VIDEOS_FOLDER.$id.'/time-thumbs/*');
         foreach($files as $file){
             if(is_file($file)) {
                  unlink($file);

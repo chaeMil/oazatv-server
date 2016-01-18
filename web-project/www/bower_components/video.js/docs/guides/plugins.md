@@ -1,6 +1,11 @@
 Plugins
 =======
-If you've built something cool with Video.js, you can easily share it with the rest of the world by creating a plugin.
+If you've built something cool with Video.js, you can easily share it with the rest of the world by creating a plugin. Although, you can roll your own, you can also use [generator-videojs-plugin](https://github.com/dmlap/generator-videojs-plugin), a [Yeoman](http://yeoman.io) generator that provides scaffolding for video.js plugins including:
+* [Grunt](http://gruntjs.com) for build management
+* [npm](https://www.npmjs.org) for dependency management
+* [QUnit](http://qunitjs.com) for testing
+
+
 
 Step 1: Write Some Javascript
 -----------------------------
@@ -18,7 +23,7 @@ Step 2: Registering A Plugin
 -------------------------------
 It's time to give the rest of the world the opportunity to be awed by your genius. When your plugin is loaded, it needs to let Video.js know this amazing new functionality is now available:
 
-    vjs.plugin('examplePlugin', examplePlugin);
+    videojs.plugin('examplePlugin', examplePlugin);
 
 From this point on, your plugin will be added to the Video.js prototype and will show up as a property on every instance created. Make sure you choose a unique name that doesn't clash with any of the properties already in Video.js. Which leads us to...
 
@@ -26,7 +31,7 @@ Step 3: Using A Plugin
 ----------------------
 There are two ways to initialize a plugin. If you're creating your video tag dynamically, you can specify the plugins you'd like to initialize with it and any options you want to pass to them:
 
-    vjs('vidId', {
+    videojs('vidId', {
       plugins: {
         examplePlugin: {
           exampleOption: true
@@ -36,6 +41,11 @@ There are two ways to initialize a plugin. If you're creating your video tag dyn
 
 If you've already initialized your video tag, you can activate a plugin at any time by calling its setup function directly:
 
+    var video = videojs('cool-vid');
     video.examplePlugin({ exampleOption: true });
 
-That's it. Head on over to the Video.js wiki and add your plugin to the list so everyone else can check it out.
+That's it. Head on over to the [Video.js wiki](https://github.com/videojs/video.js/wiki/Plugins) and add your plugin to the list so everyone else can check it out.
+
+## How should I use the Video.js icons in my plugin?
+
+If you'd like to use any of the icons available in the [Video.js icon set](http://videojs.github.io/font/), please target them via the CSS class names instead of codepoints. The codepoints *may* change between versions of the font, so using the class names ensures that your plugin will stay up to date with any font changes.

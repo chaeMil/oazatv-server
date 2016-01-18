@@ -10,6 +10,13 @@
 .container {
   .container-fixed();
 
+  &.main-content {
+    &.padded {
+        margin-top: @navbar-height;
+        padding-top: @navbar-padding-vertical;
+    }
+  }
+
   @media (min-width: @screen-sm-min) {
     width: @container-sm;
   }
@@ -29,7 +36,7 @@
 
 .container-fluid {
   .container-fixed();
-  
+
   &.main-content {
     &.padded {
         margin-top: @navbar-height;

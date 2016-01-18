@@ -194,7 +194,8 @@
     @media (min-width: @grid-float-breakpoint) {
         .navbar > .container &,
         .navbar > .container-fluid & {
-            margin-left: -@navbar-padding-horizontal;
+            //margin-left: @navbar-padding-horizontal;
+            margin-left: 0;
         }
     }
 }
@@ -676,9 +677,7 @@
     }
 
     .navbar-user-menu {
-        position: absolute;
-        top: 0;
-        right: 0;
+        margin-top: -@navbar-height;
         margin-right: @navbar-padding-horizontal;
         display: inline-block;
         line-height: @navbar-height;
@@ -705,7 +704,7 @@
         box-shadow: none;
         -webkit-box-shadow: none;
         position: relative;
-        
+
         @media (min-width: @screen-md-min) {
             margin-left: @navbar-padding-horizontal;
         }
@@ -715,27 +714,27 @@
             background-color: lighten(@brand-primary, 8%);
 
             @media (min-width: @screen-md-min) {
-                
+
                 &:focus {
                     width: 400px;
                 }
 
             }
         }
-        
+
         .form-control::-webkit-input-placeholder { color: @gray-lighter; }
         .form-control:-moz-placeholder { color: @gray-lighter; }
         .form-control::-moz-placeholder { color: @gray-lighter; }
         .form-control:-ms-input-placeholder { color: @gray-lighter; }
-        
+
         .btn-default {
             background-color: lighten(@brand-primary, -5%);
             color: @gray-lighter;
-            
+
             &:hover {
                 background-color: lighten(@brand-primary, 10%);
             }
         }
-        
+
     }
 }

@@ -1,10 +1,10 @@
 {block content}
 
 <div class="row video-player">
-    
-    <div class="col-md-8 col-lg-9">
 
-        <video id="video" class="video-js vjs-default-skin" 
+    <div class="col-md-7 col-md-offset-2 col-lg-9">
+
+        <video id="video" class="video-js vjs-default-skin"
                controls preload="auto"
              {if isset($video['thumbs']['1024'])}
                  poster="{$basePath}/{$video['thumbs']['1024']}"
@@ -23,9 +23,9 @@
           <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
         </p>
       </video>
-        
+
     </div>
-    
+
 </div>
 
 <h1>{$video['name']}</h1>
@@ -38,9 +38,9 @@
 {block pageScripts}
 
 <script>
-    
+
 $('document').ready(function() {
-    
+
     var video = videojs('video').ready(function(){
         var player = this;
 
@@ -49,15 +49,15 @@ $('document').ready(function() {
            savePlayerVolume(player.volume().toString().substr(0,5));
         });
     });
-    
+
     if (getSavedVideoTime() !== undefined) {
         video.currentTime(getSavedVideoTime());
     }
-    
+
     if (getSavedPlayerVolume() !== undefined) {
         video.volume(getSavedPlayerVolume());
     }
-    
+
     $(window).bind('beforeunload', function(){
         player.pause();
     });

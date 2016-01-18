@@ -1,73 +1,69 @@
 {block content}
 
-<div class="container container-without-padding">
-    
-    {if isset($archiveItems)}  
-        <div class="row videos-box">
-            <a n:foreach="$archiveItems as $item"       
-                n:href="Video:watch $item['hash']">
-                 <div class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                     <div class="thumb" 
-                          style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});"> 
-                     </div>
-                     <div class="info">
-                        <span class="name">{$item['name']}</span>
-                        <span class="date">{$item['date']}</span>
-                        {if ($item['type'] == 'video')}
-                            <span class="views">{$item['views']} {_frontend.basic.views}</span>
-                        {/if}
-                     </div>
+{if isset($archiveItems)}
+    <div class="row videos-box">
+        <a n:foreach="$archiveItems as $item"
+            n:href="Video:watch $item['hash']">
+             <div class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                 <div class="thumb"
+                      style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});">
                  </div>
-            </a>
-        </div>
-    {/if}
-    
-    <!-- Pagination -->
-    <div class="row text-center">
-        <div class="col-lg-12">
-            <ul class="pagination">
-                {if $pages > 1}
-                    {if $page > 0}
-                        <li>
-                            <a href="{$basePath}/archive/page/{$page-1}">&laquo;</a>
-                        </li>
+                 <div class="info">
+                    <span class="name">{$item['name']}</span>
+                    <span class="date">{$item['date']}</span>
+                    {if ($item['type'] == 'video')}
+                        <span class="views">{$item['views']} {_frontend.basic.views}</span>
                     {/if}
-                        {if $page >= 4}
-                            <li>
-                                <a href="{$basePath}/archive/page/1">1</a>
-                            </li>
-                            <li>
-                                <a>...</a>
-                            </li>
-                        {/if}
-                    {var $limit = $pages > $page + 5 ? 5 : $pages - $page}
-                    {for $x = $page; $x < $page + $limit + 1; $x++}
-                        {if $page <= 0}
-                            <li class="{if $x == $page}active{/if}">
-                                <a href="{$basePath}/archive/page/{$x}">{$x}</a>
-                            </li>
-                        {else}
-                            {if $x == $page}
-                                {if $page != 1}
-                                    <li>
-                                        <a href="{$basePath}/archive/page/{$x-1}">{$x-1}</a>
-                                    </li>
-                                {/if}
-                            {/if}
-                            <li class="{if $x == $page}active{/if}">
-                                <a href="{$basePath}/archive/page/{$x}">{$x}</a>
-                            </li>
-                        {/if}
-                    {/for}
-                    {if $pages > $page + 1}
-                        <li>
-                            <a href="{$basePath}/archive/page/{$page+1}">&raquo;</a>
-                        </li>
-                    {/if}
-                {/if}
-            </ul>
-        </div>
+                 </div>
+             </div>
+        </a>
     </div>
-    <!-- /.row -->
-    
+{/if}
+
+<!-- Pagination -->
+<div class="row text-center">
+    <div class="col-lg-12">
+        <ul class="pagination">
+            {if $pages > 1}
+                {if $page > 0}
+                    <li>
+                        <a href="{$basePath}/archive/page/{$page-1}">&laquo;</a>
+                    </li>
+                {/if}
+                    {if $page >= 4}
+                        <li>
+                            <a href="{$basePath}/archive/page/1">1</a>
+                        </li>
+                        <li>
+                            <a>...</a>
+                        </li>
+                    {/if}
+                {var $limit = $pages > $page + 5 ? 5 : $pages - $page}
+                {for $x = $page; $x < $page + $limit + 1; $x++}
+                    {if $page <= 0}
+                        <li class="{if $x == $page}active{/if}">
+                            <a href="{$basePath}/archive/page/{$x}">{$x}</a>
+                        </li>
+                    {else}
+                        {if $x == $page}
+                            {if $page != 1}
+                                <li>
+                                    <a href="{$basePath}/archive/page/{$x-1}">{$x-1}</a>
+                                </li>
+                            {/if}
+                        {/if}
+                        <li class="{if $x == $page}active{/if}">
+                            <a href="{$basePath}/archive/page/{$x}">{$x}</a>
+                        </li>
+                    {/if}
+                {/for}
+                {if $pages > $page + 1}
+                    <li>
+                        <a href="{$basePath}/archive/page/{$page+1}">&raquo;</a>
+                    </li>
+                {/if}
+            {/if}
+        </ul>
+    </div>
 </div>
+<!-- /.row -->

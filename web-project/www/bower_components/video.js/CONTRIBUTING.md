@@ -28,7 +28,7 @@ Guidelines for bug reports:
 
 2. Check if the issue has already been fixed &mdash; try to reproduce it using the latest `master` branch in the repository.
 
-3. Isolate the problem &mdash; **create a [reduced test case](http://css-tricks.com/6263-reduced-test-cases/)** with a live example. You can possibly use [this JSBin example](http://jsbin.com/axedog/7/edit) as a starting point.
+3. Isolate the problem &mdash; **create a [reduced test case](https://css-tricks.com/reduced-test-cases/)** with a live example. You can possibly use [this JSBin example](http://jsbin.com/axedog/7/edit) as a starting point.
 
 A good bug report should be as detailed as possible, so that others won't have to follow up for the essential details.
 
@@ -222,7 +222,7 @@ Make sure your changes are pushed to origin
 git push
 ```
 
-Use contrib to submit a a pull request (make sure you're in your feature branch)
+Use contrib to submit a pull request (make sure you're in your feature branch)
 
 ```bash
 contrib feature submit
