@@ -19,7 +19,7 @@ use Nette,
  * @author chaemil
  */
 class SearchManager extends BaseModel {
-    
+
     /** @var Nette\Database\Context */
     public static $database;
     private $videoManager;
@@ -31,27 +31,27 @@ class SearchManager extends BaseModel {
         $this->videoManager = $videoManager;
         $this->photosManager = $photosManager;
     }
-    
-    
+
+
     public function search($userInput, $lang, $limit = 5, $offset = 0) {
-        
+
         if (strlen($userInput) >= 3) {
-            
+
             $userInput = preg_replace('!\s+!', ' ', $userInput);
             $userInput = str_replace(' ', '%', $userInput);
             $userInputAscii = \Nette\Utils\Strings::toAscii($userInput);
-        
+
             $videoSearch = self::$database->table(VideoManager::TABLE_NAME)
-                    ->select('*')                    
+                    ->select('*')
                     ->where(VideoManager::COLUMN_PUBLISHED." = 1 AND ((".
                             VideoManager::COLUMN_NAME_CS." LIKE ? OR ".
                             VideoManager::COLUMN_NAME_EN." LIKE ? ) OR (".
                             VideoManager::COLUMN_TAGS." LIKE ? ) OR (".
-                            
+
                             VideoManager::COLUMN_NAME_CS." LIKE ? OR ".
                             VideoManager::COLUMN_NAME_EN." LIKE ? ) OR (".
                             VideoManager::COLUMN_TAGS." LIKE ? ))",
-                            
+
                             "%".$userInput."%", "%".$userInput."%", "%".$userInput ."%",
                             "%".$userInputAscii."%", "%".$userInputAscii."%", "%".$userInputAscii ."%")
                     ->limit($limit, $offset)
@@ -61,7 +61,7 @@ class SearchManager extends BaseModel {
 
             foreach($videoSearch as $video) {
                 $videoOut = $this->videoManager->createLocalizedVideoObject($lang, $video);
-                
+
                 $videoOut['type'] = 'video';
                 $videoSearchOut[] = $videoOut;
             }
@@ -69,16 +69,16 @@ class SearchManager extends BaseModel {
             $output['videos'] = $videoSearchOut;
 
             $albumsSearch = self::$database->table(PhotosManager::TABLE_NAME_ALBUMS)
-                    ->select('*')                    
+                    ->select('*')
                     ->where(VideoManager::COLUMN_PUBLISHED." = 1 AND ((".
                             VideoManager::COLUMN_NAME_CS." LIKE ? OR ".
                             VideoManager::COLUMN_NAME_EN." LIKE ? ) OR (".
                             VideoManager::COLUMN_TAGS." LIKE ? ) OR (".
-                            
+
                             VideoManager::COLUMN_NAME_CS." LIKE ? OR ".
                             VideoManager::COLUMN_NAME_EN." LIKE ? ) OR (".
                             VideoManager::COLUMN_TAGS." LIKE ? ))",
-                            
+
                             "%".$userInput."%", "%".$userInput."%", "%".$userInput ."%",
                             "%".$userInputAscii."%", "%".$userInputAscii."%", "%".$userInputAscii ."%")
                     ->limit($limit, $offset)
@@ -87,15 +87,15 @@ class SearchManager extends BaseModel {
             $albumsSearchOut = array();
 
             foreach($albumsSearch as $album) {
-                if ($jsonApi) {
-                    
+                if (isset($jsonApi)) {
+
                     $albumOut = $album->toArray();
-                
+
                 } else {
                     $albumOut = $this->photosManager
                             ->createLocalizedAlbumThumbObject($lang, $album);
                 }
-                
+
                 $albumOut['type'] = 'album';
                 $albumsSearchOut[] = $albumOut;
             }
@@ -104,10 +104,10 @@ class SearchManager extends BaseModel {
 
             return $output;
         }
-        
+
         else {
             return "";
         }
     }
-    
+
 }

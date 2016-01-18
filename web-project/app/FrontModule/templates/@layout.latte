@@ -93,7 +93,8 @@
 
     </div>
 
-    {include content}
+      {include content}
+
 
     {block scripts}
         <script src="{$basePath}/bower_components/jquery/dist/jquery.min.js"></script>
@@ -131,7 +132,7 @@
                     }
                 });
 
-                $('#search').bind('focusout', function() {
+                $('.dropdown-search').bind('focusout', function() {
                     $('#dropdown-search').slideUp();
 
                     if ($(window).width() <= 768) {
@@ -168,6 +169,8 @@
                                         $('#search-animation').hide();
 
                                         oldSearch = input;
+
+                                        $('.dropdown-search').focus();
                                     }
                                 );
 

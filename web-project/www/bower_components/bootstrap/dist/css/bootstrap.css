@@ -4784,7 +4784,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   background-color: #699ef6;
 }
 @media (min-width: 992px) {
-  .navbar-inverse .navbar-search .form-control:focus {
+  .navbar-inverse .navbar-search .form-control {
     width: 400px;
   }
 }
@@ -6963,6 +6963,7 @@ button.close {
   overflow: hidden;
 }
 .search-results .heading {
+  padding-left: 8px;
   display: block;
   font-weight: bold;
   text-transform: uppercase;
@@ -6970,6 +6971,7 @@ button.close {
   vertical-align: bottom;
 }
 .search-results li {
+  height: 55px;
   list-style: none;
   margin-left: -30px;
   overflow: hidden;
