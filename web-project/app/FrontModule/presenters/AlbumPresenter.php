@@ -18,24 +18,24 @@ Model\PhotosManager;
  * @author Michal Mlejnek <chaemil72 at gmail.com>
  */
 class AlbumPresenter extends BasePresenter {
-    
+
     public $photosManager;
-    
+
     public function __construct(Nette\DI\Container $container,
             Context $database, PhotosManager $photosManager) {
         parent::__construct($container, $database);
         $this->photosManager = $photosManager;
     }
-    
-    public function renderWatch($id) {
+
+    public function renderView($id) {
         $hash = $id; //id only in router, actualy its hash
         $album = $this->photosManager->getAlbumFromDBbyHash($hash);
-        
+
         $this->template->album = $this->photosManager
                 ->createLocalizedAlbumThumbObject($this->lang, $album);
-        
+
         $this->template->photos = $this->photosManager
                 ->createLocalizedAlbumPhotosObject($this->lang, $album['id']);
     }
-    
+
 }

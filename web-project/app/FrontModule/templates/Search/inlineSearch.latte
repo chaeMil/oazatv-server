@@ -37,7 +37,7 @@
             </span>
             <ul>
                 <li n:foreach="$search['albums'] as $album">
-                    <a n:href="Album:watch $album['hash']">
+                    <a n:href="Album:view $album['hash']">
                         <div class="row">
                             <div class="col-xs-4 col-sm-3">
                                 <div style="background-image: url('{$basePath}/{$album['thumbs']['128']}');"
