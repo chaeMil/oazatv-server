@@ -9,14 +9,16 @@
 </div>
 
 <div class="container">
-    <div class="row gallery">
+    <div class="row">
         <div class="col-xl-10 col-xl-offset-1">
-            <figure n:foreach="$photos as $photo" class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
-                <a href="{$basePath}/{$photo['thumbs']['2048']}" data-size="{$photo['dimensions']['width']}x{$photo['dimensions']['height']}">
-                  <img class="img-responsive" src="{$basePath}/{$photo['thumbs']['512']}" />
+            <div id="gallery">
+                <a n:foreach="$photos as $photo" href="{$basePath}/{$photo['thumbs']['2048']}" data-size="{$photo['dimensions']['width']}x{$photo['dimensions']['height']}">
+                    <img class="img-responsive" src="{$basePath}/{$photo['thumbs']['512']}" />
+                    {if ($photo['desc'])}
+                        <div class="caption description">{$photo['desc']}</div>
+                    {/if}
                 </a>
-                <figcaption itemprop="caption description">Image caption 1</figcaption>
-            </figure>
+            </div>
         </div>
     </div>
 </div>
@@ -92,29 +94,63 @@
 
 {block pageScripts}
     <script>
+
+        $(document).ready(function() {
+
+            adjustGallery();
+
+            $(window).resize(function() {
+
+                adjustGallery();
+
+            });
+        });
+
+        function adjustGallery() {
+
+            var width = $(window).width();
+            var row = 120;
+
+            if (width >= 1200) {
+                row = 200;
+            }
+
+            if (width < 1200 && width >= 992) {
+                row = 180;
+            }
+
+            if (width < 992 && width >= 768) {
+                row = 160;
+            }
+
+            if (width < 768) {
+                row = 120;
+            }
+
+            $("#gallery").justifiedGallery({
+                rowHeight: row,
+                lastRow: 'nojustify',
+                margins: 8,
+                cssAnimation: true
+            });
+        }
+
         var initPhotoSwipeFromDOM = function(gallerySelector) {
 
             // parse slide data (url, title, size ...) from DOM elements
             // (children of gallerySelector)
             var parseThumbnailElements = function(el) {
-                var thumbElements = el.childNodes,
+
+                var thumbElements = el.children,
                     numNodes = thumbElements.length,
                     items = [],
-                    figureEl,
                     linkEl,
                     size,
                     item;
 
                 for(var i = 0; i < numNodes; i++) {
 
-                    figureEl = thumbElements[i]; // <figure> element
-
-                    // include only element nodes
-                    if(figureEl.nodeType !== 1) {
-                        continue;
-                    }
-
-                    linkEl = figureEl.children[0]; // <a> element
+                    linkEl = thumbElements[i]; // <a> element
 
                     size = linkEl.getAttribute('data-size').split('x');
 
@@ -125,11 +161,9 @@
                         h: parseInt(size[1], 10)
                     };
 
-
-
-                    if(figureEl.children.length > 1) {
+                    if(linkEl.children.length > 1) {
                         // <figcaption> content
-                        item.title = figureEl.children[1].innerHTML;
+                        item.title = linkEl.children[1].innerHTML;
                     }
 
                     if(linkEl.children.length > 0) {
@@ -137,7 +171,7 @@
                         item.msrc = linkEl.children[0].getAttribute('src');
                     }
 
-                    item.el = figureEl; // save link to element for getThumbBoundsFn
+                    item.el = linkEl; // save link to element for getThumbBoundsFn
                     items.push(item);
                 }
 
@@ -158,7 +192,7 @@
 
                 // find root element of slide
                 var clickedListItem = closest(eTarget, function(el) {
-                    return (el.tagName && el.tagName.toUpperCase() === 'FIGURE');
+                    return (el.tagName && el.tagName.toUpperCase() === 'A');
                 });
 
                 if(!clickedListItem) {
@@ -295,7 +329,7 @@
             }
         };
 
-        initPhotoSwipeFromDOM('.gallery');
+        initPhotoSwipeFromDOM('#gallery');
 
     </script>
 {/block}

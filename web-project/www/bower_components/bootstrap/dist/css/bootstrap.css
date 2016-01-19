@@ -7020,6 +7020,9 @@ button.close {
 .search-results li a .row .text-info .tags .tag.highlight {
   background-color: yellow;
 }
+.pswp__button--share {
+  display: none !important;
+}
 .glyphicon-refresh-animate {
   -animation: spin 0.7s infinite linear;
   -webkit-animation: spin2 0.7s infinite linear;
