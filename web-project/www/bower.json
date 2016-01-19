@@ -20,6 +20,7 @@
     "font-awesome": "~4.4.0",
     "jquery": "~2.2.0",
     "mixitup": "~2.1.10",
+    "photoswipe": "~4.1.1",
     "video.js": "videojs#~5.4.6"
   }
 }

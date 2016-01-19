@@ -19,7 +19,7 @@ use Nette,
  * @author chaemil
  */
 class PhotosManager {
-    
+
     const
             TABLE_NAME_PHOTOS = 'db_photo_files',
             COLUMN_ID = 'id',
@@ -42,22 +42,22 @@ class PhotosManager {
             THUMB_512 = 512,
             THUMB_256 = 256,
             THUMB_128 = 128;
-            
-    
+
+
     /** @var Nette\Database\Context */
     public $database;
 
     public function __construct(Nette\Database\Context $database) {
         $this->database = $database;
     }
-    
+
     public function saveAlbumToDB($values) {
         if(isset($values['id'])) {
             $albumId = \Nette\Utils\Strings::webalize($values['id']);
         } else {
             $albumId = 0;
         }
-        
+
         if ($albumId) {
             $album = $this->database->table(self::TABLE_NAME_ALBUMS)->get($albumId);
             $sql = $album->update($values);
@@ -72,28 +72,28 @@ class PhotosManager {
             chmod($newAlbumDir, 0777);
             chmod($newAlbumThumbsDir, 0777);
         }
-        
+
         return $sql->id;
     }
-    
+
     public function deleteAlbum($id) {
         $album = $this->database->table(self::TABLE_NAME_ALBUMS)
                 ->get($id);
-        
+
         $photos = $this->database->table(self::TABLE_NAME_PHOTOS)
                 ->select('*')
                 ->where(self::COLUMN_ALBUM_ID, $id);
-        
+
         FileUtils::recursiveDelete(ALBUMS_FOLDER.$id);
-        
+
         $photos->delete();
         $album->delete();
     }
-    
+
     public function getAlbumFromDB($id, $published = 1) {
         if ($published != 2) {
             return $this->database->table(self::TABLE_NAME_ALBUMS)
-                    ->select("*")->where(array(self::COLUMN_ID=> $id, 
+                    ->select("*")->where(array(self::COLUMN_ID=> $id,
                         self::COLUMN_PUBLISHED => $published))
                     ->fetch();
         } else {
@@ -101,37 +101,37 @@ class PhotosManager {
                     ->select("*")->where(array(self::COLUMN_ID=> $id))
                     ->fetch();
         }
-                
+
     }
-    
+
     public function getAlbumFromDBbyHash($hash, $published = 1) {
         return $this->database->table(self::TABLE_NAME_ALBUMS)
-                ->select("*")->where(array(self::COLUMN_HASH=> $hash, 
+                ->select("*")->where(array(self::COLUMN_HASH=> $hash,
                     self::COLUMN_PUBLISHED => $published))
                 ->fetch();
-                
+
     }
-    
+
     public function countAlbums($published = 1) {
-        
+
         if ($published != 2) {
-            
+
             return $this->database->table(self::TABLE_NAME_ALBUMS)
                     ->where(self::COLUMN_PUBLISHED, $published)
                     ->count("*");
-            
+
         } else {
-            
+
             return $this->database->table(self::TABLE_NAME_ALBUMS)->count("*");
-            
+
         }
-        
-        
+
+
     }
-    
-    public function getAlbumsFromDB($from, $count, $published = 1, 
+
+    public function getAlbumsFromDB($from, $count, $published = 1,
             $order = self::COLUMN_DATE) {
-        
+
         if($published != 2) {
             return $this->database->table(self::TABLE_NAME_ALBUMS)
                 ->select('*')
@@ -145,22 +145,22 @@ class PhotosManager {
                 ->order($order);
         }
     }
-    
+
     public function savePhotoToDB($values) {
         $this->database->table(self::TABLE_NAME_PHOTOS)->insert($values);
     }
-    
+
     public function updatePhotoInDB($values) {
         $photo = $this->database->table(self::TABLE_NAME_PHOTOS)
                 ->get($values['id']);
         $photo->update($values);
     }
-    
+
     public function getPhotoFromDB($id) {
         return $this->database->table(self::TABLE_NAME_PHOTOS)
                 ->select("*")->where(self::COLUMN_ID, $id)->fetch();
     }
-    
+
     public function getPhotoThumbnails($photoId) {
         $photo = $this->getPhotoFromDB($photoId);
         $thumb = ALBUMS_FOLDER.$photo->album_id.'/thumbs/'.str_replace(".jpg", "_".self::THUMB_1024.".jpg", $photo->file);
@@ -174,88 +174,88 @@ class PhotosManager {
                 self::THUMB_256 => $thumbfile."_".self::THUMB_256.".jpg",
                 self::THUMB_128 => $thumbfile."_".self::THUMB_128.".jpg");
     }
-    
+
     public function generatePhotoThumbnails($photoId) {
         $photo = $this->database->table(self::TABLE_NAME_PHOTOS)
                 ->select('*')
                 ->where(self::COLUMN_ID, $photoId)
                 ->fetch();
-        
+
         if (file_exists(ALBUMS_FOLDER.$photo->album_id.'/'.$photo->file)) {
-        
-            ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file, 
+
+            ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file,
                     self::THUMB_2048, self::THUMB_2048, ALBUMS_FOLDER.$photo->album_id.'/thumbs/');
-            ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file, 
+            ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file,
                     self::THUMB_1024, self::THUMB_1024, ALBUMS_FOLDER.$photo->album_id.'/thumbs/');
-            ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file, 
+            ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file,
                     self::THUMB_512, self::THUMB_512, ALBUMS_FOLDER.$photo->album_id.'/thumbs/');
-            ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file, 
+            ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file,
                     self::THUMB_256, self::THUMB_256, ALBUMS_FOLDER.$photo->album_id.'/thumbs/');
-            ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file, 
+            ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file,
                     self::THUMB_128, self::THUMB_128, ALBUMS_FOLDER.$photo->album_id.'/thumbs/');
         }
     }
-    
+
     public function deletePhotoThumbnails($photoId) {
         foreach($this->getPhotoThumbnails($photoId) as $thumbnail) {
             if (file_exists($thumbnail)) {
                 unlink($thumbnail);
             }
-        } 
+        }
     }
-    
+
     public function deletePhoto($photoId) {
         $photo = $this->database->table(self::TABLE_NAME_PHOTOS)
                 ->select('*')
                 ->where(self::COLUMN_ID, $photoId)
                 ->fetch();
-        
+
         $this->deletePhotoThumbnails($photoId);
         $file = ALBUMS_FOLDER.$photo->album_id."/".$photo->file;
         if (file_exists($file)) {
             unlink($file);
         }
-        
-        $photo->delete();        
+
+        $photo->delete();
     }
-    
+
     public function getPhotosFromAlbum($aldumId) {
         return $this->database->table(self::TABLE_NAME_PHOTOS)
                 ->select('*')
                 ->order(self::COLUMN_ORDER, "ASC")
                 ->where(self::COLUMN_ALBUM_ID, $aldumId);
     }
-    
+
     public function countPhotosInAlbum($albumId) {
         return $this->database->table(self::TABLE_NAME_PHOTOS)
                 ->count('*')
                 ->where(self::COLUMN_ALBUM_ID, $albumId);
     }
-    
+
     public function getAlbumMaxOrderNumber($albumId) {
         $photos = $this->database->table(self::TABLE_NAME_PHOTOS)
                 ->select(self::COLUMN_ORDER)
                 ->where(self::COLUMN_ALBUM_ID, $albumId);
-        
+
         $maxOrderNum = 0;
         foreach($photos as $photo) {
             if ($photo->order > $maxOrderNum) {
                 $maxOrderNum = $photo->order;
             }
         }
-        
+
         return $maxOrderNum + 1;
     }
-    
+
     public function createLocalizedAlbumThumbObject($lang, $input) {
-        $album = Array();    
-        
+        $album = Array();
+
         switch($lang) {
             case 'cs':
                 $day = date('d', strtotime($input[self::COLUMN_DATE]));
                 $month = date('n', strtotime($input[self::COLUMN_DATE]));
                 $year = date('Y', strtotime($input[self::COLUMN_DATE]));
-                
+
                 $album['name'] = $input[self::COLUMN_NAME_CS];
                 $album['date'] = StringUtils::formatCzechDate($year, $month, $day);
                 $album['desc'] = $input[self::COLUMN_DESCRIPTION_CS];
@@ -264,40 +264,42 @@ class PhotosManager {
                 $day = date('d', strtotime($input[self::COLUMN_DATE]));
                 $month = date('n', strtotime($input[self::COLUMN_DATE]));
                 $year = date('Y', strtotime($input[self::COLUMN_DATE]));
-                
+
                 $album['name'] = $input[self::COLUMN_NAME_EN];
                 $album['date'] = StringUtils::formatEnglishDate($year, $month, $day);
                 $album['desc'] = $input[self::COLUMN_DESCRIPTION_EN];
                 break;
         }
-        
-        
+
+
         $album['id'] = $input[self::COLUMN_ID];
         $album['hash'] = $input[self::COLUMN_HASH];
         $album['tags'] = $input[self::COLUMN_TAGS];
         $album['days'] = $input[self::COLUMN_DAYS];
-        
+
         if ($input[self::COLUMN_COVER_PHOTO_ID] != '') {
             $album['thumbs'] = $this->getPhotoThumbnails($input[self::COLUMN_COVER_PHOTO_ID]);
         } else {
             $album['thumbs'] = null;
         }
-        
-        
+
+
         return $album;
     }
-    
+
     public function createLocalizedAlbumPhotosObject($lang, $albumId) {
-        $photos = Array();  
-        
+        $photos = Array();
+
         $input = $this->getPhotosFromAlbum($albumId);
-        
+
         foreach($input as $photo) {
-            
+
             $photoOut['id'] = $photo[self::COLUMN_ID];
             $photoOut['thumbs'] = $this->getPhotoThumbnails($photo[self::COLUMN_ID]);
             $photoOut['order'] = $photo[self::COLUMN_ORDER];
-            
+            $photoOut['dimensions'] = ImageUtils::getImageDimensions(
+                    $this->getPhotoThumbnails($photo[self::COLUMN_ID])[self::THUMB_2048]);
+
             switch($lang) {
                 case 'cs':
                     $photoOut['desc'] = $photo[self::COLUMN_DESCRIPTION_CS];
@@ -306,10 +308,10 @@ class PhotosManager {
                     $photoOut['desc'] = $photo[self::COLUMN_DESCRIPTION_EN];
                     break 1;
             }
-            
+
             $photos[] = $photoOut;
         }
-        
+
         return $photos;
     }
 }
