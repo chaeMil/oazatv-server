@@ -12,7 +12,8 @@ use Nette,
  Model\PhotosManager,
  App\StringUtils,
  App\ImageUtils,
- App\EventLogger;
+ App\EventLogger,
+ Nette\Application\UI\Form;
 
 /**
  * Description of AlbumsPresenter
@@ -114,6 +115,7 @@ class AlbumsPresenter extends BaseSecuredPresenter {
         
         $form->addMultiUpload("photos", "fotky")
                 ->setRequired()
+                ->addRule(Form::MIME_TYPE, 'Povolené formáty fotografií jsou pouze JPEG nebo JPG', 'image/jpeg')
                 ->setAttribute("class", "form-control");
         
         $form->addSubmit("submit", "nahrát")
@@ -122,8 +124,15 @@ class AlbumsPresenter extends BaseSecuredPresenter {
         $this->bootstrapFormRendering($form);
         
         $form->onSuccess[] = $this->photosUploadSuceeded;
+        $form->onError[] = $this->photosUploadError;
         
         return $form;
+    }
+    
+    public function photosUploadError($form) {
+        $vals = $form->getValues();
+        $this->flashMessage('Povolené formáty fotografií jsou pouze JPEG nebo JPG', "danger");
+        $this->redirect("Albums:albumDetail#files", $vals['album_id']);
     }
     
     public function photosUploadSuceeded($form) {
