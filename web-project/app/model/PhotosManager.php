@@ -105,10 +105,16 @@ class PhotosManager {
     }
 
     public function getAlbumFromDBbyHash($hash, $published = 1) {
-        return $this->database->table(self::TABLE_NAME_ALBUMS)
-                ->select("*")->where(array(self::COLUMN_HASH=> $hash,
-                    self::COLUMN_PUBLISHED => $published))
-                ->fetch();
+        if ($published != 2) {
+            return $this->database->table(self::TABLE_NAME_ALBUMS)
+                    ->select("*")->where(array(self::COLUMN_HASH=> $hash,
+                        self::COLUMN_PUBLISHED => $published))
+                    ->fetch();
+        } else {
+            return $this->database->table(self::TABLE_NAME_ALBUMS)
+                    ->select("*")->where(array(self::COLUMN_HASH => $hashd))
+                    ->fetch();
+        }
 
     }
 
@@ -223,7 +229,7 @@ class PhotosManager {
         return $this->database->table(self::TABLE_NAME_PHOTOS)
                 ->select('*')
                 ->order(self::COLUMN_ORDER, "ASC")
-                ->where(self::COLUMN_ALBUM_ID, $aldumId);
+                ->where(self::COLUMN_ALBUM_ID, $aldumId)->fetchAll();
     }
 
     public function countPhotosInAlbum($albumId) {
