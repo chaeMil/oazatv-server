@@ -59,8 +59,6 @@ class AlbumPresenter extends BasePresenter {
                 $albumArray['photos'][] = $photoArray;
             }
             
-            dump($albumArray); exit;
-            
             $jsonArray['album'] = $albumArray;
             
             $this->sendJson($jsonArray);

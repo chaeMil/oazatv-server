@@ -51,10 +51,13 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
         $error['error_cs'] = $errorCS;
         $error['error_en'] = $errorEN;
         
+        $errorJsonArray = array();
+        $errorJsonArray['error'] = $error;
+        
         $httpResponse = $this->container->getByType('Nette\Http\Response');
         $httpResponse->setCode($errorCode);
         
-        $this->sendResponse(new JsonResponse($error));
+        $this->sendResponse(new JsonResponse($errorJsonArray));
         
     }
 }
