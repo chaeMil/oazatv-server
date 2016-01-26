@@ -67,7 +67,7 @@ class ArchivePresenter extends BasePresenter {
             
             if ($item['type'] == "album") {
             
-                $photoUrlPrefix = SERVER . "/". ALBUMS_FOLDER . $albumArray['id'] . "/";
+                $photoUrlPrefix = SERVER . "/". ALBUMS_FOLDER . $item['id'] . "/";
 
                 $coverPhotoId = $item['cover_photo_id'];
                 
