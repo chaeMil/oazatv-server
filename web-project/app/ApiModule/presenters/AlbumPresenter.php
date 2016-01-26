@@ -37,12 +37,25 @@ class AlbumPresenter extends BasePresenter {
         if ($album != false) {
 
             $albumArray = $album->toArray();
+            
+            $photoUrlPrefix = SERVER . "/". ALBUMS_FOLDER . $albumArray['id'] . "/";
+            
+            $coverPhotoId = $albumArray['cover_photo_id'];
+            $coverPhotoThumbs = $this->photosManager->getPhotoThumbnails($coverPhotoId);
+            $coverPhotoOriginal = $this->photosManager->getPhotoFromDB($coverPhotoId);
+            
+            $albumArray['cover_photo'] = $photoUrlPrefix . $coverPhotoOriginal['file'];
+            $albumArray['cover_photo_128'] = $photoUrlPrefix . $coverPhotoThumbs['128'];
+            $albumArray['cover_photo_256'] = $photoUrlPrefix . $coverPhotoThumbs['256'];
+            $albumArray['cover_photo_512'] = $photoUrlPrefix . $coverPhotoThumbs['512'];
+            $albumArray['cover_photo_1024'] = $photoUrlPrefix . $coverPhotoThumbs['1024'];
+            $albumArray['cover_photo_2048'] = $photoUrlPrefix . $coverPhotoThumbs['2048'];
+            
+            unset($albumArray['cover_photo_id']);
             $albumPhotos = $this->photosManager->getPhotosFromAlbum($album['id']);
             
             foreach($albumPhotos as $photo) {
                 $photoArray = $photo->toArray();
-                
-                $photoUrlPrefix = SERVER . "/". ALBUMS_FOLDER . $photoArray[PhotosManager::COLUMN_ALBUM_ID] . "/";
                 
                 $photoArray['original_file'] = $photoUrlPrefix . $photo['file'];
                 $nameHash = str_replace('.jpg', "", $photo['file']);
