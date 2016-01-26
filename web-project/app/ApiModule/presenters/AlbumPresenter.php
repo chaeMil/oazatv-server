@@ -44,12 +44,16 @@ class AlbumPresenter extends BasePresenter {
             $coverPhotoThumbs = $this->photosManager->getPhotoThumbnails($coverPhotoId);
             $coverPhotoOriginal = $this->photosManager->getPhotoFromDB($coverPhotoId);
             
-            $albumArray['cover_photo'] = $photoUrlPrefix . $coverPhotoOriginal['file'];
-            $albumArray['cover_photo_128'] = $photoUrlPrefix . $coverPhotoThumbs['128'];
-            $albumArray['cover_photo_256'] = $photoUrlPrefix . $coverPhotoThumbs['256'];
-            $albumArray['cover_photo_512'] = $photoUrlPrefix . $coverPhotoThumbs['512'];
-            $albumArray['cover_photo_1024'] = $photoUrlPrefix . $coverPhotoThumbs['1024'];
-            $albumArray['cover_photo_2048'] = $photoUrlPrefix . $coverPhotoThumbs['2048'];
+            $thumbs = array();
+            
+            $thumbs['original_file'] = $photoUrlPrefix . $coverPhotoOriginal['file'];
+            $thumbs['thumb_128'] = SERVER . $coverPhotoThumbs['128'];
+            $thumbs['thumb_256'] = SERVER . $coverPhotoThumbs['256'];
+            $thumbs['thumb_512'] = SERVER . $coverPhotoThumbs['512'];
+            $thumbs['thumb_1024'] = SERVER . $coverPhotoThumbs['1024'];
+            $thumbs['thumb_2048'] = SERVER . $coverPhotoThumbs['2048'];
+            
+            $albumArray['thumbs'] = $thumbs;
             
             unset($albumArray['cover_photo_id']);
             $albumPhotos = $this->photosManager->getPhotosFromAlbum($album['id']);
