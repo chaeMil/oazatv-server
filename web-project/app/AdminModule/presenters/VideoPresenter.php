@@ -11,7 +11,9 @@ namespace App\AdminModule;
 use Nette,
  Model\VideoManager,
  Model\VideoConvertQueueManager,
- App\EventLogger;
+ App\EventLogger,
+ Model\TagsManager,
+ Model\CategoriesManager;
 
 /**
  * Description of VideoPresenter
@@ -23,12 +25,17 @@ class VideoPresenter extends BaseSecuredPresenter {
     public $database;
     private $videoManager;
     private $convertQueueManager;
+    private $tagsManager;
+    private $categoriesManager;
 
     function __construct(Nette\Database\Context $database, VideoManager $videoManager,
-     VideoConvertQueueManager $convertQueueManager) {
+     VideoConvertQueueManager $convertQueueManager, TagsManager $tagsManager, 
+            CategoriesManager $categoriesManager) {
         $this->database = $database;
         $this->videoManager = $videoManager;
         $this->convertQueueManager = $convertQueueManager;
+        $this->tagsManager = $tagsManager;
+        $this->categoriesManager = $categoriesManager;
     }
     
     public function renderList() {       
@@ -41,6 +48,9 @@ class VideoPresenter extends BaseSecuredPresenter {
     public function renderDetail($id) {
         $this->getTemplateVariables($this->getUser()->getId());
         $video = $this->videoManager->getVideoFromDB($id, 2);
+        
+        $this->template->tagsArray = $this->tagsManager->tagCloud();
+        $this->template->categories = $this->categoriesManager->getCategoriesFromDB();
         
         if (!isset($video['id'])) {
             $this->error('Požadované video neexistuje!');
@@ -99,6 +109,7 @@ class VideoPresenter extends BaseSecuredPresenter {
         
         $form->addText('tags', 'tagy')
                 ->setRequired()
+                ->setHtmlId("tags")
                 ->setAttribute("class", "form-control")
                 ->setAttribute("data-role", "tagsinput");
         

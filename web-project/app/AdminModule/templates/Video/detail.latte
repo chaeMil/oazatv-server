@@ -31,7 +31,47 @@
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="info">
                     <br>
-                    {control videoBasicInfoForm}
+                    <div class="col-md-8"> 
+                        {control videoBasicInfoForm}
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <input id="filter" type="text" class="form-control" placeholder="Vyhledávání...">
+                        <br>
+
+                        <div id="tagsTableWrapper" style="overflow-y: scroll">
+                            <table class="table table-hover">
+                                <thead>
+                                    <th>tag</th>
+                                    <th>počet</th>
+                                </thead>
+                                <tbody class="searchable">
+                                    {foreach $tagsArray as $tag => $count}
+                                        <tr class="addableTag" id="tag_{$tag|strip}" data-tag="{$tag|strip}">
+                                            <td>{$tag|strip}</td>
+                                            <td>{$count}x</td>
+                                        </tr>
+                                    {/foreach}
+                                </tbody>                
+                            </table>
+                        </div>
+
+                        <br>
+
+                        <h4>Kategorie:</h4>
+
+                        <div id="categoriesWrapper">
+                            {foreach $categories as $category}
+                                <a class="btn btn-info addableCategory" 
+                                   id="category_{$category['id']}" 
+                                   data-id="{$category['id']|strip}"
+                                   data-text="{$category['name_cs']|strip} | {$category['name_en']|strip}">
+                                    {$category['name_cs']|strip} | {$category['name_en']|strip}
+                                </a>
+                            {/foreach}
+                        </div>
+
+                    </div>
                 </div>
                 
                 <div role="tabpanel" class="tab-pane" id="files">
@@ -419,5 +459,68 @@
         });
     }
     
+</script>
+
+<script>
+    $(document).ready(function() {
+        (function ($) {
+
+            $('#filter').keyup(function () {
+
+                var rex = new RegExp($(this).val(), 'i');
+                $('.searchable tr').hide();
+                $('.searchable tr').filter(function () {
+                    return rex.test($(this).text());
+                }).show();
+
+            });
+            
+            hideUsedTags();
+            adjustTagsWrapper(); 
+            
+            $("#categories").tagsinput({
+                allowDuplicates: true,
+                itemValue: 'id',
+                itemText: 'text'
+            });
+
+            $('#tags').on('itemRemoved', function(event) {
+                $('#tag_' + $.trim(event.item)).removeClass('hidden');
+            });
+            
+            $('.addableTag').on('click', function() {
+                $('#tags').tagsinput('add', $(this).data('tag'));
+                $(this).addClass('hidden');
+            });
+            
+            $('#categories').on('itemRemoved', function(event) {
+                $('#category_' + event.item.id).removeClass('hidden');
+            });
+            
+            $('.addableCategory').on('click', function() {
+                var catId = $(this).data('id');
+                var catText = $(this).data('text');
+                $('#categories').tagsinput('add', { id: catId, text: catText });
+                $(this).addClass('hidden');
+            });
+            
+            $(window).resize(function() {
+               adjustTagsWrapper(); 
+            });
+
+        }(jQuery));
+    });
+    
+    function adjustTagsWrapper() {
+        $('#tagsTableWrapper').height($('#frm-videoBasicInfoForm').height() - 140);
+    }
+    
+    function hideUsedTags() {
+        var usedTags = $('#tags').tagsinput('items');
+        
+        $.each(usedTags, function(index, value) {
+           $('#tag_' + $.trim(value)).addClass('hidden');
+        });
+    }
 </script>
 {/block}
