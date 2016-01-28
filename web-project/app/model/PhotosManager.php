@@ -278,9 +278,11 @@ class PhotosManager {
         }
 
 
+        $tags = explode(",", $input[self::COLUMN_TAGS]);
+        
         $album['id'] = $input[self::COLUMN_ID];
         $album['hash'] = $input[self::COLUMN_HASH];
-        $album['tags'] = $input[self::COLUMN_TAGS];
+        $album['tags'] = $tags;
         $album['days'] = $input[self::COLUMN_DAYS];
 
         if ($input[self::COLUMN_COVER_PHOTO_ID] != '') {

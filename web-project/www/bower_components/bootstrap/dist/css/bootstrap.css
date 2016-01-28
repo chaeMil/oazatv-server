@@ -6861,6 +6861,11 @@ button.close {
     display: none !important;
   }
 }
+.tags .tag {
+  font-size: 20px;
+  font-family: "Roboto Slab", serif;
+  color: #666666;
+}
 .video-player-bg {
   margin-top: -20px;
   background-color: #000000;

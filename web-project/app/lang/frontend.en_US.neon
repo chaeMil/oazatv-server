@@ -7,6 +7,7 @@ basic:
     next: "next"
     videos: "videos"
     albums: "photoalbums"
+    number_of_days: "days"
 search:
     more: "more results"
 homepage:

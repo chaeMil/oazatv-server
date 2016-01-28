@@ -7,7 +7,8 @@ basic:
     next: "další"
     videos: "videa"
     albums: "fotoalba"
-search: 
+    number_of_days: "počet dnů"
+search:
     more: "další výsledky"
 homepage:
     newest_videos: "Nejnovější videa"
