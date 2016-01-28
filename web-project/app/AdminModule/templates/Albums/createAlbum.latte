@@ -6,11 +6,39 @@
     
     <div class="container">
         <div class="row">
-            <a n:href="Main:default"> 
-                <h2><span class="glyphicon glyphicon-chevron-left pull-left"></span>Vytvořit album</h2>
-            </a>  
+            <div class="col-xs-12">
+                <h2><a n:href="Main:default"> 
+                        <span class="glyphicon glyphicon-chevron-left pull-left"></span>Vytvořit album
+                    </a>
+                </h2>
+            </div>  
             
-            {control createAlbumForm}
+            <div class="col-md-8"> 
+                {control createAlbumForm}
+            </div>
+            
+            <div class="col-md-4">
+                <input id="filter" type="text" class="form-control" placeholder="Vyhledávání...">
+                <br>
+
+                <div id="tagsTableWrapper" style="overflow-y: scroll">
+                    <table class="table table-hover">
+                        <thead>
+                            <th>tag</th>
+                            <th>počet</th>
+                        </thead>
+                        <tbody class="searchable">
+                            {foreach $tagsArray as $tag => $count}
+                                <tr class="addableTag" id="tag_{$tag|strip}" data-tag="{$tag|strip}">
+                                    <td>{$tag|strip}</td>
+                                    <td>{$count}x</td>
+                                </tr>
+                            {/foreach}
+                        </tbody>                
+                    </table>
+                </div>
+                        
+            </div>
                         
         </div>
     </div>
@@ -26,5 +54,42 @@
             locale: 'cs'
         });
     });
+</script>
+
+<script>
+    $(document).ready(function() {
+        (function ($) {
+
+            $('#filter').keyup(function () {
+
+                var rex = new RegExp($(this).val(), 'i');
+                $('.searchable tr').hide();
+                $('.searchable tr').filter(function () {
+                    return rex.test($(this).text());
+                }).show();
+
+            });
+            
+            adjustTagsWrapper(); 
+
+            $('#tags').on('itemRemoved', function(event) {
+                $('#tag_' + event.item).removeClass('hidden');
+            });
+            
+            $('.addableTag').on('click', function() {
+                $('#tags').tagsinput('add', $(this).data('tag'));
+                $(this).addClass('hidden');
+            });
+            
+            $(window).resize(function() {
+               adjustTagsWrapper(); 
+            });
+
+        }(jQuery));
+    });
+    
+    function adjustTagsWrapper() {
+        $('#tagsTableWrapper').height($('#frm-createAlbumForm').height() - 115);
+    }
 </script>
 {/block}

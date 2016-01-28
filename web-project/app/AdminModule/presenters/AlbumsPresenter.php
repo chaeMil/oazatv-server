@@ -13,7 +13,8 @@ use Nette,
  App\StringUtils,
  App\ImageUtils,
  App\EventLogger,
- Nette\Application\UI\Form;
+ Nette\Application\UI\Form,
+ Model\TagsManager;
 
 /**
  * Description of AlbumsPresenter
@@ -24,10 +25,13 @@ class AlbumsPresenter extends BaseSecuredPresenter {
     
     public $database;
     private $photosManager;
+    private $tagsManager;
 
-    function __construct(Nette\Database\Context $database, PhotosManager $photosManager) {
+    function __construct(Nette\Database\Context $database, PhotosManager $photosManager,
+            TagsManager $tagsManager) {
         $this->database = $database;
         $this->photosManager = $photosManager;
+        $this->tagsManager = $tagsManager;
     }
     
     public function renderList() {       
@@ -41,6 +45,7 @@ class AlbumsPresenter extends BaseSecuredPresenter {
         $this->getTemplateVariables($this->getUser()->getId());
         $album = $this->photosManager->getAlbumFromDB($id, 2);
         
+        $this->template->tagsArray = $this->tagsManager->tagCloud();
         $this->template->album = $album;
         $this->template->photos = $this->photosManager->getPhotosFromAlbum($id);
         $this->template->photosManager = $this->photosManager;
@@ -51,6 +56,7 @@ class AlbumsPresenter extends BaseSecuredPresenter {
     
     public function renderCreateAlbum() {
         $this->getTemplateVariables($this->getUser()->getId());
+        $this->template->tagsArray = $this->tagsManager->tagCloud();
     }
     
     public function actionDeleteAlbum($id) {
@@ -192,6 +198,7 @@ class AlbumsPresenter extends BaseSecuredPresenter {
                 
         $form->addText('tags', 'tagy')
                 ->setRequired()
+                ->setHtmlId("tags")
                 ->setAttribute("class", "form-control")
                 ->setAttribute("data-role", "tagsinput");
         

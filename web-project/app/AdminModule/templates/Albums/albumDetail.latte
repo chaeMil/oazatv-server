@@ -31,7 +31,32 @@
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="info">
                     <br>
-                    {control createAlbumForm}
+                    <div class="col-md-8"> 
+                        {control createAlbumForm}
+                    </div>
+
+                    <div class="col-md-4">
+                        <input id="filter" type="text" class="form-control" placeholder="Vyhledávání...">
+                        <br>
+
+                        <div id="tagsTableWrapper" style="overflow-y: scroll">
+                            <table class="table table-hover">
+                                <thead>
+                                    <th>tag</th>
+                                    <th>počet</th>
+                                </thead>
+                                <tbody class="searchable">
+                                    {foreach $tagsArray as $tag => $count}
+                                        <tr class="addableTag" id="tag_{$tag|strip}" data-tag="{$tag|strip}">
+                                            <td>{$tag|strip}</td>
+                                            <td>{$count}x</td>
+                                        </tr>
+                                    {/foreach}
+                                </tbody>                
+                            </table>
+                        </div>
+
+                    </div>
                 </div>
                 
                 <div role="tabpanel" class="tab-pane" id="files">
@@ -214,5 +239,51 @@ $('#photosGrid .cover').click(function() {
         }
     });
 });
+</script>
+
+<script>
+    $(document).ready(function() {
+        (function ($) {
+
+            $('#filter').keyup(function () {
+
+                var rex = new RegExp($(this).val(), 'i');
+                $('.searchable tr').hide();
+                $('.searchable tr').filter(function () {
+                    return rex.test($(this).text());
+                }).show();
+
+            });
+            
+            hideUsedTags();
+            adjustTagsWrapper(); 
+
+            $('#tags').on('itemRemoved', function(event) {
+                $('#tag_' + event.item).removeClass('hidden');
+            });
+            
+            $('.addableTag').on('click', function() {
+                $('#tags').tagsinput('add', $(this).data('tag'));
+                $(this).addClass('hidden');
+            });
+            
+            $(window).resize(function() {
+               adjustTagsWrapper(); 
+            });
+
+        }(jQuery));
+    });
+    
+    function adjustTagsWrapper() {
+        $('#tagsTableWrapper').height($('#frm-createAlbumForm').height() - 115);
+    }
+    
+    function hideUsedTags() {
+        var usedTags = $('#tags').tagsinput('items');
+        
+        $.each(usedTags, function(index, value) {
+           $('#tag_' + $.trim(value)).addClass('hidden');
+        });
+    }
 </script>
 {/block}
