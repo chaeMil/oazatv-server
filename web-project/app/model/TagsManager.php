@@ -42,6 +42,8 @@ class TagsManager extends BaseModel {
             $tagArray .= ",".$line['tags'];
         }
         
+        $tagArray = str_replace(" ", "", $tagArray);
+        
         $tagArray = array_count_values(explode(',', $tagArray));
         arsort($tagArray);
         

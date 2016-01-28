@@ -6869,7 +6869,13 @@ button.close {
 .video-player-bg {
   margin-top: -20px;
   background-color: #000000;
-  padding-bottom: 5px;
+  padding-bottom: 1px;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+.video-player-bg .container {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
 }
 .video-box {
   transition-duration: 500ms;
