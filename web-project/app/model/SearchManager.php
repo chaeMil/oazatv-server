@@ -60,7 +60,14 @@ class SearchManager extends BaseModel {
             $videoSearchOut = array();
 
             foreach($videoSearch as $video) {
-                $videoOut = $this->videoManager->createLocalizedVideoObject($lang, $video);
+                $videoOut = $video->toArray();
+                
+                $videoUrlPrefix = SERVER . "/". VIDEOS_FOLDER . $videoOut[VideoManager::COLUMN_ID] . "/";
+            
+                $videoOut[VideoManager::COLUMN_MP3_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_MP3_FILE];
+                $videoOut[VideoManager::COLUMN_MP4_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_MP4_FILE];
+                $videoOut[VideoManager::COLUMN_WEBM_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_WEBM_FILE];
+                $videoOut[VideoManager::COLUMN_THUMB_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_THUMB_FILE];
 
                 $videoOut['type'] = 'video';
                 $videoSearchOut[] = $videoOut;
@@ -87,14 +94,25 @@ class SearchManager extends BaseModel {
             $albumsSearchOut = array();
 
             foreach($albumsSearch as $album) {
-                if (isset($jsonApi)) {
+                
+                $albumOut = $album->toArray();
+                
+                $photoUrlPrefix = SERVER . "/". ALBUMS_FOLDER . $albumOut['id'] . "/";
+                
+                $coverPhotoId = $albumOut['cover_photo_id'];
+                $coverPhotoThumbs = $this->photosManager->getPhotoThumbnails($coverPhotoId);
+                $coverPhotoOriginal = $this->photosManager->getPhotoFromDB($coverPhotoId);
 
-                    $albumOut = $album->toArray();
+                $thumbs = array();
 
-                } else {
-                    $albumOut = $this->photosManager
-                            ->createLocalizedAlbumThumbObject($lang, $album);
-                }
+                $thumbs['original_file'] = $photoUrlPrefix . $coverPhotoOriginal['file'];
+                $thumbs['thumb_128'] = SERVER . $coverPhotoThumbs['128'];
+                $thumbs['thumb_256'] = SERVER . $coverPhotoThumbs['256'];
+                $thumbs['thumb_512'] = SERVER . $coverPhotoThumbs['512'];
+                $thumbs['thumb_1024'] = SERVER . $coverPhotoThumbs['1024'];
+                $thumbs['thumb_2048'] = SERVER . $coverPhotoThumbs['2048'];
+
+                $albumOut['thumbs'] = $thumbs;
 
                 $albumOut['type'] = 'album';
                 $albumsSearchOut[] = $albumOut;
