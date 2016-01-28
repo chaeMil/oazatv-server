@@ -35,9 +35,14 @@ class CategoriesPresenter extends BaseSecuredPresenter {
                 ->getCategoriesFromDB();
     }
     
+    public function renderCreateCategory() {
+        $this->getTemplateVariables($this->getUser()->getId());
+    }
+    
     public function renderDetail($id) {
         $this->getTemplateVariables($this->getUser()->getId());
         $category = $this->categoriesManager->getCategoryFromDB($id);
+        $this->template->category = $category;
         
         if (!isset($category['id'])) {
             $this->error('Požadovaná kategorie neexistuje!');
@@ -50,8 +55,7 @@ class CategoriesPresenter extends BaseSecuredPresenter {
     public function createComponentCategoryForm() {        
         $form = new Nette\Application\UI\Form;
         
-        $form->addHidden('id')
-                ->setRequired();
+        $form->addHidden('id');
         
         $form->addText('name_cs', 'název česky')
                 ->setRequired()
@@ -74,6 +78,7 @@ class CategoriesPresenter extends BaseSecuredPresenter {
         return $form;
     }
     
+    
     public function categorySucceeded($form) {
         $vals = $form->getValues();
         
@@ -90,7 +95,7 @@ class CategoriesPresenter extends BaseSecuredPresenter {
         }
     }
     
-    public function actionDeleteVCategoery($id) {
+    public function actionDeleteCategory($id) {
         $this->categoriesManager->deleteCategory($id);
         EventLogger::log('user '.$this->getUser()->getIdentity()->login.' deleted category '.$id, 
                 EventLogger::ACTIONS_LOG);

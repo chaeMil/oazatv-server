@@ -28,7 +28,7 @@ class CategoriesManager extends BaseModel {
             COLUMN_NAME_EN = 'name_en';
 
     /** @var Nette\Database\Context */
-    private static $database;
+    public static $database;
 
     public function __construct(Nette\Database\Context $database) {
         self::$database = $database;
