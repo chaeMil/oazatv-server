@@ -41,28 +41,9 @@ class UploadPresenter extends BaseSecuredPresenter {
     function createComponentPrepareVideoInDB() {
         $form = new Nette\Application\UI\Form;
         
-        $form->addText("year", "rok:")
-                ->setType("number")
-                ->setDefaultValue(date("Y"))
-                ->setAttribute("min", "1950")
-                ->setAttribute("max", "2050")
-                ->setAttribute("step", "1")
+        $form->addText('date', 'datum')
                 ->setRequired()
-                ->setAttribute("class", "form-control");
-        
-        $form->addSelect("month", "měsíc:")
-                ->setItems(Constants::$months)
-                ->setRequired()
-                ->setDefaultValue(date("n"))
-                ->setAttribute("class", "form-control");
-        
-        $form->addText("day", "den:")
-                ->setType("number")
-                ->setDefaultValue(date("j"))
-                ->setAttribute("min", "1")
-                ->setAttribute("max", "31")
-                ->setAttribute("step", "1")
-                ->setRequired()
+                ->setHtmlId("datepicker")
                 ->setAttribute("class", "form-control");
         
         $form->addText("name_cs", "název česky:")
@@ -105,13 +86,7 @@ class UploadPresenter extends BaseSecuredPresenter {
     
     public function prepareVideoInDBSucceeded($form) {
        
-        $values = $form->getValues();        
-        
-        $sqlDate = StringUtils::formatSQLDate($values['year'], $values['month'], $values['day']);
-        unset($values['year']);
-        unset($values['month']);
-        unset($values['day']);
-        $values['date'] = $sqlDate;
+        $values = $form->getValues();
         
         $insertedId = $this->videoManager->saveVideoToDB($values);
         

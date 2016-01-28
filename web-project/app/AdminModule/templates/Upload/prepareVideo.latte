@@ -17,3 +17,14 @@
     
 </div>
 {/block}
+
+{block pageScripts}
+<script>
+    $(function () {
+        $('#datepicker').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale: 'cs'
+        });
+    });
+</script>
+{/block}
