@@ -5,8 +5,8 @@
     <meta name="robots" content="index, follow" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="../dist/bootstrap-tagsinput.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/themes/github.css">
     <link rel="stylesheet" href="assets/app.css">
@@ -16,7 +16,7 @@
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    ga('create', 'UA-42755476-1', 'timschlechter.github.io');
+    ga('create', 'UA-42755476-1', 'bootstrap-tagsinput.github.io');
     ga('send', 'pageview');
     </script>
   </head>
@@ -27,17 +27,17 @@
         <h1>Bootstrap Tags Input</h1>
         <p>jQuery plugin providing a Twitter Bootstrap user interface for managing tags</p>
         <p>
-            <a class="btn btn-default" role="button" href="https://github.com/timschlechter/bootstrap-tagsinput">Code on Github</a>
+            <a class="btn btn-default" role="button" href="https://github.com/bootstrap-tagsinput/bootstrap-tagsinput">Code on Github</a>
             <a class="btn btn-default" role="button" href="bootstrap-2.3.2.html">Bootstrap 2.3.2</a>
-            <a class="btn btn-primary" role="button" href="http://timschlechter.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.zip">Download</a>
+            <a class="btn btn-primary" role="button" href="https://codeload.github.com/bootstrap-tagsinput/bootstrap-tagsinput/zip/latest">Download</a>
         </p>
         <p>
           <ul class="list-inline">
             <li>
-              <iframe src="//ghbtns.com/github-btn.html?user=timschlechter&repo=bootstrap-tagsinput&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
+              <iframe src="//ghbtns.com/github-btn.html?user=bootstrap-tagsinput&repo=bootstrap-tagsinput&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
             </li>
             <li>
-              <iframe src="//ghbtns.com/github-btn.html?user=timschlechter&repo=bootstrap-tagsinput&type=fork&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
+              <iframe src="//ghbtns.com/github-btn.html?user=bootstrap-tagsinput&repo=bootstrap-tagsinput&type=fork&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
             </li>
             <li>
               <a href="https://twitter.com/share" class="navbar-link twitter-share-button" data-hashtags="bootstraptagsinput">Tweet</a>
@@ -508,11 +508,19 @@ angular.module('AngularExample', ['bootstrap-tagsinput'])
               </td>
             </tr>
             <tr>
+              <td colspan="2"><code>cancelConfirmKeysOnEmpty</code></td>
+              <td><p>Boolean value controlling whether form submissions get processed when pressing enter in a field converted to a tagsinput (default: false).
+                <pre><code data-language="javascript">$('input').tagsinput({
+  cancelConfirmKeysOnEmpty: true
+});</code></pre>
+              </td>
+            </tr>
+            <tr>
               <td colspan="2"><code>onTagExists</code></td>
               <td><p>Function invoked when trying to add an item which allready exists. By default, the existing tag hides and fades in.
                 <pre><code data-language="javascript">$('input').tagsinput({
   onTagExists: function(item, $tag) {
-    $tag.hide.fadeIn();
+    $tag.hide().fadeIn();
   }
 });</code></pre>
               </td>
@@ -612,14 +620,6 @@ $('#tags-input').on('beforeItemRemove', function(event) {
               </td>
             </tr>
             <tr>
-              <td><code>removeAll</code></td>
-              <td>
-                <p>Removes all tags</p>
-
-                <pre><code data-language="javascript">$('input').tagsinput('removeAll');</code></pre>
-              </td>
-            </tr>
-            <tr>
               <td><code>focus</code></td>
               <td>
                 <p>Sets focus in the tagsinput</p>
@@ -669,6 +669,15 @@ $('#tags-input').on('beforeItemRemove', function(event) {
           </thead>
           <tbody>
             <tr>
+              <td><code>itemAddedOnInit</code></td>
+              <td>
+                During initialization, pre-defined tags being added will cause this event to be triggered. Example:
+                <pre><code data-language="javascript">$('input').on('itemAddedOnInit', function(event) {
+  // event.item: contains the item
+});</code></pre>
+              </td>
+            </tr>
+            <tr>
               <td><code>beforeItemAdd</code></td>
               <td>
                 Triggered just before an item gets added. Example:
@@ -716,9 +725,9 @@ $('#tags-input').on('beforeItemRemove', function(event) {
       </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/typeahead.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
     <script src="../dist/bootstrap-tagsinput.min.js"></script>
     <script src="../dist/bootstrap-tagsinput/bootstrap-tagsinput-angular.min.js"></script>
