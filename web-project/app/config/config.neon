@@ -33,6 +33,7 @@ services:
     - Model\ArchiveManager
     - Model\SearchManager
     - Model\CategoriesManager
+    - Model\TagsManager
     - App\RouterFactory
     router: @App\RouterFactory::createRouter
     nette.latteFactory:
