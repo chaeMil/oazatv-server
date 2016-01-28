@@ -29,13 +29,11 @@ class TagsManager extends BaseModel {
         self::$videoManager = $videoManager;
     }
     
-    public function tagCloud($published = 1) {
+    public function tagCloud() {
         
         $query= self::$database->query("(SELECT tags FROM ".VideoManager::TABLE_NAME.
-                " WHERE ".VideoManager::COLUMN_PUBLISHED." = ".$published.
                 ") UNION ALL (".
-                "SELECT tags FROM ".PhotosManager::TABLE_NAME_ALBUMS.
-                " WHERE ".PhotosManager::COLUMN_PUBLISHED. " = ".$published.");")
+                "SELECT tags FROM ".PhotosManager::TABLE_NAME_ALBUMS.");")
                 ->fetchAll();
         
         $tagArray = '';

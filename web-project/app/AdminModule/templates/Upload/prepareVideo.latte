@@ -4,13 +4,41 @@
     
     {include ../navbar.latte}
     
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <a n:href="Main:default"> 
-                <h2><span class="glyphicon glyphicon-chevron-left pull-left"></span>Nahrát video</h2>
-            </a>  
             
-            {control prepareVideoInDB}
+            <div class="col-xs-12">
+                <h2>
+                    <a n:href="Main:default"> <span class="glyphicon glyphicon-chevron-left pull-left"></span>Nahrát video</a>
+                </h2>
+            </div>
+            
+            <div class="col-md-6">                
+                {control prepareVideoInDB}
+            </div>
+            
+            <div class="col-md-6">
+                <input id="filter" type="text" class="form-control" placeholder="Vyhledávání...">
+                <br>
+
+                <div id="tagsTableWrapper" style="overflow-y: scroll">
+                    <table class="table table-hover">
+                        <thead>
+                            <th>tag</th>
+                            <th>počet</th>
+                        </thead>
+                        <tbody class="searchable">
+                            {foreach $tagsArray as $tag => $count}
+                                <tr class="addableTag" id="tag_{$tag|strip}" data-tag="{$tag|strip}">
+                                    <td>{$tag|strip}</td>
+                                    <td>{$count}x</td>
+                                </tr>
+                            {/foreach}
+                        </tbody>                
+                    </table>
+                </div>
+                        
+            </div>
                         
         </div>
     </div>
@@ -26,5 +54,42 @@
             locale: 'cs'
         });
     });
+</script>
+
+<script>
+    $(document).ready(function() {
+        (function ($) {
+
+            $('#filter').keyup(function () {
+
+                var rex = new RegExp($(this).val(), 'i');
+                $('.searchable tr').hide();
+                $('.searchable tr').filter(function () {
+                    return rex.test($(this).text());
+                }).show();
+
+            });
+            
+            $('#tags').on('itemRemoved', function(event) {
+                $('#tag_' + event.item).removeClass('hidden');
+            });
+            
+            adjustTagsWrapper(); 
+            
+            $('.addableTag').on('click', function() {
+                $('#tags').tagsinput('add', $(this).data('tag'));
+                $(this).addClass('hidden');
+            });
+            
+            $(window).resize(function() {
+               adjustTagsWrapper(); 
+            });
+
+        }(jQuery));
+    });
+    
+    function adjustTagsWrapper() {
+        $('#tagsTableWrapper').height($('#frm-prepareVideoInDB').height() - 115);
+    }
 </script>
 {/block}

@@ -1,5 +1,11 @@
 @import "variables.less";
 
+.addableTag {
+    &:hover {
+        cursor: pointer;
+    }
+}
+
 .profile-img {
 	margin-top: 20px;
 	width: 180px;
@@ -21,7 +27,7 @@
 
 .alert {
 	.profile-img-tiny {
-		margin-right: 15px; 
+		margin-right: 15px;
 		margin-top: -3px;
 	}
 }
@@ -45,7 +51,7 @@
 
 .open-player {
 	margin-top: -40px;
-        
+
         &:hover {
             color: white;
             cursor: pointer;
@@ -55,7 +61,7 @@
 .file-missing {
         color: red;
         margin-top: -40px;
-        
+
         &:hover {
             color: #FF8888;
             cursor: pointer;
@@ -175,7 +181,7 @@
 }
 
 
-//custom range input 
+//custom range input
 
 input[type=range] {
   -webkit-appearance: none;
@@ -321,7 +327,7 @@ input[type=range]:focus::-ms-fill-upper {
 			background-position: center center;
 			background-color: @gray-darker;
 			background-repeat: no-repeat;
-			
+
 			.photo-desc {
 				z-index: 15;
 				position: absolute;
