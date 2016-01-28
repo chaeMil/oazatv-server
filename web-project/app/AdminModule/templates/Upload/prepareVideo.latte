@@ -37,6 +37,21 @@
                         </tbody>                
                     </table>
                 </div>
+                       
+                <br>
+                
+                <h4>Kategorie:</h4>
+                        
+                <div id="categoriesWrapper">
+                    {foreach $categories as $category}
+                        <a class="btn btn-info addableCategory" 
+                           id="category_{$category['id']}" 
+                           data-id="{$category['id']|strip}"
+                           data-text="{$category['name_cs']|strip} | {$category['name_en']|strip}">
+                            {$category['name_cs']|strip} | {$category['name_en']|strip}
+                        </a>
+                    {/foreach}
+                </div>
                         
             </div>
                         
@@ -70,14 +85,31 @@
 
             });
             
+            adjustTagsWrapper(); 
+            
+            $("#categories").tagsinput({
+                allowDuplicates: true,
+                itemValue: 'id',
+                itemText: 'text'
+            });
+
             $('#tags').on('itemRemoved', function(event) {
                 $('#tag_' + event.item).removeClass('hidden');
             });
             
-            adjustTagsWrapper(); 
-            
             $('.addableTag').on('click', function() {
                 $('#tags').tagsinput('add', $(this).data('tag'));
+                $(this).addClass('hidden');
+            });
+            
+            $('#categories').on('itemRemoved', function(event) {
+                $('#category_' + event.item.id).removeClass('hidden');
+            });
+            
+            $('.addableCategory').on('click', function() {
+                var catId = $(this).data('id');
+                var catText = $(this).data('text');
+                $('#categories').tagsinput('add', { id: catId, text: catText });
                 $(this).addClass('hidden');
             });
             

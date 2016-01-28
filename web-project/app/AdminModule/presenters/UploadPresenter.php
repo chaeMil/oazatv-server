@@ -15,7 +15,8 @@ use Nette,
  App\StringUtils,
  Nette\Utils\Strings,
  App\EventLogger,
- Model\TagsManager;
+ Model\TagsManager,
+ Model\CategoriesManager;
 
 /**
  * Description of UploadPresenter
@@ -27,20 +28,23 @@ class UploadPresenter extends BaseSecuredPresenter {
     public $database;
     private $videoManager;
     private $tagsManager;
+    private $categoriesManager;
     
     const
             RESUMABLE_TEMP = 'uploaded/resumable-temp/';
 
     function __construct(Nette\Database\Context $database, VideoManager $videoManager,
-        TagsManager $tagsManager) {
+        TagsManager $tagsManager, CategoriesManager $categoriesManager) {
         $this->database = $database;
         $this->videoManager = $videoManager;
         $this->tagsManager = $tagsManager;
+        $this->categoriesManager = $categoriesManager;
     }
     
     function renderPrepareVideo() {
         $this->getTemplateVariables($this->getUser()->getId());
         $this->template->tagsArray = $this->tagsManager->tagCloud();
+        $this->template->categories = $this->categoriesManager->getCategoriesFromDB();
     }
     
     function createComponentPrepareVideoInDB() {
