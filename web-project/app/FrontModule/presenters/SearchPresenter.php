@@ -23,8 +23,7 @@ class SearchPresenter extends BasePresenter {
         
         $page = $id;
         
-        $search = $this->searchManager->search($q, $this->lang, 
-                500, $page * 16);
+        $search = $this->searchManager->search($q, 500, $page * 16);
         
         $paginator = new Nette\Utils\Paginator;
         $paginator->setItemsPerPage(16);
@@ -43,7 +42,7 @@ class SearchPresenter extends BasePresenter {
         
         $limit = 7;
         $q = $id;
-        $search = $this->searchManager->search($q, $this->lang, $limit);
+        $search = $this->searchManager->search($q, $limit);
         $this->template->search = $search;
         $this->template->limit = $limit;
         $this->template->q = $q;

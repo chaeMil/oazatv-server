@@ -33,7 +33,7 @@ class SearchManager extends BaseModel {
     }
 
 
-    public function search($userInput, $lang, $limit = 5, $offset = 0) {
+    public function search($userInput, $limit = 5, $offset = 0) {
 
         if (strlen($userInput) >= 3) {
 
@@ -55,6 +55,7 @@ class SearchManager extends BaseModel {
                             "%".$userInput."%", "%".$userInput."%", "%".$userInput ."%",
                             "%".$userInputAscii."%", "%".$userInputAscii."%", "%".$userInputAscii ."%")
                     ->limit($limit, $offset)
+                    ->order(VideoManager::COLUMN_DATE)
                     ->fetchAll();
 
             $videoSearchOut = array();
@@ -77,18 +78,19 @@ class SearchManager extends BaseModel {
 
             $albumsSearch = self::$database->table(PhotosManager::TABLE_NAME_ALBUMS)
                     ->select('*')
-                    ->where(VideoManager::COLUMN_PUBLISHED." = 1 AND ((".
-                            VideoManager::COLUMN_NAME_CS." LIKE ? OR ".
-                            VideoManager::COLUMN_NAME_EN." LIKE ? ) OR (".
-                            VideoManager::COLUMN_TAGS." LIKE ? ) OR (".
+                    ->where(PhotosManager::COLUMN_PUBLISHED." = 1 AND ((".
+                            PhotosManager::COLUMN_NAME_CS." LIKE ? OR ".
+                            PhotosManager::COLUMN_NAME_EN." LIKE ? ) OR (".
+                            PhotosManager::COLUMN_TAGS." LIKE ? ) OR (".
 
-                            VideoManager::COLUMN_NAME_CS." LIKE ? OR ".
-                            VideoManager::COLUMN_NAME_EN." LIKE ? ) OR (".
-                            VideoManager::COLUMN_TAGS." LIKE ? ))",
+                            PhotosManager::COLUMN_NAME_CS." LIKE ? OR ".
+                            PhotosManager::COLUMN_NAME_EN." LIKE ? ) OR (".
+                            PhotosManager::COLUMN_TAGS." LIKE ? ))",
 
                             "%".$userInput."%", "%".$userInput."%", "%".$userInput ."%",
                             "%".$userInputAscii."%", "%".$userInputAscii."%", "%".$userInputAscii ."%")
                     ->limit($limit, $offset)
+                    ->order(PhotosManager::COLUMN_DATE)
                     ->fetchAll();
 
             $albumsSearchOut = array();
