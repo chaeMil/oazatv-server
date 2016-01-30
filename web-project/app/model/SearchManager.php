@@ -55,7 +55,7 @@ class SearchManager extends BaseModel {
                             "%".$userInput."%", "%".$userInput."%", "%".$userInput ."%",
                             "%".$userInputAscii."%", "%".$userInputAscii."%", "%".$userInputAscii ."%")
                     ->limit($limit, $offset)
-                    ->order(VideoManager::COLUMN_DATE)
+                    ->order(VideoManager::COLUMN_DATE, "desc")
                     ->fetchAll();
 
             $videoSearchOut = array();
@@ -90,7 +90,7 @@ class SearchManager extends BaseModel {
                             "%".$userInput."%", "%".$userInput."%", "%".$userInput ."%",
                             "%".$userInputAscii."%", "%".$userInputAscii."%", "%".$userInputAscii ."%")
                     ->limit($limit, $offset)
-                    ->order(PhotosManager::COLUMN_DATE)
+                    ->order(PhotosManager::COLUMN_DATE, "desc")
                     ->fetchAll();
 
             $albumsSearchOut = array();
