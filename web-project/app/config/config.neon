@@ -50,7 +50,7 @@ translation:
         request: on
 
 constants:
-    VERSION: "0.8.1 (2015-10-22)"
+    VERSION: "0.8.5 (2016-01-31)"
     DB_PREFIX: ""
     DB_ADMIN_PREFIX: "admin_"
     ADMIN_UPLOADED_DIR: "uploaded/"
