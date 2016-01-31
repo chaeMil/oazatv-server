@@ -9,11 +9,17 @@
             <a href="javascript:history.go(-1);"> 
                 <h2>
                     <span class="glyphicon glyphicon-chevron-left pull-left">
-                    </span>Upravit chválu
+                    </span>Upravit kategorii
                 </h2>
             </a>  
             
-            {control songForm}
+            {control categoryForm}
+            
+            <div class="col-xs-offset-3" style="padding-left: 8px;">
+                <a class="btn btn-danger btn-lg btn-block confirm"
+                   data-confirm="Smazat kategorii?" 
+                   n:href="Categories:deleteCategory $category->id">Smazat</a>
+            </div>
                         
         </div>
     </div>

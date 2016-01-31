@@ -52,7 +52,7 @@ class SongsPresenter extends BaseSecuredPresenter {
         
     }
     
-    public function createComponentCategoryForm() {        
+    public function createComponentSongForm() {        
         $form = new Nette\Application\UI\Form;
         
         $form->addHidden('id');

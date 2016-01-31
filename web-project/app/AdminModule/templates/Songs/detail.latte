@@ -14,6 +14,13 @@
             </a>  
             
             {control songForm}
+            
+            <div class="col-xs-offset-3" style="padding-left: 8px;">
+                <a class="btn btn-danger btn-lg btn-block confirm"
+                   data-confirm="Smazat chválu?"
+                   n:href="Songs:deleteSong $song->id">Smazat</a>
+            </div>
+            
                         
         </div>
     </div>
