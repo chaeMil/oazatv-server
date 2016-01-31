@@ -33,7 +33,7 @@ class SearchManager extends BaseModel {
     }
 
 
-    public function search($userInput, $limit = 5, $offset = 0) {
+        public function search($userInput, $limit = 5, $offset = 0, $lang = 'cs') {
 
         if (strlen($userInput) >= 3) {
 
@@ -71,6 +71,17 @@ class SearchManager extends BaseModel {
                 $videoOut[VideoManager::COLUMN_THUMB_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_THUMB_FILE];
 
                 $videoOut['type'] = 'video';
+                switch($lang) {
+                    case 'cs':
+                        $videoOut['name'] = $video['name_cs'];
+                        break;
+                    case 'en':
+                        $videoOut['name'] = $video['name_en'];
+                        break;
+                    default:
+                        $videoOut['name'] = $video['name_en'];
+                        break;
+                }
                 $videoSearchOut[] = $videoOut;
             }
 
@@ -117,6 +128,17 @@ class SearchManager extends BaseModel {
                 $albumOut['thumbs'] = $thumbs;
 
                 $albumOut['type'] = 'album';
+                switch($lang) {
+                    case 'cs':
+                        $albumOut['name'] = $album['name_cs'];
+                        break;
+                    case 'en':
+                        $albumOut['name'] = $album['name_en'];
+                        break;
+                    default:
+                        $albumOut['name'] = $album['name_en'];
+                        break;
+                }
                 $albumsSearchOut[] = $albumOut;
             }
 

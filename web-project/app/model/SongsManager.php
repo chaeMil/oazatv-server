@@ -78,5 +78,20 @@ class SongsManager extends BaseModel {
         $video = $this->getSongFromDB($id);
         $video->delete();
     }
+    
+    public function parseTagsAndReplaceKnownSongs(array $tags) {
+        
+        $knownSongs = $this->getSongsFromDB();
+        
+        foreach($tags as $tag => $tagIndex) {
+            foreach($knownSongs as $song => $songIndex) {
+                if (trim($tag) == trim($song['tag'])) {
+                    $tags[$tagIndex] = $song['name'];
+                }
+            }
+        }
+        
+        return $tags;
+    }
    
 }

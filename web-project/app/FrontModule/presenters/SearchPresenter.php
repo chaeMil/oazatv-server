@@ -42,7 +42,7 @@ class SearchPresenter extends BasePresenter {
         
         $limit = 7;
         $q = $id;
-        $search = $this->searchManager->search($q, $limit);
+        $search = $this->searchManager->search($q, $limit, 0, $this->lang);
         $this->template->search = $search;
         $this->template->limit = $limit;
         $this->template->q = $q;

@@ -11,7 +11,8 @@ namespace App\FrontModule;
 use Nette,
 Nette\Database\Context,
 Model\VideoManager,
-Model\AnalyticsManager;
+Model\AnalyticsManager,
+Model\SongsManager;
 
 /**
  * Description of VideoPreseter
@@ -22,20 +23,25 @@ class VideoPresenter extends BasePresenter {
     
     private $videoManager;
     private $analyticsManager;
+    private $songsManager;
     
     public function __construct(Nette\DI\Container $container,
             Context $database, VideoManager $videoManager,
-            AnalyticsManager $analyticsManager) {
+            AnalyticsManager $analyticsManager, SongsManager $songsManager) {
         
         parent::__construct($container, $database);
         
         $this->videoManager = $videoManager;
         $this->analyticsManager = $analyticsManager;
+        $this->songsManager = $songsManager;
     }
     
     public function renderWatch($id) {
         $hash = $id; //id only in router, actualy its hash
         $video = $this->videoManager->getVideoFromDBbyHash($hash); 
+        
+        $tags = explode(",",$video['tags']);
+        $this->songsManager->parseTagsAndReplaceKnownSongs($tags);
         
         if(!file_exists(VIDEOS_FOLDER.$video['id']."/time-thumbs/time-thumb-0001.jpg")) {
             $this->videoManager->generateVideoTimeThumbs($video['id']);
