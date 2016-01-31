@@ -9,21 +9,26 @@
                        controls preload="auto"
                      {if isset($video['thumbs']['1024'])}
                          poster="{$basePath}/{$video['thumbs']['1024']}"
-                     {/if}
-                >
+                     {/if}>
 
-                {if isset($video['mp4'])}
-                    <source src="{$basePath}/{$video['mp4']}" type='video/mp4'>
-                {/if}
-                {if isset($video['webm'])}
-                    <source src="{$basePath}/{$video['webm']}" type='video/webm'>
-                {/if}
+                    {if isset($video['mp4'])}
+                        <source src="{$basePath}/{$video['mp4']}" type='video/mp4'>
+                    {/if}
+                    {if isset($video['webm'])}
+                        <source src="{$basePath}/{$video['webm']}" type='video/webm'>
+                    {/if}
 
-                <p class="vjs-no-js">
-                  To view this video please enable JavaScript, and consider upgrading to a web browser that
-                  <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-                </p>
-              </video>
+                    <p class="vjs-no-js">
+                      To view this video please enable JavaScript, and consider upgrading to a web browser that
+                      <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                    </p>
+                </video>
+                <div id="video-vjs-playlist" class="vjs-track">
+                    <ul>
+                        <li class="vjs-track" href="#audio" data-index="1"
+                        data-src="{$basePath}/{$video['mp3']}">Audio</a>
+                    </ul>
+                </div>
 
             </div>
         </div>
@@ -87,6 +92,11 @@ $('document').ready(function() {
            saveVideoTime(player.currentTime());
            savePlayerVolume(player.volume().toString().substr(0,5));
         });
+    });
+
+    var playlist = video.playlist({
+        "continuous": true,
+        "setTrack": 2
     });
 
     setInterval(function() {
