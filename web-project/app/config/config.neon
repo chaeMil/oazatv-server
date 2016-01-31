@@ -34,6 +34,7 @@ services:
     - Model\SearchManager
     - Model\CategoriesManager
     - Model\TagsManager
+    - Model\SongsManager
     - App\RouterFactory
     router: @App\RouterFactory::createRouter
     nette.latteFactory:
