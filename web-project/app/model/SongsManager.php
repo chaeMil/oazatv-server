@@ -33,12 +33,12 @@ class SongsManager extends BaseModel {
     public function __construct(Nette\Database\Context $database) {
         self::$database = $database;
     }
-    
+
     private function checkIfSongExists($id) {
         return self::$database->table(self::TABLE_NAME)
                 ->where(self::COLUMN_ID, $id)->count();
     }
-    
+
     public function saveSongToDB($values) {
 
         if(isset($values['id'])) {
@@ -58,40 +58,46 @@ class SongsManager extends BaseModel {
         return $sql->id;
 
     }
-    
-    
+
+
     public function getSongFromDB($id) {
         return self::$database->table(self::TABLE_NAME)
                 ->select("*")
                 ->where(array(self::COLUMN_ID => $id))
                 ->fetch();
     }
-    
+
     public function getSongsFromDB() {
         return self::$database->table(self::TABLE_NAME)
             ->select('*')
             ->fetchAll();
 
     }
-    
+
     public function deleteSong($id) {
         $video = $this->getSongFromDB($id);
         $video->delete();
     }
-    
+
     public function parseTagsAndReplaceKnownSongs(array $tags) {
-        
+
         $knownSongs = $this->getSongsFromDB();
-        
-        foreach($tags as $tag => $tagIndex) {
-            foreach($knownSongs as $song => $songIndex) {
-                if (trim($tag) == trim($song['tag'])) {
-                    $tags[$tagIndex] = $song['name'];
+        $outputTags = $tags;
+
+        //dump($outputTags); exit;
+
+        foreach($tags as $tagIndex => $tag) {
+            $outputTags[$tagIndex] = '#' . trim($tag);
+            foreach($knownSongs as $song) {
+                if (trim($tag) == $song['tag']) {
+                    $outputTags[$tagIndex] = '♫ ' . $song['name'] . ' ♫';
                 }
             }
         }
-        
-        return $tags;
+
+        dump($outputTags); exit;
+
+        return $outputTags;
     }
-   
+
 }

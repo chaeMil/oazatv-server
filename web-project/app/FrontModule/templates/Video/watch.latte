@@ -37,6 +37,11 @@
             <p>{$video['desc']}</p>
             <p>{$video['date']}</p>
             <p>{$video['views']}</p>
+            <p>
+            {foreach $tags as $tag}
+                {$tag}
+            {/foreach}
+            </p>
         </div>
     </div>
 

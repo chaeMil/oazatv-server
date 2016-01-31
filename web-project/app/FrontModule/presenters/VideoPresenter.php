@@ -41,7 +41,8 @@ class VideoPresenter extends BasePresenter {
         $video = $this->videoManager->getVideoFromDBbyHash($hash); 
         
         $tags = explode(",",$video['tags']);
-        $this->songsManager->parseTagsAndReplaceKnownSongs($tags);
+        $tagsWithSongs = $this->songsManager->parseTagsAndReplaceKnownSongs($tags);
+        $this->template->tags = $tagsWithSongs;
         
         if(!file_exists(VIDEOS_FOLDER.$video['id']."/time-thumbs/time-thumb-0001.jpg")) {
             $this->videoManager->generateVideoTimeThumbs($video['id']);
