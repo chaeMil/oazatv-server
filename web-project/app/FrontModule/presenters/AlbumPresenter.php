@@ -10,7 +10,8 @@ namespace App\FrontModule;
 
 use Nette,
 Nette\Database\Context,
-Model\PhotosManager;
+Model\PhotosManager,
+Model\TagsManager;
 
 /**
  * Description of VideoPreseter
@@ -19,17 +20,22 @@ Model\PhotosManager;
  */
 class AlbumPresenter extends BasePresenter {
 
-    public $photosManager;
+    private $photosManager;
+    private $tagsManager;
 
     public function __construct(Nette\DI\Container $container,
-            Context $database, PhotosManager $photosManager) {
+            Context $database, PhotosManager $photosManager, TagsManager $tagsManager) {
         parent::__construct($container, $database);
         $this->photosManager = $photosManager;
+        $this->tagsManager = $tagsManager;
     }
 
     public function renderView($id) {
         $hash = $id; //id only in router, actualy its hash
         $album = $this->photosManager->getAlbumFromDBbyHash($hash);
+        $tags = explode(",", $album['tags']);
+        $tagsWithUsage = $this->tagsManager->tagsUsage($tags);
+        $this->template->tags = $tagsWithUsage;
 
         $this->template->album = $this->photosManager
                 ->createLocalizedAlbumThumbObject($this->lang, $album);

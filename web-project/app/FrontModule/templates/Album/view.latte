@@ -7,10 +7,12 @@
             <div class="col-xl-8 col-lg-8 col-md-8">
                 <p>{$album['desc']}</p>
             </div>
-            <div class="tags col-xl-4 col-lg-4 col-md-4">
-                {foreach $album['tags'] as $tag}
-                    <a class="tag">#{$tag}</a>
+            <div class="col-xl-4 col-lg-4 col-md-4">
+                <p id="playerTags" class="tags">
+                {foreach $tags as $tag => $usage}
+                    <a class="tag" rel="{$usage}">#{$tag}</a>
                 {/foreach}
+                </p>
             </div>
             <br>
         </div>
@@ -106,6 +108,18 @@
     <script>
 
         $(document).ready(function() {
+
+            $('#playerTags a').tagcloud({
+                size: {
+                    start: 12,
+                    end: 25,
+                    unit: 'px'
+                },
+                color: {
+                    start: "#444444",
+                    end: "#206ff2"
+                }
+            });
 
             adjustGallery();
 

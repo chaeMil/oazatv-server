@@ -60,4 +60,13 @@ class TagsManager extends BaseModel {
         }
     }
 
+    public function tagsUsage(array $tags) {
+        $tagsWithUsage = array();
+        foreach($tags as $tag) {
+            $tagsWithUsage[str_replace('\"', '', $tag)] = $this->tagUsage($tag);
+        }
+
+        return $tagsWithUsage;
+    }
+
 }
