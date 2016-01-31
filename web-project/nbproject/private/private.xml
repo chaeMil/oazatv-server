@@ -5,7 +5,6 @@
         <group>
             <file>file:/var/www/html/oazatv-server/web-project/app/model/SearchManager.php</file>
             <file>file:/var/www/html/oazatv-server/web-project/app/ApiModule/presenters/AlbumPresenter.php</file>
-            <file>file:/var/www/html/oazatv-server/web-project/app/ApiModule/presenters/SearchPresenter.php</file>
         </group>
     </open-files>
 </project-private>
