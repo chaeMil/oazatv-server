@@ -13,7 +13,8 @@
  */
 namespace Model;
 
-use Nette;
+use Nette,
+Model\TagsManager;
 /**
  * Description of VideoManager
  *
@@ -29,9 +30,12 @@ class SongsManager extends BaseModel {
 
     /** @var Nette\Database\Context */
     public static $database;
+    private $tagsManager;
 
-    public function __construct(Nette\Database\Context $database) {
+    public function __construct(Nette\Database\Context $database,
+    TagsManager $tagsManager) {
         self::$database = $database;
+        $this->tagsManager = $tagsManager;
     }
 
     private function checkIfSongExists($id) {
@@ -82,20 +86,19 @@ class SongsManager extends BaseModel {
     public function parseTagsAndReplaceKnownSongs(array $tags) {
 
         $knownSongs = $this->getSongsFromDB();
-        $outputTags = $tags;
-
-        //dump($outputTags); exit;
+        $outputTags = array();
 
         foreach($tags as $tagIndex => $tag) {
-            $outputTags[$tagIndex] = '#' . trim($tag);
+            $newTag = array();
+            $newTag['tag'] = '#'.trim($tag);
+            $newTag['usage'] = $this->tagsManager->tagUsage($tag);
             foreach($knownSongs as $song) {
-                if (trim($tag) == $song['tag']) {
-                    $outputTags[$tagIndex] = '♫ ' . $song['name'] . ' ♫';
+                if ($newTag['tag'] == '#'.trim($song['tag'])) {
+                    $newTag['tag'] = '♫ ' . $song['name'] . ' ♫';
                 }
             }
+            $outputTags[] = $newTag;
         }
-
-        dump($outputTags); exit;
 
         return $outputTags;
     }

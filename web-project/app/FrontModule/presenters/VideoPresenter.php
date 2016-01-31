@@ -20,38 +20,34 @@ Model\SongsManager;
  * @author Michal Mlejnek <chaemil72 at gmail.com>
  */
 class VideoPresenter extends BasePresenter {
-    
+
     private $videoManager;
     private $analyticsManager;
     private $songsManager;
-    
+
     public function __construct(Nette\DI\Container $container,
             Context $database, VideoManager $videoManager,
             AnalyticsManager $analyticsManager, SongsManager $songsManager) {
-        
+
         parent::__construct($container, $database);
-        
+
         $this->videoManager = $videoManager;
         $this->analyticsManager = $analyticsManager;
         $this->songsManager = $songsManager;
     }
-    
+
     public function renderWatch($id) {
         $hash = $id; //id only in router, actualy its hash
-        $video = $this->videoManager->getVideoFromDBbyHash($hash); 
-        
+        $video = $this->videoManager->getVideoFromDBbyHash($hash);
+
         $tags = explode(",",$video['tags']);
         $tagsWithSongs = $this->songsManager->parseTagsAndReplaceKnownSongs($tags);
         $this->template->tags = $tagsWithSongs;
-        
-        if(!file_exists(VIDEOS_FOLDER.$video['id']."/time-thumbs/time-thumb-0001.jpg")) {
-            $this->videoManager->generateVideoTimeThumbs($video['id']);
-        }
-        
+
         $httpResponse = $this->container->getByType('Nette\Http\Response');
-        
+
         $watchedCookie = $this->getHttpRequest()->getCookie($hash);
-        
+
         if (!isset($watchedCookie)) {
             $this->videoManager->countView($video->id);
             $this->analyticsManager->addVideoToPopular($video->id);
@@ -61,5 +57,5 @@ class VideoPresenter extends BasePresenter {
         $this->template->video = $this->videoManager
                 ->createLocalizedVideoObject($this->lang, $video);
     }
-    
+
 }

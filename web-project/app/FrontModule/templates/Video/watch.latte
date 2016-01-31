@@ -37,9 +37,9 @@
             <p>{$video['desc']}</p>
             <p>{$video['date']}</p>
             <p>{$video['views']}</p>
-            <p>
+            <p id="playerTags" class="tags">
             {foreach $tags as $tag}
-                {$tag}
+                <a class="tag" rel="{$tag['usage']}">{$tag['tag']}</a>
             {/foreach}
             </p>
         </div>
@@ -55,6 +55,18 @@
 <script>
 
 $('document').ready(function() {
+
+    $('#playerTags a').tagcloud({
+        size: {
+            start: 12,
+            end: 25,
+            unit: 'px'
+        },
+        color: {
+            start: "#444444",
+            end: "#206ff2"
+        }
+    });
 
     var player;
 
