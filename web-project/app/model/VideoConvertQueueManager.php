@@ -25,6 +25,7 @@ class VideoConvertQueueManager extends BaseModel {
             COLUMN_TARGET_FILENAME = 'target_filename',
             COLUMN_STATUS = 'status',
             COLUMN_PROGRESS = 'progress',
+            COLUMN_PROFILE = "profile",
             COLUMN_ADDED = 'added',
             COLUMN_STARTED_AT = 'started_at',
             COLUMN_FINISHED_AT = 'finished_at',
@@ -47,11 +48,12 @@ class VideoConvertQueueManager extends BaseModel {
                     self::COLUMN_STATUS => self::STATUS_WAITING))->count();
     }
     
-    public function addVideoToQueue($videoId, $inputFile, $target) {
+    public function addVideoToQueue($videoId, $inputFile, $target, $profile) {
         if ($this->checkIfAlreadyExists($videoId, $inputFile, $target) == 0) {
             $this::$database->table(self::TABLE_NAME)
                 ->insert(array (self::COLUMN_VIDEO_ID => $videoId,
                     self::COLUMN_INPUT => $inputFile,
+                    self::COLUMN_PROFILE => $profile,
                     self::COLUMN_TARGET => $target));
         }
     }

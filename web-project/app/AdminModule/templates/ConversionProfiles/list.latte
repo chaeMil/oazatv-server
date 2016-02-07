@@ -1,0 +1,74 @@
+{block content}
+
+<div id="wrapper">
+    
+    {include ../navbar.latte}
+    
+    <div class="container">
+        <div class="row">
+            <a href="javascript:history.go(-1);"> 
+                <h2><span class="glyphicon glyphicon-chevron-left pull-left"></span>
+                    Seznam profilů
+                </h2>
+            </a>  
+            
+        </div>
+        
+        <br>
+        
+        <div class="row">
+            <div class="col-md-10">
+                <input id="filter" type="text" class="form-control" placeholder="Vyhledávání...">
+            </div>
+            <div class="col-md-2">
+                <a n:href="ConversionProfiles:createProfile" class="btn btn-primary">Vytvořit profil</a>
+            </div>
+        </div>
+        
+        <br>
+        <div class="row">
+            <table class="table table-hover">
+                <thead>
+                    <th>id</th>
+                    <th>název</th>
+                    <th>audio bitrate</th>
+                    <th>video bitrate</th>
+                </thead>
+                <tbody class="searchable">
+                    <tr n:foreach="$profiles as $profile" 
+                        class="clickable-row"
+                        data-href="{$presenter->link('ConversionProfiles:Detail', $profile->id)}">
+                        <td>{$profile->id}</td>
+                        <td>{$profile->name}</td>
+                        <td>{$profile->audio_bitrate}</td>
+                        <td>{$profile->video_bitrate}</td>
+                    </tr>
+                </tbody>                
+            </table>
+        </div>
+        
+    </div>
+    
+    
+</div>
+{/block}
+
+{block pageScripts}
+    <script>
+        $(document).ready(function() {
+            (function ($) {
+
+                $('#filter').keyup(function () {
+
+                    var rex = new RegExp($(this).val(), 'i');
+                    $('.searchable tr').hide();
+                    $('.searchable tr').filter(function () {
+                        return rex.test($(this).text());
+                    }).show();
+
+                })
+
+            }(jQuery));
+        });
+    </script>
+{/block}

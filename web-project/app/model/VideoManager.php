@@ -202,8 +202,8 @@ class VideoManager extends BaseModel {
         $video->update(array(self::COLUMN_THUMB_FILE => $newThumbName));
     }
 
-    public function addVideoToConvertQueue($id, $input, $target) {
-        self::$queueManager->addVideoToQueue($id, $input, $target);
+    public function addVideoToConvertQueue($id, $input, $target, $profile) {
+        self::$queueManager->addVideoToQueue($id, $input, $target, $profile);
     }
 
     public function returnMissingThumbs() {

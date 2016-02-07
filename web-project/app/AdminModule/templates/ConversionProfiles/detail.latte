@@ -1,0 +1,28 @@
+{block content}
+
+<div id="wrapper">
+    
+    {include ../navbar.latte}
+    
+    <div class="container">
+        <div class="row">
+            <a href="javascript:history.go(-1);"> 
+                <h2>
+                    <span class="glyphicon glyphicon-chevron-left pull-left">
+                    </span>Upravit profil
+                </h2>
+            </a>  
+            
+            {control conversionProfileForm}
+            
+            <div class="col-xs-offset-3" style="padding-left: 8px;">
+                <a class="btn btn-danger btn-lg btn-block confirm"
+                   data-confirm="Smazat profil?" 
+                   n:href="ConversionProfiles:deleteProfile $profile->id">Smazat</a>
+            </div>
+                        
+        </div>
+    </div>
+    
+</div>
+{/block}
