@@ -12,6 +12,7 @@ use Nette,
  Model\VideoConvertQueueManager,
  Model\VideoManager,
  Model\ConversionManager,
+ Model\ConversionProfilesManager,
  App\EventLogger;
 
 /**
@@ -25,14 +26,17 @@ class VideoConvertQueuePresenter extends BaseSecuredPresenter {
     private $videoManager;
     private $queueManager;
     private $conversionManager;
+    private $conversionProfilesManager;
     
     function __construct(Nette\Database\Context $database, 
-            VideoManager $videoManager, \Model\VideoConvertQueueManager $queueManager,
-            ConversionManager $conversionManager) {
+            VideoManager $videoManager, VideoConvertQueueManager $queueManager,
+            ConversionManager $conversionManager, 
+            ConversionProfilesManager $conversionProfilesManager) {
         $this->database = $database;
         $this->videoManager = $videoManager;
         $this->queueManager = $queueManager;
         $this->conversionManager = $conversionManager;
+        $this->conversionProfilesManager = $conversionProfilesManager;
     }
     
     public function renderDefault() {
@@ -50,6 +54,7 @@ class VideoConvertQueuePresenter extends BaseSecuredPresenter {
     public function renderQueueItem($id) {
         $this->getTemplateVariables($this->getUser()->getId());
         $this->template->queueId = $id;
+        $this->template->conversionProfilesManager = $this->conversionProfilesManager;
     }
     
     public function renderQueueItemAjax($id) {

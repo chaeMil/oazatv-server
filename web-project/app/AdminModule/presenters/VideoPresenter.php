@@ -13,7 +13,8 @@ use Nette,
  Model\VideoConvertQueueManager,
  App\EventLogger,
  Model\TagsManager,
- Model\CategoriesManager;
+ Model\CategoriesManager,
+ Model\ConversionProfilesManager;
 
 /**
  * Description of VideoPresenter
@@ -27,15 +28,18 @@ class VideoPresenter extends BaseSecuredPresenter {
     private $convertQueueManager;
     private $tagsManager;
     private $categoriesManager;
+    private $conversionProfilesManager;
 
     function __construct(Nette\Database\Context $database, VideoManager $videoManager,
      VideoConvertQueueManager $convertQueueManager, TagsManager $tagsManager, 
-            CategoriesManager $categoriesManager) {
+            CategoriesManager $categoriesManager,
+            ConversionProfilesManager $conversionProfilesManager) {
         $this->database = $database;
         $this->videoManager = $videoManager;
         $this->convertQueueManager = $convertQueueManager;
         $this->tagsManager = $tagsManager;
         $this->categoriesManager = $categoriesManager;
+        $this->conversionProfilesManager = $conversionProfilesManager;
     }
     
     public function renderList() {       
@@ -51,6 +55,7 @@ class VideoPresenter extends BaseSecuredPresenter {
         
         $this->template->tagsArray = $this->tagsManager->tagCloud();
         $this->template->categories = $this->categoriesManager->getCategoriesFromDB();
+        $this->template->conversionProfiles = $this->conversionProfilesManager->getProfilesFromDB();
         
         if (!isset($video['id'])) {
             $this->error('Požadované video neexistuje!');
@@ -178,11 +183,11 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->redirect("Video:Detail#files", $id);
     }
     
-    public function actionConvertFile($id, $input, $target) {
-        $this->videoManager->addVideoToConvertQueue($id, $input, $target);
+    public function actionConvertFile($id, $input, $target, $profile) {
+        $this->videoManager->addVideoToConvertQueue($id, $input, $target, $profile);
         EventLogger::log('user '.$this->getUser()
                 ->getIdentity()->login.' added '.$input.' from video '.$id.
-                    ' to conversion queue, target format is '.$target,
+                    ' to conversion queue, target format is '.$target. ", profile: ".$profile,
                 EventLogger::CONVERSION_LOG);
         $this->flashMessage("Soubor byl přidán do fronty", "info");
         $this->redirect("Video:Detail#files", $id);
