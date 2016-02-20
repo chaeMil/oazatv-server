@@ -15,9 +15,11 @@
                             </div>
                             <div class="col-xs-8 col-sm-9 text-info">
                                 {var $nameArray = explode(' ', $video['name'])}
-                                {foreach $nameArray as $name}
-                                    <span class="name">{$name}</span>
-                                {/foreach}
+                                    <span class="names">
+                                        {foreach $nameArray as $name}
+                                            <span class="name">{$name}</span>
+                                        {/foreach}
+                                    </span>
                                 <br>
                                 <span class="tags">
                                     {var $tags = explode(',', str_replace(' ', '', trim($video['tags'])))}
@@ -46,9 +48,11 @@
                             </div>
                             <div class="col-xs-8 col-sm-9 text-info">
                                 {var $nameArray = explode(' ', $album['name'])}
-                                {foreach $nameArray as $name}
-                                    <span class="name">{$name}</span>
-                                {/foreach}
+                                    <span class="names">
+                                        {foreach $nameArray as $name}
+                                            <span class="name">{$name}</span>
+                                        {/foreach}
+                                    </span>
                                 <br>
                                 <span class="tags">
                                     {var $tags = explode(',', str_replace(' ', '', trim($album['tags'])))}

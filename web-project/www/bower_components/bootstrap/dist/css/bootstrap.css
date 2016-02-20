@@ -6861,11 +6861,6 @@ button.close {
     display: none !important;
   }
 }
-.tags .tag {
-  font-size: 20px;
-  font-family: "Roboto Slab", serif;
-  color: #666666;
-}
 .video-player-bg {
   margin-top: -20px;
   background-color: #000000;
@@ -7017,11 +7012,14 @@ button.close {
 .search-results li a .row .text-info {
   padding-left: 20px;
 }
-.search-results li a .row .text-info .name {
+.search-results li a .row .text-info .names {
+  white-space: nowrap;
+}
+.search-results li a .row .text-info .names .name {
   color: #212121;
   font-weight: bold;
 }
-.search-results li a .row .text-info .name.highlight {
+.search-results li a .row .text-info .names .name.highlight {
   background-color: yellow;
 }
 .search-results li a .row .text-info .tags {
