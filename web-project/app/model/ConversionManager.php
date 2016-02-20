@@ -26,46 +26,65 @@ class ConversionManager {
     private $serverSettings;
     private $queueManager;
     private $videoManager;
+    private $profilesManager;
 
     public function __construct(Nette\Database\Context $database, \Model\ServerSettings $serverSettings,
-     \Model\VideoConvertQueueManager $queueManager, \Model\VideoManager $videoManager) {
+     \Model\VideoConvertQueueManager $queueManager, \Model\VideoManager $videoManager, 
+            \Model\ConversionProfilesManager $profilesManager) {
         $this::$database = $database;
         $this->serverSettings = $serverSettings;
         $this->queueManager = $queueManager;
         $this->videoManager = $videoManager;
+        $this->profilesManager = $profilesManager;
     }
     
     public function startConversion($queueId) {
         $queueItem = $this->queueManager->getVideoFromQueueByQueueId($queueId);
-        $video = $this->videoManager->getVideoFromDB($queueItem->video_id, 2);
+        $video = $this->videoManager->getVideoFromDB($queueItem->video_id, 2);      
         
         //setup bitrate
         switch ($queueItem->target) {
             case VideoManager::COLUMN_MP3_FILE:
-                $CONVaudioBitrate = $this->serverSettings->loadValue("mp3_audio_bitrate");
-                $CONVvideoBitrate = $this->serverSettings->loadValue("mp3_video_bitrate");
+                if ($queueItem['profile'] == 0) {
+                    $CONVaudioBitrate = $this->serverSettings->loadValue("mp3_audio_bitrate");
+                    $CONVvideoBitrate = $this->serverSettings->loadValue("mp3_video_bitrate");
+                }
                 $CONVextension = ".mp3";
                 $CONVcodecVideo = "";
                 $CONVcodecAudio = "";
                 $CONVextraParam = "-g 0";
                 break;
             case VideoManager::COLUMN_MP4_FILE:
-                $CONVaudioBitrate = $this->serverSettings->loadValue("mp4_audio_bitrate");
-                $CONVvideoBitrate = $this->serverSettings->loadValue("mp4_video_bitrate");
+                if ($queueItem['profile'] == 0) {
+                    $CONVaudioBitrate = $this->serverSettings->loadValue("mp4_audio_bitrate");
+                    $CONVvideoBitrate = $this->serverSettings->loadValue("mp4_video_bitrate");
+                }
                 $CONVextension = ".mp4";
                 $CONVcodecVideo = "libx264 -preset medium -profile:v baseline -level 3";
                 $CONVcodecAudio = "aac -strict -2";
                 $CONVextraParam = "-deinterlace -movflags faststart -async 1";
                 break;
             case VideoManager::COLUMN_WEBM_FILE:
-                $CONVaudioBitrate = $this->serverSettings->loadValue("webm_audio_bitrate");
-                $CONVvideoBitrate = $this->serverSettings->loadValue("webm_video_bitrate");
+                if ($queueItem['profile'] == 0) {
+                    $CONVaudioBitrate = $this->serverSettings->loadValue("webm_audio_bitrate");
+                    $CONVvideoBitrate = $this->serverSettings->loadValue("webm_video_bitrate");
+                }
                 $CONVextension = ".webm";
                 $CONVcodecVideo = "libvpx";
                 $CONVcodecAudio = "libvorbis";
                 $CONVextraParam = "-async 1";
                 break;
         }
+        
+        if ($queueItem['profile'] != 0) {
+            
+            $profile = $this->profilesManager->getProfileFromDB($queueItem['profile']);
+            
+            $CONVaudioBitrate = $profile['audio_bitrate'];
+            $CONVvideoBitrate = $profile['video_bitrate'];
+            
+        }
+        
         
         //setup input file
         switch ($queueItem->input) {

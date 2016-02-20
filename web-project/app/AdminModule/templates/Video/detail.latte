@@ -130,13 +130,13 @@
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     {if (!$video->mp4_file)}
-                                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, '{$video->original_file|noescape}', '{$mp4File|noescape}')">MP4 soubor</a></li>
+                                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'original_file', '{$mp4File|noescape}')">MP4 soubor</a></li>
                                                     {/if}
                                                     {if (!$video->mp3_file)}
-                                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, '{$video->original_file|noescape}', '{$mp3File|noescape}')">MP3 soubor</a></li>
+                                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'original_file', '{$mp3File|noescape}')">MP3 soubor</a></li>
                                                     {/if}
                                                     {if (!$video->webm_file)}
-                                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, '{$video->original_file|noescape}', '{$webmFile|noescape}')">WEBM soubor</a></li>
+                                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'original_file', '{$webmFile|noescape}')">WEBM soubor</a></li>
                                                     {/if}
                                                 </ul>
                                             </div>
@@ -173,10 +173,10 @@
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     {if (!$video->mp3_file)}
-                                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, '{$video->mp4_file|noescape}', '{$mp3File|noescape}')">MP3 soubor</a></li>
+                                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'mp4_file', '{$mp3File|noescape}')">MP3 soubor</a></li>
                                                     {/if}
                                                     {if (!$video->webm_file)}
-                                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, '{$video->mp4_file|noescape}', '{$webmFile|noescape}')">WEBM soubor</a></li>
+                                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'mp4_file', '{$webmFile|noescape}')">WEBM soubor</a></li>
                                                     {/if}
                                                 </ul>
                                             </div>
@@ -235,10 +235,10 @@
                                                     </button>
                                                     <ul class="dropdown-menu">
                                                         {if (!$video->mp4_file)}
-                                                            <li><a onclick="convertVideoFileDialog({$video->id|noescape}, '{$video->webm_file|noescape}', '{$mp4File|noescape}')">MP4 soubor</a></li>
+                                                            <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'webm_file', '{$mp4File|noescape}')">MP4 soubor</a></li>
                                                         {/if}
                                                         {if (!$video->mp3_file)}
-                                                            <li><a onclick="convertVideoFileDialog({$video->id|noescape}, '{$video->webm_file|noescape}', '{$mp3File|noescape}')">MP3 soubor</a></li>
+                                                                <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'webm_file', '{$mp3File|noescape}')">MP3 soubor</a></li>
                                                         {/if}
                                                     </ul>
                                                 </div>
@@ -445,7 +445,7 @@
         });
     }
     
-    function convertVideoFileDialog(id, originalFile, targetFormat) {
+    function convertVideoFileDialog(id, inputFormat, targetFormat) {
         bootbox.dialog({
             title: "vybrat profil",
             message: '<select id="convertVideoProfileDropdown" class="form-control">' + 
@@ -453,7 +453,7 @@
                     <option value="{$profile['id']|noescape}">{$profile['name']|noescape}' + 
                     ' | A: {$profile['audio_bitrate']|noescape}kbps' + 
                     ' | V: {$profile['video_bitrate']|noescape}kbps</option> {/foreach} </select>' + 
-                    '<br> <a class="player-download btn btn-primary" onclick="convertProfileConfirmButton(' + id + ',\'' + originalFile + '\',\'' +  targetFormat + '\');" >zkonvertovat</a>',
+                    '<br> <a class="player-download btn btn-primary" onclick="convertProfileConfirmButton(' + id + ',\'' + inputFormat + '\',\'' +  targetFormat + '\');" >zkonvertovat</a>',
             buttons: {
                 main: {
                     label: "zavřít",
