@@ -33,38 +33,59 @@ class SearchManager extends BaseModel {
     }
 
 
-        public function search($userInput, $limit = 5, $offset = 0, $lang = 'cs') {
+    public function search($userInput, $limit = 5, $offset = 0, $lang = 'cs') {
+
+        $hashTag = false;
 
         if (strlen($userInput) >= 3) {
+            
+            if (substr($userInput, 0, 1) === "#") {
+                $hashTag = true;
+            }
 
             $userInput = preg_replace('!\s+!', ' ', $userInput);
             $userInput = str_replace(' ', '%', $userInput);
             $userInputAscii = \Nette\Utils\Strings::toAscii($userInput);
-
-            $videoSearch = self::$database->table(VideoManager::TABLE_NAME)
+            
+            if ($hashTag) {
+                $videoSearch = self::$database->table(VideoManager::TABLE_NAME)
                     ->select('*')
-                    ->where(VideoManager::COLUMN_PUBLISHED." = 1 AND ((".
-                            VideoManager::COLUMN_NAME_CS." LIKE ? OR ".
-                            VideoManager::COLUMN_NAME_EN." LIKE ? ) OR (".
-                            VideoManager::COLUMN_TAGS." LIKE ? ) OR (".
+                    ->where(VideoManager::COLUMN_PUBLISHED." = 1 AND (".
+                            VideoManager::COLUMN_TAGS." LIKE ? OR ".
 
-                            VideoManager::COLUMN_NAME_CS." LIKE ? OR ".
-                            VideoManager::COLUMN_NAME_EN." LIKE ? ) OR (".
-                            VideoManager::COLUMN_TAGS." LIKE ? ))",
+                            VideoManager::COLUMN_TAGS." LIKE ? )",
 
-                            "%".$userInput."%", "%".$userInput."%", "%".$userInput ."%",
-                            "%".$userInputAscii."%", "%".$userInputAscii."%", "%".$userInputAscii ."%")
+                            "%".substr($userInput, 1)."%",
+                            "%".substr($userInputAscii, 1)."%")
                     ->limit($limit, $offset)
-                    ->order(VideoManager::COLUMN_DATE . " DESC")
+                    ->order(VideoManager::COLUMN_DATE. " DESC")
                     ->fetchAll();
+            } else {
+                $videoSearch = self::$database->table(VideoManager::TABLE_NAME)
+                        ->select('*')
+                        ->where(VideoManager::COLUMN_PUBLISHED." = 1 AND ((".
+                                VideoManager::COLUMN_NAME_CS." LIKE ? OR ".
+                                VideoManager::COLUMN_NAME_EN." LIKE ? ) OR (".
+                                VideoManager::COLUMN_TAGS." LIKE ? ) OR (".
+
+                                VideoManager::COLUMN_NAME_CS." LIKE ? OR ".
+                                VideoManager::COLUMN_NAME_EN." LIKE ? ) OR (".
+                                VideoManager::COLUMN_TAGS." LIKE ? ))",
+
+                                "%".$userInput."%", "%".$userInput."%", "%".$userInput ."%",
+                                "%".$userInputAscii."%", "%".$userInputAscii."%", "%".$userInputAscii ."%")
+                        ->limit($limit, $offset)
+                        ->order(VideoManager::COLUMN_DATE . " DESC")
+                        ->fetchAll();
+            }
 
             $videoSearchOut = array();
 
             foreach($videoSearch as $video) {
                 $videoOut = $video->toArray();
-                
+
                 $videoUrlPrefix = SERVER . "/". VIDEOS_FOLDER . $videoOut[VideoManager::COLUMN_ID] . "/";
-            
+
                 $videoOut[VideoManager::COLUMN_MP3_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_MP3_FILE];
                 $videoOut[VideoManager::COLUMN_MP4_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_MP4_FILE];
                 $videoOut[VideoManager::COLUMN_WEBM_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_WEBM_FILE];
@@ -87,31 +108,46 @@ class SearchManager extends BaseModel {
 
             $output['videos'] = $videoSearchOut;
 
-            $albumsSearch = self::$database->table(PhotosManager::TABLE_NAME_ALBUMS)
+            if ($hashTag) {
+                $albumsSearch = self::$database->table(PhotosManager::TABLE_NAME_ALBUMS)
                     ->select('*')
-                    ->where(PhotosManager::COLUMN_PUBLISHED." = 1 AND ((".
-                            PhotosManager::COLUMN_NAME_CS." LIKE ? OR ".
-                            PhotosManager::COLUMN_NAME_EN." LIKE ? ) OR (".
-                            PhotosManager::COLUMN_TAGS." LIKE ? ) OR (".
+                    ->where(PhotosManager::COLUMN_PUBLISHED." = 1 AND (".
+                            PhotosManager::COLUMN_TAGS." LIKE ? OR ".
 
-                            PhotosManager::COLUMN_NAME_CS." LIKE ? OR ".
-                            PhotosManager::COLUMN_NAME_EN." LIKE ? ) OR (".
-                            PhotosManager::COLUMN_TAGS." LIKE ? ))",
+                            PhotosManager::COLUMN_TAGS." LIKE ? )",
 
-                            "%".$userInput."%", "%".$userInput."%", "%".$userInput ."%",
-                            "%".$userInputAscii."%", "%".$userInputAscii."%", "%".$userInputAscii ."%")
+                            "%".substr($userInput, 1)."%",
+                            "%".substr($userInputAscii, 1)."%")
                     ->limit($limit, $offset)
                     ->order(PhotosManager::COLUMN_DATE. " DESC")
                     ->fetchAll();
+            } else {
+                $albumsSearch = self::$database->table(PhotosManager::TABLE_NAME_ALBUMS)
+                        ->select('*')
+                        ->where(PhotosManager::COLUMN_PUBLISHED." = 1 AND ((".
+                                PhotosManager::COLUMN_NAME_CS." LIKE ? OR ".
+                                PhotosManager::COLUMN_NAME_EN." LIKE ? ) OR (".
+                                PhotosManager::COLUMN_TAGS." LIKE ? ) OR (".
+
+                                PhotosManager::COLUMN_NAME_CS." LIKE ? OR ".
+                                PhotosManager::COLUMN_NAME_EN." LIKE ? ) OR (".
+                                PhotosManager::COLUMN_TAGS." LIKE ? ))",
+
+                                "%".$userInput."%", "%".$userInput."%", "%".$userInput ."%",
+                                "%".$userInputAscii."%", "%".$userInputAscii."%", "%".$userInputAscii ."%")
+                        ->limit($limit, $offset)
+                        ->order(PhotosManager::COLUMN_DATE. " DESC")
+                        ->fetchAll();
+            }
 
             $albumsSearchOut = array();
 
             foreach($albumsSearch as $album) {
-                
+
                 $albumOut = $album->toArray();
-                
+
                 $photoUrlPrefix = SERVER . "/". ALBUMS_FOLDER . $albumOut['id'] . "/";
-                
+
                 $coverPhotoId = $albumOut['cover_photo_id'];
                 $coverPhotoThumbs = $this->photosManager->getPhotoThumbnails($coverPhotoId);
                 $coverPhotoOriginal = $this->photosManager->getPhotoFromDB($coverPhotoId);
