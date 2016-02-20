@@ -453,7 +453,14 @@
                     <option value="{$profile['id']|noescape}">{$profile['name']|noescape}' + 
                     ' | A: {$profile['audio_bitrate']|noescape}kbps' + 
                     ' | V: {$profile['video_bitrate']|noescape}kbps</option> {/foreach} </select>' + 
-                    '<br> <a class="btn btn-primary" onclick="convertProfileConfirmButton(' + id + ',\'' + originalFile + '\',\'' +  targetFormat + '\');" >zkonvertovat</a>',
+                    '<br> <a class="player-download btn btn-primary" onclick="convertProfileConfirmButton(' + id + ',\'' + originalFile + '\',\'' +  targetFormat + '\');" >zkonvertovat</a>',
+            buttons: {
+                main: {
+                    label: "zavřít",
+                    className: "btn-primary"
+                }
+            },
+            className: "modal60"
         });
     }
     
