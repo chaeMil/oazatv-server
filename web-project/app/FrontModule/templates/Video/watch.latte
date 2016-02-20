@@ -48,7 +48,7 @@
                     <br>
                     <p id="playerTags" class="tags">
                     {foreach $tags as $tag}
-                        <a class="tag" rel="{$tag['usage']}">{$tag['tag']}</a>
+                        <a href="{$basePath}/search/?q=%23{substr($tag['tag'], 1)}" class="tag" rel="{$tag['usage']}">{$tag['tag']}</a>
                     {/foreach}
                     </p>
                 </div>

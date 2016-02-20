@@ -10,7 +10,8 @@
             <div class="col-xl-4 col-lg-4 col-md-4">
                 <p id="playerTags" class="tags">
                 {foreach $tags as $tag => $usage}
-                    <a class="tag" rel="{$usage}">#{$tag}</a>
+                    <a href="{$basePath}/search/?q=%23{substr($tag, 1)}" c
+                       lass="tag" rel="{$usage}">#{$tag}</a>
                 {/foreach}
                 </p>
             </div>
