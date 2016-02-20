@@ -25,6 +25,7 @@
                     <th>přidáno</th>
                     <th>začátek konverze</th>
                     <th>konec konverze</th>
+                    <th>profil</th>
                     <th>status</th>
                     <th></th>
                 </thead>
@@ -40,6 +41,15 @@
                         <td class="date">{$video->added}</td>
                         <td class="date">{$video->started_at}</td>
                         <td class="date">{$video->finished_at}</td>
+                        <td>{var $profile = $profilesManager->getProfileFromDB($video->profile)}
+                            {if $profile}
+                                <a n:href="ConversionProfiles:detail $profile->id">
+                                   {$profile->name} | A: {$profile->audio_bitrate} V: {$profile->video_bitrate}
+                                </a>
+                            {else}
+                                výchozí
+                            {/if}
+                        </td>
                         <td>{if ($video->status == 0)}čeká se{/if}
                             {if ($video->status == 1)}konvertuje se{/if}
                             {if ($video->status == 2)}hotovo{/if}</td>
