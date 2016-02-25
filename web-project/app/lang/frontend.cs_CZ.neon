@@ -8,6 +8,7 @@ basic:
     videos: "videa"
     albums: "fotoalba"
     number_of_days: "počet dnů"
+    similar_videos: "Podobná videa"
 search:
     more: "další výsledky"
 homepage:

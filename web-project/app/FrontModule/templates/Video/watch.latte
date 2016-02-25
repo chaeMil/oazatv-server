@@ -48,8 +48,24 @@
                 </div>
             </div>
             <hr>
+            <h3>{_frontend.basic.similar_videos}</h3>
             <div class="row">
-
+                {foreach $similarVideos as $similarVideo}
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <a n:href="Video:watch $similarVideo['hash']">
+                            <div class="video-box">
+                                <div class="thumb"
+                                     style="background-image: url({$basePath|noescape}/{$similarVideo['thumbs']['512']|noescape});">
+                                </div>
+                                <div class="info">
+                                    <span class="name">{$similarVideo['name']}</span>
+                                    <span class="date">{$similarVideo['date']}</span>
+                                    <span class="views">{$similarVideo['views']} {_frontend.basic.views}</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {/foreach}
             </div>
         </div>
     </div>

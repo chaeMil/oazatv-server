@@ -8,6 +8,7 @@ basic:
     videos: "videos"
     albums: "photoalbums"
     number_of_days: "days"
+    similar_videos: "Similar videos"
 search:
     more: "more results"
 homepage:

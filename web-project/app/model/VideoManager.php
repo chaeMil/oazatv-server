@@ -373,7 +373,7 @@ class VideoManager extends BaseModel {
         }
     }
     
-    public function findSimilarVideos($originalVideo, $numOfVideos = 8) {
+    public function findSimilarVideos($originalVideo, $lang, $numOfVideos = 8) {
         $originalTags = explode(',', str_replace(' ', '', $originalVideo['tags']));
         $tagsManager = new TagsManager(self::$database); 
         $hiddenTags = $tagsManager->getHiddenTagsFromDB();
@@ -399,8 +399,12 @@ class VideoManager extends BaseModel {
             }
         }
         
-        dump($similarVideos); exit;
+        $localizedSimilarVideos = array();
         
-        exit;
+        foreach($similarVideos as $video) {
+            $localizedSimilarVideos[] = $this->createLocalizedVideoObject($lang, $video);
+        }
+        
+        return $localizedSimilarVideos;
     }
 }
