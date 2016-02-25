@@ -30,5 +30,21 @@ class TagsManagerPresenter extends BaseSecuredPresenter {
         $this->getTemplateVariables($this->getUser()->getId());
         
         $this->template->tagArray = $this->tagsManager->tagCloud();
+        
+        $this->template->hiddenTags = $this->tagsManager->getHiddenTagsFromDB();
+        
+        $this->template->tagsManager = $this->tagsManager;
+    }
+    
+    public function actionSetTagHidden($tag) {
+        $this->tagsManager->saveHiddenTagToDB($tag);
+        $this->flashMessage('Tag je nyní skrytý', 'info');
+        $this->redirect('TagsManager:default');
+    }
+    
+    public function actionSetTagVisible($tag) {
+        $this->tagsManager->deleteHiddenTagFromDB($tag);
+        $this->flashMessage('Tag je nyní zobrazován', 'info');
+        $this->redirect('TagsManager:default');
     }
 }

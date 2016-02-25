@@ -18,6 +18,11 @@ use Nette,
  * @author Michal Mlejnek <chaemil72 at gmail.com>
  */
 class TagsManager extends BaseModel {
+    
+    const 
+            TABLE_NAME_HIDDEN_TAGS = 'db_hidden_tags',
+            COLUMN_ID = 'id',
+            COLUMN_TAG = 'tag';
 
 
     /** @var Nette\Database\Context */
@@ -67,6 +72,32 @@ class TagsManager extends BaseModel {
         }
 
         return $tagsWithUsage;
+    }
+    
+    public function getHiddenTagsFromDB() {
+        return self::$database->table(self::TABLE_NAME_HIDDEN_TAGS)
+                ->select(self::COLUMN_TAG)
+                ->fetchAll();
+    }
+    
+    public function saveHiddenTagToDB($tag) {
+        self::$database->table(self::TABLE_NAME_HIDDEN_TAGS)
+                ->insert(array(self::COLUMN_TAG => $tag));
+    }
+    
+    public function deleteHiddenTagFromDB($tag) {
+        $tagToDelete = self::$database->table(self::TABLE_NAME_HIDDEN_TAGS)
+                ->select('*')->where(self::COLUMN_TAG, $tag);
+        $tagToDelete->delete();
+    }
+    
+    public function isTagHidden($tag) {
+        $hiddenTags = $this->getHiddenTagsFromDB();
+        $tagsArray = array();
+        foreach($hiddenTags as $hiddenTag) {
+            $tagsArray[] = $hiddenTag[self::COLUMN_TAG];
+        }
+        return in_array($tag, $tagsArray);
     }
 
 }

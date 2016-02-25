@@ -25,11 +25,18 @@
                 <thead>
                     <th>tag</th>
                     <th>počet</th>
+                    <th>skrýt / zobrazit</th>
                 </thead>
                 <tbody class="searchable">
                     <tr n:foreach="$tagArray as $tag => $count">
                         <td>{$tag}</td>
                         <td>{$count}x</td>
+                        <td>{if $tagsManager->isTagHidden($tag)}
+                                <a n:href="TagsManager:setTagVisible $tag">zobrazit</a> (nezobrazuje se)
+                            {else}
+                                <a n:href="TagsManager:setTagHidden $tag">skrýt</a> (zobrazuje se)
+                            {/if}
+                        </td>
                     </tr>
                 </tbody>                
             </table>
