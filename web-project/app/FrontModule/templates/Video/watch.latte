@@ -7,9 +7,9 @@
 
                 <video id="video" class="video-js vjs-default-skin"
                        controls preload="auto"
-                     {if isset($video['thumbs']['1024'])}
-                         poster="{$basePath}/{$video['thumbs']['1024']}"
-                     {/if}>
+                    {if isset($video['thumbs']['1024'])}
+                        poster="{$basePath}/{$video['thumbs']['1024']}"
+                    {/if}>
 
                     {if isset($video['mp4'])}
                         <source src="{$basePath}/{$video['mp4']}" type='video/mp4'>
@@ -23,12 +23,6 @@
                       <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
                     </p>
                 </video>
-                <div id="video-vjs-playlist" class="vjs-track">
-                    <ul>
-                        <li class="vjs-track" href="#audio" data-index="1"
-                        data-src="{$basePath}/{$video['mp3']}">Audio</a>
-                    </ul>
-                </div>
 
             </div>
         </div>
