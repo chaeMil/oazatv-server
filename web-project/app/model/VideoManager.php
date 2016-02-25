@@ -398,7 +398,9 @@ class VideoManager extends BaseModel {
                 $similarVideo = $this->getVideoFromDBbyTag($randomTag);
 
                 if($similarVideo != false) {
-                    $similarVideos[] = $similarVideo;
+                    if ($similarVideo['id'] != $originalVideo['id']) {
+                        $similarVideos[] = $similarVideo;
+                    }
                 }
                 
                 $try++;
