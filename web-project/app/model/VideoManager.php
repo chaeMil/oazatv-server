@@ -388,14 +388,20 @@ class VideoManager extends BaseModel {
         $similarVideos = array();
         
         if ($usableTags >= $numOfVideos) {
+            $try = 0;
             while(sizeof($similarVideos) != $numOfVideos) {
-
+                
+                if ($try > 50) {
+                    break;
+                }
                 $randomTag = $usableTags[rand(0, count($usableTags)-1)];
                 $similarVideo = $this->getVideoFromDBbyTag($randomTag);
 
                 if($similarVideo != false) {
                     $similarVideos[] = $similarVideo;
                 }
+                
+                $try++;
             }
         }
         
