@@ -11,7 +11,8 @@ namespace Model;
 use Nette,
  App\StringUtils,
  App\FileUtils,
- Model\VideoConvertQueueManager;
+ Model\VideoConvertQueueManager,
+ Model\TagsManager;
 
 /**
  * Description of VideoManager
@@ -48,7 +49,8 @@ class VideoManager extends BaseModel {
     public static $database;
     public static $queueManager;
 
-    public function __construct(Nette\Database\Context $database, \Model\VideoConvertQueueManager $queueManager) {
+    public function __construct(Nette\Database\Context $database, 
+            VideoConvertQueueManager $queueManager) {
         self::$database = $database;
         self::$queueManager = $queueManager;
     }
@@ -115,6 +117,24 @@ class VideoManager extends BaseModel {
             return self::$database->table(self::TABLE_NAME)
                     ->select("*")
                     ->where(array(self::COLUMN_HASH => $hash))
+                    ->fetch();
+        }
+    }
+    
+    public function getVideoFromDBbyTag($tag, $published = 1) {
+
+        if ($published != 2) {
+            return self::$database->table(self::TABLE_NAME)
+                    ->select("*")
+                    ->order('rand()')
+                    ->where(array(self::COLUMN_TAGS." LIKE '%$tag%'",
+                        self::COLUMN_PUBLISHED => $published))
+                    ->fetch();
+        } else {
+            return self::$database->table(self::TABLE_NAME)
+                    ->select("*")
+                    ->order('rand()')
+                    ->where(array(self::COLUMN_TAGS." LIKE '%$tag%'"))
                     ->fetch();
         }
     }
@@ -187,7 +207,7 @@ class VideoManager extends BaseModel {
         FileUtils::recursiveDelete(VIDEOS_FOLDER . $id ."/");
         $video->delete();
     }
-
+    public $tagsManager;
     public function useOriginalFileAs($id, $target) {
         $video = $this->getVideoFromDB($id, 2);
         $video->update(array(self::COLUMN_ORIGINAL_FILE => "", $target => $video->original_file));
@@ -351,5 +371,36 @@ class VideoManager extends BaseModel {
                  unlink($file);
             }
         }
+    }
+    
+    public function findSimilarVideos($originalVideo, $numOfVideos = 8) {
+        $originalTags = explode(',', str_replace(' ', '', $originalVideo['tags']));
+        $tagsManager = new TagsManager(self::$database); 
+        $hiddenTags = $tagsManager->getHiddenTagsFromDB();
+        
+        $hiddenTagsArray = array();
+        foreach($hiddenTags as $hiddenTag) {
+            $hiddenTagsArray[] = $hiddenTag['tag'];
+        }
+        
+        $usableTags = array_diff($originalTags, $hiddenTagsArray);
+        sort($usableTags);
+        $similarVideos = array();
+        
+        if ($usableTags >= $numOfVideos) {
+            while(sizeof($similarVideos) != $numOfVideos) {
+
+                $randomTag = $usableTags[rand(0, count($usableTags)-1)];
+                $similarVideo = $this->getVideoFromDBbyTag($randomTag);
+
+                if($similarVideo != false) {
+                    $similarVideos[] = $similarVideo;
+                }
+            }
+        }
+        
+        dump($similarVideos); exit;
+        
+        exit;
     }
 }

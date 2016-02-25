@@ -8,9 +8,7 @@
 
 namespace Model;
 
-use Nette,
- App\StringUtils,
- Model\VideoManager;
+use Nette;
 
 /**
  * Description of TagsManager
@@ -29,9 +27,8 @@ class TagsManager extends BaseModel {
     public static $database;
     public static $videoManager;
 
-    public function __construct(Nette\Database\Context $database, VideoManager $videoManager) {
+    public function __construct(Nette\Database\Context $database) {
         self::$database = $database;
-        self::$videoManager = $videoManager;
     }
 
     public function tagCloud() {
