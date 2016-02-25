@@ -88,11 +88,6 @@ $('document').ready(function() {
         });
     });
 
-    var playlist = video.playlist({
-        "continuous": true,
-        "setTrack": 2
-    });
-
     setInterval(function() {
         saveVideoTime(player.currentTime());
         savePlayerVolume(player.volume().toString().substr(0,5));
