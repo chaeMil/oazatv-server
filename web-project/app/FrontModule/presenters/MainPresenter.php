@@ -6,7 +6,8 @@ use Nette,
 Nette\Database\Context,
 Model\VideoManager,
 Model\PhotosManager,
-Model\AnalyticsManager;
+Model\AnalyticsManager,
+Model\CategoriesManager;
 
 
 class MainPresenter extends BasePresenter {
@@ -14,19 +15,23 @@ class MainPresenter extends BasePresenter {
     private $videoManager;
     private $photosManager;
     private $analyticsManager;
+    private $categoriesManager;
     
     public function __construct(Nette\DI\Container $container,
             Context $database, VideoManager $videoManager,
             PhotosManager $photosManager,
-            AnalyticsManager $analyticsManager) {
+            AnalyticsManager $analyticsManager,
+            CategoriesManager $categoriesManager) {
         
         parent::__construct($container, $database);
         $this->videoManager = $videoManager;
         $this->photosManager = $photosManager;
         $this->analyticsManager = $analyticsManager;
+        $this->categoriesManager = $categoriesManager;
     }
     
     public function renderDefault() {
+        
         $newestVideos = $this->videoManager->getVideosFromDB(0, 8);
         $templateNewestVideos = null;
         
@@ -60,6 +65,7 @@ class MainPresenter extends BasePresenter {
         $this->template->newestAlbums = $templateNewestAlbums;
         $this->template->lang = $this->lang;
         $this->template->user = $this->getUser();
+        $this->template->categories = $this->categoriesManager->getLocalizedCategories($this->lang);
     }
     
 }

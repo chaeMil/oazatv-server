@@ -1,0 +1,28 @@
+{block defaultFooter}
+
+<div class="container">
+
+    <hr>
+
+    <div class="footer">
+
+        {if isset($categories)}
+            <div  class="categories">
+
+                <h4>{_frontend.basic.categories}</h4>
+                <ul>
+                    {foreach $categories as $category}
+
+                        <li>{$category['name']}</li>
+
+                    {/foreach}
+                </ul>
+
+            </div>
+        {/if}
+
+    </div>
+    
+</div>
+
+{/block}

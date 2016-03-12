@@ -10,6 +10,7 @@ basic:
     number_of_days: "days"
     similar_videos: "Similar videos"
     songbook: "Songbook"
+    categories: "Categories"
 search:
     more: "more results"
 homepage:

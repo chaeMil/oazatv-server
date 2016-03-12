@@ -10,6 +10,7 @@ basic:
     number_of_days: "počet dnů"
     similar_videos: "Podobná videa"
     songbook: "Zpěvník"
+    categories: "Kategorie"
 search:
     more: "další výsledky"
 homepage:
