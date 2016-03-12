@@ -48,7 +48,10 @@ class SongsPresenter extends BaseSecuredPresenter {
             $this->error('Požadovaná chvála neexistuje!');
         }
         
-        $this['songForm']->setDefaults($song->toArray());
+        $songArray = $song->toArray();
+        $songArray['body'] = htmlspecialchars_decode($songArray['body']);
+        
+        $this['songForm']->setDefaults($songArray);
         
     }
     
@@ -69,6 +72,7 @@ class SongsPresenter extends BaseSecuredPresenter {
                 ->setAttribute("class", "form-control");
         
         $form->addTextArea('body', 'text')
+                ->setHtmlId('bodyEditor')
                 ->setAttribute("class", "form-control");
 
         $form->addSubmit('send', 'Uložit')
