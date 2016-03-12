@@ -25,5 +25,47 @@ and open the template in the editor.
             font-size: 3.0vw;
         }
     }
+    
+    .fab-buttons {
+        position: fixed;
+        bottom: 20px;
+        right: 30px;
+        width: 65px;
+        
+        @media (max-width: 480px) {
+            bottom: 4px;
+            right: 16px;
+            width: 55px;
+        }
+        
+        .btn {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 10px;
+            background-color: @brand-primary;
+            color: white;
+            font-size: 40px;
+            line-height: 45px;
+            text-align: center;
+            border-radius: 100%;
+            -webkit-box-shadow: 0 7px 15px 0 rgba(0,0,0,0.32);
+            box-shadow: 0 7px 15px 0 rgba(0,0,0,0.32);
+            transition-duration: 150ms;
+            
+            &:hover {
+                background-color: darken(@brand-primary, 4%);
+                transition-duration: 150ms;
+            }
+            
+            &:active {
+                background-color: darken(@brand-primary, 7%);
+                -webkit-box-shadow: 0 2px 8px 0 rgba(0,0,0,0.45);
+                box-shadow: 0 2px 8px 0 rgba(0,0,0,0.45);
+                transition-duration: 150ms;
+            }
+        
+        }
+        
+    }
 }
     

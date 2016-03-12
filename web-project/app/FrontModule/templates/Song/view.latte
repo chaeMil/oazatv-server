@@ -12,10 +12,71 @@
         
         {$song['body']|noescape}
         
+        <div class="fab-buttons">
+        
+            <a onclick="transposeSong(+1); adjustHash(+1);" class="btn">+</a>
+            
+            <a onclick="transposeSong(-1); adjustHash(-1);" class="btn">-</a>
+
+        </div>
+        
     </div>
         
     <hr>
     
 </div>
+
+{/block}
+
+{block pageScripts}
+
+<script>
+    
+    function transposeChord(chord, amount) {
+        var scale = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "B", "H"];
+        return chord.replace(/[CDEFGABH]#?/g,
+            function(match) {
+                var i = (scale.indexOf(match) + amount) % scale.length;
+                return scale[ i < 0 ? i + scale.length : i ];
+            });
+    }
+
+    window.trans = "";
+
+    function transposeSong(step) {
+        //hideChord();
+        $("chord").each( function () {
+            var chord = $(this).text();
+            //chord = chord.replace("H","B");
+            //chord = chord.replace("h","b");
+            chord = chord.replace("[","");
+            chord = chord.replace("]","");
+            $(this).text("["+transposeChord(chord,step)+"]");
+            $(this).attr("onclick","displayChord('"+transposeChord(chord,step)+"');");
+        });
+    }
+
+    function resetTranspose() {
+        var hash = window.location.hash.replace("#","") | 0;
+        var howMuch = 0 - hash;
+        transposeSong(howMuch);
+        setHash('0');
+}
+
+    function adjustHash(step) {
+        var hash = window.location.hash.replace("#","") | 0;
+        window.location.hash = (parseInt(hash) + step);
+    }
+
+    function setHash(hash) {
+        window.location.hash = (hash.replace("#",""));
+    }
+
+    function adjustSongToHash() {
+        var hash = window.location.hash.replace("#","") | 0;
+        transposeSong(parseInt(hash));
+    }
+    
+</script>
 
 {/block}
