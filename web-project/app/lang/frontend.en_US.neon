@@ -9,6 +9,7 @@ basic:
     albums: "photoalbums"
     number_of_days: "days"
     similar_videos: "Similar videos"
+    songbook: "Songbook"
 search:
     more: "more results"
 homepage:

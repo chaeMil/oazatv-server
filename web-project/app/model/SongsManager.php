@@ -79,6 +79,13 @@ class SongsManager extends BaseModel {
             ->fetchAll();
 
     }
+    
+    public function getSongFromDBByTag($tag) {
+        return self::$database->table(self::TABLE_NAME)
+                ->select('*')
+                ->where(array(self::COLUMN_TAG => $tag))
+                ->fetch();
+    }
 
     public function deleteSong($id) {
         $video = $this->getSongFromDB($id);
@@ -94,9 +101,12 @@ class SongsManager extends BaseModel {
             $newTag = array();
             $newTag['tag'] = '#'.trim($tag);
             $newTag['usage'] = $this->tagsManager->tagUsage($tag);
+            $newTag['type'] = 'tag';
             foreach($knownSongs as $song) {
                 if ($newTag['tag'] == '#'.trim($song['tag'])) {
                     $newTag['tag'] = '♫ ' . $song['name'] . ' ♫';
+                    $newTag['type'] = 'song';
+                    $newTag['song'] = $song['tag'];
                 }
             }
             $outputTags[] = $newTag;

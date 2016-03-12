@@ -42,7 +42,11 @@
                     <br>
                     <p id="playerTags" class="tags">
                     {foreach $tags as $tag}
-                        <a href="{$basePath}/search/?q=%23{substr($tag['tag'], 1)}" class="tag" rel="{$tag['usage']}">{$tag['tag']}</a>
+                        {if $tag['type'] == 'song'}
+                            <a n:href="Song:view $tag['song']">{$tag['tag']}</a>
+                        {else}
+                            <a href="{$basePath}/search/?q=%23{substr($tag['tag'], 1)}" class="tag" rel="{$tag['usage']}">{$tag['tag']}</a>
+                        {/if}
                     {/foreach}
                     </p>
                 </div>

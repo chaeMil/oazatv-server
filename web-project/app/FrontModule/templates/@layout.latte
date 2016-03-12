@@ -67,6 +67,11 @@
                    n:href="Archive:Default">
                     {_frontend.basic.archive}
                 </a>
+                
+                <a class="btn btn-primary btn-archive hidden-xs"
+                   n:href="Archive:Default">
+                    {_frontend.basic.songbook}
+                </a>
             </div>
             <!-- /.navbar-collapse -->
 
@@ -89,13 +94,14 @@
         <!-- /.container -->
     </nav>
 
-    <!-- Page Content -->
+    
     <div class="container main-content padded">
 
         <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
     </div>
 
+    <!-- Page Content -->
     {include content}
 
 

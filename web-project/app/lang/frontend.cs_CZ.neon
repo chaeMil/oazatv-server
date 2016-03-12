@@ -9,6 +9,7 @@ basic:
     albums: "fotoalba"
     number_of_days: "počet dnů"
     similar_videos: "Podobná videa"
+    songbook: "Zpěvník"
 search:
     more: "další výsledky"
 homepage:
