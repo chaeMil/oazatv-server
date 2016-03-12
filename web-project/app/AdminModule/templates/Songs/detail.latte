@@ -31,7 +31,22 @@
 {block pageScripts}
 
 <script>
-    CKEDITOR.replace( 'bodyEditor' );
+    var editor = CKEDITOR.replace( 'bodyEditor', {
+        contentsCss: {$basePath} + '/admin_components/css/ckeditor_songbook_style.css',
+        // Define the toolbar groups as it is a more accessible solution.
+        toolbarGroups: [
+            {"name":"clipbboard", "groups":["clipboard", "undo"]},
+            {"name":"basicstyles","groups":["basicstyles"]},
+            {"name":"links","groups":["links"]},
+            {"name":"paragraph","groups":["list","blocks"]},
+            {"name":"document","groups":["mode"]},
+            {"name":"insert","groups":["insert"]},
+            {"name":"styles","groups":["styles"]},
+            {"name":"about","groups":["about"]}
+        ],
+        // Remove the redundant buttons from toolbar groups defined above.
+        removeButtons: 'Underline,Subscript,Superscript,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Source,Bold,Italic,Strike,NumberedList,BulletedList,Indent,Outdent,Blockquote,Styles,Format,About,RemoveFormat'
+    });
 </script>
 
 {/block}
