@@ -23,10 +23,12 @@ Model\TagsManager;
 class SongsManager extends BaseModel {
 
     const
-            TABLE_NAME = 'db_known_songs',
+            TABLE_NAME = 'db_songbook',
             COLUMN_ID = 'id',
             COLUMN_TAG = 'tag',
-            COLUMN_NAME_CS = 'name_';
+            COLUMN_NAME = 'name',
+            COLUMN_AUTHOR = 'author',
+            COLUMN_BODY = 'body';
 
     /** @var Nette\Database\Context */
     public static $database;

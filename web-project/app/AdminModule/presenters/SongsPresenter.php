@@ -64,6 +64,12 @@ class SongsPresenter extends BaseSecuredPresenter {
         $form->addText('tag', 'TAG')
                 ->setRequired()
                 ->setAttribute("class", "form-control");
+        
+        $form->addText('author', 'autor')
+                ->setAttribute("class", "form-control");
+        
+        $form->addTextArea('body', 'text')
+                ->setAttribute("class", "form-control");
 
         $form->addSubmit('send', 'Uložit')
                 ->setAttribute("class", "btn-lg btn-success btn-block");

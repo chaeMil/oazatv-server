@@ -31,6 +31,7 @@
                 <thead>
                     <th>id</th>
                     <th>název</th>
+                    <th>autor</th>
                     <th>TAG</th>
                 </thead>
                 <tbody class="searchable">
@@ -39,6 +40,7 @@
                         data-href="{$presenter->link('Songs:Detail', $song->id)}">
                         <td>{$song->id}</td>
                         <td>{$song->name}</td>
+                        <td>{$song->author}</td>
                         <td>{$song->tag}</td>
                     </tr>
                 </tbody>                
