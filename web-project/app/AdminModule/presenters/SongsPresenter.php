@@ -50,6 +50,7 @@ class SongsPresenter extends BaseSecuredPresenter {
         
         $songArray = $song->toArray();
         $songArray['body'] = htmlspecialchars_decode($songArray['body']);
+        $songArray['body'] = \App\StringUtils::removeStyleTag($songArray['body']);
         
         $this['songForm']->setDefaults($songArray);
         

@@ -52,6 +52,8 @@ class SongsManager extends BaseModel {
         } else {
             $id = 0;
         }
+        
+        $values['body'] = \App\StringUtils::removeStyleTag($values['body']);
 
         if ($id != 0 && $this->checkIfSongExists($id) > 0) {
             $category = self::$database->table(self::TABLE_NAME)->get($id);
