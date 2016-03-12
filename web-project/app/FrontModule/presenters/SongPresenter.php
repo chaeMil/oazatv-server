@@ -34,6 +34,8 @@ class SongPresenter extends BasePresenter {
         $song['body'] = str_replace(array("[", "]"), array("<chord>[","]</chord>"), 
                 htmlspecialchars_decode($song['body']));
         
+        $song['body'] = \App\StringUtils::removeStyleTag($song['body']);
+        
         $this->template->song = $song;
    }
 

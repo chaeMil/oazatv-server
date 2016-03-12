@@ -89,4 +89,8 @@ class StringUtils {
     public static function formatEnglishDate($year, $month, $day) {
         return $month.'/'.$day.'/'.$year;
     }
+    
+    public static function removeStyleTag($input) {
+        return preg_replace('/(<[^>]+) style=".*?"/i', '$1', $input);
+    }
 }
