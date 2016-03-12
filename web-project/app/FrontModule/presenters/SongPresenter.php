@@ -29,7 +29,11 @@ class SongPresenter extends BasePresenter {
 
     public function renderView($id) {
         $tag = $id; //id only in router, actualy its tag
-        $song = $this->songsManager->getSongFromDBByTag($tag);
+        $song = $this->songsManager->getSongFromDBByTag($tag)->toArray();
+        
+        $song['body'] = str_replace(array("[", "]"), array("<chord>[","]</chord>"), 
+                htmlspecialchars_decode($song['body']));
+        
         $this->template->song = $song;
    }
 
