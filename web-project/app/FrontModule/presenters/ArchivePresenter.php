@@ -30,7 +30,7 @@ class ArchivePresenter extends BasePresenter {
         
         $paginator = new Nette\Utils\Paginator;
         $paginator->setItemCount($this->archiveManager->countArchive());
-        $paginator->setItemsPerPage(16);
+        $paginator->setItemsPerPage(64);
         $paginator->setPage($page);
 
         $archive = $this->archiveManager

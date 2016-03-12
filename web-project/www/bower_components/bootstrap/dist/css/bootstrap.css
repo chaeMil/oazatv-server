@@ -7169,13 +7169,14 @@ and open the template in the editor.
   }
 }
 .songbook .fab-buttons .btn {
+  padding: 0;
   width: 60px;
   height: 60px;
   margin-bottom: 10px;
   background-color: #4285f4;
   color: white;
-  font-size: 40px;
-  line-height: 45px;
+  font-size: 35px;
+  line-height: 57px;
   text-align: center;
   border-radius: 100%;
   -webkit-box-shadow: 0 7px 15px 0 rgba(0, 0, 0, 0.32);
