@@ -65,7 +65,8 @@ class MainPresenter extends BasePresenter {
         $this->template->newestAlbums = $templateNewestAlbums;
         $this->template->lang = $this->lang;
         $this->template->user = $this->getUser();
-        $this->template->categories = $this->categoriesManager->getLocalizedCategories($this->lang);
+        $this->template->categories = $this->categoriesManager
+                ->getLocalizedCategories($this->lang);
     }
     
 }

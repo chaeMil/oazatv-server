@@ -4,16 +4,16 @@
 
     <hr>
 
-    <div class="footer">
+    <div class="row footer">
 
         {if isset($categories)}
-            <div  class="categories">
+            <div  class="categories col-md-4">
 
-                <h4>{_frontend.basic.categories}</h4>
+                <h4 class="text-center">{_frontend.basic.categories}</h4>
                 <ul>
                     {foreach $categories as $category}
 
-                        <li>{$category['name']}</li>
+                        <li class="text-center">{$category['name']}</li>
 
                     {/foreach}
                 </ul>
@@ -22,7 +22,11 @@
         {/if}
 
     </div>
+        
+    <hr>
     
 </div>
+       
+
 
 {/block}

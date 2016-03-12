@@ -7193,4 +7193,21 @@ and open the template in the editor.
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.45);
   transition-duration: 150ms;
 }
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 12.3.2016, 22:49:38
+    Author     : chaemil
+*/
+.footer {
+  margin-bottom: 30px;
+}
+.footer .categories ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
 /*# sourceMappingURL=bootstrap.css.map */
