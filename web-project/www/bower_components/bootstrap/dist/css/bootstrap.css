@@ -7146,6 +7146,15 @@ and open the template in the editor.
     font-size: 3.0vw;
   }
 }
+.songbook.text chord {
+  color: #4285f4;
+}
+.songbook.text chord:hover {
+  color: #0b51c5;
+  background-color: #eeeeee;
+  cursor: pointer;
+  border-radius: 6px;
+}
 .songbook .fab-buttons {
   position: fixed;
   bottom: 20px;

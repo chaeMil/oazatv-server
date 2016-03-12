@@ -30,7 +30,13 @@
 
 {block pageScripts}
 
+<link rel="import" href="{$basePath}/html_components/XChord.html" />
+
 <script>
+    
+    $(document).ready(function() {
+        adjustSongToHash();
+    });
     
     function transposeChord(chord, amount) {
         var scale = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "B", "H"];

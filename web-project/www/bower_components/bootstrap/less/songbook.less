@@ -24,6 +24,17 @@ and open the template in the editor.
         @media (max-width: 480px) {
             font-size: 3.0vw;
         }
+        
+        chord {
+            color: @brand-primary;
+            
+            &:hover {
+                color: darken(@brand-primary, 20%);
+                background-color: @gray-lighter;
+                cursor: pointer;
+                border-radius: 6px;
+            }
+        }
     }
     
     .fab-buttons {

@@ -1,0 +1,222 @@
+/*
+ * X-Chord HTML5 Web Component by Martin Ivanov (@wemakesitesnet)
+ * More info regarding this exciting new technology: http://webcomponents.org/, http://www.x-tags.org/, http://www.polymer-project.org/
+ * @author Martin Ivanov
+ * @url developer website: http://wemakesites.net/
+ * @url developer twitter: https://twitter.com/#!/wemakesitesnet
+ * @url developer blog http://acidmartin.wordpress.com/
+ **/
+
+/*
+ * Do you like this solution? Please, donate:
+ * https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QFUHPWJB2JDBS
+ **/
+
+acidjs-xchord li::before,
+acidjs-xchord .acidjs-xchord-empty::after,
+acidjs-xchord .acidjs-xchord-muted::after,
+acidjs-xchord li:last-child b::before,
+acidjs-xchord li:nth-child(12) b:first-child span::after,
+acidjs-xchord .acidjs-xchord-fret-odd li:nth-child(2n+1) b:first-child span::after,
+acidjs-xchord .acidjs-xchord-fret-even li:nth-child(2n+2) b:first-child span::after
+{
+    position: absolute;
+}
+
+acidjs-xchord,
+acidjs-xchord *,
+acidjs-xchord::before,
+acidjs-xchord::after,
+acidjs-xchord *::before,
+acidjs-xchord *::after
+{
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+acidjs-xchord h3,
+acidjs-xchord .acidjs-xchord-empty::after,
+acidjs-xchord .acidjs-xchord-pressed::after,
+acidjs-xchord .acidjs-xchord-muted::after,
+acidjs-xchord li:nth-child(2n+1) b:first-child span::after
+{
+    font-size: 1em;
+    line-height: 1em;
+}
+
+acidjs-xchord b,
+acidjs-xchord li,
+acidjs-xchord li:last-child b::before
+{
+    width: 100%;
+}
+
+acidjs-xchord a,
+acidjs-xchord p,
+acidjs-xchord h3,
+acidjs-xchord li:last-child b::before
+{
+    text-align: center;
+}
+
+acidjs-xchord .acidjs-xchord-fret-odd li:nth-child(2n+1) b:first-child span::after,
+acidjs-xchord .acidjs-xchord-fret-even li:nth-child(2n+2) b:first-child span::after,
+acidjs-xchord li:nth-child(12) b:first-child span::after
+{
+    content: "\25cf";
+    left: 50%;
+    margin: -.5em 0 0 -.3em;
+    color: #ccc;
+}
+
+acidjs-xchord:empty,
+acidjs-xchord *:not(span):empty
+{
+    display: none;
+}
+
+acidjs-xchord,
+acidjs-xchord b
+{
+    border: solid 1px #000;
+}
+
+acidjs-xchord b,
+acidjs-xchord li b:last-child
+{
+    border-bottom: 0;
+}
+
+acidjs-xchord
+{
+    vertical-align: top;
+    margin: .1em;
+    display: inline-block;
+    width: 10em;
+    padding: 0 1.5em 1.5em;
+    font: normal 1em/1em Garamond, Georgia, "Times New Roman", Serif;
+    cursor: default;
+    color: #000;
+    background: #fff;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+acidjs-xchord a
+{
+    display: block;
+    color: #666;
+    text-decoration: none;
+    font: normal .6em Helvetica, Arial, Sans-serif;
+}
+
+acidjs-xchord p
+{
+    padding: 1.75em 0 0;
+    font-size: .8em;
+    font-style: italic;
+}
+
+acidjs-xchord h3
+{
+    padding: .5em 0;
+}
+
+acidjs-xchord li
+{
+    display: table;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+acidjs-xchord li b:last-child
+{
+    border-top: 0;
+    border-right: 0;
+    width: 0;
+}
+
+acidjs-xchord li:last-child b::before
+{
+    content: attr(data-key);
+    bottom: -1em;
+    margin: 0 0 0 -50%;
+    text-transform: uppercase;
+    font-size: .75em;
+    line-height: .75em;
+}
+
+acidjs-xchord li::before
+{
+    counter-increment: fret;
+    content: counter(fret, upper-roman)".";
+    margin: .6em 0 0 -2.2em;
+    font-size: .6em;
+}
+
+acidjs-xchord b
+{
+    display: table-cell;
+    vertical-align: middle;
+    height: 2em;
+    font-weight: normal;
+}
+
+acidjs-xchord li:last-child
+{
+    border-bottom: solid 1px #666;
+}
+
+acidjs-xchord div
+{
+    position: relative;
+    counter-reset: fret 0;
+}
+
+acidjs-xchord li:nth-child(12) b:first-child span::after
+{
+    color: #333;
+}
+
+acidjs-xchord li:nth-child(11) b:first-child span::after
+{
+    visibility: hidden;
+}
+
+acidjs-xchord .acidjs-xchord-pressed::after
+{
+    content: "\25cf";
+    margin: 0 0 0 -.3em;
+}
+
+acidjs-xchord .acidjs-xchord-empty::after
+{
+    content: "\25c9";
+    margin: -1.5em 0 0 -.4em;
+}
+
+acidjs-xchord .acidjs-xchord-muted::after
+{
+    content: "\2718";
+    margin: -1.5em 0 0 -.5em;
+}
+
+@media print
+{
+    acidjs-xchord
+    {
+        border: 0;
+    }
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) 
+{ 
+    acidjs-xchord .acidjs-xchord-muted::after
+    {
+        margin: -1.4em 0 0 -.3em;
+    }
+}
