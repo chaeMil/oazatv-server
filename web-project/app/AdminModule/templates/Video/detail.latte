@@ -60,15 +60,21 @@
 
                         <h4>Kategorie:</h4>
 
-                        <div id="categoriesWrapper">
-                            {foreach $categories as $category}
-                                <a class="btn btn-info addableCategory" 
-                                   id="category_{$category['id']}" 
-                                   data-id="{$category['id']|strip}"
-                                   data-text="{$category['name_cs']|strip} | {$category['name_en']|strip}">
-                                    {$category['name_cs']|strip} | {$category['name_en']|strip}
-                                </a>
-                            {/foreach}
+                        <div id="categoriesWrapper" style="overflow-y: scroll">
+                            <table class="table table-hover">
+                                <tbody>
+                                    {foreach $categories as $category}
+                                        <tr class="addableCategory" 
+                                           id="category_{$category['id']}" 
+                                           data-id="{$category['id']|strip}"
+                                           data-text="{$category['name_cs']|strip} | {$category['name_en']|strip}">
+                                            <td>
+                                                {$category['name_cs']|strip} | {$category['name_en']|strip}
+                                            </td>
+                                        </tr>
+                                    {/foreach}
+                                </tbody>                
+                            </table>
                         </div>
 
                     </div>
@@ -495,12 +501,13 @@
             });
             
             hideUsedTags();
+            hideUsedCategories();
             adjustTagsWrapper(); 
             
             $("#categories").tagsinput({
                 allowDuplicates: true,
                 itemValue: 'id',
-                itemText: 'text'
+                itemText: 'label'
             });
 
             $('#tags').on('itemRemoved', function(event) {
@@ -513,13 +520,13 @@
             });
             
             $('#categories').on('itemRemoved', function(event) {
-                $('#category_' + event.item.id).removeClass('hidden');
+                $('#category_' + event.item).removeClass('hidden');
             });
             
             $('.addableCategory').on('click', function() {
                 var catId = $(this).data('id');
                 var catText = $(this).data('text');
-                $('#categories').tagsinput('add', { id: catId, text: catText });
+                $('#categories').tagsinput('add', catId);
                 $(this).addClass('hidden');
             });
             
@@ -538,14 +545,27 @@
     }
     
     function adjustTagsWrapper() {
-        $('#tagsTableWrapper').height($('#frm-videoBasicInfoForm').height() - 140);
+        $('#tagsTableWrapper').height(($('#frm-videoBasicInfoForm').height()) / 2);
     }
     
     function hideUsedTags() {
         var usedTags = $('#tags').tagsinput('items');
         
         $.each(usedTags, function(index, value) {
-           $('#tag_' + $.trim(value)).addClass('hidden');
+            $('#tag_' + $.trim(value)).addClass('hidden');
+        });
+    }
+    
+    function hideUsedCategories() {
+        var usedCategories = $('#categories').val();
+        
+        var usedCategoriesArray = usedCategories.toString().replace(" ", "").split(",");
+        
+        $('#categories').tagsinput('removeAll');
+        
+        $.each(usedCategoriesArray, function(index, value) {
+            $('#categories').tagsinput('add', value);
+            $('#category_' + $.trim(value)).addClass('hidden');
         });
     }
 </script>

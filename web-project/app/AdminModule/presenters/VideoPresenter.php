@@ -120,6 +120,7 @@ class VideoPresenter extends BaseSecuredPresenter {
         
         $form->addText("categories", "kategorie:")
                 ->setHtmlId("categories")
+                ->setAttribute("data-role", "tagsinput")
                 ->setAttribute("class", "form-control");
         
         $form->addTextArea('description_cs', 'popis česky')
