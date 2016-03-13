@@ -22,7 +22,7 @@
                 {/if}
 
                 <h5 class="song">
-                    <a n:href="Song:view $song['tag']">{$song['name']}</a>
+                    [{$song['tag']}] <a n:href="Song:view $song['tag']">{$song['name']}</a>
                     <br>
                     <small>{$song['author']}</small>
                 </h5>
