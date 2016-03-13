@@ -41,7 +41,7 @@ class SongPresenter extends BasePresenter {
         $song['body'] = \App\StringUtils::removeStyleTag($song['body']);
         
         $this->template->song = $song;
-        $videos = $this->videoManager->getVideosFromDBbyTags($song['tag']);
+        $videos = $this->videoManager->getVideosFromDBbyTag($song['tag']);
         $videosArray = array();
         
         foreach($videos as $video) {
