@@ -37,6 +37,10 @@ class SongPresenter extends BasePresenter {
         $song['body'] = \App\StringUtils::removeStyleTag($song['body']);
         
         $this->template->song = $song;
-   }
+    }
+    
+    public function renderAll() {
+        $this->template->songs = $this->songsManager->getSongsFromDB();
+    }
 
 }

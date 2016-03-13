@@ -78,6 +78,7 @@ class SongsManager extends BaseModel {
     public function getSongsFromDB() {
         return self::$database->table(self::TABLE_NAME)
             ->select('*')
+            ->order(self::COLUMN_TAG." COLLATE utf8_czech_ci")
             ->fetchAll();
 
     }
