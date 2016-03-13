@@ -1,3 +1,56 @@
+.fab-buttons {
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    width: 65px;
+    z-index: 300;
+
+    @media (max-width: 480px) {
+        bottom: 4px;
+        right: 16px;
+        width: 55px;
+    }
+
+    .btn {
+        padding: 0;
+        width: 60px;
+        height: 60px;
+        margin-bottom: 10px;
+        background-color: @brand-primary;
+        color: white;
+        font-size: 35px;
+        line-height: 57px;
+        text-align: center;
+        border-radius: 100%;
+        -webkit-box-shadow: 0 7px 15px 0 rgba(0,0,0,0.32);
+        box-shadow: 0 7px 15px 0 rgba(0,0,0,0.32);
+        transition-duration: 150ms;
+
+        &:hover {
+            background-color: darken(@brand-primary, 4%);
+            transition-duration: 150ms;
+        }
+
+        &:active {
+            background-color: darken(@brand-primary, 7%);
+            -webkit-box-shadow: 0 2px 8px 0 rgba(0,0,0,0.45);
+            box-shadow: 0 2px 8px 0 rgba(0,0,0,0.45);
+            transition-duration: 150ms;
+        }
+        
+        &.search {
+            .fa {
+                font-size: 30px;
+                position: absolute;
+                top: 15px;
+                left: 17px;
+            }
+        }
+
+    }
+
+}
+
 .video-player-bg {
     margin-top: -20px;
     background-color: #000000;
@@ -30,7 +83,7 @@
         background-size: cover;
         background-color: @gray-darker;
         @media (max-width: @screen-sm) {
-            max-width: 130px;
+            max-width: 170px;
             float: left;
             display: block;
         }
@@ -46,13 +99,19 @@
         margin-bottom: 30px;
         @media (max-width: @screen-sm) {
             margin-top: -3px;
-            width: calc(100% - 130px);
+            width: calc(100% - 170px);
             padding-left: @padding-small-horizontal;
             font-size: 90%;
         }
         .name {
             @media (max-width: @screen-sm) {
-                line-height: 15px;
+                line-height: 18px;
+                font-size: 18px;
+                margin-top: 3px;
+                white-space: normal;   
+                font-weight: 400;
+                max-height: 55px;
+                overflow: hidden;
             }
             margin-top: -10px;
             font-family: @font-family-serif;
@@ -72,6 +131,7 @@
             @media (max-width: @screen-sm) {
                 float: left;
                 width: 100%;
+                font-weight: normal;
             }
         }
     }

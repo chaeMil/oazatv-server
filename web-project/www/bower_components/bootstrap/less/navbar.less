@@ -30,6 +30,8 @@
 
 .navbar-header {
     &:extend(.clearfix all);
+    
+    display: inline-block;
 
     @media (min-width: @grid-float-breakpoint) {
         float: left;
@@ -677,11 +679,12 @@
     }
 
     .navbar-user-menu {
-        margin-top: -@navbar-height;
+        margin-top: -2px;
         margin-right: @navbar-padding-horizontal;
         display: inline-block;
         line-height: @navbar-height;
         color: @navbar-inverse-brand-color;
+        margin-right: 0px;
 
         .i {
             font-size: 150%;

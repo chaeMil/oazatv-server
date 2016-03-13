@@ -23,23 +23,53 @@
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top noselect" role="navigation">
-        <div class="container">
+        <div class="container" class="position: relative;">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle pull-left" data-toggle="collapse"
+                {*<button type="button" class="navbar-toggle pull-left" data-toggle="collapse"
                         data-target="#navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                </button>
+                </button>*}
 
                 <a class="navbar-brand" href="{$basePath}/">
                     <img class="logo" src="{$basePath}/img/logo.png"/>
-                    <span class="text">Oáza.tv</span>
+                    <span class="text hidden-xs">Oáza.tv</span>
                 </a>
+                    
+                    
             </div>
+                    
+            <div class="pull-right navbar-user-menu">
+                <a class="btn btn-primary btn-archive"
+                       n:href="Archive:Default">
+                        {_frontend.basic.archive}
+                </a>
 
+                <a class="btn btn-primary btn-archive"
+                   n:href="Song:all">
+                    {_frontend.basic.songbook}
+                </a>
+
+                {if $user->isLoggedIn()}
+                    <a class="dropdown-toggle"
+                       type="button" data-toggle="dropdown">
+                        <i class="fa fa-user"></i>
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu pull-right">
+                        <li><a href="#">Profile</a></li>
+                        <li><a href="#">Settings</a></li>
+                        <li><a href="#">Logout</a></li>
+                    </ul>
+                {else}
+                    <a type="button" class="btn btn-primary btn-archive" href="#">
+                        <i class="fa fa-user"></i>
+                    </a>
+                {/if}
+            </div>
+                    
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <form class="navbar-form navbar-search" role="search" action="{plink Search:default}">
@@ -62,34 +92,10 @@
                         </div>
                     </div>
                 </form>
-
-                <a class="btn btn-primary btn-archive hidden-xs"
-                   n:href="Archive:Default">
-                    {_frontend.basic.archive}
-                </a>
-                
-                <a class="btn btn-primary btn-archive hidden-xs"
-                   n:href="Song:all">
-                    {_frontend.basic.songbook}
-                </a>
             </div>
             <!-- /.navbar-collapse -->
 
-            {*if $user->isLoggedIn()}
-                <a class="dropdown-toggle pull-right navbar-user-menu"
-                   type="button" data-toggle="dropdown">
-                    <i class="fa fa-user"></i>
-                    <span class="caret"></span></a>
-                <ul class="dropdown-menu pull-right">
-                    <li><a href="#">Profile</a></li>
-                    <li><a href="#">Settings</a></li>
-                    <li><a href="#">Logout</a></li>
-                </ul>
-            {else}
-                <a class="pull-right navbar-user-menu" type="button" href="#">
-                    {_frontend.basic.login}
-                </a>
-            {/if*}
+            
         </div>
         <!-- /.container -->
     </nav>
@@ -98,6 +104,15 @@
     <div class="container main-content padded">
 
         <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+        
+        <div class="fab-buttons">
+        
+            <a type="button" data-toggle="collapse" data-target="#navbar-collapse" 
+               class="btn search">
+                <i class="fa fa-search"></i>
+            </a>
+
+        </div>
 
     </div>
 

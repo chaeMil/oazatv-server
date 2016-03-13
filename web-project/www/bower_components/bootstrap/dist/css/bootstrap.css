@@ -4225,6 +4225,9 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     border-radius: 3px;
   }
 }
+.navbar-header {
+  display: inline-block;
+}
 @media (min-width: 768px) {
   .navbar-header {
     float: left;
@@ -4750,11 +4753,12 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   color: #444444;
 }
 .navbar-inverse .navbar-user-menu {
-  margin-top: -64px;
+  margin-top: -2px;
   margin-right: 15px;
   display: inline-block;
   line-height: 64px;
   color: #d3e2fc;
+  margin-right: 0px;
 }
 .navbar-inverse .navbar-user-menu .i {
   font-size: 150%;
@@ -6861,6 +6865,51 @@ button.close {
     display: none !important;
   }
 }
+.fab-buttons {
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  width: 65px;
+  z-index: 300;
+}
+@media (max-width: 480px) {
+  .fab-buttons {
+    bottom: 4px;
+    right: 16px;
+    width: 55px;
+  }
+}
+.fab-buttons .btn {
+  padding: 0;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 10px;
+  background-color: #4285f4;
+  color: white;
+  font-size: 35px;
+  line-height: 57px;
+  text-align: center;
+  border-radius: 100%;
+  -webkit-box-shadow: 0 7px 15px 0 rgba(0, 0, 0, 0.32);
+  box-shadow: 0 7px 15px 0 rgba(0, 0, 0, 0.32);
+  transition-duration: 150ms;
+}
+.fab-buttons .btn:hover {
+  background-color: #2f79f3;
+  transition-duration: 150ms;
+}
+.fab-buttons .btn:active {
+  background-color: #206ff2;
+  -webkit-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.45);
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.45);
+  transition-duration: 150ms;
+}
+.fab-buttons .btn.search .fa {
+  font-size: 30px;
+  position: absolute;
+  top: 15px;
+  left: 17px;
+}
 .video-player-bg {
   margin-top: -20px;
   background-color: #000000;
@@ -6898,7 +6947,7 @@ button.close {
 }
 @media (max-width: 768px) {
   .video-box .thumb {
-    max-width: 130px;
+    max-width: 170px;
     float: left;
     display: block;
   }
@@ -6916,7 +6965,7 @@ button.close {
 @media (max-width: 768px) {
   .video-box .info {
     margin-top: -3px;
-    width: calc(100% - 130px);
+    width: calc(100% - 170px);
     padding-left: 10px;
     font-size: 90%;
   }
@@ -6932,7 +6981,13 @@ button.close {
 }
 @media (max-width: 768px) {
   .video-box .info .name {
-    line-height: 15px;
+    line-height: 18px;
+    font-size: 18px;
+    margin-top: 3px;
+    white-space: normal;
+    font-weight: 400;
+    max-height: 55px;
+    overflow: hidden;
   }
 }
 .video-box .info .date {
@@ -6947,6 +7002,7 @@ button.close {
   .video-box .info .views {
     float: left;
     width: 100%;
+    font-weight: normal;
   }
 }
 .dropdown-search {
@@ -7154,45 +7210,6 @@ and open the template in the editor.
   background-color: #eeeeee;
   cursor: pointer;
   border-radius: 6px;
-}
-.songbook .fab-buttons {
-  position: fixed;
-  bottom: 20px;
-  right: 30px;
-  width: 65px;
-  z-index: 300;
-}
-@media (max-width: 480px) {
-  .songbook .fab-buttons {
-    bottom: 4px;
-    right: 16px;
-    width: 55px;
-  }
-}
-.songbook .fab-buttons .btn {
-  padding: 0;
-  width: 60px;
-  height: 60px;
-  margin-bottom: 10px;
-  background-color: #4285f4;
-  color: white;
-  font-size: 35px;
-  line-height: 57px;
-  text-align: center;
-  border-radius: 100%;
-  -webkit-box-shadow: 0 7px 15px 0 rgba(0, 0, 0, 0.32);
-  box-shadow: 0 7px 15px 0 rgba(0, 0, 0, 0.32);
-  transition-duration: 150ms;
-}
-.songbook .fab-buttons .btn:hover {
-  background-color: #2f79f3;
-  transition-duration: 150ms;
-}
-.songbook .fab-buttons .btn:active {
-  background-color: #206ff2;
-  -webkit-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.45);
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.45);
-  transition-duration: 150ms;
 }
 .songbook.all {
   display: block;
