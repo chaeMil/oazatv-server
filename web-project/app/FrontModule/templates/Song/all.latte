@@ -1,29 +1,35 @@
 {block content}
 
 <div class="container">
+    <div class="row">
     
-    <hr>
-    
-    <h1 class="text-center">{_frontend.basic.songbook}</h1>
-    
-    <hr>
-    
-    <div class="songbook all">
-        {foreach $songs as $song}
-            {var $initial = mb_substr($song['tag'], 0, 1, 'UTF-8')}
-            {if isset($lastInitial) && $lastInitial != $initial}
-                </div>
-            {/if}
+        <hr>
 
-            {if !isset($lastInitial) || $initial != $lastInitial}
-                <div class="col-sm-6 col-md-4 col-lg-3 songs-block">
-                <h2>{$initial}</h2>
-            {/if}
+        <h1 class="text-center">{_frontend.basic.songbook}</h1>
 
-            <h5>{$song['name']} &nbsp; <small>{$song['author']}</small></h5>
+        <hr>
 
-            {var $lastInitial = $initial}
-        {/foreach}
+        <div class="songbook all" data-masonry='{ "itemSelector": ".songs-block", "columnWidth": 320, "isFitWidth": true }'>
+            {foreach $songs as $song}
+                {var $initial = mb_substr($song['tag'], 0, 1, 'UTF-8')}
+                {if isset($lastInitial) && $lastInitial != $initial}
+                    </div>
+                {/if}
+
+                {if !isset($lastInitial) || $initial != $lastInitial}
+                    <div class="songs-block">
+                    <h2>{$initial}</h2>
+                {/if}
+
+                <h5 class="song">
+                    <a n:href="Song:view $song['tag']">{$song['name']}</a>
+                    <br>
+                    <small>{$song['author']}</small>
+                </h5>
+
+                {var $lastInitial = $initial}
+            {/foreach}
+        </div>
     </div>
     
     <hr>

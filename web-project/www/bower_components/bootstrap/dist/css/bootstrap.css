@@ -7193,8 +7193,21 @@ and open the template in the editor.
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.45);
   transition-duration: 150ms;
 }
-.songbook .all .songs-block {
-  float: left;
+.songbook.all {
+  display: block;
+  margin: 0 auto;
+}
+.songbook.all .songs-block {
+  width: 320px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+.songbook.all .songs-block .song {
+  max-width: 100%;
+  overflow: hidden;
+}
+.songbook.all .songs-block .song a {
+  color: #666666;
 }
 /*
 To change this license header, choose License Headers in Project Properties.

@@ -80,11 +80,24 @@ and open the template in the editor.
         
     }
     
-    .all {
+    &.all {
+        
+        display: block;
+        margin: 0 auto;
         
         .songs-block {
+            width: 320px;
+            padding: 12px;
+            margin-bottom: 10px;
             
-            float: left;
+            .song {
+                max-width: 100%;
+                overflow: hidden;
+                
+                a {
+                    color: @gray;
+                }
+            }
             
         }
         
