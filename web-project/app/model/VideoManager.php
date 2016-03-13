@@ -173,9 +173,10 @@ class VideoManager extends BaseModel {
     public function getVideosFromDBbyTags($tags, $limit = 10, $published = 1) {
         return self::$database->table(self::TABLE_NAME)
                 ->select('*')
-                ->where(array(self::COLUMN_TAGS.' IN(?)' => $tags,
+                ->where(array(self::COLUMN_TAGS." LIKE '%$tags%'",
                         self::COLUMN_PUBLISHED => $published))
-                ->limit($limit);
+                ->limit($limit)
+                ->fetchAll();
     }
 
     public function getOriginalFileInfo($id) {

@@ -24,6 +24,31 @@
         
     <hr>
     
+    {if isset($videos) && sizeof($videos) > 0}
+        <h2>{_frontend.songbook.videos_including_this_song}:</h2>
+
+        <br>
+
+        <div class="row videos">
+        {foreach $videos as $video}
+
+            <div class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                <a n:href="Video:watch $video['hash']">
+                    <div class="thumb"
+                         style="background-image: url({$basePath|noescape}/{$video['thumbs']['512']|noescape});">
+                    </div>
+                    <div class="info">
+                        <span class="name">{$video['name']}</span>
+                        <span class="date">{$video['date']}</span>
+                        <span class="views">{$video['views']} {_frontend.basic.views}</span>
+                    </div>
+                </a>
+            </div>
+
+        {/foreach}
+        </div>
+    {/if}
+    
 </div>
 
 {/block}
@@ -36,7 +61,26 @@
     
     $(document).ready(function() {
         adjustSongToHash();
+        
+        affixButtons();
     });
+    
+    $(window).on('scroll', function() {
+        affixButtons();
+    });
+    
+    function affixButtons() {
+        var song = $('.songbook.text');
+        var songBottom = song.offset().top + song.height() + 100;
+        var scroll = $(window).scrollTop() + $(window).height();
+        
+        if (scroll > songBottom) {
+            $('.fab-buttons').css('bottom', scroll - songBottom);
+        } else {
+            $('.fab-buttons').css('bottom', 20);
+        }
+        
+    }
     
     function transposeChord(chord, amount) {
         var scale = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "B", "H"];

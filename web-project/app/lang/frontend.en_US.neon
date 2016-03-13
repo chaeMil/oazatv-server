@@ -17,3 +17,5 @@ homepage:
     newest_videos: "Newest videos"
     newest_albums: "Newest albums"
     popular_videos: "Popular videos"
+songbook:
+    videos_including_this_song: "Videos including this song"

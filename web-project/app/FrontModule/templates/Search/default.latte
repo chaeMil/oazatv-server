@@ -16,21 +16,20 @@
         </div>
 
         <div class="row videos-box">
-            <a n:foreach="$search['videos'] as $item"
-                n:href="Video:watch $item['hash']">
-                <div class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+            <div n:foreach="$search['videos'] as $item" class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                <a n:href="Video:watch $item['hash']">
                     <div class="thumb"
                           style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});">
                     </div>
-                    <div class="info">
-                        <span class="name">{$item['name']}</span>
-                        <span class="date">{$item['date']}</span>
-                        {if ($item['type'] == 'video')}
-                            <span class="views">{$item['views']} {_frontend.basic.views}</span>
-                        {/if}
-                    </div>
+                </a>
+                <div class="info">
+                    <span class="name">{$item['name']}</span>
+                    <span class="date">{$item['date']}</span>
+                    {if ($item['type'] == 'video')}
+                        <span class="views">{$item['views']} {_frontend.basic.views}</span>
+                    {/if}
                 </div>
-            </a>
+            </div>
         </div>
     {/if}
 
@@ -49,21 +48,20 @@
         </div>
 
         <div class="row albums-box">
-            <a n:foreach="$search['albums'] as $item"
-                n:href="Album:view $item['hash']">
-                <div class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+            <div n:foreach="$search['albums'] as $item" class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                <a n:href="Album:view $item['hash']">
                     <div class="thumb"
                           style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});">
                     </div>
-                    <div class="info">
-                        <span class="name">{$item['name']}</span>
-                        <span class="date">{$item['date']}</span>
-                        {if ($item['type'] == 'video')}
-                            <span class="views">{$item['views']} {_frontend.basic.views}</span>
-                        {/if}
-                    </div>
+                </a>
+                <div class="info">
+                    <span class="name">{$item['name']}</span>
+                    <span class="date">{$item['date']}</span>
+                    {if ($item['type'] == 'video')}
+                        <span class="views">{$item['views']} {_frontend.basic.views}</span>
+                    {/if}
                 </div>
-            </a>
+            </div>
         </div>
     {/if}
 

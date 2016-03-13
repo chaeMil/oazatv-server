@@ -10,7 +10,8 @@ namespace App\FrontModule;
 
 use Nette,
 Nette\Database\Context,
-Model\SongsManager;
+Model\SongsManager,
+Model\VideoManager;
 
 /**
  * Description of VideoPreseter
@@ -20,11 +21,14 @@ Model\SongsManager;
 class SongPresenter extends BasePresenter {
 
     private $songsManager;
+    private $videoManager;
 
     public function __construct(Nette\DI\Container $container,
-            Context $database, SongsManager $songsManager) {
+            Context $database, SongsManager $songsManager, 
+            VideoManager $videoManager) {
         parent::__construct($container, $database);
-        $this->songsManager =  $songsManager;
+        $this->songsManager = $songsManager;
+        $this->videoManager = $videoManager;
     }
 
     public function renderView($id) {
@@ -37,6 +41,14 @@ class SongPresenter extends BasePresenter {
         $song['body'] = \App\StringUtils::removeStyleTag($song['body']);
         
         $this->template->song = $song;
+        $videos = $this->videoManager->getVideosFromDBbyTags($song['tag']);
+        $videosArray = array();
+        
+        foreach($videos as $video) {
+            $videosArray[] = $this->videoManager->createLocalizedVideoObject($this->lang, $video);
+        }
+        
+        $this->template->videos = $videosArray;
     }
     
     public function renderAll() {
