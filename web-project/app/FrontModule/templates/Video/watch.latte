@@ -37,6 +37,27 @@
                     <h2>{$video['name']}</h2>
                     <h4>{$video['date']} | {$video['views']} {_frontend.basic.views}</h4>
                     <p>{$video['desc']}</p>
+                    {if isset($preachers)}
+                        <hr>
+                        <div class="preachers">
+                            {foreach $preachers as $preacher}
+                                {if $preacher}
+                                    <div class="preacher">
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                                <img class="img-responsive" 
+                                                     src="{$basePath}/db/preachers/{$preacher['id']}_256.jpg" />
+                                            </div>
+                                            <div class="col-xs-9">
+                                                <p class="lead">{$preacher['name']}</p>
+                                                <p>{$preacher['about']}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {/if}
+                            {/foreach}
+                        </div>
+                    {/if}
                 </div>
                 <div class="col-md-6">
                     <br>

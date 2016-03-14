@@ -86,6 +86,13 @@ class PreachersManager extends BaseModel {
             ->fetchAll();
 
     }
+    
+    public function getPreacherFromDBByTag($tag) {
+        return self::$database->table(self::TABLE_NAME)
+                ->select('*')
+                ->where(self::COLUMN_TAGS." LIKE ?", "%".trim($tag)."%")
+                ->fetch();
+    }
 
     public function deletePreacher($id) {
         $preacher = $this->getPreacherFromDB($id);
@@ -94,6 +101,29 @@ class PreachersManager extends BaseModel {
         }
         $this->deletePhotoThumbnails($id);
         $preacher->delete();
+    }
+    
+    public function createLocalizedObject($lang, $input) {        
+        $preacher = array();
+        
+        switch($lang) {
+            case 'cs':
+                $preacher['about'] = $input[self::COLUMN_ABOUT_CS];
+                break;
+            case 'en':
+                $preacher['about'] = $input[self::COLUMN_ABOUT_EN];
+                break;
+            default:
+                $preacher['about'] = $input[self::COLUMN_ABOUT_EN];
+                break;
+        }
+        
+        $preacher[self::COLUMN_ID] = $input[self::COLUMN_ID];
+        $preacher[self::COLUMN_NAME] = $input[self::COLUMN_NAME];
+        $preacher[self::COLUMN_TAGS] = $input[self::COLUMN_TAGS];
+        
+        return $preacher;
+        
     }
     
     public function getPhotoThumbnails($id) {
