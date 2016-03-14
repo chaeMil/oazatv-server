@@ -98,13 +98,14 @@ class PreachersPresenter extends BaseSecuredPresenter {
        
         $status = $this->preachersManager->savePreacherToDB($vals);
         
+        if(!$status) {
+            $filename = $vals['id'];
+        } else {
+            $filename = $status;
+        }
+        
         if ($file->isOk()) {
             $extension = "jpg";
-            if(!$status) {
-                $filename = $vals['id'];
-            } else {
-                $filename = $status;
-            }
             $newName = PREACHERS_FOLDER.$filename.".".$extension;
             if(file_exists($newName)) {
                 unlink($newName);
