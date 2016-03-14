@@ -50,7 +50,7 @@
                                             </div>
                                             <div class="col-xs-9">
                                                 <p class="lead">{$preacher['name']}</p>
-                                                <p>{$preacher['about']}</p>
+                                                <p>{$preacher['about']|noescape}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -59,41 +59,47 @@
                         </div>
                     {/if}
                 </div>
+                <hr class="visible-sm visible-xs">
                 <div class="col-md-6">
-                    <br>
-                    <p id="playerTags" class="tags">
-                    {foreach $tags as $tag}
-                        {if $tag['type'] == 'song'}
-                            <a n:href="Song:view $tag['song']">{$tag['tag']}</a>
-                        {else}
-                            <a href="{$basePath}/search/?q=%23{substr($tag['tag'], 1)}" class="tag" rel="{$tag['usage']}">{$tag['tag']}</a>
-                        {/if}
-                    {/foreach}
-                    </p>
+                    {if count($similarVideos) > 0}
+                        <h3>{_frontend.basic.similar_videos}</h3>
+                        <div class="row">
+                            {foreach $similarVideos as $similarVideo}
+                                {breakIf $iterator->getCounter() > 2}
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <a n:href="Video:watch $similarVideo['hash']">
+                                        <div class="video-box">
+                                            <div class="thumb"
+                                                 style="background-image: url({$basePath|noescape}/{$similarVideo['thumbs']['512']|noescape});">
+                                            </div>
+                                            <div class="info">
+                                                <span class="name">{$similarVideo['name']}</span>
+                                                <span class="date">{$similarVideo['date']}</span>
+                                                <span class="views">{$similarVideo['views']} {_frontend.basic.views}</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            {/foreach}
+                        </div>
+                    {/if}
                 </div>
             </div>
             <hr>
-            {if count($similarVideos) > 0}
-                <h3>{_frontend.basic.similar_videos}</h3>
-                <div class="row">
-                    {foreach $similarVideos as $similarVideo}
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <a n:href="Video:watch $similarVideo['hash']">
-                                <div class="video-box">
-                                    <div class="thumb"
-                                         style="background-image: url({$basePath|noescape}/{$similarVideo['thumbs']['512']|noescape});">
-                                    </div>
-                                    <div class="info">
-                                        <span class="name">{$similarVideo['name']}</span>
-                                        <span class="date">{$similarVideo['date']}</span>
-                                        <span class="views">{$similarVideo['views']} {_frontend.basic.views}</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    {/foreach}
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <p id="playerTags" class="tags text-center">
+                        {foreach $tags as $tag}
+                            {if $tag['type'] == 'song'}
+                                <a n:href="Song:view $tag['song']">{$tag['tag']}</a>
+                            {else}
+                                <a href="{$basePath}/search/?q=%23{substr($tag['tag'], 1)}" class="tag" rel="{$tag['usage']}">{$tag['tag']}</a>
+                            {/if}
+                        {/foreach}
+                    </p>
                 </div>
-            {/if}
+            </div>
+            <br>
         </div>
     </div>
 

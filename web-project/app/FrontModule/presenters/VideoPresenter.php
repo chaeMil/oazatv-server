@@ -73,7 +73,7 @@ class VideoPresenter extends BasePresenter {
         $this->template->video = $this->videoManager
                 ->createLocalizedVideoObject($this->lang, $video);
         
-        $this->template->similarVideos = $this->videoManager->findSimilarVideos($video, $this->lang, 4);
+        $this->template->similarVideos = $this->videoManager->findSimilarVideos($video, $this->lang, 8);
     }
 
 }
