@@ -44,11 +44,10 @@ services:
     authenticator:  Model\UserManager
 
 translation:
-    default: cs
+    default: en
     whitelist: [cs, en]
-    fallback: [cs_CZ, cs]
-    resolvers:
-        request: on
+    fallback: [en_US, en]
+    debuger: on
 
 constants:
     VERSION: "0.9.1 (2016-02-25)"

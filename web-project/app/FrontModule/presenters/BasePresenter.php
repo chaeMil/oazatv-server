@@ -16,6 +16,12 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
     public $lang;
     public $container;
     
+    /** @persistent */
+    public $locale;
+
+    /** @var \Kdyby\Translation\Translator @inject */
+    public $translator;
+    
     public function __construct(Nette\DI\Container $container, 
             Nette\Database\Context $database) {
         parent::__construct();
@@ -27,7 +33,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
     public function beforeRender() {
         parent::beforeRender();
         $routerLang = $this->getParameter('locale');
-        $this->setupLanguage($this->container, $routerLang);
+        $this->setupLanguage($this->container, $this->translator->getLocale());
     }
     
     public function setupLanguage($container, $lang = null) {

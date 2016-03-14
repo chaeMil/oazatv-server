@@ -35,7 +35,7 @@ class RouterFactory
                 ));
 
                 //frontend links
-                $router[] = new Route('[<locale=cs cs|en>/]<presenter>/<action>/<id>', array(
+                $router[] = new Route('<presenter>/<action>/<id>/', array(
                     'module' => 'Front',
                     'presenter' => 'Main',
                     'action' => 'default',
