@@ -1,0 +1,67 @@
+{block content}
+
+<div id="wrapper">
+    
+    {include ../navbar.latte}
+    
+    <div class="container">
+        <div class="row">
+            <a href="javascript:history.go(-1);"> 
+                <h2>
+                    <span class="glyphicon glyphicon-chevron-left pull-left">
+                    </span>Upravit kazatele
+                </h2>
+            </a>  
+            
+            {control preacherForm}
+            
+            <div class="col-xs-offset-3" style="padding-left: 8px;">
+                <a class="btn btn-danger btn-lg btn-block confirm"
+                   data-confirm="Smazat kazatele?"
+                   n:href="Songs:deletePreacher $preacher->id">Smazat</a>
+            </div>
+            
+                        
+        </div>
+    </div>
+    
+</div>
+{/block}
+
+{block pageScripts}
+
+<script>
+    var editor = CKEDITOR.replace( 'aboutCsEditor', {
+        // Define the toolbar groups as it is a more accessible solution.
+        toolbarGroups: [
+            {"name":"clipbboard", "groups":["clipboard", "undo"]},
+            {"name":"basicstyles","groups":["basicstyles"]},
+            {"name":"links","groups":["links"]},
+            {"name":"paragraph","groups":["list","blocks"]},
+            {"name":"document","groups":["mode"]},
+            {"name":"insert","groups":["insert"]},
+            {"name":"styles","groups":["styles"]},
+            {"name":"about","groups":["about"]}
+        ],
+        // Remove the redundant buttons from toolbar groups defined above.
+        removeButtons: 'Underline,Subscript,Superscript,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Source,Strike,NumberedList,BulletedList,Indent,Outdent,Blockquote,Styles,Format,About,RemoveFormat'
+    });
+    
+    var editor = CKEDITOR.replace( 'aboutEnEditor', {
+        // Define the toolbar groups as it is a more accessible solution.
+        toolbarGroups: [
+            {"name":"clipbboard", "groups":["clipboard", "undo"]},
+            {"name":"basicstyles","groups":["basicstyles"]},
+            {"name":"links","groups":["links"]},
+            {"name":"paragraph","groups":["list","blocks"]},
+            {"name":"document","groups":["mode"]},
+            {"name":"insert","groups":["insert"]},
+            {"name":"styles","groups":["styles"]},
+            {"name":"about","groups":["about"]}
+        ],
+        // Remove the redundant buttons from toolbar groups defined above.
+        removeButtons: 'Underline,Subscript,Superscript,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Source,Strike,NumberedList,BulletedList,Indent,Outdent,Blockquote,Styles,Format,About,RemoveFormat'
+    });
+</script>
+
+{/block}
