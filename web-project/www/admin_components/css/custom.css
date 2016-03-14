@@ -20,3 +20,8 @@ and open the template in the editor.
 .navbar-top-links .dropdown-tasks{
     margin-left: -160px;
 }
+
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}

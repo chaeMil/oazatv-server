@@ -5,6 +5,7 @@
     {include ../navbar.latte}
     
     <div class="container">
+        
         <div class="row">
             <a href="javascript:history.go(-1);"> 
                 <h2>
@@ -13,12 +14,20 @@
                 </h2>
             </a>  
             
+            <div class="row">
+                <div class="col-xs-5 col-centered">
+                    <img class="img-responsive" src="{$basePath}/db/preachers/{$preacher['id']}.jpg" />
+                </div>
+            </div>
+
+            <br>
+            
             {control preacherForm}
             
             <div class="col-xs-offset-3" style="padding-left: 8px;">
                 <a class="btn btn-danger btn-lg btn-block confirm"
                    data-confirm="Smazat kazatele?"
-                   n:href="Songs:deletePreacher $preacher->id">Smazat</a>
+                   n:href="Preachers:deletePreacher $preacher->id">Smazat</a>
             </div>
             
                         

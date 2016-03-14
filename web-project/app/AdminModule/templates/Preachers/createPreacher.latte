@@ -9,7 +9,7 @@
             <a href="javascript:history.go(-1);"> 
                 <h2>
                     <span class="glyphicon glyphicon-chevron-left pull-left">
-                    </span>Upravit kazatele
+                    </span>Přidat kazatele
                 </h2>
             </a>  
             
@@ -19,4 +19,43 @@
     </div>
     
 </div>
+{/block}
+
+
+{block pageScripts}
+
+<script>
+    var editor = CKEDITOR.replace( 'aboutCsEditor', {
+        // Define the toolbar groups as it is a more accessible solution.
+        toolbarGroups: [
+            {"name":"clipbboard", "groups":["clipboard", "undo"]},
+            {"name":"basicstyles","groups":["basicstyles"]},
+            {"name":"links","groups":["links"]},
+            {"name":"paragraph","groups":["list","blocks"]},
+            {"name":"document","groups":["mode"]},
+            {"name":"insert","groups":["insert"]},
+            {"name":"styles","groups":["styles"]},
+            {"name":"about","groups":["about"]}
+        ],
+        // Remove the redundant buttons from toolbar groups defined above.
+        removeButtons: 'Underline,Subscript,Superscript,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Source,Strike,NumberedList,BulletedList,Indent,Outdent,Blockquote,Styles,Format,About,RemoveFormat'
+    });
+    
+    var editor = CKEDITOR.replace( 'aboutEnEditor', {
+        // Define the toolbar groups as it is a more accessible solution.
+        toolbarGroups: [
+            {"name":"clipbboard", "groups":["clipboard", "undo"]},
+            {"name":"basicstyles","groups":["basicstyles"]},
+            {"name":"links","groups":["links"]},
+            {"name":"paragraph","groups":["list","blocks"]},
+            {"name":"document","groups":["mode"]},
+            {"name":"insert","groups":["insert"]},
+            {"name":"styles","groups":["styles"]},
+            {"name":"about","groups":["about"]}
+        ],
+        // Remove the redundant buttons from toolbar groups defined above.
+        removeButtons: 'Underline,Subscript,Superscript,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Source,Strike,NumberedList,BulletedList,Indent,Outdent,Blockquote,Styles,Format,About,RemoveFormat'
+    });
+</script>
+
 {/block}

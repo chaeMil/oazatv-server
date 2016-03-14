@@ -10,7 +10,8 @@ namespace App\AdminModule;
 
 use Nette,
  Model\PreachersManager,
- App\EventLogger;
+ App\EventLogger,
+ App\StringUtils;
 
 /**
  * Description of VideoPresenter
@@ -92,7 +93,26 @@ class PreachersPresenter extends BaseSecuredPresenter {
     public function preacherSucceeded($form) {
         $vals = $form->getValues();
         
+        $file = $vals['file'];
+        unset($vals['file']);
+       
         $status = $this->preachersManager->savePreacherToDB($vals);
+        
+        if ($file->isOk()) {
+            $extension = "jpg";
+            if(!$status) {
+                $filename = $vals['id'];
+            } else {
+                $filename = $status;
+            }
+            $newName = PREACHERS_FOLDER.$filename.".".$extension;
+            if(file_exists($newName)) {
+                unlink($newName);
+            }
+            $file->move($newName);
+            chmod($newName, 0777);
+            $this->preachersManager->generatePhotoThumbnails($filename);
+        }
         
         if ($status) {
             EventLogger::log('user '.$this->getUser()->getIdentity()
@@ -103,6 +123,8 @@ class PreachersPresenter extends BaseSecuredPresenter {
         } else {
             $this->flashMessage("Nic nebylo změněno", "info");
         }
+        
+        $this->redirect("Preachers:detail", $filename);
     }
     
     public function actionDeletePreacher($id) {
