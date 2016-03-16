@@ -6990,8 +6990,14 @@ button.close {
     overflow: hidden;
   }
 }
+.video-box .info .name.invert {
+  color: #eeeeee;
+}
 .video-box .info .date {
   color: #666666;
+}
+.video-box .info .date.invert {
+  color: #bbbbbb;
 }
 .video-box .info .views {
   color: #bbbbbb;
@@ -7004,6 +7010,31 @@ button.close {
     width: 100%;
     font-weight: normal;
   }
+}
+.video-box .info .views.invert {
+  color: #bbbbbb;
+}
+.video-box.video-box-horizontal {
+  margin-bottom: 15px;
+}
+.video-box.video-box-horizontal .thumb {
+  max-width: 150px;
+  float: left;
+  display: block;
+}
+.video-box.video-box-horizontal .info {
+  margin-top: -3px;
+  width: calc(100% - 150px);
+  padding-left: 10px;
+  font-size: 90%;
+}
+.video-box.video-box-horizontal .views {
+  float: left;
+  width: 100%;
+  font-weight: normal;
+}
+.similar-videos {
+  overflow: scroll;
 }
 .dropdown-search {
   width: 400px;
@@ -7092,10 +7123,18 @@ button.close {
   -animation: spin 0.7s infinite linear;
   -webkit-animation: spin2 0.7s infinite linear;
 }
+.video-player .column {
+  padding-left: 0;
+  padding-right: 0;
+  margin-top: 24px;
+}
+.video-player #similarVideosHeader {
+  color: #eeeeee;
+}
 .video-player #video {
   width: 100% !important;
   position: relative;
-  max-height: 60vh;
+  max-height: 75vh;
   height: auto !important;
 }
 .video-player #video.vjs-fullscreen {
@@ -7152,7 +7191,7 @@ button.close {
   background: #699ef6;
 }
 ::-webkit-scrollbar-thumb:window-inactive {
-  background: rgba(255, 0, 0, 0.4);
+  background: #acc9fa;
 }
 /*
 To change this license header, choose License Headers in Project Properties.

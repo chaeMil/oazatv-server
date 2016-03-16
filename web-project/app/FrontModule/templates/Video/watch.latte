@@ -2,8 +2,8 @@
 
 <div class="container-fluid video-player-bg">
     <div class="container">
-        <div class="row video-player">
-            <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2 col-xl-10 col-xl-offset-1">
+        <div class="video-player">
+            <div class="column {if count($similarVideos) <= 0} col-md-8 col-md-offset-2 col-xl-10 col-xl-offset-1 {else} col-md-8 col-xl-9 {/if}">
 
                 <video id="video" class="video-js vjs-default-skin"
                        controls preload="auto"
@@ -25,13 +25,37 @@
                 </video>
 
             </div>
+                    
+            <div class="col-md-4 col-xl-3">
+                {if count($similarVideos) > 0}
+                    <h3 id="similarVideosHeader">{_frontend.basic.similar_videos}</h3>
+                    <div class="row similar-videos">
+                        {foreach $similarVideos as $similarVideo}
+                            <div class="col-xs-12">
+                                <a n:href="Video:watch $similarVideo['hash']">
+                                    <div class="video-box video-box-horizontal">
+                                        <div class="thumb"
+                                             style="background-image: url({$basePath|noescape}/{$similarVideo['thumbs']['512']|noescape});">
+                                        </div>
+                                        <div class="info">
+                                            <span class="name invert">{$similarVideo['name']}</span>
+                                            <span class="date invert">{$similarVideo['date']}</span>
+                                            <span class="views invert">{$similarVideo['views']} {_frontend.basic.views}</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        {/foreach}
+                    </div>
+                {/if}
+            </div>
         </div>
     </div>
 </div>
 
 <div class="container">
     <div class="row">
-        <div class="col-md-12 col-lg-12 col-xl-8 col-xl-offset-2">
+        <div class="col-md-12 col-lg-12 col-xl-8">
             <div class="row">
                 <div class="col-md-6">
                     <h2>{$video['name']}</h2>
@@ -60,30 +84,6 @@
                     {/if}
                 </div>
                 <hr class="visible-sm visible-xs">
-                <div class="col-md-6">
-                    {if count($similarVideos) > 0}
-                        <h3>{_frontend.basic.similar_videos}</h3>
-                        <div class="row">
-                            {foreach $similarVideos as $similarVideo}
-                                {breakIf $iterator->getCounter() > 2}
-                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <a n:href="Video:watch $similarVideo['hash']">
-                                        <div class="video-box">
-                                            <div class="thumb"
-                                                 style="background-image: url({$basePath|noescape}/{$similarVideo['thumbs']['512']|noescape});">
-                                            </div>
-                                            <div class="info">
-                                                <span class="name">{$similarVideo['name']}</span>
-                                                <span class="date">{$similarVideo['date']}</span>
-                                                <span class="views">{$similarVideo['views']} {_frontend.basic.views}</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            {/foreach}
-                        </div>
-                    {/if}
-                </div>
             </div>
             <hr>
             <div class="row">
@@ -156,6 +156,14 @@ $('document').ready(function() {
     });
 });
 
+$(document).ready(function() {
+   adjustSimilarVideosPane();
+   
+   $(window).resize(function() {
+       adjustSimilarVideosPane();
+   });
+});
+
 function saveVideoTime(time) {
     setCookie({$video['hash']} + '_time', time);
 }
@@ -170,6 +178,10 @@ function savePlayerVolume(volume) {
 
 function getSavedPlayerVolume() {
     return getCookie('player_volume');
+}
+
+function adjustSimilarVideosPane() {
+    $('.similar-videos').height($('#video').height() - $('#similarVideosHeader').outerHeight());
 }
 
 </script>
