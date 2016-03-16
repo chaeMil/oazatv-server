@@ -6921,6 +6921,9 @@ button.close {
   padding-left: 0px !important;
   padding-right: 0px !important;
 }
+.preachers {
+  padding-top: 30px;
+}
 .video-box {
   transition-duration: 500ms;
   -webkit-ransition-duration: 500ms;
