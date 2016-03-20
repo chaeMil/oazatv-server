@@ -103,6 +103,10 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
         $this->flashMessage("Změny úspěšně uloženy", "success");
         $this->redirect("RowsList");
     }
+    
+    public function actionSaveBlockToDb($data) {
+        $this->frontPageManager->saveBlockToDB($data);
+    }
   
 }
 

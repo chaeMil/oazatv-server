@@ -142,7 +142,13 @@ class FrontPageManager extends BaseModel {
     public function getBlocksFromRow($rowId) {
         $row = $this->getRowFromDB($rowId);
         $blocksIdsArray = explode(",", str_replace(" ", "", trim($row)));
-
+           
+        $blocks = array();
+        foreach($blocksIdsArray as $blockId) {
+            $blocks[] = $this->getBlockFromDB($blockId);
+        }
+        
+        return $blocks;
     }
     
     public function isBlockInRow($blockId, $rowId) {

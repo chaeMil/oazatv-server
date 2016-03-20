@@ -52,7 +52,7 @@
                                     <a class="btn btn-default" n:href="toggleRowPublished $row['id']">
                                     <span class="glyphicon {if $row['published']}glyphicon-eye-open{else}glyphicon-eye-close{/if}"></span>
                                 </a>
-                                <a class="btn btn-default"
+                                <a class="btn btn-default create-block"
                                    data-rowId="{$row['id']}">
                                     <span class="glyphicon glyphicon-plus"></span>
                                 </a>
@@ -69,7 +69,13 @@
                         <span class="row">
                             <div class="col-xs-12">
                                 
-                                {$blocks = $frontPageManager->getBlocksFromRow($row['id'])}
+                                {var $blocks = $frontPageManager->getBlocksFromRow($row['id'])}
+                                
+                                {foreach $blocks as $block}
+                                
+                                    {dump($block)}
+                                    
+                                {/foreach}
                                 
                             </div>
                         </span>
@@ -120,9 +126,13 @@
                         label: "Vytvořit",
                         className: "btn-success",
                         callback: function () {
-                            var name = $('#name').val();
-                            var answer = $("input[name='awesomeness']:checked").val()
-                            Example.show("Hello " + name + ". You've chosen <b>" + answer + "</b>");
+                            $.post( {$presenter->link('saveBlockToDb')} )
+                                    .done(function() {
+                                        alert( "done" );
+                                    })
+                                    .fail(function() {
+                                        alert( "error" );
+                                    });
                         }
                     }
                 }
