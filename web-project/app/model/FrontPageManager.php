@@ -44,6 +44,11 @@ class FrontPageManager extends BaseModel {
                 ->where(self::COLUMN_ID, $id)->count();
     }
     
+    private function getRowMaxSort() {
+        return self::$database->table(self::TABLE_NAME_ROWS)
+                ->max(self::COLUMN_SORT);
+    }
+    
     public function saveRowToDB($values) {
 
         if(isset($values['id'])) {
@@ -57,6 +62,10 @@ class FrontPageManager extends BaseModel {
             $sql = $row->update($values);
             return $sql;
         } else {
+            $maxSort = $this->getRowMaxSort();
+            if (isset($maxSort)) {
+                $values['sort'] = intval($maxSort) + 1;
+            }
             $sql = self::$database->table(self::TABLE_NAME_ROWS)->insert($values);
         }
 
@@ -75,6 +84,7 @@ class FrontPageManager extends BaseModel {
     public function getRowsFromDB() {
         return self::$database->table(self::TABLE_NAME_ROWS)
             ->select('*')
+            ->order(self::COLUMN_SORT." ASC")
             ->fetchAll();
 
     }
@@ -139,6 +149,43 @@ class FrontPageManager extends BaseModel {
         $row = $this->getRowFromDB($rowId);
         $blockIdsArray = $blocksIdsArray = explode(",", str_replace(" ", "", trim($row)));
         return in_array($blockId, $blockIdsArray);
+    }
+    
+    private function getNextSortRow($sort) {
+        return self::$database->table(self::TABLE_NAME_ROWS)
+                ->select('*')
+                ->order(self::COLUMN_SORT." ASC")
+                ->where(self::COLUMN_SORT." > ?", $sort)
+                ->limit(1, 0)
+                ->fetch();
+    }
+    
+    private function getPrevSortRow($sort) {
+        return self::$database->table(self::TABLE_NAME_ROWS)
+                ->select('*')
+                ->order(self::COLUMN_SORT." DESC")
+                ->where(self::COLUMN_SORT." < ?", $sort)
+                ->limit(1, 0)
+                ->fetch();
+    }
+    
+    public function moveRow($id, $amount) {
+        
+        $originalRow = $this->getRowFromDB($id);
+        
+        if ($amount < 0) {
+            $otherRow = $this->getPrevSortRow($originalRow['sort']);
+        } else {
+            $otherRow = $this->getNextSortRow($originalRow['sort']);
+        }
+        
+        if ($otherRow) {
+            $originalRowSort = $originalRow['sort'];
+            $otherRowSort = $otherRow['sort'];
+
+            $originalRow->update(array(self::COLUMN_SORT => $otherRowSort));
+            $otherRow->update(array(self::COLUMN_SORT => $originalRowSort));
+        }
     }
 
 }

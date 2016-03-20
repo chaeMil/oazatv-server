@@ -36,19 +36,26 @@
             {foreach $rows as $row}
             
                 
-                <div class="panel panel-default" data-id="{$row['id']}">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">{$row['name']}</h3>
 
                         <span class="pull-right">
                             <div class="btn-group">
-                                <a class="btn btn-default">
+                                <a class="btn btn-default" n:href="moveRowUp $row['id']">
+                                    <span class="glyphicon glyphicon-chevron-up"></span>
+                                </a>
+                                    <a class="btn btn-default" n:href="moveRowDown $row['id']">
+                                    <span class="glyphicon glyphicon-chevron-down"></span>
+                                </a>
+                                <a class="btn btn-default"
+                                   data-rowId="{$row['id']}">
                                     <span class="glyphicon glyphicon-plus"></span>
                                 </a>
                                 <a class="btn btn-default confirm" 
                                    data-confirm="Odstranit pozici?"
-                                   n:href="FrontPageManager:deleteRow $row['id']">
-                                    <span class="glyphicon glyphicon-remove"></span>
+                                   n:href="deleteRow $row['id']">
+                                    <span class="glyphicon glyphicon-trash"></span>
                                 </a>
                             </div>
                         </span>
@@ -74,5 +81,51 @@
     
 </div>
 
+
+{/block}
+
+{block pageScripts}
+
+<script type="text/javascript">
+    $(document).on("click", '.create-block', function(e) { 
+        e.preventDefault();
+        var rowId = $(this).attr("data-rowId");
+        var button = $(this);
+        var dialog = bootbox.dialog({
+                title: "Vytvořit nový blok.",
+                message: '<div class="row">  ' +
+                    '<div class="col-md-12"> ' +
+                    '<form class="form-horizontal"> ' +
+                    '<div class="form-group"> ' +
+                    '<label class="col-md-4 control-label" for="type">Vyber typ bloku:</label> ' +
+                    '<div class="col-md-4">' + 
+                    
+                    //H1
+                    '<div class="radio"> <label for="type-0"> ' +
+                    '<input type="radio" name="type" id="type-0" value="h1" checked="checked"> H1 (titulek, plná šířka) </label> ' +
+                    
+                    //H2
+                    '</div><div class="radio"> <label for="type-1"> ' +
+                    '<input type="radio" name="type" id="type-1" value="h2"> H2 (titulek, plná šířka) </label> ' +
+                    
+                    '</div> ' +
+                    '</div> </div>' +
+                    '</form> </div>  </div>',
+                buttons: {
+                    success: {
+                        label: "Vytvořit",
+                        className: "btn-success",
+                        callback: function () {
+                            var name = $('#name').val();
+                            var answer = $("input[name='awesomeness']:checked").val()
+                            Example.show("Hello " + name + ". You've chosen <b>" + answer + "</b>");
+                        }
+                    }
+                }
+            }
+        );
+        return dialog;
+    });
+</script>
 
 {/block}

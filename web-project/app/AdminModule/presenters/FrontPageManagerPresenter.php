@@ -85,6 +85,18 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
         $this->flashMessage("Pozice byla smazána!", "danger");
         $this->redirect("FrontPageManager:RowsList");
     }
+    
+    public function actionMoveRowUp($id) {
+        $this->frontPageManager->moveRow($id, -1);
+        $this->flashMessage("Změny úspěšně uloženy", "success");
+        $this->redirect("RowsList");
+    }
+    
+    public function actionMoveRowDown($id) {
+        $this->frontPageManager->moveRow($id, 1);
+        $this->flashMessage("Změny úspěšně uloženy", "success");
+        $this->redirect("RowsList");
+    }
   
 }
 
