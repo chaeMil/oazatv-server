@@ -31,12 +31,12 @@
         
         <div class="row">
             
-            <div class="col-xs-12">
+            <div class="col-xs-12 front-page-manager-rows">
             
             {foreach $rows as $row}
             
                 
-                <div class="panel panel-default">
+                <div class="panel panel-default {if !$row['published']}unpublished{/if}">
                     <div class="panel-heading">
                         <h3 class="panel-title">{$row['name']}</h3>
 
@@ -47,6 +47,10 @@
                                 </a>
                                     <a class="btn btn-default" n:href="moveRowDown $row['id']">
                                     <span class="glyphicon glyphicon-chevron-down"></span>
+                                </a>
+                                </a>
+                                    <a class="btn btn-default" n:href="toggleRowPublished $row['id']">
+                                    <span class="glyphicon {if $row['published']}glyphicon-eye-open{else}glyphicon-eye-close{/if}"></span>
                                 </a>
                                 <a class="btn btn-default"
                                    data-rowId="{$row['id']}">

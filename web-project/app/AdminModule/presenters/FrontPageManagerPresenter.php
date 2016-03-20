@@ -97,6 +97,12 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
         $this->flashMessage("Změny úspěšně uloženy", "success");
         $this->redirect("RowsList");
     }
+    
+    public function actionToggleRowPublished($id) {
+        $this->frontPageManager->toggleRowPublished($id);
+        $this->flashMessage("Změny úspěšně uloženy", "success");
+        $this->redirect("RowsList");
+    }
   
 }
 

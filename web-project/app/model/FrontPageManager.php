@@ -188,4 +188,13 @@ class FrontPageManager extends BaseModel {
         }
     }
 
+    public function toggleRowPublished($id) {
+        $row = $this->getRowFromDB($id);
+        if ($row[self::COLUMN_PUBLISHED] == 1) {
+            $published = 0;
+        } else {
+            $published = 1;
+        }
+        $row->update(array(self::COLUMN_PUBLISHED => $published));
+    }
 }
