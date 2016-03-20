@@ -37,6 +37,7 @@ services:
     - Model\SongsManager
     - Model\ConversionProfilesManager
     - Model\PreachersManager
+    - Model\FrontPageManager
     - App\RouterFactory
     router: @App\RouterFactory::createRouter
     nette.latteFactory:

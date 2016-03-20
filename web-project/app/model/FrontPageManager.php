@@ -23,10 +23,13 @@ class FrontPageManager extends BaseModel {
 
     const
             TABLE_NAME_ROWS = 'frontpage_rows',
+            TABLE_NAME_BLOCKS = 'frontpage_blocks',
             COLUMN_ID = 'id',
             COLUMN_PUBLISHED = 'published',
             COLUMN_NAME = 'name',
-            COLUMN_BLOCKS = 'blocks';
+            COLUMN_BLOCKS = 'blocks',
+            COLUMN_TYPE = 'type',
+            COLUMN_JSON_DATA = 'json_data';
 
     /** @var Nette\Database\Context */
     public static $database;
@@ -50,7 +53,7 @@ class FrontPageManager extends BaseModel {
 
         if ($id != 0 && $this->checkIfRowExists($id) > 0) {
             $row = self::$database->table(self::TABLE_NAME_ROWS)->get($id);
-            $sql = $$row->update($values);
+            $sql = $row->update($values);
             return $sql;
         } else {
             $sql = self::$database->table(self::TABLE_NAME_ROWS)->insert($values);
@@ -76,10 +79,58 @@ class FrontPageManager extends BaseModel {
     }
     
     public function deleteRow($id) {
-        $video = $this->getRowFromDB($id);
-        $video->delete();
+        $row = $this->getRowFromDB($id);
+        $row->delete();
+    }
+    
+    private function checkIfBlockExists($id) {
+        return self::$database->table(self::TABLE_NAME_BLOCKS)
+                ->where(self::COLUMN_ID, $id)->count();
+    }
+    
+    public function saveBlockToDB($values) {
+
+        if(isset($values['id'])) {
+            $id = \Nette\Utils\Strings::webalize($values['id']);
+        } else {
+            $id = 0;
+        }
+
+        if ($id != 0 && $this->checkIfBlockExists($id) > 0) {
+            $block = self::$database->table(self::TABLE_NAME_BLOCKS)->get($id);
+            $sql = $block->update($values);
+            return $sql;
+        } else {
+            $sql = self::$database->table(self::TABLE_NAME_BLOCKS)->insert($values);
+        }
+
+        return $sql->id;
+
     }
    
+    public function getBlockFromDB($id) {
+        return self::$database->table(self::TABLE_NAME_BLOCKS)
+                ->select("*")
+                ->where(array(self::COLUMN_ID => $id))
+                ->fetch();
+    }
     
+    public function getBlocksFromDB() {
+        return self::$database->table(self::TABLE_NAME_BLOCKS)
+            ->select('*')
+            ->fetchAll();
+
+    }
+    
+    public function deleteBlock($id) {
+        $row = $this->getBlockFromDB($id);
+        $row->delete();
+    }
+    
+    public function getBlocksFromRow($rowId) {
+        $row = $this->getRowFromDB($rowId);
+        $blocksIdsArray = explode(",", str_replace(" ", "", strip($row)));
+        
+    }
 
 }
