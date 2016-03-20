@@ -32,14 +32,14 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
         $this->getTemplateVariables($this->getUser()->getId());
         
         $this->template->rows = $this->frontPageManager->getRowsFromDB();
-        $this->template->blocks = $this->frontPageManager->getBlocksFromDB();
+        $this->template->frontPageManager = $this->frontPageManager;
     }
     
     public function renderCreateRow() {
         $this->getTemplateVariables($this->getUser()->getId());
     }
     
-    public function createComponentRowForm() {        
+    public function createComponentCreateRowForm() {        
         $form = new Nette\Application\UI\Form;
         
         $form->addHidden('id');
@@ -48,7 +48,7 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
                 ->setRequired()
                 ->setAttribute("class", "form-control");
 
-        $form->addSubmit('send', 'Uložit')
+        $form->addSubmit('send', 'Vytvořit novou pozici')
                 ->setAttribute("class", "btn-lg btn-success btn-block");
         
 
@@ -85,5 +85,6 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
         $this->flashMessage("Pozice byla smazána!", "danger");
         $this->redirect("FrontPageManager:RowsList");
     }
+  
 }
 

@@ -12,11 +12,63 @@
                     <span class="glyphicon glyphicon-chevron-left pull-left">
                     </span>Správce titulní strany
                 </h2>
-            </a>  
+            </a>            
+        </div>
+        
+        <hr>
+        
+        <div class="row">
+            
+            <div class="col-md-8 col-md-offset-1">
+                
+                {control createRowForm}
+                
+            </div>
+            
+        </div>
+        
+        <hr>
+        
+        <div class="row">
+            
+            <div class="col-xs-12">
+            
+            {foreach $rows as $row}
+            
+                
+                <div class="panel panel-default" data-id="{$row['id']}">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{$row['name']}</h3>
 
-            <br>
-                       
-                        
+                        <span class="pull-right">
+                            <div class="btn-group">
+                                <a class="btn btn-default">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </a>
+                                <a class="btn btn-default confirm" 
+                                   data-confirm="Odstranit pozici?"
+                                   n:href="FrontPageManager:deleteRow $row['id']">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </a>
+                            </div>
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <br>
+                        <span class="row">
+                            <div class="col-xs-12">
+                                
+                                {$blocks = $frontPageManager->getBlocksFromRow($row['id'])}
+                                
+                            </div>
+                        </span>
+                    </div>
+                </div>
+                
+            {/foreach}
+            
+            </div>
+            
         </div>
     </div>
     

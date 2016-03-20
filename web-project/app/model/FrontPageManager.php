@@ -25,6 +25,7 @@ class FrontPageManager extends BaseModel {
             TABLE_NAME_ROWS = 'frontpage_rows',
             TABLE_NAME_BLOCKS = 'frontpage_blocks',
             COLUMN_ID = 'id',
+            COLUMN_SORT = 'sort',
             COLUMN_PUBLISHED = 'published',
             COLUMN_NAME = 'name',
             COLUMN_BLOCKS = 'blocks',
@@ -118,6 +119,7 @@ class FrontPageManager extends BaseModel {
     public function getBlocksFromDB() {
         return self::$database->table(self::TABLE_NAME_BLOCKS)
             ->select('*')
+            ->order(self::COLUMN_SORT." ASC")
             ->fetchAll();
 
     }
@@ -129,8 +131,14 @@ class FrontPageManager extends BaseModel {
     
     public function getBlocksFromRow($rowId) {
         $row = $this->getRowFromDB($rowId);
-        $blocksIdsArray = explode(",", str_replace(" ", "", strip($row)));
-        
+        $blocksIdsArray = explode(",", str_replace(" ", "", trim($row)));
+
+    }
+    
+    public function isBlockInRow($blockId, $rowId) {
+        $row = $this->getRowFromDB($rowId);
+        $blockIdsArray = $blocksIdsArray = explode(",", str_replace(" ", "", trim($row)));
+        return in_array($blockId, $blockIdsArray);
     }
 
 }
