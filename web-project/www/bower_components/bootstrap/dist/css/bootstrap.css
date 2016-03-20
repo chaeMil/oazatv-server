@@ -7180,6 +7180,12 @@ button.close {
   display: block;
   content: '';
 }
+.footer.bottom {
+  background-color: #212121;
+  margin-bottom: 0px;
+  padding-bottom: 50px;
+  padding-top: 30px;
+}
 @-webkit-keyframes spin2 {
   from {
     -webkit-transform: rotate(0deg);
