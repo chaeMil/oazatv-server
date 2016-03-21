@@ -65,3 +65,19 @@ frontpage_blocks:
                 name: 'max_videos'
                 type: 'select'
                 options: '4|8|12|16'
+    new_albums:
+        name: 'new_albums'
+        info: 'Nenovější alba (standardní layout)'
+        inputs:
+            select:
+                name: 'max_albums'
+                type: 'select'
+                options: '4|8|12|16'
+    popular_videos:
+        name: 'popular_videos'
+        info: 'Populární videa (standardní layout)'
+        inputs:
+            select:
+                name: 'max_videos'
+                type: 'select'
+                options: '4|8|12|16'

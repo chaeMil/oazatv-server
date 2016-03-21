@@ -1,0 +1,27 @@
+{block content}
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            {if isset($popularVideos)}
+                <h1>{_frontend.homepage.popular_videos}</h1>
+                <div class="row videos-box">
+                    <a n:foreach="$popularVideos as $video"
+                       n:href="Video:watch $video['hash']">
+                        {breakIf $iterator->getCounter() > $data['inputs']['max_videos']}
+                        <div class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                            <div class="thumb"
+                                 style="background-image: url({$basePath|noescape}/{$video['thumbs']['512']|noescape});">
+                            </div>
+                            <div class="info">
+                                <span class="name">{$video['name']}</span>
+                                <span class="date">{$video['date']}</span>
+                                <span class="views">{$video['views']} {_frontend.basic.views}</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {/if}
+        </div>
+    </div>
+</div>
