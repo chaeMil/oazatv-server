@@ -73,7 +73,7 @@
                                 
                                 {foreach $blocks as $block}
                                 
-                                    {dump($block)}
+                                    {include 'blocks/'.$block['type'].'.latte', data => $block['json_data']}
                                     
                                 {/foreach}
                                 

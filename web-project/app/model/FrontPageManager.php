@@ -141,11 +141,13 @@ class FrontPageManager extends BaseModel {
     
     public function getBlocksFromRow($rowId) {
         $row = $this->getRowFromDB($rowId);
-        $blocksIdsArray = explode(",", str_replace(" ", "", trim($row)));
+        $blocksIdsArray = explode(",", str_replace(" ", "", trim($row[self::COLUMN_BLOCKS])));
            
         $blocks = array();
         foreach($blocksIdsArray as $blockId) {
-            $blocks[] = $this->getBlockFromDB($blockId);
+            if ($blockId != "") {
+                $blocks[] = $this->getBlockFromDB($blockId);
+            }
         }
         
         return $blocks;

@@ -1,0 +1,19 @@
+frontpage_blocks:
+    h1:
+        inputs:
+            text: 
+                type: 'text'
+                mutations: 'cs|en'
+            text_small:
+                type: 'text'
+                mutations: 'cs|en'
+        html: '<h1>{$text} <small>{$text_small}</small></h1>'
+    h1:
+        inputs:
+            text: 
+                type: 'text'
+                mutations: 'cs|en'
+            text_small:
+                type: 'text'
+                mutations: 'cs|en'
+        html: '<h2>{$text} <small>{$text_small}</small></h2>'
