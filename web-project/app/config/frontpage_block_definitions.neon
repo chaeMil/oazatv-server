@@ -41,4 +41,20 @@ frontpage_blocks:
                 name: 'notification_type'
                 type: 'select'
                 options: 'success|info|warning|danger'
+    notification_text_closable:
+        name: 'notification_text_closable'
+        info: 'Notifikační lištička co se dá zavřít'
+        inputs:
+            name:
+                name: 'name'
+                type: 'text'
+                mutations: 'cs|en'
+            text:
+                name: 'text'
+                type: 'text'
+                mutations: 'cs|en'
+            select:
+                name: 'notification_type'
+                type: 'select'
+                options: 'success|info|warning|danger'
                 
