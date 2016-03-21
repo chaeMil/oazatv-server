@@ -105,7 +105,7 @@
                 title: "Vytvořit nový blok.",
                 message: '<div class="row">  ' +
                     '<div class="col-md-12"> ' +
-                    '<form class="form-horizontal"> ' +
+                    '<form class="form-horizontal" id="blockType"> ' +
                     '<div class="form-group"> ' +
                     '<label class="col-md-4 control-label" for="type">Vyber typ bloku:</label> ' +
                     '<div class="col-md-4">' + 
@@ -126,13 +126,8 @@
                         label: "Vytvořit",
                         className: "btn-success",
                         callback: function () {
-                            $.post( {$presenter->link('saveBlockToDb')} )
-                                    .done(function() {
-                                        alert( "done" );
-                                    })
-                                    .fail(function() {
-                                        alert( "error" );
-                                    });
+                            window.location.href = {$presenter->link('createNewBlock')} + 
+                                "?rowId=" + rowId + "&type=" + $('input[name=type]:checked', '#blockType').val();
                         }
                     }
                 }

@@ -203,4 +203,10 @@ class FrontPageManager extends BaseModel {
         }
         $row->update(array(self::COLUMN_PUBLISHED => $published));
     }
+    
+    public function addBlockToRow($blockId, $rowId) {
+        $row = $this->getRowFromDB($rowId);
+        $rowBlocks = $row[self::COLUMN_BLOCKS];
+        $row->update(array(self::COLUMN_BLOCKS => $rowBlocks .= $blockId.","));
+    }
 }

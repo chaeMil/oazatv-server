@@ -104,8 +104,17 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
         $this->redirect("RowsList");
     }
     
-    public function actionSaveBlockToDb($data) {
-        $this->frontPageManager->saveBlockToDB($data);
+    public function actionCreateNewBlock($rowId, $type) {
+        $values['type'] = $type;
+        $blockId = $this->frontPageManager->saveBlockToDB($values);
+        $this->frontPageManager->addBlockToRow($blockId, $rowId);
+        
+        EventLogger::log('user '.$this->getUser()->getIdentity()
+                    ->login.' updated frontpage > add block '.$blockId,
+                EventLogger::ACTIONS_LOG);
+        
+        $this->flashMessage("Změny úspěšně uloženy", "success");
+        $this->redirect("RowsList");
     }
   
 }
