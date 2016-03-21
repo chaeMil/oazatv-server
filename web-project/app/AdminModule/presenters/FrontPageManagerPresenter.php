@@ -159,7 +159,11 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
                                     $form->addGroup($input['name']);
                                     foreach(explode('|', $input['mutations']) as $mutation) {
                                         
-                                        $savedInput = $savedData['inputs'][$input['name']][$mutation];                                        
+                                        if (isset($savedData)) {
+                                            $savedInput = $savedData['inputs'][$input['name']][$mutation];
+                                        } else {
+                                            $savedInput = "";
+                                        }
                                         $form->addText($input['name'].'_'.$mutation, $mutation)
                                                 ->setValue($savedInput)
                                                 ->setAttribute("class", "form-control");
@@ -167,7 +171,11 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
                                 } else {
                                     $form->addGroup($input['name']);
                                     
-                                    $savedInput = $savedData['inputs'][$input['name']];
+                                    if (isset($savedData)) {
+                                            $savedInput = $savedData['inputs'][$input['name']];
+                                        } else {
+                                            $savedInput = "";
+                                        }
                                     $form->addText($input['name'], $input['name'])
                                             ->setValue($savedInput)
                                                 ->setAttribute("class", "form-control");
