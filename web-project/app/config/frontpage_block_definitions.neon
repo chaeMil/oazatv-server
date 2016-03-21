@@ -1,3 +1,5 @@
+# latte files for frontside are located in /app/FrontModule/templates/Main/blocks
+
 frontpage_blocks:
     h1:
         name: 'H1'
