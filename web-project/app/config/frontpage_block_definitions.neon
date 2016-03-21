@@ -59,7 +59,7 @@ frontpage_blocks:
                 options: 'success|info|warning|danger'
     new_videos:
         name: 'new_videos'
-        info: 'Nenovější videa (standardní layout)'
+        info: 'Nejnovější videa (standardní layout)'
         inputs:
             select:
                 name: 'max_videos'
@@ -67,7 +67,7 @@ frontpage_blocks:
                 options: '4|8|12|16'
     new_albums:
         name: 'new_albums'
-        info: 'Nenovější alba (standardní layout)'
+        info: 'Nejnovější alba (standardní layout)'
         inputs:
             select:
                 name: 'max_albums'
