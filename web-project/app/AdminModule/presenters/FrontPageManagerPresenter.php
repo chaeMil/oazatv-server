@@ -138,11 +138,16 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
         $block = $this->frontPageManager->getBlockFromDB($id);
         
         $form = new Nette\Application\UI\Form;
+        $form->addHidden('id')->setValue($id);
         
         if(isset($block) && sizeof($definitions) > 0) {
             
             foreach($definitions as $definition) {
                 if ($definition['name'] == $block['type']) {
+                    
+                    $form->addHidden('definition')
+                            ->setValue($definition['name']);
+                    
                     foreach($definition['inputs'] as $input) {
                         switch($input['type']) {
                             case 'text':
@@ -160,17 +165,54 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
                                 
                                 break;
                         }
-                        
+                    }
+                }
+            }
+
+            $form->addGroup("");
+            $form->addSubmit('send', 'Uložit')
+                ->setAttribute("class", "btn-lg btn-success btn-block");
+        }
+        
+        $form->onSuccess[] = $this->editBlockSucceeded;
+
+        // setup Bootstrap form rendering
+        $this->bootstrapFormRendering($form);
+
+        return $form;
+        
+    }
+    
+    public function editBlockSucceeded($form) {
+        $vals = $form->getValues();
+        dump($vals);
+        
+        $output = array();
+        
+        $definitions = $this->frontPageManager->getBlocksDefinitions();
+        foreach($definitions as $definition) {
+            if ($definition['name'] == $vals['definition']) {
+                foreach($definition['inputs'] as $input) {
+                    switch($input['type']) {
+                        case 'id':
+                            $output['id'] = $vals['id'];
+                            break;
+                        case 'text':
+                            if (isset($input['mutations'])) {
+                                $output[$input['name']] = array();
+                                foreach(explode("|", $input['mutations']) as $mutation) {
+                                    $output[$input['name']][$mutation] = $vals[$input['name'].'_'.$mutation];
+                                }
+                            } else {
+                                $output[$input['name']] = $vals[$input['name']];
+                            }
+                            break;
                     }
                 }
             }
         }
         
-        // setup Bootstrap form rendering
-        $this->bootstrapFormRendering($form);
-        
-        return $form;
-        
+        dump($output);
     }
   
 }
