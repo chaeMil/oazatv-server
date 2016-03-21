@@ -77,10 +77,7 @@ class FrontPageManager extends BaseModel {
     
     
     public function getRowFromDB($id) {
-        return self::$database->table(self::TABLE_NAME_ROWS)
-                ->select("*")
-                ->where(array(self::COLUMN_ID => $id))
-                ->fetch();
+        return self::$database->table(self::TABLE_NAME_ROWS)->get($id);
     }
     
     public function getRowsFromDB() {
@@ -122,10 +119,7 @@ class FrontPageManager extends BaseModel {
     }
    
     public function getBlockFromDB($id) {
-        return self::$database->table(self::TABLE_NAME_BLOCKS)
-                ->select("*")
-                ->where(array(self::COLUMN_ID => $id))
-                ->fetch();
+        return self::$database->table(self::TABLE_NAME_BLOCKS)->get($id);
     }
     
     public function getBlocksFromDB() {
@@ -216,7 +210,6 @@ class FrontPageManager extends BaseModel {
     
     public function getBlocksDefinitions() {
         $definitions = $this->neonAdapter->load(__DIR__ . '/../config/frontpage_block_definitions.neon');
-        //dump($definitions['frontpage_blocks']); exit;
         return $definitions['frontpage_blocks'];
     }
 }

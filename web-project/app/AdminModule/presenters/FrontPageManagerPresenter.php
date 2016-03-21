@@ -10,7 +10,8 @@ namespace App\AdminModule;
 
 use Nette,
  Model\FrontPageManager,
- App\EventLogger;
+ App\EventLogger,
+ App\StringUtils;
 
 /**
  * Description of VideoPresenter
@@ -21,7 +22,6 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
     
     public $database;
     public $frontPageManager;
-    public $frontpageBlocks;
 
     function __construct(Nette\Database\Context $database, 
             FrontPageManager $frontPageManager) {
@@ -125,6 +125,52 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
                 EventLogger::ACTIONS_LOG);
         $this->flashMessage("Blok byl smazán!", "danger");
         $this->redirect("FrontPageManager:RowsList");
+    }
+    
+    public function actionEditBlock($id) {
+        $this->getTemplateVariables($this->getUser()->getId());
+    }
+    
+    public function createComponentEditBlock() {
+        
+        $definitions = $this->frontPageManager->getBlocksDefinitions();
+        $id = $this->getParameter('id');
+        $block = $this->frontPageManager->getBlockFromDB($id);
+        
+        $form = new Nette\Application\UI\Form;
+        
+        if(isset($block) && sizeof($definitions) > 0) {
+            
+            foreach($definitions as $definition) {
+                if ($definition['name'] == $block['type']) {
+                    foreach($definition['inputs'] as $input) {
+                        switch($input['type']) {
+                            case 'text':
+                                if (isset($input['mutations'])) {
+                                    $form->addGroup($input['name']);
+                                    foreach(explode('|', $input['mutations']) as $mutation) {
+                                        $form->addText($input['name'].'_'.$mutation, $mutation)
+                                                ->setAttribute("class", "form-control");
+                                    }
+                                } else {
+                                    $form->addGroup($input['name']);
+                                    $form->addText($input['name'], $input['name'])
+                                                ->setAttribute("class", "form-control");
+                                }
+                                
+                                break;
+                        }
+                        
+                    }
+                }
+            }
+        }
+        
+        // setup Bootstrap form rendering
+        $this->bootstrapFormRendering($form);
+        
+        return $form;
+        
     }
   
 }
