@@ -25,3 +25,20 @@ frontpage_blocks:
                 name: 'text_small'
                 type: 'text'
                 mutations: 'cs|en'
+    notification_text:
+        name: 'notification_text'
+        info: 'Notifikační lištička'
+        inputs:
+            name:
+                name: 'name'
+                type: 'text'
+                mutations: 'cs|en'
+            text:
+                name: 'text'
+                type: 'text'
+                mutations: 'cs|en'
+            select:
+                name: 'notification_type'
+                type: 'select'
+                options: 'success|info|warning|danger'
+                

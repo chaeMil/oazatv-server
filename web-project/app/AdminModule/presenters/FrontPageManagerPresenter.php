@@ -180,6 +180,15 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
                                             ->setValue($savedInput)
                                                 ->setAttribute("class", "form-control");
                                 }
+                                break;
+                            case 'select':
+                                $form->addGroup($input['name']);
+                                
+                                $options = explode("|", $definition['inputs'][$input['type']]['options']);
+
+                                $form->addSelect($input['name'], $input['name'])
+                                        ->setItems($options)
+                                        ->setAttribute("class", "form-control");
                                 
                                 break;
                         }
