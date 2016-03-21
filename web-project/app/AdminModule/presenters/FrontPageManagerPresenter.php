@@ -21,6 +21,7 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
     
     public $database;
     public $frontPageManager;
+    public $frontpageBlocks;
 
     function __construct(Nette\Database\Context $database, 
             FrontPageManager $frontPageManager) {
@@ -33,6 +34,7 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
         
         $this->template->rows = $this->frontPageManager->getRowsFromDB();
         $this->template->frontPageManager = $this->frontPageManager;
+        $this->template->blockDefinitions = $this->frontPageManager->getBlocksDefinitions();
     }
     
     public function renderCreateRow() {

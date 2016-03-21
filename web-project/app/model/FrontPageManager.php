@@ -34,9 +34,11 @@ class FrontPageManager extends BaseModel {
 
     /** @var Nette\Database\Context */
     public static $database;
+    private $neonAdapter;
 
     public function __construct(Nette\Database\Context $database) {
         self::$database = $database;
+        $this->neonAdapter = new Nette\DI\Config\Adapters\NeonAdapter();
     }
     
     private function checkIfRowExists($id) {
@@ -210,5 +212,16 @@ class FrontPageManager extends BaseModel {
         $row = $this->getRowFromDB($rowId);
         $rowBlocks = $row[self::COLUMN_BLOCKS];
         $row->update(array(self::COLUMN_BLOCKS => $rowBlocks .= $blockId.","));
+    }
+    
+    public function getBlocksDefinitions() {
+        $definitions = $this->neonAdapter->load(__DIR__ . '/../config/frontpage_block_definitions.neon');
+        //dump($definitions['frontpage_blocks']); exit;
+        return $definitions['frontpage_blocks'];
+    }
+    
+    public function getBlockData($id) {
+        $block = $this->getBlockFromDB($id);
+        $definitions = $this->getBlockDefinition($block[self::COLUMN_TYPE]);
     }
 }

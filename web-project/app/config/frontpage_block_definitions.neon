@@ -1,5 +1,7 @@
 frontpage_blocks:
     h1:
+        name: 'H1'
+        info: 'Nadpis H1 přes celou šířku pozice'
         inputs:
             text: 
                 type: 'text'
@@ -8,7 +10,9 @@ frontpage_blocks:
                 type: 'text'
                 mutations: 'cs|en'
         html: '<h1>{$text} <small>{$text_small}</small></h1>'
-    h1:
+    h2:
+        name: 'H2'
+        info: 'Nadpis H2 přes celou šířku pozice'
         inputs:
             text: 
                 type: 'text'

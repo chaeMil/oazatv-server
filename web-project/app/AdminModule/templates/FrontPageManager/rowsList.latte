@@ -73,7 +73,45 @@
                                 
                                 {foreach $blocks as $block}
                                 
-                                    {include 'blocks/'.$block['type'].'.latte', data => $block['json_data']}
+                                    {if isset($block['type'])}
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">{$block['type']}</h3>
+
+                                                <span class="pull-right">
+                                                    <div class="btn-group">
+                                                        {*<a class="btn btn-default" n:href="moveRowUp $row['id']">
+                                                            <span class="glyphicon glyphicon-chevron-up"></span>
+                                                        </a>
+                                                            <a class="btn btn-default" n:href="moveRowDown $row['id']">
+                                                            <span class="glyphicon glyphicon-chevron-down"></span>
+                                                        </a>
+                                                        </a>
+                                                            <a class="btn btn-default" n:href="toggleRowPublished $row['id']">
+                                                            <span class="glyphicon {if $row['published']}glyphicon-eye-open{else}glyphicon-eye-close{/if}"></span>
+                                                        </a>
+                                                        <a class="btn btn-default create-block"
+                                                           data-rowId="{$row['id']}">
+                                                            <span class="glyphicon glyphicon-plus"></span>
+                                                        </a>
+                                                        <a class="btn btn-default confirm" 
+                                                           data-confirm="Odstranit pozici?"
+                                                           n:href="deleteRow $row['id']">
+                                                            <span class="glyphicon glyphicon-trash"></span>
+                                                        </a>*}
+                                                    </div>
+                                                </span>
+                                            </div>
+                                            <div class="panel-body">
+                                                <br>
+                                                <span class="row">
+                                                    <div class="col-xs-12">
+                                                        {include 'blocks/'.$block['type'].'.latte', data => $block['json_data']}
+                                                    </div>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    {/if}
                                     
                                 {/foreach}
                                 
@@ -108,15 +146,15 @@
                     '<form class="form-horizontal" id="blockType"> ' +
                     '<div class="form-group"> ' +
                     '<label class="col-md-4 control-label" for="type">Vyber typ bloku:</label> ' +
-                    '<div class="col-md-4">' + 
+                    '<div class="col-md-8">' + 
                     
-                    //H1
-                    '<div class="radio"> <label for="type-0"> ' +
-                    '<input type="radio" name="type" id="type-0" value="h1" checked="checked"> H1 (titulek, plná šířka) </label> ' +
-                    
-                    //H2
-                    '</div><div class="radio"> <label for="type-1"> ' +
-                    '<input type="radio" name="type" id="type-1" value="h2"> H2 (titulek, plná šířka) </label> ' +
+                    {foreach $blockDefinitions as $definition}
+                                
+                        // {$definition['name']}
+                        '<div class="radio"> <label for="type-0"> ' +
+                        '<input type="radio" name="type" id="type-0" value="' + {$definition['name']} + '"> ' + {$definition['info']} + '</label> ' +
+                                
+                    {/foreach}
                     
                     '</div> ' +
                     '</div> </div>' +
