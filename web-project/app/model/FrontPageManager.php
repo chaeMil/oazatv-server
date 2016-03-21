@@ -212,6 +212,10 @@ class FrontPageManager extends BaseModel {
         $definitions = $this->neonAdapter->load(__DIR__ . '/../config/frontpage_block_definitions.neon');
         return $definitions['frontpage_blocks'];
     }
+    
+    public function parseJsonBlock($json) {
+        return json_decode($json, true);
+    }
 
     public function createJsonBlock($vals) {
         $output = array();

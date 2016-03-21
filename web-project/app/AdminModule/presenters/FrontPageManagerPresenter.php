@@ -136,6 +136,10 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
         $definitions = $this->frontPageManager->getBlocksDefinitions();
         $id = $this->getParameter('id');
         $block = $this->frontPageManager->getBlockFromDB($id);
+        if($block[FrontPageManager::COLUMN_JSON_DATA] != "") {
+            $savedData = $this->frontPageManager
+                    ->parseJsonBlock($block[FrontPageManager::COLUMN_JSON_DATA]);
+        }
         
         $form = new Nette\Application\UI\Form;
         $form->addHidden('id')->setValue($id);
@@ -154,12 +158,18 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
                                 if (isset($input['mutations'])) {
                                     $form->addGroup($input['name']);
                                     foreach(explode('|', $input['mutations']) as $mutation) {
+                                        
+                                        $savedInput = $savedData['inputs'][$input['name']][$mutation];                                        
                                         $form->addText($input['name'].'_'.$mutation, $mutation)
+                                                ->setValue($savedInput)
                                                 ->setAttribute("class", "form-control");
                                     }
                                 } else {
                                     $form->addGroup($input['name']);
+                                    
+                                    $savedInput = $savedData['inputs'][$input['name']];
                                     $form->addText($input['name'], $input['name'])
+                                            ->setValue($savedInput)
                                                 ->setAttribute("class", "form-control");
                                 }
                                 
