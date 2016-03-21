@@ -236,6 +236,14 @@ class FrontPageManager extends BaseModel {
                                 $output['inputs'][$input['name']] = $vals[$input['name']];
                             }
                             break;
+                        case 'select':
+                            
+                            $definitionOptions = explode("|",$input['options']);
+                            $inputVal = $vals[$input['name']];
+                            $outputVal = $definitionOptions[$inputVal];
+                            
+                            $output['inputs'][$input['name']] = $outputVal;
+                            break;
                     }
                 }
             }
