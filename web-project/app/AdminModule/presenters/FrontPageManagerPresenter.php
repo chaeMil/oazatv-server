@@ -184,10 +184,17 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
                             case 'select':
                                 $form->addGroup($input['name']);
                                 
-                                $options = explode("|", $definition['inputs'][$input['type']]['options']);
+                                $definitionOptions = explode("|", $definition['inputs'][$input['type']]['options']);
+                                if (isset($savedData)) {
+                                    $savedValue = $savedData['inputs'][$input['name']];
+                                    $savedInput = array_search($savedValue, $definitionOptions);
+                                } else {
+                                    $savedInput = 0;
+                                }
 
                                 $form->addSelect($input['name'], $input['name'])
-                                        ->setItems($options)
+                                        ->setItems($definitionOptions)
+                                        ->setValue($savedInput)
                                         ->setAttribute("class", "form-control");
                                 
                                 break;
