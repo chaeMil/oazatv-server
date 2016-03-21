@@ -7,7 +7,8 @@ Nette\Database\Context,
 Model\VideoManager,
 Model\PhotosManager,
 Model\AnalyticsManager,
-Model\CategoriesManager;
+Model\CategoriesManager,
+Model\FrontPageManager;
 
 
 class MainPresenter extends BasePresenter {
@@ -16,21 +17,29 @@ class MainPresenter extends BasePresenter {
     private $photosManager;
     private $analyticsManager;
     private $categoriesManager;
+    private $frontPageManager;
     
     public function __construct(Nette\DI\Container $container,
             Context $database, VideoManager $videoManager,
             PhotosManager $photosManager,
             AnalyticsManager $analyticsManager,
-            CategoriesManager $categoriesManager) {
+            CategoriesManager $categoriesManager,
+            FrontPageManager $frontPageManager) {
         
         parent::__construct($container, $database);
         $this->videoManager = $videoManager;
         $this->photosManager = $photosManager;
         $this->analyticsManager = $analyticsManager;
         $this->categoriesManager = $categoriesManager;
+        $this->frontPageManager = $frontPageManager;
     }
     
     public function renderDefault() {
+        
+        $this->template->rows = $this->frontPageManager->getRowsFromDB();
+        $this->template->frontPageManager = $this->frontPageManager;
+        $this->template->blockDefinitions = $this->frontPageManager->getBlocksDefinitions();
+        $this->template->lang = $this->lang;
         
         $newestVideos = $this->videoManager->getVideosFromDB(0, 8);
         $templateNewestVideos = null;

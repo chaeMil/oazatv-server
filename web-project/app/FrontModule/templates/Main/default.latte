@@ -1,5 +1,25 @@
 {block content}
 
+{if isset($rows)}
+    {foreach $rows as $row}
+
+        {var $blocks = $frontPageManager->getBlocksFromRow($row['id'])}
+        {if isset($blocks)}
+        
+            {foreach $blocks as $block}
+                {if isset($block['type'])}
+                    
+                    {include 'blocks/'.$block['type'].'.latte', data => $frontPageManager->parseJsonBlock($block['json_data'])}
+                    
+                {/if}   
+            {/foreach}
+            
+        {/if}
+
+    {/foreach}
+{/if}
+
+
 <div class="container">
     {if isset($newestVideos)}
 
