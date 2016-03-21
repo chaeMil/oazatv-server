@@ -1,0 +1,38 @@
+{block content}
+
+{var $dataArray = $frontPageManager->parseJsonBlock($data)}
+
+{foreach $dataArray['inputs'] as $name => $input}
+
+<div class="col-xs-12 col-md-6 col-lg-4">
+   
+    <ul class="list-group">
+        {if is_array($input)}
+
+            <li class="list-group-item active">
+                {$name}</h4>
+            </li>
+            {foreach $input as $name => $mutation}    
+                <li class="list-group-item">
+                    {$name}: {$mutation}
+                </li>
+            {/foreach}
+
+        {else}
+            
+            <li class="list-group-item active">
+                {$name}
+            </li>
+            <li class="list-group-item">
+                {$name}: {$input}
+            </li>
+
+        {/if}
+    </ul>
+    
+</div>    
+    
+{/foreach}
+
+
+{/block}
