@@ -118,6 +118,14 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
         $this->flashMessage("Změny úspěšně uloženy", "success");
         $this->redirect("RowsList");
     }
+    
+    public function actionDeleteBlock($id) {
+        $this->frontPageManager->deleteBlock($id);
+        EventLogger::log('user '.$this->getUser()->getIdentity()->login.' deleted frontpage > block '.$id, 
+                EventLogger::ACTIONS_LOG);
+        $this->flashMessage("Blok byl smazán!", "danger");
+        $this->redirect("FrontPageManager:RowsList");
+    }
   
 }
 

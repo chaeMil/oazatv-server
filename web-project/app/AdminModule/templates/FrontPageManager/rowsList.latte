@@ -80,25 +80,21 @@
 
                                                 <span class="pull-right">
                                                     <div class="btn-group">
-                                                        {*<a class="btn btn-default" n:href="moveRowUp $row['id']">
+                                                        {*<a class="btn btn-default" n:href="moveBlockLeft $block['id']">
                                                             <span class="glyphicon glyphicon-chevron-up"></span>
                                                         </a>
-                                                            <a class="btn btn-default" n:href="moveRowDown $row['id']">
+                                                            <a class="btn btn-default" n:href="moveBlockRight $block['id']">
                                                             <span class="glyphicon glyphicon-chevron-down"></span>
-                                                        </a>
-                                                        </a>
-                                                            <a class="btn btn-default" n:href="toggleRowPublished $row['id']">
-                                                            <span class="glyphicon {if $row['published']}glyphicon-eye-open{else}glyphicon-eye-close{/if}"></span>
-                                                        </a>
-                                                        <a class="btn btn-default create-block"
-                                                           data-rowId="{$row['id']}">
+                                                        </a>*}
+                                                        <a class="btn btn-default edit-block"
+                                                           data-rowId="{$block['id']}">
                                                             <span class="glyphicon glyphicon-plus"></span>
                                                         </a>
                                                         <a class="btn btn-default confirm" 
-                                                           data-confirm="Odstranit pozici?"
-                                                           n:href="deleteRow $row['id']">
+                                                           data-confirm="Odstranit blok?"
+                                                           n:href="deleteBlock $block['id']">
                                                             <span class="glyphicon glyphicon-trash"></span>
-                                                        </a>*}
+                                                        </a>
                                                     </div>
                                                 </span>
                                             </div>
@@ -151,8 +147,8 @@
                     {foreach $blockDefinitions as $definition}
                                 
                         // {$definition['name']}
-                        '<div class="radio"> <label for="type-0"> ' +
-                        '<input type="radio" name="type" id="type-0" value="' + {$definition['name']} + '"> ' + {$definition['info']} + '</label> ' +
+                        '<div class="radio"> <label for="type-{$iterator->counter}"> ' +
+                        '<input type="radio" name="type" id="type-{$iterator->counter}" value="' + {$definition['name']} + '"> ' + {$definition['info']} + '</label></div> ' +
                                 
                     {/foreach}
                     

@@ -219,9 +219,4 @@ class FrontPageManager extends BaseModel {
         //dump($definitions['frontpage_blocks']); exit;
         return $definitions['frontpage_blocks'];
     }
-    
-    public function getBlockData($id) {
-        $block = $this->getBlockFromDB($id);
-        $definitions = $this->getBlockDefinition($block[self::COLUMN_TYPE]);
-    }
 }
