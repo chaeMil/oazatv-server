@@ -4,7 +4,6 @@
     <div class="row">
         <div class="col-xs-12">
             {if isset($newestAlbums)}
-                <h1>{_frontend.homepage.newest_albums}</h1>
                 <div class="row videos-box">
                     <a n:foreach="$newestAlbums as $album"
                        n:href="Album:view $album['hash']">
