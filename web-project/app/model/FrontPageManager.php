@@ -212,4 +212,32 @@ class FrontPageManager extends BaseModel {
         $definitions = $this->neonAdapter->load(__DIR__ . '/../config/frontpage_block_definitions.neon');
         return $definitions['frontpage_blocks'];
     }
+
+    public function createJsonBlock($vals) {
+        $output = array();
+        $output['inputs'] = array();
+        
+        $definitions = $this->getBlocksDefinitions();
+        foreach($definitions as $definition) {
+            if ($definition['name'] == $vals['definition']) {
+                foreach($definition['inputs'] as $input) {
+                    switch($input['type']) {
+                        case 'text':
+                            if (isset($input['mutations'])) {
+                                $output['inputs'][$input['name']] = array();
+                                foreach(explode("|", $input['mutations']) as $mutation) {
+                                    $output['inputs'][$input['name']][$mutation] = $vals[$input['name'].'_'.$mutation];
+                                }
+                            } else {
+                                $output['inputs'][$input['name']] = $vals[$input['name']];
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+        
+        return json_encode($output);
+    }
+
 }

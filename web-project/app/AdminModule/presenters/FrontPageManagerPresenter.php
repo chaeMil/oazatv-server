@@ -124,7 +124,7 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
         EventLogger::log('user '.$this->getUser()->getIdentity()->login.' deleted frontpage > block '.$id, 
                 EventLogger::ACTIONS_LOG);
         $this->flashMessage("Blok byl smazán!", "danger");
-        $this->redirect("FrontPageManager:RowsList");
+        $this->redirect("RowsList");
     }
     
     public function actionEditBlock($id) {
@@ -185,34 +185,19 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
     
     public function editBlockSucceeded($form) {
         $vals = $form->getValues();
-        dump($vals);
         
-        $output = array();
+        $jsonData = $this->frontPageManager->createJsonBlock($vals);
+        $dbValues = array(
+            FrontPageManager::COLUMN_ID => $vals['id'],
+            FrontPageManager::COLUMN_TYPE => $vals['definition'],
+            FrontPageManager::COLUMN_JSON_DATA => $jsonData);
         
-        $definitions = $this->frontPageManager->getBlocksDefinitions();
-        foreach($definitions as $definition) {
-            if ($definition['name'] == $vals['definition']) {
-                foreach($definition['inputs'] as $input) {
-                    switch($input['type']) {
-                        case 'id':
-                            $output['id'] = $vals['id'];
-                            break;
-                        case 'text':
-                            if (isset($input['mutations'])) {
-                                $output[$input['name']] = array();
-                                foreach(explode("|", $input['mutations']) as $mutation) {
-                                    $output[$input['name']][$mutation] = $vals[$input['name'].'_'.$mutation];
-                                }
-                            } else {
-                                $output[$input['name']] = $vals[$input['name']];
-                            }
-                            break;
-                    }
-                }
-            }
-        }
+        $this->frontPageManager->saveBlockToDB($dbValues);
         
-        dump($output);
+        EventLogger::log('user '.$this->getUser()->getIdentity()->login.' edited frontpage > block '.$vals['id'], 
+                EventLogger::ACTIONS_LOG);
+        $this->flashMessage("Blok upraven!", "success");
+        $this->redirect("RowsList");
     }
   
 }
