@@ -57,4 +57,11 @@ frontpage_blocks:
                 name: 'notification_type'
                 type: 'select'
                 options: 'success|info|warning|danger'
-                
+    new_videos:
+        name: 'new_videos'
+        info: 'Nenovější videa (standardní layout)'
+        inputs:
+            select:
+                name: 'max_videos'
+                type: 'select'
+                options: '4|8|12|16'

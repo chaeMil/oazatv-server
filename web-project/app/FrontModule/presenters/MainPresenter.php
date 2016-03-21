@@ -41,7 +41,7 @@ class MainPresenter extends BasePresenter {
         $this->template->blockDefinitions = $this->frontPageManager->getBlocksDefinitions();
         $this->template->lang = $this->lang;
         
-        $newestVideos = $this->videoManager->getVideosFromDB(0, 8);
+        $newestVideos = $this->videoManager->getVideosFromDB(0, 16);
         $templateNewestVideos = null;
         
         foreach($newestVideos as $video) {
