@@ -81,3 +81,11 @@ frontpage_blocks:
                 name: 'max_videos'
                 type: 'select'
                 options: '4|8|12|16'
+    test_image:
+        name: 'test_image'
+        info: 'testovací blok s obrázkem'
+        inputs:
+            image:
+                name: 'image'
+                type: 'image'
+                formats: 'jpg|jpeg'

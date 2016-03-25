@@ -181,6 +181,7 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
                                                 ->setAttribute("class", "form-control");
                                 }
                                 break;
+                                
                             case 'select':
                                 $form->addGroup($input['name']);
                                 
@@ -198,6 +199,13 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
                                         ->setAttribute("class", "form-control");
                                 
                                 break;
+                                
+                            case 'image':
+                                $form->addGroup($input['name']);
+                                
+                                $imageFormats = $definition['inputs'][$input['type']]['formats'];
+                                $form->addUpload($input['name'], $input['name']." [".$imageFormats."]")
+                                        ->setAttribute("class", "form-control");
                         }
                     }
                 }
@@ -219,6 +227,12 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
     
     public function editBlockSucceeded($form) {
         $vals = $form->getValues();
+
+        foreach($vals as $value) {
+            dump($value);
+        }
+        
+        exit;
         
         $jsonData = $this->frontPageManager->createJsonBlock($vals);
         $dbValues = array(
