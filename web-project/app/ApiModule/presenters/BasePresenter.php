@@ -12,7 +12,9 @@ use Nette,
  Nette\Application\Responses\JsonResponse,
  Model\ArchiveManager,
  Model\VideoManager,
- Model\PhotosManager;
+ Model\PhotosManager,
+ Model\CategoriesManager,
+ Model\AnalyticsManager;
 
 /**
  * Description of MainPresenter
@@ -27,10 +29,13 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
     public $archiveManager;
     public $videoManager;
     public $photosManager;
+    public $analyticsManager;
+    public $categoriesManager;
     
     public function __construct(Nette\DI\Container $container,
             Nette\Database\Context $database, ArchiveManager $archiveManager, 
-            VideoManager $videoManager, PhotosManager $photosManager) {
+            VideoManager $videoManager, PhotosManager $photosManager,
+            AnalyticsManager $analyticsManager, CategoriesManager $categoriesManager) {
         
         parent::__construct();
         
@@ -39,6 +44,8 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
         $this->archiveManager = $archiveManager;
         $this->videoManager = $videoManager;
         $this->photosManager = $photosManager;
+        $this->analyticsManager = $analyticsManager;
+        $this->categoriesManager = $categoriesManager;
         
         $routerLang = $this->getParameter('locale');
         $this->setupLanguage($this->container, $routerLang);

@@ -22,17 +22,6 @@ use Nette,
  * @author Michal Mlejnek <chaemil72 at gmail.com>
  */
 class VideoPresenter extends BasePresenter {
-    
-    private $analyticsManager;
-    
-    public function __construct(Nette\DI\Container $container,
-            Context $database, ArchiveManager $archiveManager, 
-            VideoManager $videoManager, PhotosManager $photosManager,
-            AnalyticsManager $analyticsManager) {
-        
-        parent::__construct($container, $database, $archiveManager, $videoManager, $photosManager);
-        $this->analyticsManager = $analyticsManager;
-    }
    
     public function actionDefault($id) {
         $hash = $id;

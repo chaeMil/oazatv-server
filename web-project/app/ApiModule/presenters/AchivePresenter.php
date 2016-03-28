@@ -21,13 +21,6 @@ use Nette,
  * @author Michal Mlejnek <chaemil72 at gmail.com>
  */
 class ArchivePresenter extends BasePresenter {
-    
-    public function __construct(Nette\DI\Container $container,
-            Context $database, ArchiveManager $archiveManager, 
-            VideoManager $videoManager, PhotosManager $photosManager) {
-        
-        parent::__construct($container, $database, $archiveManager, $videoManager, $photosManager);
-    }
    
     public function renderDefault($id = 1) {
         $page = $id;

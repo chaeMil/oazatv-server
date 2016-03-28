@@ -22,13 +22,6 @@ use Nette,
  */
 class AlbumPresenter extends BasePresenter {
     
-    public function __construct(Nette\DI\Container $container,
-            Context $database, ArchiveManager $archiveManager, 
-            VideoManager $videoManager, PhotosManager $photosManager) {
-        
-        parent::__construct($container, $database, $archiveManager, $videoManager, $photosManager);
-    }
-    
     public function actionDefault($id) {
         $hash = $id;
         

@@ -14,9 +14,7 @@ use Nette,
  Model\VideoManager,
  Model\PhotosManager,
  Model\AnalyticsManager,
- Model\CategoriesManager,
- App\ApiModule\JsonApi,
- Model\FrontPageManager;
+ Model\ArchiveManager;
 
 /**
  * Description of MainPresenter
@@ -24,25 +22,15 @@ use Nette,
  * @author Michal Mlejnek <chaemil72 at gmail.com>
  */
 class MainPresenter extends BasePresenter {
-
-    public function __construct(Nette\DI\Container $container,
-            Context $database,
-            VideoManager $videoManager,
-            PhotosManager $photosManager,
-            AnalyticsManager $analyticsManager,
-            CategoriesManager $categoriesManager) {
-        
-        parent::__construct($container, $database);
-        $this->videoManager = $videoManager;
-        $this->photosManager = $photosManager;
-        $this->analyticsManager = $analyticsManager;
-        $this->categoriesManager = $categoriesManager;
-    }
    
     public function renderDefault() {
         $response = array('apiVersion' => 2.0,
                           'appVersion' => VERSION);
         
+        $newestVideos = $this->videoManager->getVideosFromDB(0, 16);
+        $newestAlbums = $this->photosManager->getAlbumsFromDB(0, 16);
+        $popularVideos = $this->analyticsManager->getPopularVideosIds(7, 16);
+                
         
         $this->sendResponse(new JsonResponse($response));
     }
