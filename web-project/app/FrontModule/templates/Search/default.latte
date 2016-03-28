@@ -3,47 +3,64 @@
 <div class="container container-without-padding">
 
     {if isset($search)}
-        {foreach $search as $item}
-            
-            {if $item['type'] == 'video'}
-                <div class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                    <a n:href="Video:watch $item['hash'], true">
-                        <div class="thumb"
-                             {if isset($item['thumbs']) && isset($item['thumbs']['512'])}
-                              style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});"
-                                {/if}>
-                        </div>
-                    </a>
-                    <div class="info">
-                        <span class="name">{$item['name']}</span>
-                        <span class="date">{$item['date']}</span>
-                        {if ($item['type'] == 'video')}
-                            <span class="views">{$item['views']} {_frontend.basic.views}</span>
-                        {/if}
-                    </div>
-                </div>
-            {/if}
-            
-            {if $item['type'] == 'album'}
-                <div class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                    <a n:href="Album:view $item['hash']">
-                        <div class="thumb"
-                             {if isset($item['thumbs']) && isset($item['thumbs']['512'])}
-                              style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});"
-                               {/if}>
-                        </div>
-                    </a>
-                    <div class="info">
-                        <span class="name">{$item['name']}</span>
-                        <span class="date">{$item['date']}</span>
-                        {if ($item['type'] == 'video')}
-                            <span class="views">{$item['views']} {_frontend.basic.views}</span>
-                        {/if}
-                    </div>
-                </div>
-            {/if}
+        
+        <div class="row">
+            <div class="col-xs-12">
+                <h1><small>{_frontend.basic.search}:</small> {$q}</h1>
+                <hr>
+            </div>
+        </div>
                 
-        {/foreach}
+        <div class="row">
+            <div class="col-xs-12">
+                
+                {foreach $search as $item}
+
+                    {if $item['type'] == 'video'}
+                        <div class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                            <a n:href="Video:watch $item['hash'], true">
+                                <div class="thumb"
+                                     {if isset($item['thumbs']) && isset($item['thumbs']['512'])}
+                                      style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});"
+                                        {/if}>
+                                </div>
+                            
+                                <div class="info">
+                                    <span class="name">{$item['name']}</span>
+                                    <span class="date">{$item['date']}</span>
+                                    {if ($item['type'] == 'video')}
+                                        <span class="views">{$item['views']} {_frontend.basic.views}</span>
+                                    {/if}
+                                </div>
+                            </a>
+                        </div>
+                    {/if}
+
+                    {if $item['type'] == 'album'}
+                        <div class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                            <a n:href="Album:view $item['hash']">
+                                <div class="thumb"
+                                     {if isset($item['thumbs']) && isset($item['thumbs']['512'])}
+                                      style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});"
+                                       {/if}>
+                                </div>
+                            
+                                <div class="info">
+                                    <span class="name">{$item['name']}</span>
+                                    <span class="date">{$item['date']}</span>
+                                    {if ($item['type'] == 'video')}
+                                        <span class="views">{$item['views']} {_frontend.basic.views}</span>
+                                    {/if}
+                                </div>
+                            </a>
+                        </div>
+                    {/if}
+
+                {/foreach}
+                
+            </div>
+        </div>
+                
     {/if}
 
     <!-- Pagination -->
@@ -95,42 +112,3 @@
     <!-- /.row -->
 
 </div>
-
-
-{block pageScripts}
-
-<script>
-
-  $(document).ready(function() {
-    $('#toggleVideos').click(function() {
-      if ($('.videos-box').is(':visible')) {
-        $('.videos-box').slideUp();
-        $(this).children()
-          .removeClass('glyphicon-chevron-down')
-          .addClass('glyphicon-chevron-up');
-      } else {
-        $('.videos-box').slideDown();
-        $(this).children()
-          .removeClass('glyphicon-chevron-up')
-          .addClass('glyphicon-chevron-down');
-      }
-    });
-
-    $('#toggleAlbums').click(function() {
-      if ($('.albums-box').is(':visible')) {
-        $('.albums-box').slideUp();
-        $(this).children()
-          .removeClass('glyphicon-chevron-down')
-          .addClass('glyphicon-chevron-up');
-      } else {
-        $('.albums-box').slideDown();
-        $(this).children()
-          .removeClass('glyphicon-chevron-up')
-          .addClass('glyphicon-chevron-down');
-      }
-    });
-  });
-
-</script>
-
-{/block}
