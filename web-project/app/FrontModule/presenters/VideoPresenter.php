@@ -45,14 +45,18 @@ class VideoPresenter extends BasePresenter {
         $watchedCookie = $this->getHttpRequest()->getCookie($hash);
         if (!isset($watchedCookie)) {
             $this->videoManager->countView($id);
+            $this->analyticsManager->countVideoView($id, AnalyticsManager::WEB);
             $this->analyticsManager->addVideoToPopular($id);
             $httpResponse->setCookie($hash, 'watched', '1 hour');
         }
     }
 
-    public function renderWatch($id) {
+    public function renderWatch($id, $searched) {
         $hash = $id; //id only in router, actualy its hash
         $video = $this->videoManager->getVideoFromDBbyHash($hash);
+        if(isset($searched)) {
+            $this->analyticsManager->countVideoSearchClick($video['id'], AnalyticsManager::WEB);
+        }
 
         $tags = explode(",",$video['tags']);
         $tagsWithSongs = $this->songsManager->parseTagsAndReplaceKnownSongs($tags);

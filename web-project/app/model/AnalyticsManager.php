@@ -20,10 +20,19 @@ use Nette,
 class AnalyticsManager {
     
     const
-            TABLE_NAME = 'popular_videos',
+            TABLE_NAME_POPULAR_VIDEOS = 'popular_videos',
             COLUMN_ID = 'id',
             COLUMN_DATETIME = 'datetime',
-            COUNT = 'count';
+            COUNT = 'count',
+            TABLE_NAME_VIDEO_ANALYTICS = 'db_video_analytics',
+            COLUMN_VIDEO = 'video',
+            COLUMN_ACTION = 'action',
+            COLUMN_ACTION_TYPE = 'action_type',
+            WATCH = 'watch',
+            SHARE = 'share',
+            WEB = 'web',
+            API = 'api',
+            SEARCH_CLICK = 'search_click';
     
     /** @var Nette\Database\Context */
     private $database;
@@ -37,7 +46,7 @@ class AnalyticsManager {
     }
     
     public function addVideoToPopular($videoId) {
-        $this->database->table(self::TABLE_NAME)->insert(array(
+        $this->database->table(self::TABLE_NAME_POPULAR_VIDEOS)->insert(array(
             self::COLUMN_ID => $videoId, self::COLUMN_DATETIME => date("Y-m-d H:i:s")
         ));
     }
@@ -48,7 +57,7 @@ class AnalyticsManager {
         
         $videos = $this->database
                 ->query('SELECT '.self::COLUMN_ID.', COUNT(*) '.self::COUNT.
-                        ' FROM '.self::TABLE_NAME.
+                        ' FROM '.self::TABLE_NAME_POPULAR_VIDEOS.
                         ' WHERE '.self::COLUMN_DATETIME.' >= "'.$sqlDate.'"'.
                         ' GROUP BY '.self::COLUMN_ID.
                         ' ORDER BY '.self::COUNT.' DESC'.
@@ -61,6 +70,26 @@ class AnalyticsManager {
         }
         
         return $videosArray;
+    }
+    
+    public function countVideoView($videoId, $type) {
+        return $this->database->table(self::TABLE_NAME_VIDEO_ANALYTICS)
+                ->insert(array(
+                    self::COLUMN_VIDEO => $videoId, 
+                    self::COLUMN_ACTION => self::WATCH,
+                    self::COLUMN_ACTION_TYPE => $type,
+                    self::COLUMN_DATETIME => new Nette\Database\SqlLiteral('NOW()')
+                ));
+    }
+    
+    public function countVideoSearchClick($videoId, $type) {
+        return $this->database->table(self::TABLE_NAME_VIDEO_ANALYTICS)
+                ->insert(array(
+                    self::COLUMN_VIDEO => $videoId,
+                    self::COLUMN_ACTION => self::SEARCH_CLICK,
+                    self::COLUMN_ACTION_TYPE => $type,
+                    self::COLUMN_DATETIME => new Nette\Database\SqlLiteral('NOW()')
+                ));
     }
     
 }
