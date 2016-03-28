@@ -11,6 +11,7 @@ basic:
     similar_videos: "Similar videos"
     songbook: "Songbook"
     categories: "Categories"
+    nothing_found: "Nothing found"
 search:
     more: "more results"
 homepage:
