@@ -4,7 +4,11 @@ namespace App\FrontModule;
 
 use Nette,
     App\StringUtils,
-    App\Presenters\ErrorPresenter;
+    App\Presenters\ErrorPresenter,
+    WebLoader,
+    CssMin,
+    Nette\Utils\Finder,
+    App\Services\WebDir;
 
 
 /**
@@ -15,6 +19,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
     public $database;
     public $lang;
     public $container;
+    public $webDir;
     
     /** @persistent */
     public $locale;
@@ -44,6 +49,39 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
             $httpRequest = $container->getByType('Nette\Http\Request');
             $this->lang = $httpRequest->detectLanguage($langs);
         }
+    }
+    
+    public function injectWebDir(WebDir $webDir) {
+        $this->webDir = $webDir;
+    }
+    
+    protected function createComponentCss() {
+        $dir = $this->webDir->getPath('/');
+        $files = new WebLoader\FileCollection($this->webDir->getPath('/css'));
+        $files->addFiles(array(
+            $dir . '/bower_components/bootstrap/dist/css/bootstrap.css',
+            $dir . '/bower_components/font-awesome/css/font-awesome.css',
+            $dir . '/css/BootstrapXL.css',
+            $dir . '/bower_components/flexslider/flexslider.css',
+            $dir . '/bower_components/video.js/dist/video-js.css',
+            $dir . '/bower_components/photoswipe/dist/photoswipe.css',
+            $dir . '/bower_components/photoswipe/dist/default-skin/default-skin.css',
+            $dir . '/bower_components/justifiedGallery/dist/css/justifiedGallery.css',
+            ));
+
+        $files->addWatchFiles(Finder::findFiles('*.css', '*.less')->in($dir . '/bower_components/'));
+
+        $compiler = WebLoader\Compiler::createCssCompiler($files, $dir . '/webtemp');
+
+        /*$compiler->addFilter(new WebLoader\Filter\VariablesFilter(array('foo' => 'bar')));
+        $compiler->addFilter(function ($code) {
+            return cssmin::minify($code, "remove-last-semicolon");
+        });*/
+
+        $control = new WebLoader\Nette\CssLoader($compiler, $this->template->basePath. '/webtemp');
+        $control->setMedia('screen');
+
+        return $control;
     }
     
     public function bootstrapFormRendering($form) {

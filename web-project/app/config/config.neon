@@ -20,6 +20,7 @@ session:
 
 extensions:
     translation: Kdyby\Translation\DI\TranslationExtension
+    webloader: WebLoader\Nette\Extension
 
 services:
     - Model\BugReport
@@ -39,11 +40,15 @@ services:
     - Model\PreachersManager
     - Model\FrontPageManager
     - App\RouterFactory
+    webDir: App\Services\WebDir(%wwwDir%)
     router: @App\RouterFactory::createRouter
     nette.latteFactory:
         setup:
             - setTempDirectory(null)
     authenticator:  Model\UserManager
+    wlCssFilter: WebLoader\Filter\CssUrlsFilter(%wwwDir%)
+    lessFilter: WebLoader\Filter\LessFilter
+    jwlCssMinFilter: Joseki\Webloader\CssMinFilter
 
 translation:
     default: en
