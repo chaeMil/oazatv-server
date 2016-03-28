@@ -36,18 +36,20 @@ class BlocksPresenter extends BasePresenter {
     public function renderDefault() {
         
         $definitions = $this->frontPageManager->getBlocksDefinitions();
-        $response = array();        
+        $definitionsArray = array();        
         
         foreach($definitions as $definition) {
             
             $json2view = $this->loadBlockDefinition($definition['name']);
-            $response[] = $json2view;
+            $definitionsArray[] = array('name' => $definition['name'],
+                                'definition' => $json2view);
             
         }
         
-        $this->sendJson($response);
+        $response = array();
+        $response['definitions'] = $definitionsArray;
         
-        exit;
+        $this->sendJson($response);
         
     }
 }
