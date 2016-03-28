@@ -67,7 +67,7 @@ class MainPresenter extends BasePresenter {
                     ->createLocalizedVideoObject($this->lang, $video);
         }
         
-        $newestAlbums = $this->photosManager->getAlbumsFromDB(0, 8);
+        $newestAlbums = $this->photosManager->getAlbumsFromDB(0, 16);
         $templateNewestAlbums = null;
         
         foreach($newestAlbums as $album) {
@@ -75,7 +75,7 @@ class MainPresenter extends BasePresenter {
                     ->createLocalizedAlbumThumbObject($this->lang, $album);
         }
         
-        $popularVideos = $this->analyticsManager->getPopularVideosIds(7, 8);
+        $popularVideos = $this->analyticsManager->getPopularVideosIds(7, 16);
         
         $templatePopularVideos = null;
         

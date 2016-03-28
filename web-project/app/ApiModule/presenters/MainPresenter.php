@@ -10,7 +10,13 @@ namespace App\ApiModule;
 
 use Nette,
  Nette\Application\Responses\JsonResponse,
- App\ApiModule\JsonApi;
+ Nette\Database\Context,
+ Model\VideoManager,
+ Model\PhotosManager,
+ Model\AnalyticsManager,
+ Model\CategoriesManager,
+ App\ApiModule\JsonApi,
+ Model\FrontPageManager;
 
 /**
  * Description of MainPresenter
@@ -18,10 +24,30 @@ use Nette,
  * @author Michal Mlejnek <chaemil72 at gmail.com>
  */
 class MainPresenter extends BasePresenter {
+    
+    private $videoManager;
+    private $photosManager;
+    private $analyticsManager;
+    private $categoriesManager;
+    
+    public function __construct(Nette\DI\Container $container,
+            Context $database,
+            VideoManager $videoManager,
+            PhotosManager $photosManager,
+            AnalyticsManager $analyticsManager,
+            CategoriesManager $categoriesManager) {
+        
+        parent::__construct($container, $database);
+        $this->videoManager = $videoManager;
+        $this->photosManager = $photosManager;
+        $this->analyticsManager = $analyticsManager;
+        $this->categoriesManager = $categoriesManager;
+    }
    
     public function renderDefault() {
         $response = array('apiVersion' => 2.0,
                           'appVersion' => VERSION);
+        
         
         $this->sendResponse(new JsonResponse($response));
     }
