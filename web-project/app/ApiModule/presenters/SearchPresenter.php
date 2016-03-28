@@ -21,15 +21,6 @@ use Nette,
 
 class SearchPresenter extends BasePresenter {
     
-    private $searchManager;
-    
-    public function __construct(Nette\DI\Container $container,
-            Context $database, SearchManager $searchManager) {
-        
-        parent::__construct($container, $database);
-        $this->searchManager = $searchManager;
-    }
-    
     public function renderDefault($id, $limit) {
         
         if ($limit == null) {

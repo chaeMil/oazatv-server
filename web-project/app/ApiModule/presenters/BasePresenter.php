@@ -14,7 +14,8 @@ use Nette,
  Model\VideoManager,
  Model\PhotosManager,
  Model\CategoriesManager,
- Model\AnalyticsManager;
+ Model\AnalyticsManager,
+ Model\SearchManager;
 
 /**
  * Description of MainPresenter
@@ -31,11 +32,13 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
     public $photosManager;
     public $analyticsManager;
     public $categoriesManager;
+    public $searchManager;
     
     public function __construct(Nette\DI\Container $container,
             Nette\Database\Context $database, ArchiveManager $archiveManager, 
             VideoManager $videoManager, PhotosManager $photosManager,
-            AnalyticsManager $analyticsManager, CategoriesManager $categoriesManager) {
+            AnalyticsManager $analyticsManager, CategoriesManager $categoriesManager,
+            SearchManager $searchManager) {
         
         parent::__construct();
         
@@ -46,6 +49,7 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
         $this->photosManager = $photosManager;
         $this->analyticsManager = $analyticsManager;
         $this->categoriesManager = $categoriesManager;
+        $this->searchManager = $searchManager;
         
         $routerLang = $this->getParameter('locale');
         $this->setupLanguage($this->container, $routerLang);
