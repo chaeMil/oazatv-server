@@ -24,12 +24,7 @@ use Nette,
  * @author Michal Mlejnek <chaemil72 at gmail.com>
  */
 class MainPresenter extends BasePresenter {
-    
-    private $videoManager;
-    private $photosManager;
-    private $analyticsManager;
-    private $categoriesManager;
-    
+
     public function __construct(Nette\DI\Container $container,
             Context $database,
             VideoManager $videoManager,

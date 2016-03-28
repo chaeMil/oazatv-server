@@ -11,8 +11,10 @@ namespace App\ApiModule;
 use Nette,
  Nette\Application\Responses\JsonResponse,
  Nette\Database\Context,
+  Model\PhotosManager,
  Model\VideoManager,
- Model\AnalyticsManager;
+ Model\AnalyticsManager,
+ Model\ArchiveManager;
 
 /**
  * Description of MainPresenter
@@ -21,15 +23,14 @@ use Nette,
  */
 class VideoPresenter extends BasePresenter {
     
-    private $videoManager;
     private $analyticsManager;
     
     public function __construct(Nette\DI\Container $container,
-            Context $database, VideoManager $videoManager,
+            Context $database, ArchiveManager $archiveManager, 
+            VideoManager $videoManager, PhotosManager $photosManager,
             AnalyticsManager $analyticsManager) {
         
-        parent::__construct($container, $database);
-        $this->videoManager = $videoManager;
+        parent::__construct($container, $database, $archiveManager, $videoManager, $photosManager);
         $this->analyticsManager = $analyticsManager;
     }
    

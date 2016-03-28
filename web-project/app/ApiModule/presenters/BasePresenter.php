@@ -9,7 +9,10 @@
 namespace App\ApiModule;
 
 use Nette,
- Nette\Application\Responses\JsonResponse;
+ Nette\Application\Responses\JsonResponse,
+ Model\ArchiveManager,
+ Model\VideoManager,
+ Model\PhotosManager;
 
 /**
  * Description of MainPresenter
@@ -21,14 +24,21 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
     public $container;
     public $database;
     public $lang;
+    public $archiveManager;
+    public $videoManager;
+    public $photosManager;
     
     public function __construct(Nette\DI\Container $container,
-            Nette\Database\Context $database) {
+            Nette\Database\Context $database, ArchiveManager $archiveManager, 
+            VideoManager $videoManager, PhotosManager $photosManager) {
         
         parent::__construct();
         
         $this->database = $database;
         $this->container = $container;
+        $this->archiveManager = $archiveManager;
+        $this->videoManager = $videoManager;
+        $this->photosManager = $photosManager;
         
         $routerLang = $this->getParameter('locale');
         $this->setupLanguage($this->container, $routerLang);
@@ -59,5 +69,41 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
         
         $this->sendResponse(new JsonResponse($errorJsonArray));
         
+    }
+    
+    public function createArchiveItem($item) {
+        if ($item['type'] == "video") {
+                
+            $videoUrlPrefix = SERVER . "/". VIDEOS_FOLDER . $item[VideoManager::COLUMN_ID] . "/";
+
+            $item[VideoManager::COLUMN_MP3_FILE] = $videoUrlPrefix . $item[VideoManager::COLUMN_MP3_FILE];
+            $item[VideoManager::COLUMN_MP4_FILE] = $videoUrlPrefix . $item[VideoManager::COLUMN_MP4_FILE];
+            $item[VideoManager::COLUMN_WEBM_FILE] = $videoUrlPrefix . $item[VideoManager::COLUMN_WEBM_FILE];
+            $item[VideoManager::COLUMN_THUMB_FILE] = $videoUrlPrefix . $item[VideoManager::COLUMN_THUMB_FILE];
+
+        }
+
+        if ($item['type'] == "album") {
+
+            $photoUrlPrefix = SERVER . "/". ALBUMS_FOLDER . $item['id'] . "/";
+
+            $coverPhotoId = $item['cover_photo_id'];
+
+            $coverPhotoThumbs = $this->photosManager->getPhotoThumbnails($coverPhotoId);
+            $coverPhotoOriginal = $this->photosManager->getPhotoFromDB($coverPhotoId);
+
+            $thumbs = array();
+
+            $thumbs['original_file'] = $photoUrlPrefix . $coverPhotoOriginal['file'];
+            $thumbs['thumb_128'] = SERVER . $coverPhotoThumbs['128'];
+            $thumbs['thumb_256'] = SERVER . $coverPhotoThumbs['256'];
+            $thumbs['thumb_512'] = SERVER . $coverPhotoThumbs['512'];
+            $thumbs['thumb_1024'] = SERVER . $coverPhotoThumbs['1024'];
+            $thumbs['thumb_2048'] = SERVER . $coverPhotoThumbs['2048'];
+
+            $item['thumbs'] = $thumbs;
+        }
+        
+        return $item;
     }
 }
