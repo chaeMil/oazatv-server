@@ -31,8 +31,13 @@ class AlbumPresenter extends BasePresenter {
     }
 
     public function renderView($id) {
-        $hash = $id; //id only in router, actualy its hash
-        $album = $this->photosManager->getAlbumFromDBbyHash($hash);
+        if (is_numeric($id)) {
+            $album = $this->photosManager->getAlbumFromDB($id);
+            $this->redirect("Album:view",  $album['hash']);
+        } else {
+            $hash = $id; //id only in router, actualy its hash
+            $album = $this->photosManager->getAlbumFromDBbyHash($hash);
+        }
         $tags = explode(",", $album['tags']);
         $tagsWithUsage = $this->tagsManager->tagsUsage($tags);
         $this->template->tags = $tagsWithUsage;

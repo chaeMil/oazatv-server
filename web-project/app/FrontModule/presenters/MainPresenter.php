@@ -36,6 +36,22 @@ class MainPresenter extends BasePresenter {
     
     public function renderDefault() {
         
+        //support legacy links
+        $params = $this->getHttpRequest()->getQuery();
+        if (isset($params['page'])) {
+            if ($params['page'] == 'vp') {
+                if (isset($params['v'])) {
+                    $this->redirect("Video:watch", $params['v']);
+                }
+            }
+            
+            if ($params['page'] == 'photo-album') {
+                if(isset($params['album'])) {
+                    $this->redirect("Album:view", $params['album']);
+                }
+            }
+        }
+        
         $this->template->rows = $this->frontPageManager->getRowsFromDB();
         $this->template->frontPageManager = $this->frontPageManager;
         $this->template->blockDefinitions = $this->frontPageManager->getBlocksDefinitions();
