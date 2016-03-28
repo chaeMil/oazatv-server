@@ -3,12 +3,10 @@
 namespace App\FrontModule;
 
 use Nette,
-    App\StringUtils,
-    App\Presenters\ErrorPresenter,
-    WebLoader,
-    CssMin,
-    Nette\Utils\Finder,
-    App\Services\WebDir;
+App\Services\WebDir,
+WebLoader,
+CssMin,
+Nette\Utils\Finder;
 
 
 /**
@@ -19,7 +17,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
     public $database;
     public $lang;
     public $container;
-    public $webDir;
+    private $webDir;
     
     /** @persistent */
     public $locale;
@@ -56,29 +54,50 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
     }
     
     protected function createComponentCss() {
-        $dir = $this->webDir->getPath('/');
-        $files = new WebLoader\FileCollection($this->webDir->getPath('/css'));
+        $dir = $this->webDir->getPath('');
+        $files = new WebLoader\FileCollection($dir);
         $files->addFiles(array(
-            $dir . '/bower_components/bootstrap/dist/css/bootstrap.css',
-            $dir . '/css/BootstrapXL.css',
-            $dir . '/bower_components/flexslider/flexslider.css',
-            $dir . '/bower_components/video.js/dist/video-js.css',
-            $dir . '/bower_components/photoswipe/dist/photoswipe.css',
-            $dir . '/bower_components/photoswipe/dist/default-skin/default-skin.css',
-            $dir . '/bower_components/justifiedGallery/dist/css/justifiedGallery.css',
+            $dir . '/assets/bower_components/bootstrap/dist/css/bootstrap.css',
+            $dir . '/assets/css/BootstrapXL.css',
+            $dir . '/assets/bower_components/flexslider/flexslider.css',
+            $dir . '/assets/bower_components/video.js/dist/video-js.css',
+            $dir . '/assets/bower_components/photoswipe/dist/photoswipe.css',
+            $dir . '/assets/bower_components/photoswipe/dist/default-skin/default-skin.css',
+            $dir . '/assets/bower_components/justifiedGallery/dist/css/justifiedGallery.css',
             ));
-
-        $files->addWatchFiles(Finder::findFiles('*.css', '*.less')->in($dir . '/bower_components/'));
 
         $compiler = WebLoader\Compiler::createCssCompiler($files, $dir . '/webtemp');
 
-        /*$compiler->addFilter(new WebLoader\Filter\VariablesFilter(array('foo' => 'bar')));
         $compiler->addFilter(function ($code) {
-            return cssmin::minify($code, "remove-last-semicolon");
-        });*/
+            return cssmin::minify($code);
+        });
 
         $control = new WebLoader\Nette\CssLoader($compiler, $this->template->basePath. '/webtemp');
         $control->setMedia('screen');
+
+        return $control;
+    }
+    
+     protected function createComponentJs() {
+        $dir = $this->webDir->getPath('');
+        $files = new WebLoader\FileCollection($dir);
+        $files->addFiles(array(
+            $dir . '/assets/bower_components/jquery/dist/jquery.min.js',
+            $dir . '/assets/bower_components/bootstrap/dist/js/bootstrap.min.js',
+            $dir . '/assets/bower_components/video.js/dist/video.min.js',
+            $dir . '/assets/js/jquery.bootstrap-autohidingnavbar.min.js',
+            $dir . '/assets/bower_components/photoswipe/dist/photoswipe.min.js',
+            $dir . '/assets/bower_components/photoswipe/dist/photoswipe-ui-default.min.js',
+            $dir . '/assets/bower_components/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+            $dir . '/assets/bower_components/masonry/dist/masonry.pkgd.min.js',
+            $dir . '/assets/js/x-tag-components.js',
+            $dir . '/assets/js/jquery.tagcloud.js/jquery.tagcloud.js',
+            $dir . '/assets/js/utils.js'
+            ));
+
+        $compiler = WebLoader\Compiler::createJsCompiler($files, $dir . '/webtemp');
+
+        $control = new WebLoader\Nette\JavaScriptLoader($compiler, $this->template->basePath. '/webtemp');
 
         return $control;
     }

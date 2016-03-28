@@ -8,7 +8,8 @@ Model\VideoManager,
 Model\PhotosManager,
 Model\AnalyticsManager,
 Model\CategoriesManager,
-Model\FrontPageManager;
+Model\FrontPageManager,
+WebLoader\Nette\LoaderFactory;
 
 
 class MainPresenter extends BasePresenter {
@@ -20,13 +21,14 @@ class MainPresenter extends BasePresenter {
     private $frontPageManager;
     
     public function __construct(Nette\DI\Container $container,
-            Context $database, VideoManager $videoManager,
+            Context $database, LoaderFactory $webLoader,
+            VideoManager $videoManager,
             PhotosManager $photosManager,
             AnalyticsManager $analyticsManager,
             CategoriesManager $categoriesManager,
             FrontPageManager $frontPageManager) {
         
-        parent::__construct($container, $database);
+        parent::__construct($container, $database,$webLoader);
         $this->videoManager = $videoManager;
         $this->photosManager = $photosManager;
         $this->analyticsManager = $analyticsManager;

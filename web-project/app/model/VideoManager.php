@@ -228,10 +228,10 @@ class VideoManager extends BaseModel {
     }
 
     public function returnMissingThumbs() {
-        return array(self::THUMB_1024 => "img/missing-thumb.png",
-                self::THUMB_512 => "img/missing-thumb.png",
-                self::THUMB_256 => "img/missing-thumb.png",
-                self::THUMB_128 => "img/missing-thumb.png");
+        return array(self::THUMB_1024 => "assets/img/missing-thumb.png",
+                self::THUMB_512 => "assets/img/missing-thumb.png",
+                self::THUMB_256 => "assets/img/missing-thumb.png",
+                self::THUMB_128 => "assets/img/missing-thumb.png");
     }
 
     public function getThumbnails($id) {

@@ -29,7 +29,7 @@
                 </button>*}
 
                 <a class="navbar-brand" href="{$basePath}/">
-                    <img class="logo" src="{$basePath}/img/logo.png"/>
+                    <img class="logo" src="{$basePath}/assets/img/logo.png"/>
                     <span class="text hidden-xs">Oáza.tv</span>
                 </a>
                     
@@ -119,17 +119,8 @@
 
 
     {block scripts}
-        <script src="{$basePath}/bower_components/jquery/dist/jquery.min.js"></script>
-        <script src="{$basePath}/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="{$basePath}/bower_components/video.js/dist/video.min.js"></script>
-        <script src="{$basePath}/js/jquery.bootstrap-autohidingnavbar.min.js"></script>
-        <script src="{$basePath}/bower_components/photoswipe/dist/photoswipe.min.js"></script>
-        <script src="{$basePath}/bower_components/photoswipe/dist/photoswipe-ui-default.min.js"></script>
-        <script src="{$basePath}/bower_components/justifiedGallery/dist/js/jquery.justifiedGallery.min.js"></script>
-        <script src="{$basePath}/bower_components/masonry/dist/masonry.pkgd.min.js"></script>
-        <script src="{$basePath}/js/x-tag-components.js"></script>
-        <script src="{$basePath}/js/jquery.tagcloud.js/jquery.tagcloud.js"></script>
-        <script src="{$basePath}/js/utils.js"></script>
+    
+        {control js}
 
         <script>
             //autohidding navbar for mobile devices

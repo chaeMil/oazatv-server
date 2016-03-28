@@ -50,6 +50,7 @@ services:
     lessFilter: WebLoader\Filter\LessFilter
     jwlCssMinFilter: Joseki\Webloader\CssMinFilter
 
+
 translation:
     default: en
     whitelist: [cs, en]
