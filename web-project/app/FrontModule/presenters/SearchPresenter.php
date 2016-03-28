@@ -19,21 +19,27 @@ class SearchPresenter extends BasePresenter {
         $this->searchManager = $searchManager;
     }
     
-    public function renderDefault($id = 0, $q = '') {
+    public function renderDefault($page = 0, $q = '') {
         
-        $page = $id;
-        
-        $search = $this->searchManager->search($q, 500, $page * 16);
-        
-        $paginator = new Nette\Utils\Paginator;
-        $paginator->setItemsPerPage(16);
-        $paginator->setPage($page);
-        $paginator->setItemCount(count($search['videos']) + count($search['albums']));
+        $limit = 32;
+        $search = $this->searchManager->search($q, 999);
         
         $mergedSearch = array_merge($search['videos'], $search['albums']);
         usort($mergedSearch, array($this, 'sortItemsByDate'));
+        
+        $searchPage = $page;
+        if ($page != 0) {
+            $searchPage = $page -1;
+        }
+        $mergedLimitedSearch = array_slice($mergedSearch, $searchPage * $limit, $limit);
+        
+        $paginator = new Nette\Utils\Paginator;
+        $paginator->setItemsPerPage($limit);
+        $paginator->setPage($page);
+        $paginator->setItemCount(count($mergedSearch));
 
-        $this->template->search = $mergedSearch;
+        $this->template->q = $q;
+        $this->template->search = $mergedLimitedSearch;
         $this->template->paginator = $paginator;
         $this->template->page = $paginator->getPage();
         $this->template->pages = $paginator->getPageCount();
@@ -54,7 +60,7 @@ class SearchPresenter extends BasePresenter {
     
     private function sortItemsByDate($a, $b) {
 	if($a['date'] == $b['date']){ return 0 ; }
-	return ($a['date'] < $b['date']) ? -1 : 1;
+	return ($a['date'] > $b['date']) ? -1 : 1;
 }
     
 }

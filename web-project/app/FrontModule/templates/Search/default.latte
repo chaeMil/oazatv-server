@@ -4,6 +4,7 @@
 
     {if isset($search)}
         {foreach $search as $item}
+            
             {if $item['type'] == 'video'}
                 <div class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
                     <a n:href="Video:watch $item['hash'], true">
@@ -52,12 +53,12 @@
                 {if $pages > 1}
                     {if $page > 0}
                         <li>
-                            <a href="{$basePath}/archive/page/{$page-1}">&laquo;</a>
+                            <a href="{$basePath}/search/?page={$page-1}&q={$q}">&laquo;</a>
                         </li>
                     {/if}
                         {if $page >= 4}
                             <li>
-                                <a href="{$basePath}/archive/page/1">1</a>
+                                <a href="{$basePath}/search/?page=1&q={$q}">1</a>
                             </li>
                             <li>
                                 <a>...</a>
@@ -67,24 +68,24 @@
                     {for $x = $page; $x < $page + $limit + 1; $x++}
                         {if $page <= 0}
                             <li class="{if $x == $page}active{/if}">
-                                <a href="{$basePath}/archive/page/{$x}">{$x}</a>
+                                <a href="{$basePath}/search/?page={$x}&?q={$q}">{$x}</a>
                             </li>
                         {else}
                             {if $x == $page}
                                 {if $page != 1}
                                     <li>
-                                        <a href="{$basePath}/archive/page/{$x-1}">{$x-1}</a>
+                                        <a href="{$basePath}/search/?page={$x-1}&q={$q}">{$x-1}</a>
                                     </li>
                                 {/if}
                             {/if}
                             <li class="{if $x == $page}active{/if}">
-                                <a href="{$basePath}/archive/page/{$x}">{$x}</a>
+                                <a href="{$basePath}/search/?page={$x}&q={$q}">{$x}</a>
                             </li>
                         {/if}
                     {/for}
                     {if $pages > $page + 1}
                         <li>
-                            <a href="{$basePath}/archive/page/{$page+1}">&raquo;</a>
+                            <a href="{$basePath}/search/?page={$page+1}&q={$q}">&raquo;</a>
                         </li>
                     {/if}
                 {/if}

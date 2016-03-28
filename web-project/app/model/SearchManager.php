@@ -36,7 +36,7 @@ class SearchManager extends BaseModel {
     public function search($userInput, $limit = 5, $offset = 0, $lang = 'cs') {
 
         $hashTag = false;
-
+        
         if (strlen($userInput) >= 3) {
             
             if (substr($userInput, 0, 1) === "#") {
