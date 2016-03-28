@@ -60,7 +60,6 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         $files = new WebLoader\FileCollection($this->webDir->getPath('/css'));
         $files->addFiles(array(
             $dir . '/bower_components/bootstrap/dist/css/bootstrap.css',
-            $dir . '/bower_components/font-awesome/css/font-awesome.css',
             $dir . '/css/BootstrapXL.css',
             $dir . '/bower_components/flexslider/flexslider.css',
             $dir . '/bower_components/video.js/dist/video-js.css',
