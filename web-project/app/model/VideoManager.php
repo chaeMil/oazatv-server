@@ -104,6 +104,18 @@ class VideoManager extends BaseModel {
                     ->fetch();
         }
     }
+    
+    public function getVideoFromDBtoAPI($id) {
+        
+        $video = self::$database->table(self::TABLE_NAME)
+                ->select('id')
+                ->where(array(self::COLUMN_PUBLISHED => 1))
+                ->fetch();
+        
+        $arrayItemFromDB = $this->getVideoFromDB($video['id'])->toArray();
+        $arrayItemFromDB['type'] = 'video';
+        return $arrayItemFromDB;
+    }
 
     public function getVideoFromDBbyHash($hash, $published = 1) {
 
@@ -167,6 +179,25 @@ class VideoManager extends BaseModel {
                 ->order($order);
         }
 
+    }
+    
+    public function getVideosFromDBtoAPI($from, $count, $order = "date DESC") {
+        
+        $videos = self::$database->table(self::TABLE_NAME)
+                ->select('*')
+                ->where(array(self::COLUMN_PUBLISHED => 1))
+                ->limit($count, $from)
+                ->order($order);
+        
+        $outputArray = array();
+        
+        foreach($videos as $video) {
+            $arrayItemFromDB = $this->getVideoFromDB($video['id'])->toArray();
+            $arrayItemFromDB['type'] = 'video';
+            $outputArray[] = $arrayItemFromDB;
+        }
+        
+        return $outputArray;
     }
 
 

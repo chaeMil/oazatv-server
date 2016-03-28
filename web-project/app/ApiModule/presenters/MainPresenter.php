@@ -27,10 +27,30 @@ class MainPresenter extends BasePresenter {
         $response = array('apiVersion' => 2.0,
                           'appVersion' => VERSION);
         
-        $newestVideos = $this->videoManager->getVideosFromDB(0, 16);
-        $newestAlbums = $this->photosManager->getAlbumsFromDB(0, 16);
-        $popularVideos = $this->analyticsManager->getPopularVideosIds(7, 16);
+        $newestVideos = $this->videoManager->getVideosFromDBtoAPI(0, 16);
+        $newestAlbums = $this->photosManager->getAlbumsFromDBtoAPI(0, 16);
+        $popularVideosIds = $this->analyticsManager->getPopularVideosIds(7, 16);
+        
+        $popularVideos = array();
+        foreach($popularVideosIds as $video) {
+            $popularVideos[] = $this->videoManager->getVideoFromDBtoAPI($video['id']);
+        }
                 
+        $response['newestVideos'] = array();
+        foreach($newestVideos as $video) {
+            $response['newestVideos'][] = $this->createArchiveItem($video);
+        }
+        
+        $response['newestAlbums'] = array();
+        foreach($newestAlbums as $album) {
+            $response['newestAlbums'][] = $this->createArchiveItem($album);
+        }
+        
+        $response['popularVideos'] = array();
+        foreach($popularVideos as $video) {
+            $response['popularVideos'][] = $this->createArchiveItem($video);
+        }
+        
         
         $this->sendResponse(new JsonResponse($response));
     }

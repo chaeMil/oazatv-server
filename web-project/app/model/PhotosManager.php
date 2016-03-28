@@ -136,7 +136,7 @@ class PhotosManager {
     }
 
     public function getAlbumsFromDB($from, $count, $published = 1,
-            $order = self::COLUMN_DATE) {
+        $order = self::COLUMN_DATE) {
 
         if($published != 2) {
             return $this->database->table(self::TABLE_NAME_ALBUMS)
@@ -150,6 +150,24 @@ class PhotosManager {
                 ->limit($count, $from)
                 ->order($order);
         }
+    }
+    
+     public function getAlbumsFromDBtoAPI($from, $count, $order = self::COLUMN_DATE) {
+
+        $albums = $this->database->table(self::TABLE_NAME_ALBUMS)
+                ->select('id')
+                ->limit($count, $from)
+                ->order($order);
+        
+        $outputArray = array();
+        
+        foreach($albums as $album) {
+            $arrayItemFromDB = $this->getAlbumFromDB($album['id'])->toArray();
+            $arrayItemFromDB['type'] = 'album';
+            $outputArray[] = $arrayItemFromDB;
+        }
+        
+        return $outputArray;
     }
 
     public function savePhotoToDB($values) {

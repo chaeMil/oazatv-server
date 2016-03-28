@@ -8,12 +8,7 @@
 
 namespace App\ApiModule;
 
-use Nette,
- Nette\Application\Responses\JsonResponse,
- Nette\Database\Context,
- Model\ArchiveManager,
- Model\VideoManager,
- Model\PhotosManager;
+use Nette;
 
 /**
  * Description of MainPresenter
