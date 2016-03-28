@@ -22,7 +22,7 @@
     "justifiedGallery": "justified-gallery#~3.6.1",
     "mixitup": "~2.1.10",
     "photoswipe": "~4.1.1",
-    "video.js": "videojs#~5.4.6",
+    "video.js": "videojs#~5.8.6",
     "masonry": "^4.0.0"
   }
 }

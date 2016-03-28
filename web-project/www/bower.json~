@@ -1,0 +1,28 @@
+{
+  "name": "oazatv",
+  "version": "2.0",
+  "homepage": "https://github.com/chaeMil/oazatv-server",
+  "authors": [
+    "Michal Mlejnek <chaemil72@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootbox.js": "bootbox#~4.4.0",
+    "bootstrap": "~3.3.5",
+    "flexslider": "~2.5.0",
+    "font-awesome": "~4.4.0",
+    "jquery": "~2.2.0",
+    "justifiedGallery": "justified-gallery#~3.6.1",
+    "mixitup": "~2.1.10",
+    "photoswipe": "~4.1.1",
+    "video.js": "videojs#~5.4.6",
+    "masonry": "^4.0.0"
+  }
+}
