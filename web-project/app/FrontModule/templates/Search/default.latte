@@ -8,7 +8,9 @@
                 <div class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
                     <a n:href="Video:watch $item['hash'], true">
                         <div class="thumb"
-                              style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});">
+                             {if isset($item['thumbs']) && isset($item['thumbs']['512'])}
+                              style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});"
+                                {/if}>
                         </div>
                     </a>
                     <div class="info">
@@ -25,7 +27,9 @@
                 <div class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
                     <a n:href="Album:view $item['hash']">
                         <div class="thumb"
-                              style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});">
+                             {if isset($item['thumbs']) && isset($item['thumbs']['512'])}
+                              style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});"
+                               {/if}>
                         </div>
                     </a>
                     <div class="info">
