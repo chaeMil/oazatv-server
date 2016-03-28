@@ -4,9 +4,8 @@ namespace App\FrontModule;
 
 use Nette,
 App\Services\WebDir,
-WebLoader,
 CssMin,
-Nette\Utils\Finder;
+WebLoader;
 
 
 /**
@@ -18,6 +17,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
     public $lang;
     public $container;
     private $webDir;
+    private $neonAdapter;
     
     /** @persistent */
     public $locale;
@@ -30,6 +30,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         parent::__construct();
         $this->database = $database;
         $this->container = $container;
+        $this->neonAdapter = new Nette\DI\Config\Adapters\NeonAdapter();
         
     }
     
@@ -53,18 +54,21 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         $this->webDir = $webDir;
     }
     
+    private function getCssFilesToCompile() {
+        $neon = $this->neonAdapter->load(__DIR__ . '/../../config/assets.neon');
+        return $neon['assets']['css'];
+    }
+    
+    private function getJsFilesToCompile() {
+        $neon = $this->neonAdapter->load(__DIR__ . '/../../config/assets.neon');
+        return $neon['assets']['js'];
+    }
+    
     protected function createComponentCss() {
         $dir = $this->webDir->getPath('');
+        $cssFiles = $this->getCssFilesToCompile();
         $files = new WebLoader\FileCollection($dir);
-        $files->addFiles(array(
-            $dir . '/assets/bower_components/bootstrap/dist/css/bootstrap.css',
-            $dir . '/assets/css/BootstrapXL.css',
-            $dir . '/assets/bower_components/flexslider/flexslider.css',
-            $dir . '/assets/bower_components/video.js/dist/video-js.css',
-            $dir . '/assets/bower_components/photoswipe/dist/photoswipe.css',
-            $dir . '/assets/bower_components/photoswipe/dist/default-skin/default-skin.css',
-            $dir . '/assets/bower_components/justifiedGallery/dist/css/justifiedGallery.css',
-            ));
+        $files->addFiles($cssFiles);
 
         $compiler = WebLoader\Compiler::createCssCompiler($files, $dir . '/webtemp');
 
@@ -80,20 +84,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
     
      protected function createComponentJs() {
         $dir = $this->webDir->getPath('');
+        $jsFiles = $this->getJsFilesToCompile();
         $files = new WebLoader\FileCollection($dir);
-        $files->addFiles(array(
-            $dir . '/assets/bower_components/jquery/dist/jquery.min.js',
-            $dir . '/assets/bower_components/bootstrap/dist/js/bootstrap.min.js',
-            $dir . '/assets/bower_components/video.js/dist/video.min.js',
-            $dir . '/assets/js/jquery.bootstrap-autohidingnavbar.min.js',
-            $dir . '/assets/bower_components/photoswipe/dist/photoswipe.min.js',
-            $dir . '/assets/bower_components/photoswipe/dist/photoswipe-ui-default.min.js',
-            $dir . '/assets/bower_components/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
-            $dir . '/assets/bower_components/masonry/dist/masonry.pkgd.min.js',
-            $dir . '/assets/js/x-tag-components.js',
-            $dir . '/assets/js/jquery.tagcloud.js/jquery.tagcloud.js',
-            $dir . '/assets/js/utils.js'
-            ));
+        $files->addFiles($jsFiles);
 
         $compiler = WebLoader\Compiler::createJsCompiler($files, $dir . '/webtemp');
 
