@@ -6,7 +6,7 @@
             </span>
             <ul>
                 <li n:foreach="$search['videos'] as $video">
-                    <a n:href="Video:watch $video['hash']">
+                    <a n:href="Video:watch $video['hash'], true">
                         <div class="row">
                             <div class="col-xs-4 col-sm-3">
                                 <div style="background-image: url('{$video['thumb_file']}');"

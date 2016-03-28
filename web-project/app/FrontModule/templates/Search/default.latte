@@ -2,67 +2,43 @@
 
 <div class="container container-without-padding">
 
-    {if isset($search['videos'])}
-
-        <div class="row">
-            <div class="col-xs-12">
-                <h2 class="text-capitalize">
-                  <button id="toggleVideos" type="button" class="btn btn-default btn-lg pull-left">
-                      <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-                  </button>
-                  &nbsp;{_frontend.basic.videos}
-                </h2>
-            </div>
-        </div>
-
-        <div class="row videos-box">
-            <div n:foreach="$search['videos'] as $item" class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                <a n:href="Video:watch $item['hash'], true">
-                    <div class="thumb"
-                          style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});">
+    {if isset($search)}
+        {foreach $search as $item}
+            {if $item['type'] == 'video'}
+                <div class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <a n:href="Video:watch $item['hash'], true">
+                        <div class="thumb"
+                              style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});">
+                        </div>
+                    </a>
+                    <div class="info">
+                        <span class="name">{$item['name']}</span>
+                        <span class="date">{$item['date']}</span>
+                        {if ($item['type'] == 'video')}
+                            <span class="views">{$item['views']} {_frontend.basic.views}</span>
+                        {/if}
                     </div>
-                </a>
-                <div class="info">
-                    <span class="name">{$item['name']}</span>
-                    <span class="date">{$item['date']}</span>
-                    {if ($item['type'] == 'video')}
-                        <span class="views">{$item['views']} {_frontend.basic.views}</span>
-                    {/if}
                 </div>
-            </div>
-        </div>
-    {/if}
-
-    {if isset($search['albums'])}
-
-
-        <div class="row">
-          <div class="col-xs-12">
-              <h2 class="text-capitalize">
-                <button id="toggleAlbums" type="button" class="btn btn-default btn-lg pull-left">
-                    <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-                </button>
-                &nbsp;{_frontend.basic.albums}
-              </h2>
-          </div>
-        </div>
-
-        <div class="row albums-box">
-            <div n:foreach="$search['albums'] as $item" class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                <a n:href="Album:view $item['hash']">
-                    <div class="thumb"
-                          style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});">
+            {/if}
+            
+            {if $item['type'] == 'album'}
+                <div class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <a n:href="Album:view $item['hash']">
+                        <div class="thumb"
+                              style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});">
+                        </div>
+                    </a>
+                    <div class="info">
+                        <span class="name">{$item['name']}</span>
+                        <span class="date">{$item['date']}</span>
+                        {if ($item['type'] == 'video')}
+                            <span class="views">{$item['views']} {_frontend.basic.views}</span>
+                        {/if}
                     </div>
-                </a>
-                <div class="info">
-                    <span class="name">{$item['name']}</span>
-                    <span class="date">{$item['date']}</span>
-                    {if ($item['type'] == 'video')}
-                        <span class="views">{$item['views']} {_frontend.basic.views}</span>
-                    {/if}
                 </div>
-            </div>
-        </div>
+            {/if}
+                
+        {/foreach}
     {/if}
 
     <!-- Pagination -->

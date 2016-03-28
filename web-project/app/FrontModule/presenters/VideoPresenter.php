@@ -54,7 +54,7 @@ class VideoPresenter extends BasePresenter {
     public function renderWatch($id, $searched) {
         $hash = $id; //id only in router, actualy its hash
         $video = $this->videoManager->getVideoFromDBbyHash($hash);
-        if(isset($searched)) {
+        if($searched) {
             $this->analyticsManager->countVideoSearchClick($video['id'], AnalyticsManager::WEB);
         }
 

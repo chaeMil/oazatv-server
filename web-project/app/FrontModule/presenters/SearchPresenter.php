@@ -30,7 +30,10 @@ class SearchPresenter extends BasePresenter {
         $paginator->setPage($page);
         $paginator->setItemCount(count($search['videos']) + count($search['albums']));
         
-        $this->template->search = $search;
+        $mergedSearch = array_merge($search['videos'], $search['albums']);
+        usort($mergedSearch, array($this, 'sortItemsByDate'));
+
+        $this->template->search = $mergedSearch;
         $this->template->paginator = $paginator;
         $this->template->page = $paginator->getPage();
         $this->template->pages = $paginator->getPageCount();
@@ -48,5 +51,10 @@ class SearchPresenter extends BasePresenter {
         $this->template->q = $q;
         
     }
+    
+    private function sortItemsByDate($a, $b) {
+	if($a['date'] == $b['date']){ return 0 ; }
+	return ($a['date'] < $b['date']) ? -1 : 1;
+}
     
 }
