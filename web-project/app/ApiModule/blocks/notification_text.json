@@ -1,0 +1,7 @@
+{
+    "widget": "TextView",
+    "properties": [
+        {"name":"textSize", "type": "dimen", "value":"13sp"},
+        {"name":"text", "type": "string", "value":"<<<text>>>"}
+    ]
+}

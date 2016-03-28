@@ -25,4 +25,5 @@ class MainPresenter extends BasePresenter {
         
         $this->sendResponse(new JsonResponse($response));
     }
+    
 }
