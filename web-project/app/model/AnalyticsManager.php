@@ -116,4 +116,12 @@ class AnalyticsManager {
         }
     }
     
+    public function getAliveUsersFromPage($page, $minutes) {
+        return $this->database->table(self::TABLE_NAME_ANALYTICS_ALIVE_USERS)
+                ->select('*')
+                ->where(self::COLUMN_PAGE.' LIKE ?', '%'.$page.'%')
+                ->where(self::COLUMN_ALIVE.' >= ?', time() - 60 * $minutes)
+                ->fetchAll();
+    }
+    
 }

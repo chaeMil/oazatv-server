@@ -4,7 +4,8 @@ namespace App\AdminModule;
 
 use Nette,
  Nette\Application\UI\Form,
- Model\LiveStreamManager;
+ Model\LiveStreamManager,
+ Model\AnalyticsManager;
 
 /**
  * Presenter for all common sites in administration
@@ -15,15 +16,20 @@ class LiveStreamPresenter extends BaseSecuredPresenter {
     
     public $database;
     public $liveStreamManager;
+    public $analyticsManager;
 
     function __construct(Nette\Database\Context $database, 
-            LiveStreamManager $liveStreamManager) {
+            LiveStreamManager $liveStreamManager,
+            AnalyticsManager $analyticsManager) {
         $this->database = $database;
         $this->liveStreamManager = $liveStreamManager;
+        $this->analyticsManager = $analyticsManager;
     }
 
     public function renderDefault() {
         $this->getTemplateVariables($this->getUser()->getId());
+        $aliveUsers = $this->analyticsManager->getAliveUsersFromPage("live-stream", 1);
+        $this->template->aliveUsers = $aliveUsers;
     }
     
     public function createComponentValuesForm() {        
@@ -33,7 +39,7 @@ class LiveStreamPresenter extends BaseSecuredPresenter {
         
         $translations = array(
             'on_air' => 'OnAir',
-            'youtube_link' => 'Youtube video ID např.: M7lc1UVf-VE',
+            'youtube_link' => 'Youtube ID',
             'bottom_text_cs' => 'Text pod přehrávačem (cz)',
             'bottom_text_en' => 'Text pod přehrávačem (en)',);
         
