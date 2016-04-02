@@ -27,6 +27,7 @@ class LiveStreamPresenter extends BasePresenter {
 
     public function renderDefault() {
         $this->template->values = $this->liveStreamManager->loadValues();
+        
     }
     
     public function actionAjaxRefresh() {

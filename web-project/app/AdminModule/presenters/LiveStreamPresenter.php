@@ -32,16 +32,14 @@ class LiveStreamPresenter extends BaseSecuredPresenter {
         $values = $this->liveStreamManager->loadValues();
         
         $translations = array(
+            'on_air' => 'OnAir',
             'youtube_link' => 'Youtube video ID např.: M7lc1UVf-VE',
-            'top_text_cs' => 'Text nad přehrávačem (cz)',
-            'top_text_en' => 'Text nad přehrávačem (en)',
             'bottom_text_cs' => 'Text pod přehrávačem (cz)',
             'bottom_text_en' => 'Text pod přehrávačem (en)',);
         
         $types = array(
+            'on_air' => 'on_air',
             'youtube_link' => 'text',
-            'top_text_cs' => 'textarea',
-            'top_text_en' => 'textarea',
             'bottom_text_cs' => 'textarea',
             'bottom_text_en' => 'textarea',);
         
@@ -49,14 +47,20 @@ class LiveStreamPresenter extends BaseSecuredPresenter {
             
             switch ($types[$key]) {
                 case 'text':   
-                $form->addText($key, $translations[$key])
-                    ->setValue($value)
-                    ->setAttribute("class", "form-control");
-                    break;
+                    $form->addText($key, $translations[$key])
+                        ->setValue($value)
+                        ->setAttribute("class", "form-control");
+                        break;
                 case 'textarea':
-                $form->addTextArea($key, $translations[$key])
-                    ->setValue($value)
-                    ->setAttribute("class", "form-control ckeditor");
+                    $form->addTextArea($key, $translations[$key])
+                        ->setValue($value)
+                        ->setAttribute("class", "form-control ckeditor");
+                    break;
+                case 'on_air':
+                    $form->addSelect($key, $translations[$key])
+                        ->setItems(array('online' => 'online', 'offline' => 'offline'))
+                        ->setValue($value)
+                        ->setAttribute("class", "form-control");
                     break;
             }
             

@@ -12,6 +12,7 @@
  * @author chaemil
  */
 namespace Model;
+
 /**
  * Description of VideoManager
  *
@@ -19,15 +20,18 @@ namespace Model;
  */
 class LiveStreamManager{   
     
-    private static $configFile = __DIR__.'/../config/live_stream.json';
-    
+    const
+        CONFIG_FILE = __DIR__.'/../config/live_stream.json';
+
     public function loadValues() {
-        return json_decode(file_get_contents(self::$configFile), true);
+        return json_decode(file_get_contents(self::CONFIG_FILE), true);
     }
     
     public function saveValues($values) {
         $jsonValues = json_encode($values);
-        file_put_contents(self::$configFile, $jsonValues);
+        file_put_contents(self::CONFIG_FILE, $jsonValues);
     }
+    
+    
     
 }

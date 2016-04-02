@@ -23,8 +23,7 @@
 		"dg/adminer-custom": "^1.6",
 		"kdyby/translation": "^2.2",
 		"janmarek/webloader": "^2.5",
-		"joseki/webloader-filters": "^1.1",
-		"google/apiclient": "1.0.*@beta"
+		"joseki/webloader-filters": "^1.1"
 	},
 	"require-dev": {
 		"nette/tester": "~1.4"
