@@ -39,6 +39,7 @@ services:
     - Model\ConversionProfilesManager
     - Model\PreachersManager
     - Model\FrontPageManager
+    - Model\LiveStreamManager
     - App\RouterFactory
     webDir: App\Services\WebDir(%wwwDir%)
     router: @App\RouterFactory::createRouter
