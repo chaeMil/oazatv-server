@@ -59,7 +59,7 @@ translation:
     debuger: on
 
 constants:
-    VERSION: "0.9.10 (2016-03-28)"
+    VERSION: "0.9.11 (2016-04-02)"
     DB_PREFIX: ""
     DB_ADMIN_PREFIX: "admin_"
     ADMIN_UPLOADED_DIR: "uploaded/"
