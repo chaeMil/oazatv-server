@@ -22,7 +22,7 @@ class LiveStreamManager{
     private static $configFile = __DIR__.'/../config/live_stream.json';
     
     public function loadValues() {
-        return json_decode(file_get_contents(self::$configFile));
+        return json_decode(file_get_contents(self::$configFile), true);
     }
     
     public function saveValues($values) {
