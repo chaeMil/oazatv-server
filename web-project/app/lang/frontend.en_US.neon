@@ -12,6 +12,7 @@ basic:
     songbook: "Songbook"
     categories: "Categories"
     nothing_found: "Nothing found"
+    on_air_offline: "Offline"
 search:
     more: "more results"
 homepage:

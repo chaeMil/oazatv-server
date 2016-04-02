@@ -31,6 +31,10 @@
                 <a class="navbar-brand" href="{$basePath}/">
                     <img class="logo" src="{$basePath}/assets/img/logo.png"/>
                     <span class="text hidden-xs">Oáza.tv</span>
+                    <div class="onair offline"> 
+                        <div class="dot"></div>
+                        OnAir 
+                    </div>
                 </a>
                     
                     
@@ -229,6 +233,30 @@
                     }
                 });
             }
+            
+        </script>
+        
+        <script>
+            $(document).ready(function() {
+               
+                onAir();
+                setInterval(function() {
+                    onAir();
+                }, 10 * 1000);
+
+                function onAir() {
+                    $.get( {plink "LiveStream:ajaxRefresh"}, function(response) {
+                        var onair = response['on_air'];
+                        var onairElement = $('.onair');
+                        
+                        onairElement.removeClass('online offline')
+                            .addClass(onair);
+                    
+                        console.log(onair);
+                    });
+                }
+            });
+            
         </script>
     {/block}
 

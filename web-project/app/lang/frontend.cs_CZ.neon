@@ -12,6 +12,7 @@ basic:
     songbook: "Zpěvník"
     categories: "Kategorie"
     nothing_found: "Nic nenalezeno"
+    on_air_offline: "Offline"
 search:
     more: "další výsledky"
 homepage:

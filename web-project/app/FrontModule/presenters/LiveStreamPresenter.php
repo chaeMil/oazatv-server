@@ -26,8 +26,26 @@ class LiveStreamPresenter extends BasePresenter {
     }
 
     public function renderDefault() {
-        $this->template->values = $this->liveStreamManager->loadValues();
+        $values = $this->liveStreamManager->loadValues();
+        $this->template->values = $values;
         
+        switch($values['on_air']) {
+            case 'online':
+                $this->template->onAir = true;
+                break;
+            case 'offline':
+                $this->template->onAir = false;
+                break;
+        }
+        
+        switch($this->lang) {
+            case 'cs':
+                $this->template->text = $values['bottom_text_cs'];
+                break;
+            case 'en':
+                $this->template->text = $values['bottom_text_en'];
+                break;
+        }
     }
     
     public function actionAjaxRefresh() {

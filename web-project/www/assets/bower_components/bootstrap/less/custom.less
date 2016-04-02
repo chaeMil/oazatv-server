@@ -1,3 +1,7 @@
+html,body{
+    height: 100%
+}
+
 .fab-buttons {
     position: fixed;
     bottom: 20px;
@@ -345,6 +349,83 @@
 }
 
 
+.onair {
+    
+    margin-top: -24px;
+    
+    &.offline {
+        background-image: url('../assets/img/offline.png');
+        background-size: 100% 100%;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        position: relative;
+        
+        h1 {
+            display: block;
+            position: absolute;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            font-size: 9vw;
+            margin-top: 0;
+            margin-bottom: 0;
+            color: white;
+        }
+        
+        #player {
+            display: none;
+        }
+    }
+    
+    h1 {
+        display: none;
+    }
+}
+
+.navbar-brand {
+    .onair {
+    
+        &.online {
+            display: block;
+            bottom: 0;
+            margin-left: 104px;
+            font-size: 12px;
+            margin-top: -18px;
+
+            .dot {
+                animation-name: blink;
+                animation-duration: 1s;
+                animation-iteration-count: infinite;
+                width: 10px;
+                height: 10px;
+                display: inline-block;
+                border-radius: 100%;
+                background-color: red;
+                animation-name: blink;
+                padding-top: 4px;
+            }
+        }
+        
+        &.offline {
+            display: none;
+        }
+    }
+}
+
+
+@keyframes blink {
+    0% {
+      opacity: .2;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      opacity: .2;
+    }
+}
+
 .footer {
     
     &.bottom {
@@ -357,7 +438,6 @@
     }
     
 }
-
 
 @-webkit-keyframes spin2 {
     from {
