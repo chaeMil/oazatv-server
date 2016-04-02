@@ -238,7 +238,16 @@
         
         <script>
             $(document).ready(function() {
+                
+                var windowFocus = true;
                
+                $(window).blur(function(){
+                    windowFocus = false;
+                });
+                $(window).focus(function(){
+                    windowFocus = true;
+                });
+
                 pingAlive();
                 onAir();
                 setInterval(function() {
@@ -264,23 +273,25 @@
                 }
                 
                 function pingAlive() {
-                    var userId = generateAndGetUserId();
-                    var os = window.navigator.platform;
-                    var browser = navigator.userAgent;
-                    var page = window.location.href;
-                    
-                    if(userId) {
-                        $.get( {plink ":Api:PingAlive:"},
-                        {
-                            "oazaUserId": userId,
-                            "ip": {$_SERVER['REMOTE_ADDR']},
-                            "os": os,
-                            "browser": browser,
-                            "page": page
-                        },
-                        function(response) {
-                            console.log(response);
-                        });
+                    if (windowFocus) {
+                        var userId = generateAndGetUserId();
+                        var os = window.navigator.platform;
+                        var browser = navigator.userAgent;
+                        var page = window.location.href;
+
+                        if(userId) {
+                            $.get( {plink ":Api:PingAlive:"},
+                            {
+                                "oazaUserId": userId,
+                                "ip": {$_SERVER['REMOTE_ADDR']},
+                                "os": os,
+                                "browser": browser,
+                                "page": page
+                            },
+                            function(response) {
+                                console.log(response);
+                            });
+                        }
                     }
                 }
                 
