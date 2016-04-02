@@ -384,6 +384,11 @@ html,body{
 }
 
 .navbar-brand {
+    
+    &:hover {
+        cursor: pointer;
+    }
+    
     .onair {
     
         &.online {
@@ -392,6 +397,10 @@ html,body{
             margin-left: 104px;
             font-size: 12px;
             margin-top: -18px;
+            
+            @media (max-width: @screen-sm) {
+                margin-left: 53px;
+            }
 
             .dot {
                 animation-name: blink;

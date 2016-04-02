@@ -28,7 +28,7 @@
                     <span class="icon-bar"></span>
                 </button>*}
 
-                <a class="navbar-brand" href="{$basePath}/">
+                <a class="navbar-brand">
                     <img class="logo" src="{$basePath}/assets/img/logo.png"/>
                     <span class="text hidden-xs">Oáza.tv</span>
                     <div class="onair offline"> 
@@ -242,6 +242,7 @@
                 onAir();
                 setInterval(function() {
                     onAir();
+                    pingAlive();
                 }, 10 * 1000);
 
                 function onAir() {
@@ -255,6 +256,18 @@
                         console.log(onair);
                     });
                 }
+                
+                $('.navbar .logo').click(function() {
+                    window.location.href = {plink "Main:default"};
+                });
+                
+                $('.navbar-brand .text, .navbar .onair').click(function() {
+                    if ($('.onair').hasClass('online')) {
+                        window.location.href = {plink "LiveStream:default"};
+                    } else {
+                        window.location.href = {plink "Main:default"};
+                    }
+                });
             });
             
         </script>

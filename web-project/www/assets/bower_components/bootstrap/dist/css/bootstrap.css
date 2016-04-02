@@ -7212,12 +7212,20 @@ body {
 .onair h1 {
   display: none;
 }
+.navbar-brand:hover {
+  cursor: pointer;
+}
 .navbar-brand .onair.online {
   display: block;
   bottom: 0;
   margin-left: 104px;
   font-size: 12px;
   margin-top: -18px;
+}
+@media (max-width: 768px) {
+  .navbar-brand .onair.online {
+    margin-left: 53px;
+  }
 }
 .navbar-brand .onair.online .dot {
   animation-duration: 1s;
