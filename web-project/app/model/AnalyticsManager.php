@@ -32,7 +32,14 @@ class AnalyticsManager {
             SHARE = 'share',
             WEB = 'web',
             API = 'api',
-            SEARCH_CLICK = 'search_click';
+            SEARCH_CLICK = 'search_click',
+            TABLE_NAME_ANALYTICS_ALIVE_USERS = 'analytics_live_users',
+            COLUMN_OAZA_USER_ID = 'oaza_user_id',
+            COLUMN_ALIVE = 'alive',
+            COLUMN_IP = 'ip',
+            COLUMN_OS = 'os',
+            COLUMN_BROWSER = 'browser',
+            COLUMN_PAGE = 'page';
     
     /** @var Nette\Database\Context */
     private $database;
@@ -90,6 +97,23 @@ class AnalyticsManager {
                     self::COLUMN_ACTION_TYPE => $type,
                     self::COLUMN_DATETIME => new Nette\Database\SqlLiteral('NOW()')
                 ));
+    }
+    
+    public function updateAliveUser($oazaUserId, $ip, $os, $browser, $page) {
+        if (isset($oazaUserId) && isset($ip) && isset($os) && isset($browser) && isset($page)) {
+            $query = "REPLACE INTO ".self::TABLE_NAME_ANALYTICS_ALIVE_USERS."
+                    (".self::COLUMN_OAZA_USER_ID.",".
+                    self::COLUMN_IP.",".
+                    self::COLUMN_OS.",".
+                    self::COLUMN_BROWSER.",".
+                    self::COLUMN_PAGE.")".
+                    " VALUES ".
+                    "('".htmlentities($oazaUserId)."','".htmlentities($ip)."','".htmlentities($os)
+                    ."','".htmlentities($browser)."','".htmlentities($page)."')";
+            return $this->database->query($query);
+        } else {
+            return false;
+        }
     }
     
 }

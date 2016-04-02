@@ -239,10 +239,11 @@
         <script>
             $(document).ready(function() {
                
+                pingAlive();
                 onAir();
                 setInterval(function() {
                     onAir();
-                    pingAlive();
+                    pingAlive(); 
                 }, 10 * 1000);
 
                 function onAir() {
@@ -253,6 +254,34 @@
                         onairElement.removeClass('online offline')
                             .addClass(onair);
                     });
+                }
+                
+                function generateAndGetUserId() {
+                    if (!getCookie('oaza_user-id')) {
+                        setCookie('oaza_user-id', randomString(16), 999);
+                    }
+                    return getCookie('oaza_user-id');
+                }
+                
+                function pingAlive() {
+                    var userId = generateAndGetUserId();
+                    var os = window.navigator.platform;
+                    var browser = navigator.userAgent;
+                    var page = window.location.href;
+                    
+                    if(userId) {
+                        $.get( {plink ":Api:PingAlive:"},
+                        {
+                            "oazaUserId": userId,
+                            "ip": {$_SERVER['REMOTE_ADDR']},
+                            "os": os,
+                            "browser": browser,
+                            "page": page
+                        },
+                        function(response) {
+                            console.log(response);
+                        });
+                    }
                 }
                 
                 $('.navbar .logo').click(function() {
