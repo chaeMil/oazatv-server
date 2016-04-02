@@ -28,6 +28,7 @@ class LiveStreamPresenter extends BasePresenter {
     public function renderDefault() {
         $values = $this->liveStreamManager->loadValues();
         $this->template->values = $values;
+        $this->template->lang = $this->lang;
         
         switch($values['on_air']) {
             case 'online':
