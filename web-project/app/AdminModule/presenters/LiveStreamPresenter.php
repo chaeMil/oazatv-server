@@ -56,7 +56,7 @@ class LiveStreamPresenter extends BaseSecuredPresenter {
                 case 'textarea':
                 $form->addTextArea($key, $translations[$key])
                     ->setValue($value)
-                    ->setAttribute("class", "form-control");
+                    ->setAttribute("class", "form-control ckeditor");
                     break;
             }
             
