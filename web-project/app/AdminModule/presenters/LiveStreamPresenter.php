@@ -32,7 +32,7 @@ class LiveStreamPresenter extends BaseSecuredPresenter {
         $values = $this->liveStreamManager->loadValues();
         
         $translations = array(
-            'youtube_link' => 'Youtube odkaz',
+            'youtube_link' => 'Youtube video ID např.: M7lc1UVf-VE',
             'top_text_cs' => 'Text nad přehrávačem (cz)',
             'top_text_en' => 'Text nad přehrávačem (en)',
             'bottom_text_cs' => 'Text pod přehrávačem (cz)',
