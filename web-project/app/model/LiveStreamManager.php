@@ -21,15 +21,15 @@ namespace Model;
 class LiveStreamManager{   
     
     const
-        CONFIG_FILE = __DIR__.'/../config/live_stream.json';
+        CONFIG_FILE = '/../config/live_stream.json';
 
     public function loadValues() {
-        return json_decode(file_get_contents(self::CONFIG_FILE), true);
+        return json_decode(file_get_contents(__DIR__.self::CONFIG_FILE), true);
     }
     
     public function saveValues($values) {
         $jsonValues = json_encode($values);
-        file_put_contents(self::CONFIG_FILE, $jsonValues);
+        file_put_contents(__DIR__.self::CONFIG_FILE, $jsonValues);
     }
     
     
