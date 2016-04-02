@@ -28,7 +28,13 @@ class LiveStreamPresenter extends BaseSecuredPresenter {
 
     public function renderDefault() {
         $this->getTemplateVariables($this->getUser()->getId());
-        $aliveUsers = $this->analyticsManager->getAliveUsersFromPage("live-stream", 1);
+    }
+    
+    public function renderAliveUsers() {
+        $request = $this->getHttpRequest();
+        $adminUserOazaId = $request->getCookie('oaza_user-id');
+        $aliveUsers = $this->analyticsManager
+                ->getAliveUsersFromPage("live-stream", 1, $adminUserOazaId);
         $this->template->aliveUsers = $aliveUsers;
     }
     

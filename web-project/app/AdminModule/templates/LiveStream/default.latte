@@ -30,7 +30,7 @@
                            role="tab" data-toggle="tab">Nastavení</a>
                     </li>
                     <li role="presentation">
-                        <a href="#analytics" aria-controls="analytics" 
+                        <a id="analytics-tab" href="#analytics" aria-controls="analytics" 
                            role="tab" data-toggle="tab">Diváci</a>
                     </li>
                 </ul>
@@ -43,23 +43,10 @@
                     </div>
                     <div role="tabpanel" class="tab-pane" id="analytics">
                         <br>
-                        <table class="table table-condensed table-hover">
-                            <tr>
-                                <th>online</th>
-                                <th>IP</th> 
-                                <th>OS</th>
-                                <th>prohlížeč</th>
-                            </tr>
-                            
-                            {foreach $aliveUsers as $user}
-                                <tr>
-                                    <td>{$user['alive']}</td>
-                                    <td>{$user['ip']}</td>
-                                    <td>{$user['os']}</td>
-                                    <td>{$user['browser']}</td>
-                                </tr>
-                            {/foreach}
-                        </table>
+                        
+                        <div id="alive-users-table">
+                         
+                        </div>
                     </div>
                 </div>
 
@@ -70,4 +57,24 @@
     </div>
 </div>
     
+{/block}
+
+{block pageScripts}
+<script>
+    $(document).on('ready', function() {
+       
+        getAliveUsers();
+        setInterval(function() {
+            getAliveUsers();
+        }, 5000);
+        
+        
+        function getAliveUsers() {
+            $.get({plink "aliveUsers"}, function(response) {
+                $('#alive-users-table').html(response);
+                $('#analytics-tab').html('Diváci (' + $('#viewers-count').html() + ')');
+            });
+        }
+    });  
+</script>
 {/block}
