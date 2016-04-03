@@ -17,10 +17,11 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/var/www/html/oazatv-server/web-project/app/FrontModule/templates/Main/blocks/new_videos.latte</file>
-            <file>file:/var/www/html/oazatv-server/web-project/app/FrontModule/templates/Main/blocks/popular_videos.latte</file>
-            <file>file:/var/www/html/oazatv-server/web-project/app/config/frontpage_block_definitions.neon</file>
-            <file>file:/var/www/html/oazatv-server/web-project/app/FrontModule/templates/Main/blocks/new_albums.latte</file>
+            <file>file:/var/www/html/oazatv-server/web-project/app/AdminModule/presenters/LiveStreamPresenter.php</file>
+            <file>file:/var/www/html/oazatv-server/web-project/app/config/config.neon</file>
+            <file>file:/var/www/html/oazatv-server/web-project/app/AdminModule/templates/LiveStream/default.latte</file>
+            <file>file:/var/www/html/oazatv-server/web-project/app/model/AnalyticsManager.php</file>
+            <file>file:/var/www/html/oazatv-server/web-project/app/model/LiveStreamManager.php</file>
         </group>
     </open-files>
 </project-private>
