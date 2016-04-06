@@ -9,13 +9,7 @@
 namespace App\ApiModule;
 
 use Nette,
- Nette\Application\Responses\JsonResponse,
- Nette\Database\Context,
- Model\VideoManager,
- Model\PhotosManager,
- Model\AnalyticsManager,
- Model\ArchiveManager;
-
+ Nette\Application\Responses\JsonResponse;
 /**
  * Description of MainPresenter
  *
@@ -32,25 +26,32 @@ class MainPresenter extends BasePresenter {
         $popularVideosIds = $this->analyticsManager->getPopularVideosIds(7, 16);
         
         $popularVideos = array();
-        foreach($popularVideosIds as $video) {
-            $popularVideos[] = $this->videoManager->getVideoFromDBtoAPI($video['id']);
+        if (isset($popularVideosIds)) {
+            foreach($popularVideosIds as $video) {
+                $popularVideos[] = $this->videoManager->getVideoFromDBtoAPI($video['id']);
+            }
         }
                 
         $response['newestVideos'] = array();
-        foreach($newestVideos as $video) {
-            $response['newestVideos'][] = $this->createArchiveItem($video);
+        if (isset($newestVideos)) {
+            foreach($newestVideos as $video) {
+                $response['newestVideos'][] = $this->createArchiveItem($video);
+            }
         }
         
         $response['newestAlbums'] = array();
-        foreach($newestAlbums as $album) {
-            $response['newestAlbums'][] = $this->createArchiveItem($album);
+        if (isset($newestAlbums)) {
+            foreach($newestAlbums as $album) {
+                $response['newestAlbums'][] = $this->createArchiveItem($album);
+            }
         }
         
         $response['popularVideos'] = array();
-        foreach($popularVideos as $video) {
-            $response['popularVideos'][] = $this->createArchiveItem($video);
-        }
-        
+        if (isset($popularVideos)) {
+            foreach($popularVideos as $video) {
+                $response['popularVideos'][] = $this->createArchiveItem($video);
+            }
+        }        
         
         $this->sendResponse(new JsonResponse($response));
     }
