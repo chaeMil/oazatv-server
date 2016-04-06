@@ -51,7 +51,14 @@ class MainPresenter extends BasePresenter {
             foreach($popularVideos as $video) {
                 $response['popularVideos'][] = $this->createArchiveItem($video);
             }
-        }        
+        }     
+        
+        $response['featured'] = array(); //TODO!!! implement featured items
+        if (isset($newestVideos)) {
+            foreach($newestVideos as $video) {
+                $response['featured'][] = $this->createArchiveItem($video);
+            }
+        } 
         
         $this->sendResponse(new JsonResponse($response));
     }
