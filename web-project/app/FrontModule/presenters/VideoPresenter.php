@@ -74,6 +74,7 @@ class VideoPresenter extends BasePresenter {
 
         $this->countView($video->id, $hash);
 
+        $this->template->videoRaw = $video;
         $this->template->video = $this->videoManager
                 ->createLocalizedVideoObject($this->lang, $video);
         
