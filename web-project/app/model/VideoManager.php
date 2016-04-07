@@ -139,14 +139,14 @@ class VideoManager extends BaseModel {
             return self::$database->table(self::TABLE_NAME)
                     ->select("*")
                     ->order('rand()')
-                    ->where(array(self::COLUMN_TAGS." LIKE '%$tag%'",
+                    ->where(array(self::COLUMN_TAGS." LIKE '%".str_replace(array(' ', '.'), '', $tag)."%'",
                         self::COLUMN_PUBLISHED => $published))
                     ->fetch();
         } else {
             return self::$database->table(self::TABLE_NAME)
                     ->select("*")
                     ->order('rand()')
-                    ->where(array(self::COLUMN_TAGS." LIKE '%$tag%'"))
+                    ->where(array(self::COLUMN_TAGS." LIKE '%".str_replace(array(' ', '.'), '', $tag)."%'"))
                     ->fetch();
         }
     }
