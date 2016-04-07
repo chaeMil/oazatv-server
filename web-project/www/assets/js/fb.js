@@ -17,7 +17,7 @@ window.fbAsyncInit = function() {
 function shareToFB(link) {
     FB.ui({
         method: 'share',
-        href: link
+        href: 'http://' + link
     }, function(response){
         return response;
     });
