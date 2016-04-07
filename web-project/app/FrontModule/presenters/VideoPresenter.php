@@ -70,10 +70,12 @@ class VideoPresenter extends BasePresenter {
                 $preachers[] = $preacher;
             }
         }
+        
         $this->template->preachers = array_map("unserialize", array_unique(array_map("serialize", $preachers)));
 
         $this->countView($video->id, $hash);
 
+        $this->template->serverUrl = "http://$_SERVER[HTTP_HOST]";
         $this->template->videoRaw = $video;
         $this->template->video = $this->videoManager
                 ->createLocalizedVideoObject($this->lang, $video);
