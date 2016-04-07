@@ -18,4 +18,5 @@ assets:
         - '/assets/bower_components/masonry/dist/masonry.pkgd.min.js'
         - '/assets/js/x-tag-components.js'
         - '/assets/js/jquery.tagcloud.js/jquery.tagcloud.js'
+        - '/assets/js/fb.js'
         - '/assets/js/utils.js'
