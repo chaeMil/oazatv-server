@@ -14,10 +14,10 @@ window.fbAsyncInit = function() {
    fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
-function shareToFB(link) {
+function shareToFB() {
     FB.ui({
         method: 'share',
-        href: 'http://' + link
+        href: window.location.href
     }, function(response){
         return response;
     });
