@@ -7140,14 +7140,6 @@ body {
   -animation: spin 0.7s infinite linear;
   -webkit-animation: spin2 0.7s infinite linear;
 }
-#playerTags {
-  padding-top: 30px;
-}
-@media (min-width: 992px) {
-  #playerTags {
-    padding-top: 60px;
-  }
-}
 .video-player .column {
   padding-left: 0;
   padding-right: 0;

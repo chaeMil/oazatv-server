@@ -76,9 +76,8 @@
                                autocomplete="off"
                                placeholder="{_frontend.basic.search}" name="q"
                                id="search">
-
-                        <span class="search-animation glyphicon glyphicon-refresh
-                              glyphicon-refresh-animate" id="search-animation"></span>
+                              
+                        <i id="search-animation" class="fa fa-spinner search-animation glyphicon-refresh-animate hidden"></i>
 
                         <ul class="dropdown-menu dropdown-search" id="dropdown-search">
 
@@ -86,7 +85,7 @@
 
                         <div class="input-group-btn">
                             <button class="btn btn-default" type="submit">
-                                <i class="glyphicon glyphicon-search"></i>
+                                <i class="fa fa-search"></i>
                             </button>
                         </div>
                     </div>
@@ -160,9 +159,9 @@
                     input = $(this).val();
 
                     if (input.length >= 3) {
-                        $('#search-animation').show();
+                        $('#search-animation').removeClass('hidden');
                     } else {
-                        $('#search-animation').hide();
+                        $('#search-animation').addClass('hidden');
                         $('#dropdown-search').slideUp();
                     }
 
@@ -184,7 +183,7 @@
                                         }
 
                                         $('#dropdown-search').slideDown();
-                                        $('#search-animation').hide();
+                                        $('#search-animation').removeClass('hidden');
 
                                         oldSearch = input;
 
@@ -193,7 +192,7 @@
                                 );
 
                         } else {
-                            $('#search-animation').hide();
+                            $('#search-animation').addClass('hidden');
                         }
 
                     }, 2000);
