@@ -6,6 +6,8 @@
     {var $horizontal = false}
 {/if}
 
+{dump $item}
+
 <div class="video-box {if $horizontal} video-box-horizontal{/if} {if $responsive}col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2{/if}">
     {if ($item['type'] == 'video')}
         <a n:href="Video:watch $item['hash']">
@@ -14,7 +16,12 @@
         <a n:href="Album:view $item['hash']">
     {/if}
         <div class="thumb"
-             style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});">
+             {if isset($item['thumbs']) && isset($item['thumbs']['512'])}
+                 style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});"
+             {/if}
+             {if isset($item['thumb_file'])}
+                 style="background-image: url({$item['thumb_file']|noescape});"
+             {/if}>
         </div>
         <div class="info">
            <span class="name">{$item['name']}</span>

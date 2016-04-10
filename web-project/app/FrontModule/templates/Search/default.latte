@@ -16,45 +16,10 @@
                 
                 {foreach $search as $item}
 
-                    {if $item['type'] == 'video'}
-                        <div class="video-box video-box-horizontal col-xs-12 col-sm-6 col-md-6 col-lg-4">
-                            <a n:href="Video:watch $item['hash'], true">
-                                <div class="thumb"
-                                     {if isset($item['thumbs']) && isset($item['thumbs']['512'])}
-                                      style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});"
-                                        {/if}>
-                                </div>
-                            
-                                <div class="info">
-                                    <span class="name">{$item['name']}</span>
-                                    <span class="date">{$item['date']}</span>
-                                    {if ($item['type'] == 'video')}
-                                        <span class="views">{$item['views']} {_frontend.basic.views}</span>
-                                    {/if}
-                                </div>
-                            </a>
-                        </div>
-                    {/if}
-
-                    {if $item['type'] == 'album'}
-                        <div class="video-box video-box-horizontal col-xs-12 col-sm-6 col-md-6 col-lg-4">
-                            <a n:href="Album:view $item['hash']">
-                                <div class="thumb"
-                                     {if isset($item['thumbs']) && isset($item['thumbs']['512'])}
-                                      style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});"
-                                       {/if}>
-                                </div>
-                            
-                                <div class="info">
-                                    <span class="name">{$item['name']}</span>
-                                    <span class="date">{$item['date']}</span>
-                                    {if ($item['type'] == 'video')}
-                                        <span class="views">{$item['views']} {_frontend.basic.views}</span>
-                                    {/if}
-                                </div>
-                            </a>
-                        </div>
-                    {/if}
+                    {foreach $search as $item}
+                        {include '../Shared/videoBox.latte', item => $item, 
+                            horizontal => true}
+                    {/foreach}
 
                 {/foreach}
                 
