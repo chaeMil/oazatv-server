@@ -136,17 +136,16 @@ class VideoManager extends BaseModel {
     public function getVideoFromDBbyTag($tag, $published = 1) {
 
         if ($published != 2) {
-            return self::$database->table(self::TABLE_NAME)
-                    ->select("*")
-                    ->order('rand()')
-                    ->where(array(self::COLUMN_TAGS." LIKE '%".str_replace(array(' ', '.'), '', $tag)."%'",
-                        self::COLUMN_PUBLISHED => $published))
+            return self::$database
+                    ->query("select * from db_video_files where tags like'%"
+                            .str_replace(array(' ', '.'), '', $tag)
+                            ."%' and published = 1 order by rand() limit 1")
                     ->fetch();
         } else {
             return self::$database->table(self::TABLE_NAME)
-                    ->select("*")
-                    ->order('rand()')
-                    ->where(array(self::COLUMN_TAGS." LIKE '%".str_replace(array(' ', '.'), '', $tag)."%'"))
+                    ->query("select * from db_video_files where tags like'%"
+                            .str_replace(array(' ', '.'), '', $tag)
+                            ."%' order by rand() limit 1")
                     ->fetch();
         }
     }
@@ -423,10 +422,11 @@ class VideoManager extends BaseModel {
             $try = 0;
             while(sizeof($similarVideos) != $numOfVideos) {
                 
-                if ($try > 50) {
+                if ($try > $numOfVideos) {
                     break;
                 }
                 $randomTag = $usableTags[rand(0, count($usableTags)-1)];
+                
                 $similarVideo = $this->getVideoFromDBbyTag($randomTag);
 
                 if($similarVideo != false) {

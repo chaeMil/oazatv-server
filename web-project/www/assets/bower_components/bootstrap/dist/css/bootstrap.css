@@ -6928,6 +6928,9 @@ body {
 .preachers {
   padding-top: 30px;
 }
+.video-info {
+  padding-top: 30px;
+}
 .video-box {
   transition-duration: 500ms;
   -webkit-ransition-duration: 500ms;
