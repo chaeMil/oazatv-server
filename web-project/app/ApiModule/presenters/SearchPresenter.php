@@ -29,7 +29,7 @@ class SearchPresenter extends BasePresenter {
         
         $input = $id;
         
-        $response = $this->searchManager->search($input, $limit, 0, true);
+        $response = $this->searchManager->search($input, 0, $limit, true);
                        
         $jsonArray['search'] = $response;
         

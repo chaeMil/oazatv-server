@@ -22,7 +22,7 @@ class SearchPresenter extends BasePresenter {
     public function renderDefault($page = 0, $q = '') {
         
         $limit = 32;
-        $search = $this->searchManager->search($q, 999);
+        $search = $this->searchManager->search($q, 0, 999, $this->lang);
         
         if(isset($search['videos']) || isset($search['albums'])) {
             if(count($search['videos']) != 0 || count($search['albums'] != 0)) {
@@ -58,7 +58,7 @@ class SearchPresenter extends BasePresenter {
         
         $limit = 7;
         $q = $id;
-        $search = $this->searchManager->search($q, $limit, 0, $this->lang);
+        $search = $this->searchManager->search($q, 0, $limit, $this->lang);
         $this->template->search = $search;
         $this->template->limit = $limit;
         $this->template->q = $q;
