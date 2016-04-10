@@ -69,11 +69,36 @@ html,body{
 }
 
 .preachers {
-    padding-top: 30px;
+    @media (min-width: 1600px) {
+        padding-top: 30px;
+    }
 }
 
 .video-info {
     padding-top: 30px;
+}
+
+.share-options {
+    
+    @media (min-width: @screen-md) {
+        padding-top: 30px;
+    }
+    
+    .social {
+        
+        a {
+            display: inline-block;
+            width: 38px;
+            height: 38px;
+            font-size: 30px;
+            line-height: 38px;
+            text-align: center;
+            margin-right: 24px;
+            cursor: pointer;
+        }
+        
+    }
+    
 }
 
 .video-box {

@@ -13,6 +13,7 @@ basic:
     categories: "Categories"
     nothing_found: "Nothing found"
     on_air_offline: "Offline"
+    share: "Share"
 search:
     more: "more results"
 homepage:

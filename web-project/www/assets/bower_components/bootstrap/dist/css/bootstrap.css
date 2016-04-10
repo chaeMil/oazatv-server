@@ -6925,11 +6925,28 @@ body {
   padding-left: 0px !important;
   padding-right: 0px !important;
 }
-.preachers {
-  padding-top: 30px;
+@media (min-width: 1600px) {
+  .preachers {
+    padding-top: 30px;
+  }
 }
 .video-info {
   padding-top: 30px;
+}
+@media (min-width: 992px) {
+  .share-options {
+    padding-top: 30px;
+  }
+}
+.share-options .social a {
+  display: inline-block;
+  width: 38px;
+  height: 38px;
+  font-size: 30px;
+  line-height: 38px;
+  text-align: center;
+  margin-right: 24px;
+  cursor: pointer;
 }
 .video-box {
   transition-duration: 500ms;

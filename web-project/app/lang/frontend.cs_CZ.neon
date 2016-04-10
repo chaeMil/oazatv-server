@@ -13,6 +13,7 @@ basic:
     categories: "Kategorie"
     nothing_found: "Nic nenalezeno"
     on_air_offline: "Offline"
+    share: "Sdílet"
 search:
     more: "další výsledky"
 homepage:
