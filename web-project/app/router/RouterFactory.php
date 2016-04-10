@@ -35,11 +35,12 @@ class RouterFactory
                 ));
 
                 //frontend links
-                $router[] = new Route('<presenter>/<action>/<id>/', array(
+                $router[] = new Route('<presenter>/<action>/<id>/<attr>/', array(
                     'module' => 'Front',
                     'presenter' => 'Main',
                     'action' => 'default',
-                    'id' => NULL
+                    'id' => NULL,
+                    'attr' => NULL
                 ));
                                
                 

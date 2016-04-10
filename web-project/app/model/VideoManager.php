@@ -149,6 +149,24 @@ class VideoManager extends BaseModel {
                     ->fetch();
         }
     }
+    
+    public function getVideosFromDBbyCategory($category, $from, $count, 
+            $published = 1, $order = "date DESC") {
+
+        if($published != 2) {
+            return self::$database->table(self::TABLE_NAME)
+                ->select('*')
+                ->where(array(self::COLUMN_PUBLISHED => $published,
+                    self::COLUMN_CATEGORIES." LIKE '%".$category."%'"))
+                ->limit($count, $from)
+                ->order($order);
+        } else {
+            return self::$database->table(self::TABLE_NAME)
+                ->select('*')
+                ->limit($count, $from)
+                ->order($order);
+        }
+    }
 
     public function countVideos($published = 1) {
 
@@ -162,8 +180,7 @@ class VideoManager extends BaseModel {
 
     }
 
-    public function getVideosFromDB($from, $count, $published = 1,
-            $order = "date DESC") {
+    public function getVideosFromDB($from, $count, $published = 1, $order = "date DESC") {
 
         if($published != 2) {
             return self::$database->table(self::TABLE_NAME)
