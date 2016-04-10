@@ -30,35 +30,33 @@
 {block pageScripts}
 
 <script>
-    $(document).on('ready', function() {
-        var tag = document.createElement('script');
+    var tag = document.createElement('script');
 
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-        var player;
-        function onYouTubeIframeAPIReady() {
-          player = new YT.Player('player', {
-            height: '720',
-            width: '100%',
-            videoId: {$values['youtube_link']},
-            events: {
-              'onReady': onPlayerReady
-            }
-          });
+    var player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '720',
+        width: '100%',
+        videoId: {$values['youtube_link']},
+        events: {
+          'onReady': onPlayerReady
         }
+      });
+    }
 
-        function onPlayerReady(event) {
-          event.target.playVideo();
-        }
-        
+    function onPlayerReady(event) {
+      event.target.playVideo();
+    }
+
+    getPlayerTexts();
+
+    setInterval(function() {
         getPlayerTexts();
-        
-        setInterval(function() {
-            getPlayerTexts();
-        }, 10 * 1000);
-    });
+    }, 10 * 1000);
     
     function getPlayerTexts() {
         $.get( {plink "LiveStream:ajaxRefresh"}, function(response) {
