@@ -1,3 +1,8 @@
+{if !isset($baseLink)}
+    {var $baseLink = '/archive/page/'}
+{/if}
+
+
 <!-- Pagination -->
 <div class="row text-center">
     <div class="col-lg-12">
@@ -5,12 +10,12 @@
             {if $pages > 1}
                 {if $page > 0}
                     <li>
-                        <a href="{$basePath}/archive/page/{$page-1}">&laquo;</a>
+                        <a href="{$basePath}{$baseLink}{$page-1}">&laquo;</a>
                     </li>
                 {/if}
                     {if $page >= 4}
                         <li>
-                            <a href="{$basePath}/archive/page/1">1</a>
+                            <a href="{$basePath}{$baseLink}1">1</a>
                         </li>
                         <li>
                             <a>...</a>
@@ -20,24 +25,24 @@
                 {for $x = $page; $x < $page + $limit + 1; $x++}
                     {if $page <= 0}
                         <li class="{if $x == $page}active{/if}">
-                            <a href="{$basePath}/archive/page/{$x}">{$x}</a>
+                            <a href="{$basePath}{$baseLink}{$x}">{$x}</a>
                         </li>
                     {else}
                         {if $x == $page}
                             {if $page != 1}
                                 <li>
-                                    <a href="{$basePath}/archive/page/{$x-1}">{$x-1}</a>
+                                    <a href="{$basePath}{$baseLink}{$x-1}">{$x-1}</a>
                                 </li>
                             {/if}
                         {/if}
                         <li class="{if $x == $page}active{/if}">
-                            <a href="{$basePath}/archive/page/{$x}">{$x}</a>
+                            <a href="{$basePath}{$baseLink}{$x}">{$x}</a>
                         </li>
                     {/if}
                 {/for}
                 {if $pages > $page + 1}
                     <li>
-                        <a href="{$basePath}/archive/page/{$page+1}">&raquo;</a>
+                        <a href="{$basePath}{$baseLink}{$page+1}">&raquo;</a>
                     </li>
                 {/if}
             {/if}

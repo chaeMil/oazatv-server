@@ -54,7 +54,7 @@ class ArchivePresenter extends BasePresenter {
     
     public function renderCategory($id, $attr) {
 
-        $category = $this->categoriesManager->getCategoryFromDB($id);
+        $category = $this->categoriesManager->getLocalizedCategory($id, $this->lang);
         $itemsPerPage = 64;
         
         $videos = $this->videoManager
@@ -75,6 +75,7 @@ class ArchivePresenter extends BasePresenter {
         $this->template->paginator = $paginator;
         $this->template->page = $paginator->getPage();
         $this->template->pages = $paginator->getPageCount();
+        $this->template->category = $category;
         
     }
     

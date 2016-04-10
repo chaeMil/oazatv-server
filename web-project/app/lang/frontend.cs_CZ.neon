@@ -15,6 +15,7 @@ basic:
     on_air_offline: "Offline"
     share: "Sdílet"
     share_in_time: "Sdílet v čase"
+    category: "Kategorie"
 search:
     more: "další výsledky"
 homepage:

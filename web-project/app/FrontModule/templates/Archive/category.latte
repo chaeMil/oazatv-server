@@ -1,6 +1,14 @@
 {block content}
 
 <div class="container">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h1><small>{_frontend.basic.category}:</small> {$category['name']}</h1>
+            <hr>
+        </div>
+    </div>
+
     {if isset($archiveItems)}
         <div class="row videos-box">
             {foreach $archiveItems as $item}
@@ -9,5 +17,6 @@
         </div>
     {/if}
 
-    {include '../Shared/pagination.latte', pages => $pages, page => $page}
+    {include '../Shared/pagination.latte', pages => $pages, page => $page, 
+        baseLink => '/archive/category/'.$category['id'].'/'}
 </div>
