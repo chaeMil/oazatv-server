@@ -211,8 +211,9 @@
             
             var hash = window.location.hash;
             hash = window.location.hash.replace('#t=', '');
-            
-            player.currentTime(hash);
+            if (hash !== 0 && hash !== '' && hash !== undefined && hash !== null) {
+                player.currentTime(hash);
+            }
 
             player.on('pause', function() {
                saveVideoTime(player.currentTime());
