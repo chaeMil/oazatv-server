@@ -68,12 +68,12 @@
                     <div class="video-info">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title">
+                                <h2>
                                     {$video['name']}
-                                    <span class="pull-right">
+                                    <small class="pull-right">
                                         {$video['views']} {_frontend.basic.views}
-                                    </span>
-                                </h3>
+                                    </small>
+                                </h2>
                             </div>
                             <div class="panel-body">
                                 <p class="lead">{$video['date']}</p>
@@ -146,7 +146,7 @@
                                                                  src="{$basePath}/db/preachers/{$preacher['id']}_256.jpg" />
                                                             </div>
                                                             <div class="col-xs-9">
-                                                                <h2>{$preacher['name']}</h2>
+                                                                <h4>{$preacher['name']}</h4>
                                                                 <p>{$preacher['about']|noescape}</p>
                                                             </div>
                                                         </div>
@@ -280,8 +280,9 @@
     
     function updateShareInTime() {
         var input = $('#video-time');
-        if (!player.paused()) {
-            var url = location.href.replace(location.hash,"") + "#t=" + parseInt(player.currentTime());
+        var url = location.href.replace(location.hash,"") + "#t=" + parseInt(player.currentTime());
+        
+        if (input.val() === '' || !player.paused()) {
             input.val(url);
         }
     }

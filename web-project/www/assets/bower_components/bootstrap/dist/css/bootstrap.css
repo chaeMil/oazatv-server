@@ -6959,6 +6959,11 @@ body {
 }
 .share-options .share-time #video-time {
   padding-left: 15px;
+  border: 1px solid #eeeeee;
+}
+.share-options .share-time #video-time:focus,
+.share-options .share-time #video-time:active {
+  border: 1px solid #4285f4;
 }
 .video-box {
   transition-duration: 500ms;
