@@ -40,16 +40,12 @@
                         {foreach $similarVideos as $similarVideo}
                             <div class="col-xs-12">
                                 <a n:href="Video:watch $similarVideo['hash']">
-                                    <div class="video-box video-box-horizontal">
-                                        <div class="thumb"
-                                             style="background-image: url({$basePath|noescape}/{$similarVideo['thumbs']['512']|noescape});">
-                                        </div>
-                                        <div class="info">
-                                            <span class="name invert">{$similarVideo['name']}</span>
-                                            <span class="date invert">{$similarVideo['date']}</span>
-                                            <span class="views invert">{$similarVideo['views']} {_frontend.basic.views}</span>
-                                        </div>
-                                    </div>
+                                    {foreach $similarVideos as $item}
+                                        {include '../Shared/videoBox.latte', 
+                                            item => $item, 
+                                            responsive => false,
+                                            horizontal => true}
+                                    {/foreach}
                                 </a>
                             </div>
                         {/foreach}

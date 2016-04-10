@@ -1,4 +1,12 @@
-<div class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+{if !isset($responsive)}
+    {var $responsive = true}
+{/if}
+
+{if !isset($horizontal)}
+    {var $horizontal = false}
+{/if}
+
+<div class="video-box {if $horizontal} video-box-horizontal{/if} {if $responsive}col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2{/if}">
     {if ($item['type'] == 'video')}
         <a n:href="Video:watch $item['hash']">
     {/if}
