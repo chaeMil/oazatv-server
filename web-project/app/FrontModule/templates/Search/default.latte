@@ -18,7 +18,8 @@
 
                     {foreach $search as $item}
                         {include '../Shared/videoBox.latte', item => $item, 
-                            horizontal => true}
+                            horizontal => true, 
+                            customClasses => 'col-xs-12 col-sm-6 col-md-6 col-lg-4'}
                     {/foreach}
 
                 {/foreach}
