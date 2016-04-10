@@ -7064,6 +7064,10 @@ body {
 .video-box .info .views.invert {
   color: #bbbbbb;
 }
+.video-box.video-box-horizontal {
+  min-height: 100px;
+  overflow: hidden;
+}
 .video-box.video-box-horizontal .thumb {
   max-width: 150px;
   float: left;
