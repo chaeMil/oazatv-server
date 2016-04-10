@@ -4,9 +4,11 @@
     <div class="row">
         <div class="col-xs-12">
             {if isset($newestAlbums)}
-                {foreach $newestAlbums as $item}
-                    {include '../../Shared/videoBox.latte', item => $item}
-                {/foreach}
+                <div class="row videos-box">
+                    {foreach $newestAlbums as $item}
+                        {include '../../Shared/videoBox.latte', item => $item}
+                    {/foreach}
+                </div>
             {/if}                    
         </div>
     </div>
