@@ -19,4 +19,5 @@ assets:
         - '/assets/js/x-tag-components.js'
         - '/assets/js/jquery.tagcloud.js/jquery.tagcloud.js'
         - '/assets/js/fb.js'
+        - '/assets/js/gplus.js'
         - '/assets/js/utils.js'
