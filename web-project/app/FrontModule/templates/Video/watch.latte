@@ -116,9 +116,15 @@
                                             <a id="share-google-plus">
                                                 <i class="fa fa-google-plus"></i>
                                             </a>
-                                            <a id="share-link">
+                                            <a id="share-link" >
                                                 <i class="fa fa-link"></i>
                                             </a>
+                                        </div>
+                                        <div class="share-time">
+                                            <span>{_frontend.basic.share_in_time}</span>:<br>
+                                            <input dir="rtl" type="text" 
+                                                   class="form-control" 
+                                                   id="video-time">
                                         </div>
                                     </div>
                                 </div>    
@@ -170,6 +176,8 @@
 {block pageScripts}
 
 <script>
+    
+    var player;
 
     $('document').ready(function() {
         
@@ -184,6 +192,11 @@
         $('#share-link').click(function() {
            shareLink({_frontend.basic.share}); 
         });
+        
+        $('#video-time').click(function() {
+            player.pause();
+            $(this).select();
+        });
 
         $('#playerTags a').tagcloud({
             size: {
@@ -196,17 +209,25 @@
                 end: "#206ff2"
             }
         });
-
-        var player;
-
+        
         var video = videojs('video').ready(function(){
             player = this;
+            
+            var hash = window.location.hash;
+            hash = window.location.hash.replace('#t=', '');
+            
+            player.currentTime(hash);
 
             player.on('pause', function() {
                saveVideoTime(player.currentTime());
                savePlayerVolume(player.volume().toString().substr(0,5));
             });
+
         });
+
+        setInterval(function() {
+            updateShareInTime(player);
+        }, 1000);
 
         setInterval(function() {
             saveVideoTime(player.currentTime());
@@ -225,6 +246,8 @@
             saveVideoTime(player.currentTime());
             savePlayerVolume(player.volume().toString().substr(0,5));
         });
+        
+        
     });
 
     $(document).ready(function() {
@@ -254,6 +277,15 @@
     function adjustSimilarVideosPane() {
         $('.similar-videos').height($('#video').height() - $('#similarVideosHeader').outerHeight());
     }
+    
+    function updateShareInTime() {
+        var input = $('#video-time');
+        if (!player.paused()) {
+            var url = location.href.replace(location.hash,"") + "#t=" + parseInt(player.currentTime());
+            input.val(url);
+        }
+    }
+ 
 
 </script>
 

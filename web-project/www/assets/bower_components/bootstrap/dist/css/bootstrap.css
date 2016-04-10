@@ -6938,6 +6938,9 @@ body {
     padding-top: 30px;
   }
 }
+.share-options .social {
+  display: inline-block;
+}
 .share-options .social a {
   display: inline-block;
   width: 38px;
@@ -6947,6 +6950,15 @@ body {
   text-align: center;
   margin-right: 24px;
   cursor: pointer;
+}
+.share-options .share-time {
+  display: inline-block;
+  width: 60%;
+  border-left: 1px solid #eeeeee;
+  padding-left: 24px;
+}
+.share-options .share-time #video-time {
+  padding-left: 15px;
 }
 .video-box {
   transition-duration: 500ms;

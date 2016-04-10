@@ -14,6 +14,7 @@ basic:
     nothing_found: "Nothing found"
     on_air_offline: "Offline"
     share: "Share"
+    share_in_time: "Share in time"
 search:
     more: "more results"
 homepage:
