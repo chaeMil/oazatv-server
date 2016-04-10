@@ -4,21 +4,9 @@
     <div class="row">
         <div class="col-xs-12">
             {if isset($newestAlbums)}
-                <div class="row videos-box">
-                    <div n:foreach="$newestAlbums as $album"
-                         class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                        {breakIf $iterator->getCounter() > $data['inputs']['max_albums']}
-                        <a n:href="Album:view $album['hash']">
-                            <div class="thumb"
-                                 style="background-image: url({$basePath|noescape}/{$album['thumbs']['512']|noescape});">
-                            </div>
-                            <div class="info">
-                                <span class="name">{$album['name']}</span>
-                                <span class="date">{$album['date']}</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+                {foreach $newestAlbums as $item}
+                    {include '../../Shared/videoBox.latte', item => $item}
+                {/foreach}
             {/if}                    
         </div>
     </div>

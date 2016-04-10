@@ -4,25 +4,7 @@
     {if isset($archiveItems)}
         <div class="row videos-box">
             {foreach $archiveItems as $item}
-                <div class="video-box col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                    {if ($item['type'] == 'video')}
-                        <a n:href="Video:watch $item['hash']">
-                    {/if}
-                    {if ($item['type'] == 'album')}
-                        <a n:href="Album:view $item['hash']">
-                    {/if}
-                        <div class="thumb"
-                             style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});">
-                        </div>
-                        <div class="info">
-                           <span class="name">{$item['name']}</span>
-                           <span class="date">{$item['date']}</span>
-                           {if ($item['type'] == 'video')}
-                               <span class="views">{$item['views']} {_frontend.basic.views}</span>
-                           {/if}
-                        </div>
-                    </a>
-                </div>
+                {include '../Shared/videoBox.latte', item => $item}
             {/foreach}
         </div>
     {/if}

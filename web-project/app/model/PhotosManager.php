@@ -308,6 +308,7 @@ class PhotosManager {
         } else {
             $album['thumbs'] = null;
         }
+        $album['type'] = "album";
 
 
         return $album;

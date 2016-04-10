@@ -6971,6 +6971,9 @@ body {
   transition-delay: 350ms;
   -webkit-transition-delay: 350ms;
 }
+.video-box a:hover {
+  text-decoration: none;
+}
 @media (max-width: 768px) {
   .video-box {
     margin-bottom: 20px;

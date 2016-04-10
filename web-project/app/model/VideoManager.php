@@ -356,6 +356,7 @@ class VideoManager extends BaseModel {
         $video['categories'] = $input[self::COLUMN_CATEGORIES];
         $video['views'] = $input[self::COLUMN_VIEWS];
         $video['thumbs'] = $this->getThumbnails($videoId);
+        $video['type'] = "video";
 
         return $video;
     }
