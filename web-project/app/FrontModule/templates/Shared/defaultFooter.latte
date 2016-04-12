@@ -1,0 +1,48 @@
+{block defaultFooter}
+
+<div class="container">
+
+    <hr>
+
+    <div class="row footer">
+
+        {if isset($categories)}
+            <div  class="categories col-md-4">
+
+                <h4 class="text-center">{_frontend.basic.categories}</h4>
+                <ul>
+                    {foreach $categories as $category}
+
+                        <li class="text-center">
+                            <a n:href="Archive:Category $category['id']">
+                                {$category['name']}
+                            </a>
+                        </li>
+
+                    {/foreach}
+                </ul>
+
+            </div>
+        {/if}
+
+    </div>
+    
+</div>
+        
+<div class="container-fluid footer bottom">
+    
+    <div class="container">
+        
+        <div class="row text-center">
+            
+            <p>{_lang.basic.copyright} {date("Y")}</p>
+            
+        </div>
+        
+    </div>
+    
+</div>
+       
+
+
+{/block}

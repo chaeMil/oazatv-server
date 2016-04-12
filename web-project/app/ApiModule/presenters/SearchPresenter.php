@@ -21,15 +21,6 @@ use Nette,
 
 class SearchPresenter extends BasePresenter {
     
-    private $searchManager;
-    
-    public function __construct(Nette\DI\Container $container,
-            Context $database, SearchManager $searchManager) {
-        
-        parent::__construct($container, $database);
-        $this->searchManager = $searchManager;
-    }
-    
     public function renderDefault($id, $limit) {
         
         if ($limit == null) {
@@ -38,7 +29,7 @@ class SearchPresenter extends BasePresenter {
         
         $input = $id;
         
-        $response = $this->searchManager->search($input, $limit, 0, true);
+        $response = $this->searchManager->search($input, 0, $limit, true);
                        
         $jsonArray['search'] = $response;
         

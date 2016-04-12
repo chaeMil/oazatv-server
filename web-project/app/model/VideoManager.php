@@ -104,6 +104,18 @@ class VideoManager extends BaseModel {
                     ->fetch();
         }
     }
+    
+    public function getVideoFromDBtoAPI($id) {
+        
+        $video = self::$database->table(self::TABLE_NAME)
+                ->select('id')
+                ->where(array(self::COLUMN_PUBLISHED => 1))
+                ->fetch();
+        
+        $arrayItemFromDB = $this->getVideoFromDB($video['id'])->toArray();
+        $arrayItemFromDB['type'] = 'video';
+        return $arrayItemFromDB;
+    }
 
     public function getVideoFromDBbyHash($hash, $published = 1) {
 
@@ -124,18 +136,35 @@ class VideoManager extends BaseModel {
     public function getVideoFromDBbyTag($tag, $published = 1) {
 
         if ($published != 2) {
-            return self::$database->table(self::TABLE_NAME)
-                    ->select("*")
-                    ->order('rand()')
-                    ->where(array(self::COLUMN_TAGS." LIKE '%$tag%'",
-                        self::COLUMN_PUBLISHED => $published))
+            return self::$database
+                    ->query("select * from db_video_files where tags like'%"
+                            .str_replace(array(' ', '.'), '', $tag)
+                            ."%' and published = 1 order by rand() limit 1")
                     ->fetch();
         } else {
             return self::$database->table(self::TABLE_NAME)
-                    ->select("*")
-                    ->order('rand()')
-                    ->where(array(self::COLUMN_TAGS." LIKE '%$tag%'"))
+                    ->query("select * from db_video_files where tags like'%"
+                            .str_replace(array(' ', '.'), '', $tag)
+                            ."%' order by rand() limit 1")
                     ->fetch();
+        }
+    }
+    
+    public function getVideosFromDBbyCategory($category, $from, $count, 
+            $published = 1, $order = "date DESC") {
+
+        if($published != 2) {
+            return self::$database->table(self::TABLE_NAME)
+                ->select('*')
+                ->where(array(self::COLUMN_PUBLISHED => $published,
+                    self::COLUMN_CATEGORIES." LIKE '%".$category."%'"))
+                ->limit($count, $from)
+                ->order($order);
+        } else {
+            return self::$database->table(self::TABLE_NAME)
+                ->select('*')
+                ->limit($count, $from)
+                ->order($order);
         }
     }
 
@@ -151,8 +180,7 @@ class VideoManager extends BaseModel {
 
     }
 
-    public function getVideosFromDB($from, $count, $published = 1,
-            $order = "date DESC") {
+    public function getVideosFromDB($from, $count, $published = 1, $order = "date DESC") {
 
         if($published != 2) {
             return self::$database->table(self::TABLE_NAME)
@@ -167,6 +195,25 @@ class VideoManager extends BaseModel {
                 ->order($order);
         }
 
+    }
+    
+    public function getVideosFromDBtoAPI($from, $count, $order = "date DESC") {
+        
+        $videos = self::$database->table(self::TABLE_NAME)
+                ->select('*')
+                ->where(array(self::COLUMN_PUBLISHED => 1))
+                ->limit($count, $from)
+                ->order($order);
+        
+        $outputArray = array();
+        
+        foreach($videos as $video) {
+            $arrayItemFromDB = $this->getVideoFromDB($video['id'])->toArray();
+            $arrayItemFromDB['type'] = 'video';
+            $outputArray[] = $arrayItemFromDB;
+        }
+        
+        return $outputArray;
     }
 
 
@@ -228,10 +275,10 @@ class VideoManager extends BaseModel {
     }
 
     public function returnMissingThumbs() {
-        return array(self::THUMB_1024 => "img/missing-thumb.png",
-                self::THUMB_512 => "img/missing-thumb.png",
-                self::THUMB_256 => "img/missing-thumb.png",
-                self::THUMB_128 => "img/missing-thumb.png");
+        return array(self::THUMB_1024 => "assets/img/missing-thumb.png",
+                self::THUMB_512 => "assets/img/missing-thumb.png",
+                self::THUMB_256 => "assets/img/missing-thumb.png",
+                self::THUMB_128 => "assets/img/missing-thumb.png");
     }
 
     public function getThumbnails($id) {
@@ -326,6 +373,7 @@ class VideoManager extends BaseModel {
         $video['categories'] = $input[self::COLUMN_CATEGORIES];
         $video['views'] = $input[self::COLUMN_VIEWS];
         $video['thumbs'] = $this->getThumbnails($videoId);
+        $video['type'] = "video";
 
         return $video;
     }
@@ -392,10 +440,11 @@ class VideoManager extends BaseModel {
             $try = 0;
             while(sizeof($similarVideos) != $numOfVideos) {
                 
-                if ($try > 50) {
+                if ($try > $numOfVideos) {
                     break;
                 }
                 $randomTag = $usableTags[rand(0, count($usableTags)-1)];
+                
                 $similarVideo = $this->getVideoFromDBbyTag($randomTag);
 
                 if($similarVideo != false) {

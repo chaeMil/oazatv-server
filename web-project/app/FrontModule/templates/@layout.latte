@@ -5,17 +5,15 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 
     <title>Oáza.tv{ifset title} - {include title|striptags}{/ifset}</title>
+    
+    <meta property="og:site_name" content="Oáza.tv" />
+    {block meta}
+    {/block}
 
     <meta name="theme-color" content="#4285f4">
-
     <link rel="shortcut icon" href="{$basePath}/favicon.ico">
-    <link rel="stylesheet" href="{$basePath}/bower_components/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="{$basePath}/bower_components/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{$basePath}/css/BootstrapXL.css">
-    <link rel="stylesheet" href="{$basePath}/bower_components/video.js/dist/video-js.min.css">
-    <link rel="stylesheet" href="{$basePath}/bower_components/photoswipe/dist/photoswipe.css">
-    <link rel="stylesheet" href="{$basePath}/bower_components/photoswipe/dist/default-skin/default-skin.css">
-    <link rel="stylesheet" href="{$basePath}/bower_components/justifiedGallery/dist/css/justifiedGallery.min.css">
+    {control css}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,300,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 </head>
@@ -34,9 +32,13 @@
                     <span class="icon-bar"></span>
                 </button>*}
 
-                <a class="navbar-brand" href="{$basePath}/">
-                    <img class="logo" src="{$basePath}/img/logo.png"/>
+                <a class="navbar-brand">
+                    <img class="logo" src="{$basePath}/assets/img/logo.png"/>
                     <span class="text hidden-xs">Oáza.tv</span>
+                    <div class="onair offline"> 
+                        <div class="dot"></div>
+                        OnAir 
+                    </div>
                 </a>
                     
                     
@@ -78,9 +80,8 @@
                                autocomplete="off"
                                placeholder="{_frontend.basic.search}" name="q"
                                id="search">
-
-                        <span class="search-animation glyphicon glyphicon-refresh
-                              glyphicon-refresh-animate" id="search-animation"></span>
+                              
+                        <i id="search-animation" class="fa fa-spinner search-animation glyphicon-refresh-animate hidden"></i>
 
                         <ul class="dropdown-menu dropdown-search" id="dropdown-search">
 
@@ -88,7 +89,7 @@
 
                         <div class="input-group-btn">
                             <button class="btn btn-default" type="submit">
-                                <i class="glyphicon glyphicon-search"></i>
+                                <i class="fa fa-search"></i>
                             </button>
                         </div>
                     </div>
@@ -121,21 +122,12 @@
     {include content}
     
     
-    {include Components/defaultFooter.latte}
+    {include 'Shared/defaultFooter.latte'}
 
 
     {block scripts}
-        <script src="{$basePath}/bower_components/jquery/dist/jquery.min.js"></script>
-        <script src="{$basePath}/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="{$basePath}/bower_components/video.js/dist/video.min.js"></script>
-        <script src="{$basePath}/js/jquery.bootstrap-autohidingnavbar.min.js"></script>
-        <script src="{$basePath}/bower_components/photoswipe/dist/photoswipe.min.js"></script>
-        <script src="{$basePath}/bower_components/photoswipe/dist/photoswipe-ui-default.min.js"></script>
-        <script src="{$basePath}/bower_components/justifiedGallery/dist/js/jquery.justifiedGallery.min.js"></script>
-        <script src="{$basePath}/bower_components/masonry/dist/masonry.pkgd.min.js"></script>
-        <script src="{$basePath}/js/x-tag-components.js"></script>
-        <script src="{$basePath}/js/jquery.tagcloud.js/jquery.tagcloud.js"></script>
-        <script src="{$basePath}/js/utils.js"></script>
+    
+        {control js}
 
         <script>
             //autohidding navbar for mobile devices
@@ -171,9 +163,9 @@
                     input = $(this).val();
 
                     if (input.length >= 3) {
-                        $('#search-animation').show();
+                        $('#search-animation').removeClass('hidden');
                     } else {
-                        $('#search-animation').hide();
+                        $('#search-animation').addClass('hidden');
                         $('#dropdown-search').slideUp();
                     }
 
@@ -195,7 +187,7 @@
                                         }
 
                                         $('#dropdown-search').slideDown();
-                                        $('#search-animation').hide();
+                                        $('#search-animation').removeClass('hidden');
 
                                         oldSearch = input;
 
@@ -204,7 +196,7 @@
                                 );
 
                         } else {
-                            $('#search-animation').hide();
+                            $('#search-animation').addClass('hidden');
                         }
 
                     }, 2000);
@@ -244,6 +236,81 @@
                     }
                 });
             }
+            
+        </script>
+        
+        <script>
+            $(document).ready(function() {
+                
+                var windowFocus = true;
+               
+                $(window).blur(function(){
+                    windowFocus = false;
+                });
+                $(window).focus(function(){
+                    windowFocus = true;
+                });
+
+                pingAlive();
+                onAir();
+                setInterval(function() {
+                    onAir();
+                    pingAlive(); 
+                }, 10 * 1000);
+
+                function onAir() {
+                    $.get( {plink "LiveStream:ajaxRefresh"}, function(response) {
+                        var onair = response['on_air'];
+                        var onairElement = $('.onair');
+                        
+                        onairElement.removeClass('online offline')
+                            .addClass(onair);
+                    });
+                }
+                
+                function generateAndGetUserId() {
+                    if (!getCookie('oaza_user-id')) {
+                        setCookie('oaza_user-id', randomString(16), 999);
+                    }
+                    return getCookie('oaza_user-id');
+                }
+                
+                function pingAlive() {
+                    if (windowFocus) {
+                        var userId = generateAndGetUserId();
+                        var os = window.navigator.platform;
+                        var browser = navigator.userAgent;
+                        var page = window.location.href;
+
+                        if(userId) {
+                            $.get( {plink ":Api:PingAlive:"},
+                            {
+                                "oazaUserId": userId,
+                                "ip": {$_SERVER['REMOTE_ADDR']},
+                                "os": os,
+                                "browser": browser,
+                                "page": page
+                            },
+                            function(response) {
+                                console.log(response);
+                            });
+                        }
+                    }
+                }
+                
+                $('.navbar .logo').click(function() {
+                    window.location.href = {plink "Main:default"};
+                });
+                
+                $('.navbar-brand .text, .navbar .onair').click(function() {
+                    if ($('.onair').hasClass('online')) {
+                        window.location.href = {plink "LiveStream:default"};
+                    } else {
+                        window.location.href = {plink "Main:default"};
+                    }
+                });
+            });
+            
         </script>
     {/block}
 

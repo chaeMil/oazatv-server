@@ -1,0 +1,80 @@
+{block content}
+
+<div id="wrapper">
+    
+    {include ../navbar.latte}
+    
+    <div class="container-fluid">
+        <div class="row">
+            
+            <div class="col-lg-6 col-xl-7 hidden-md hidden-sm hidden-xs">
+                
+                <iframe id="livestream-page" 
+                        frameborder="none"
+                        style="width: 100%; height: calc(100vh - 150px)"
+                        src="{plink ":Front:LiveStream:default"}"></iframe>
+                
+            </div>
+            <div class="col-lg-6 col-xl-5" 
+                 style="height: calc(100vh - 150px); overflow-y: scroll">
+                <h2>Živé vysílání</h2>
+
+                <hr>
+                
+                <div>
+
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#settings" aria-controls="settings" 
+                           role="tab" data-toggle="tab">Nastavení</a>
+                    </li>
+                    <li role="presentation">
+                        <a id="analytics-tab" href="#analytics" aria-controls="analytics" 
+                           role="tab" data-toggle="tab">Diváci</a>
+                    </li>
+                </ul>
+                
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="settings">
+                        <br>
+                        {control valuesForm}
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="analytics">
+                        <br>
+                        
+                        <div id="alive-users-table">
+                         
+                        </div>
+                    </div>
+                </div>
+
+              </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+    
+{/block}
+
+{block pageScripts}
+<script>
+    $(document).on('ready', function() {
+       
+        getAliveUsers();
+        setInterval(function() {
+            getAliveUsers();
+        }, 5000);
+        
+        
+        function getAliveUsers() {
+            $.get({plink "aliveUsers"}, function(response) {
+                $('#alive-users-table').html(response);
+                $('#analytics-tab').html('Diváci (' + $('#viewers-count').html() + ')');
+            });
+        }
+    });  
+</script>
+{/block}

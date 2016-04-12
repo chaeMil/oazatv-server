@@ -45,14 +45,18 @@ class VideoPresenter extends BasePresenter {
         $watchedCookie = $this->getHttpRequest()->getCookie($hash);
         if (!isset($watchedCookie)) {
             $this->videoManager->countView($id);
+            $this->analyticsManager->countVideoView($id, AnalyticsManager::WEB);
             $this->analyticsManager->addVideoToPopular($id);
             $httpResponse->setCookie($hash, 'watched', '1 hour');
         }
     }
 
-    public function renderWatch($id) {
+    public function renderWatch($id, $searched) {
         $hash = $id; //id only in router, actualy its hash
         $video = $this->videoManager->getVideoFromDBbyHash($hash);
+        if($searched) {
+            $this->analyticsManager->countVideoSearchClick($video['id'], AnalyticsManager::WEB);
+        }
 
         $tags = explode(",",$video['tags']);
         $tagsWithSongs = $this->songsManager->parseTagsAndReplaceKnownSongs($tags);
@@ -66,10 +70,13 @@ class VideoPresenter extends BasePresenter {
                 $preachers[] = $preacher;
             }
         }
+        
         $this->template->preachers = array_map("unserialize", array_unique(array_map("serialize", $preachers)));
 
         $this->countView($video->id, $hash);
 
+        $this->template->serverUrl = "http://$_SERVER[HTTP_HOST]";
+        $this->template->videoRaw = $video;
         $this->template->video = $this->videoManager
                 ->createLocalizedVideoObject($this->lang, $video);
         

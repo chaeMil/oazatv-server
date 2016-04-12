@@ -78,6 +78,24 @@ class CategoriesManager extends BaseModel {
         $video = $this->getCategoryFromDB($id);
         $video->delete();
     }
+    
+    public function getLocalizedCategory($id, $lang) {
+        $category = $this->getCategoryFromDB($id);
+        
+        $newCategory['id'] = $category['id'];
+        switch($lang) {
+            case 'cs':
+                $newCategory['name'] = $category['name_cs'];
+                break;
+            case 'en':
+                $newCategory['name'] = $category['name_en'];
+                break;
+            default:
+                $newCategory['name'] = $category['name_en'];
+                break;
+        }
+        return $newCategory;
+    }
    
     public function getLocalizedCategories($lang) {
         

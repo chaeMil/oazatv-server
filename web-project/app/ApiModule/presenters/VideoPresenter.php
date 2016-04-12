@@ -11,7 +11,10 @@ namespace App\ApiModule;
 use Nette,
  Nette\Application\Responses\JsonResponse,
  Nette\Database\Context,
- Model\VideoManager;
+  Model\PhotosManager,
+ Model\VideoManager,
+ Model\AnalyticsManager,
+ Model\ArchiveManager;
 
 /**
  * Description of MainPresenter
@@ -19,15 +22,6 @@ use Nette,
  * @author Michal Mlejnek <chaemil72 at gmail.com>
  */
 class VideoPresenter extends BasePresenter {
-    
-    private $videoManager;
-    
-    public function __construct(Nette\DI\Container $container,
-            Context $database, VideoManager $videoManager) {
-        
-        parent::__construct($container, $database);
-        $this->videoManager = $videoManager;
-    }
    
     public function actionDefault($id) {
         $hash = $id;
@@ -56,7 +50,6 @@ class VideoPresenter extends BasePresenter {
                     "This video does not exist");
             
         }
-        
         
     }
 }

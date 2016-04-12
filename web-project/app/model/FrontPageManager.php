@@ -119,7 +119,10 @@ class FrontPageManager extends BaseModel {
     }
    
     public function getBlockFromDB($id) {
-        return self::$database->table(self::TABLE_NAME_BLOCKS)->get($id);
+        return self::$database->table(self::TABLE_NAME_BLOCKS)
+                ->select('*')
+                ->where(self::COLUMN_ID, $id)
+                ->fetch();
     }
     
     public function getBlocksFromDB() {

@@ -11,7 +11,9 @@ namespace App\ApiModule;
 use Nette,
  Nette\Application\Responses\JsonResponse,
  Nette\Database\Context,
- Model\PhotosManager;
+ Model\PhotosManager,
+ Model\ArchiveManager,
+ Model\VideoManager;
 
 /**
  * Description of MainPresenter
@@ -19,15 +21,6 @@ use Nette,
  * @author Michal Mlejnek <chaemil72 at gmail.com>
  */
 class AlbumPresenter extends BasePresenter {
-    
-    private $photosManager;
-    
-    public function __construct(Nette\DI\Container $container,
-            Context $database, PhotosManager $photosManager) {
-        
-        parent::__construct($container, $database);
-        $this->photosManager = $photosManager;
-    }
     
     public function actionDefault($id) {
         $hash = $id;

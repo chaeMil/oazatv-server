@@ -3,8 +3,9 @@
 namespace App\FrontModule;
 
 use Nette,
-    App\StringUtils,
-    App\Presenters\ErrorPresenter;
+App\Services\WebDir,
+CssMin,
+WebLoader;
 
 
 /**
@@ -15,6 +16,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
     public $database;
     public $lang;
     public $container;
+    private $webDir;
+    private $neonAdapter;
     
     /** @persistent */
     public $locale;
@@ -27,6 +30,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         parent::__construct();
         $this->database = $database;
         $this->container = $container;
+        $this->neonAdapter = new Nette\DI\Config\Adapters\NeonAdapter();
         
     }
     
@@ -44,6 +48,51 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
             $httpRequest = $container->getByType('Nette\Http\Request');
             $this->lang = $httpRequest->detectLanguage($langs);
         }
+    }
+    
+    public function injectWebDir(WebDir $webDir) {
+        $this->webDir = $webDir;
+    }
+    
+    private function getCssFilesToCompile() {
+        $neon = $this->neonAdapter->load(__DIR__ . '/../../config/assets.neon');
+        return $neon['assets']['css'];
+    }
+    
+    private function getJsFilesToCompile() {
+        $neon = $this->neonAdapter->load(__DIR__ . '/../../config/assets.neon');
+        return $neon['assets']['js'];
+    }
+    
+    protected function createComponentCss() {
+        $dir = $this->webDir->getPath('');
+        $cssFiles = $this->getCssFilesToCompile();
+        $files = new WebLoader\FileCollection($dir);
+        $files->addFiles($cssFiles);
+
+        $compiler = WebLoader\Compiler::createCssCompiler($files, $dir . '/webtemp');
+
+        $compiler->addFilter(function ($code) {
+            return cssmin::minify($code);
+        });
+
+        $control = new WebLoader\Nette\CssLoader($compiler, $this->template->basePath. '/webtemp');
+        $control->setMedia('screen');
+
+        return $control;
+    }
+    
+     protected function createComponentJs() {
+        $dir = $this->webDir->getPath('');
+        $jsFiles = $this->getJsFilesToCompile();
+        $files = new WebLoader\FileCollection($dir);
+        $files->addFiles($jsFiles);
+
+        $compiler = WebLoader\Compiler::createJsCompiler($files, $dir . '/webtemp');
+
+        $control = new WebLoader\Nette\JavaScriptLoader($compiler, $this->template->basePath. '/webtemp');
+
+        return $control;
     }
     
     public function bootstrapFormRendering($form) {

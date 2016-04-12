@@ -11,6 +11,11 @@ basic:
     similar_videos: "Podobná videa"
     songbook: "Zpěvník"
     categories: "Kategorie"
+    nothing_found: "Nic nenalezeno"
+    on_air_offline: "Offline"
+    share: "Sdílet"
+    share_in_time: "Sdílet v čase"
+    category: "Kategorie"
 search:
     more: "další výsledky"
 homepage:

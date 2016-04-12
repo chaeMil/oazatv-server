@@ -1,3 +1,10 @@
+{block meta}
+    <meta property="og:image" content="{$serverUrl}/{$video['thumbs']['1024']}"/>
+    <meta property="og:title" content="{$videoRaw['name_cs']} | {$videoRaw['name_en']}"/>
+    <meta property="og:description" content="{$videoRaw['description_cs']} | {$videoRaw['description_en']}"/>	
+{/block}
+
+
 {block content}
 
 <div class="container-fluid video-player-bg">
@@ -33,16 +40,12 @@
                         {foreach $similarVideos as $similarVideo}
                             <div class="col-xs-12">
                                 <a n:href="Video:watch $similarVideo['hash']">
-                                    <div class="video-box video-box-horizontal">
-                                        <div class="thumb"
-                                             style="background-image: url({$basePath|noescape}/{$similarVideo['thumbs']['512']|noescape});">
-                                        </div>
-                                        <div class="info">
-                                            <span class="name invert">{$similarVideo['name']}</span>
-                                            <span class="date invert">{$similarVideo['date']}</span>
-                                            <span class="views invert">{$similarVideo['views']} {_frontend.basic.views}</span>
-                                        </div>
-                                    </div>
+                                    {foreach $similarVideos as $item}
+                                        {include '../Shared/videoBox.latte', 
+                                            item => $item, 
+                                            responsive => false,
+                                            horizontal => true}
+                                    {/foreach}
                                 </a>
                             </div>
                         {/foreach}
@@ -58,43 +61,103 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-6 col-xl-4">
-                    <h2>{$video['name']}</h2>
-                    <h4>{$video['date']} | {$video['views']} {_frontend.basic.views}</h4>
-                    <p>{$video['desc']}</p>
-                </div>
-                {if isset($preachers)}
-                    <div class="col-md-6 col-xl-4">
-                        <div class="preachers">
-                            {foreach $preachers as $preacher}
-                                {if $preacher}
-                                    <div class="preacher">
-                                        <div class="row">
-                                            <div class="col-xs-3">
-                                                <img class="img-responsive" 
-                                                     src="{$basePath}/db/preachers/{$preacher['id']}_256.jpg" />
-                                            </div>
-                                            <div class="col-xs-9">
-                                                <p class="lead">{$preacher['name']}</p>
-                                                <p>{$preacher['about']|noescape}</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                    <div class="video-info">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h2>
+                                    {$video['name']}
+                                    <small class="pull-right">
+                                        {$video['views']} {_frontend.basic.views}
+                                    </small>
+                                </h2>
+                            </div>
+                            <div class="panel-body">
+                                <p class="lead">{$video['date']}</p>
+                                {if ($video['desc'] != "")}
+                                    <p>{$video['desc']}</p>
                                 {/if}
-                            {/foreach}
+                                
+                                <hr>
+                                <p id="playerTags" class="tags text-center">
+                                    {foreach $tags as $tag}
+                                        {if $tag['type'] == 'song'}
+                                            <a n:href="Song:view $tag['song']">{$tag['tag']}</a>
+                                        {else}
+                                            <a href="{$basePath}/search/?q=%23{substr($tag['tag'], 1)}" class="tag" rel="{$tag['usage']}">{$tag['tag']}</a>
+                                        {/if}
+                                    {/foreach}
+                                </p>
+                                
+                            </div>
                         </div>
                     </div>
-                {/if}
-                <div class="col-md-8 col-md-offset-2 col-xl-4">
-                    <p id="playerTags" class="tags text-center">
-                        {foreach $tags as $tag}
-                            {if $tag['type'] == 'song'}
-                                <a n:href="Song:view $tag['song']">{$tag['tag']}</a>
-                            {else}
-                                <a href="{$basePath}/search/?q=%23{substr($tag['tag'], 1)}" class="tag" rel="{$tag['usage']}">{$tag['tag']}</a>
-                            {/if}
-                        {/foreach}
-                    </p>
                 </div>
+                
+                <div class="col-md-6 col-xl-8">
+                    
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-xl-6 pull-right">
+                            <div class="share-options">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">
+                                            {_frontend.basic.share}
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="social">
+                                            <a id="share-fb">
+                                                <i class="fa fa-facebook"></i>
+                                            </a>
+                                            <a id="share-google-plus">
+                                                <i class="fa fa-google-plus"></i>
+                                            </a>
+                                            <a id="share-link" >
+                                                <i class="fa fa-link"></i>
+                                            </a>
+                                        </div>
+                                        <div class="share-time">
+                                            <span>{_frontend.basic.share_in_time}</span>:<br>
+                                            <input dir="rtl" type="text" 
+                                                   class="form-control" 
+                                                   id="video-time">
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+                        </div>
+                                        
+                    
+                        {if isset($preachers)}
+                            <div class="col-md-12 col-xl-6 pull-left">
+                                <div class="preachers">
+                                    {foreach $preachers as $preacher}
+                                        {if $preacher}
+                                            <div class="preacher">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-xs-3">
+                                                                <img class="img-responsive" 
+                                                                 src="{$basePath}/db/preachers/{$preacher['id']}_256.jpg" />
+                                                            </div>
+                                                            <div class="col-xs-9">
+                                                                <h4>{$preacher['name']}</h4>
+                                                                <p>{$preacher['about']|noescape}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {/if}
+                                    {/foreach}
+                                </div>
+                            </div>
+                        {/if}
+                    </div>
+
+                </div>
+                
                 <hr class="visible-sm visible-xs">
             </div>
             <br>
@@ -109,78 +172,118 @@
 {block pageScripts}
 
 <script>
-
-$('document').ready(function() {
-
-    $('#playerTags a').tagcloud({
-        size: {
-            start: 12,
-            end: 25,
-            unit: 'px'
-        },
-        color: {
-            start: "#444444",
-            end: "#206ff2"
-        }
-    });
-
+    
     var player;
 
-    var video = videojs('video').ready(function(){
-        player = this;
-
-        player.on('pause', function() {
-           saveVideoTime(player.currentTime());
-           savePlayerVolume(player.volume().toString().substr(0,5));
+    $('document').ready(function() {
+        
+        $('#share-fb').click(function() {
+           shareToFB(); 
         });
+        
+        $('#share-google-plus').click(function() {
+           shareToGooglePlus(); 
+        });
+        
+        $('#share-link').click(function() {
+           shareLink({_frontend.basic.share}); 
+        });
+        
+        $('#video-time').click(function() {
+            player.pause();
+            $(this).select();
+        });
+
+        $('#playerTags a').tagcloud({
+            size: {
+                start: 12,
+                end: 25,
+                unit: 'px'
+            },
+            color: {
+                start: "#444444",
+                end: "#206ff2"
+            }
+        });
+        
+        var video = videojs('video').ready(function(){
+            player = this;
+            
+            var hash = window.location.hash;
+            hash = window.location.hash.replace('#t=', '');
+            if (hash !== 0 && hash !== '' && hash !== undefined && hash !== null) {
+                player.currentTime(hash);
+            }
+
+            player.on('pause', function() {
+               saveVideoTime(player.currentTime());
+               savePlayerVolume(player.volume().toString().substr(0,5));
+            });
+
+        });
+
+        setInterval(function() {
+            updateShareInTime(player);
+        }, 1000);
+
+        setInterval(function() {
+            saveVideoTime(player.currentTime());
+            savePlayerVolume(player.volume().toString().substr(0,5));
+        }, 10000);
+
+        if (getSavedVideoTime() !== undefined) {
+            video.currentTime(getSavedVideoTime());
+        }
+
+        if (getSavedPlayerVolume() !== undefined) {
+            video.volume(getSavedPlayerVolume());
+        }
+
+        $(window).unload(function(){
+            saveVideoTime(player.currentTime());
+            savePlayerVolume(player.volume().toString().substr(0,5));
+        });
+        
+        
     });
 
-    setInterval(function() {
-        saveVideoTime(player.currentTime());
-        savePlayerVolume(player.volume().toString().substr(0,5));
-    }, 10000);
-
-    if (getSavedVideoTime() !== undefined) {
-        video.currentTime(getSavedVideoTime());
-    }
-
-    if (getSavedPlayerVolume() !== undefined) {
-        video.volume(getSavedPlayerVolume());
-    }
-
-    $(window).unload(function(){
-        saveVideoTime(player.currentTime());
-        savePlayerVolume(player.volume().toString().substr(0,5));
-    });
-});
-
-$(document).ready(function() {
-   adjustSimilarVideosPane();
-   
-   $(window).resize(function() {
+    $(document).ready(function() {
        adjustSimilarVideosPane();
-   });
-});
 
-function saveVideoTime(time) {
-    setCookie({$video['hash']} + '_time', time);
-}
+       $(window).resize(function() {
+           adjustSimilarVideosPane();
+       });
+    });
 
-function getSavedVideoTime() {
-    return getCookie({$video['hash']} + '_time');
-}
+    function saveVideoTime(time) {
+        setCookie({$video['hash']} + '_time', time);
+    }
 
-function savePlayerVolume(volume) {
-    setCookie('player_volume', volume);
-}
+    function getSavedVideoTime() {
+        return getCookie({$video['hash']} + '_time');
+    }
 
-function getSavedPlayerVolume() {
-    return getCookie('player_volume');
-}
+    function savePlayerVolume(volume) {
+        setCookie('player_volume', volume);
+    }
 
-function adjustSimilarVideosPane() {
-    $('.similar-videos').height($('#video').height() - $('#similarVideosHeader').outerHeight());
-}
+    function getSavedPlayerVolume() {
+        return getCookie('player_volume');
+    }
+
+    function adjustSimilarVideosPane() {
+        $('.similar-videos').height($('#video').height() - $('#similarVideosHeader').outerHeight());
+    }
+    
+    function updateShareInTime() {
+        var input = $('#video-time');
+        var url = location.href.replace(location.hash,"") + "#t=" + parseInt(player.currentTime());
+        
+        if (input.val() === '' || !player.paused()) {
+            input.val(url);
+        }
+    }
+ 
 
 </script>
 

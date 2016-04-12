@@ -33,10 +33,10 @@ class SearchManager extends BaseModel {
     }
 
 
-    public function search($userInput, $limit = 5, $offset = 0, $lang = 'cs') {
+    public function search($userInput, $offset = 0, $limit = 5, $lang = 'cs') {
 
         $hashTag = false;
-
+        
         if (strlen($userInput) >= 3) {
             
             if (substr($userInput, 0, 1) === "#") {

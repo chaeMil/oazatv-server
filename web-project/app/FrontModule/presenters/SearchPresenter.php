@@ -19,22 +19,38 @@ class SearchPresenter extends BasePresenter {
         $this->searchManager = $searchManager;
     }
     
-    public function renderDefault($id = 0, $q = '') {
+    public function renderDefault($page = 0, $q = '') {
         
-        $page = $id;
+        $limit = 32;
+        $search = $this->searchManager->search($q, 0, 999, $this->lang);
         
-        $search = $this->searchManager->search($q, 500, $page * 16);
+        if(isset($search['videos']) || isset($search['albums'])) {
+            if(count($search['videos']) != 0 || count($search['albums'] != 0)) {
+
+                $mergedSearch = array_merge($search['videos'], $search['albums']);
+                usort($mergedSearch, array($this, 'sortItemsByDate'));
+
+                $searchPage = $page;
+                if ($page != 0) {
+                    $searchPage = $page -1;
+                }
+                $mergedLimitedSearch = array_slice($mergedSearch, $searchPage * $limit, $limit);
+                
+                $paginator = new Nette\Utils\Paginator;
+                $paginator->setItemsPerPage($limit);
+                $paginator->setPage($page);
+                $paginator->setItemCount(count($mergedSearch));
+            }
+        }
         
-        $paginator = new Nette\Utils\Paginator;
-        $paginator->setItemsPerPage(16);
-        $paginator->setPage($page);
-        $paginator->setItemCount(count($search['videos']) + count($search['albums']));
-        
-        $this->template->search = $search;
-        $this->template->paginator = $paginator;
-        $this->template->page = $paginator->getPage();
-        $this->template->pages = $paginator->getPageCount();
-        $this->template->itemsPerPage = $paginator->getItemsPerPage();
+        if (isset($mergedLimitedSearch)) {
+            $this->template->q = $q;
+            $this->template->search = $mergedLimitedSearch;
+            $this->template->paginator = $paginator;
+            $this->template->page = $paginator->getPage();
+            $this->template->pages = $paginator->getPageCount();
+            $this->template->itemsPerPage = $paginator->getItemsPerPage();
+        }
         
     }
     
@@ -42,11 +58,16 @@ class SearchPresenter extends BasePresenter {
         
         $limit = 7;
         $q = $id;
-        $search = $this->searchManager->search($q, $limit, 0, $this->lang);
+        $search = $this->searchManager->search($q, 0, $limit, $this->lang);
         $this->template->search = $search;
         $this->template->limit = $limit;
         $this->template->q = $q;
         
     }
+    
+    private function sortItemsByDate($a, $b) {
+	if($a['date'] == $b['date']){ return 0 ; }
+	return ($a['date'] > $b['date']) ? -1 : 1;
+}
     
 }
