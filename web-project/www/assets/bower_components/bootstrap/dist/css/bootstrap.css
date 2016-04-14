@@ -7266,6 +7266,22 @@ body {
   font-size: 8em;
   text-shadow: 0 0 28px rgba(0, 0, 0, 0.45);
 }
+.video-player #video .vjs-audio-switch {
+  font: normal normal normal 8px/1 FontAwesome;
+  font-size: 8px;
+}
+.video-player #video .vjs-audio-switch:before {
+  padding-top: 3px;
+  content: "\f1c7";
+}
+.video-player #video .vjs-video-switch {
+  font: normal normal normal 8px/1 FontAwesome;
+  font-size: 8px;
+}
+.video-player #video .vjs-video-switch:before {
+  padding-top: 3px;
+  content: "\f1c8";
+}
 .video-player #video.vjs-paused .vjs-big-play-button {
   display: block;
 }

@@ -1,0 +1,109 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6 col-xl-4">
+                    <div class="video-info">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h2>
+                                    {$video['name']}
+                                    <small class="pull-right">
+                                        {$video['views']} {_frontend.basic.views}
+                                    </small>
+                                </h2>
+                            </div>
+                            <div class="panel-body">
+                                <p class="lead">{$video['date']}</p>
+                                {if ($video['desc'] != "")}
+                                    <p>{$video['desc']}</p>
+                                {/if}
+                                
+                                <hr>
+                                <p id="playerTags" class="tags text-center">
+                                    {foreach $tags as $tag}
+                                        {if $tag['type'] == 'song'}
+                                            <a n:href="Song:view $tag['song']">{$tag['tag']}</a>
+                                        {else}
+                                            <a href="{$basePath}/search/?q=%23{substr($tag['tag'], 1)}" class="tag" rel="{$tag['usage']}">{$tag['tag']}</a>
+                                        {/if}
+                                    {/foreach}
+                                </p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-xl-8">
+                    
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-xl-6 pull-right">
+                            <div class="share-options">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">
+                                            {_frontend.basic.share}
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="social">
+                                            <a id="share-fb">
+                                                <i class="fa fa-facebook"></i>
+                                            </a>
+                                            <a id="share-google-plus">
+                                                <i class="fa fa-google-plus"></i>
+                                            </a>
+                                            <a id="share-link" >
+                                                <i class="fa fa-link"></i>
+                                            </a>
+                                        </div>
+                                        <div class="share-time">
+                                            <span>{_frontend.basic.share_in_time}</span>:<br>
+                                            <input dir="rtl" type="text" 
+                                                   class="form-control" 
+                                                   id="video-time">
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+                        </div>
+                                        
+                    
+                        {if isset($preachers)}
+                            <div class="col-md-12 col-xl-6 pull-left">
+                                <div class="preachers">
+                                    {foreach $preachers as $preacher}
+                                        {if $preacher}
+                                            <div class="preacher">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-xs-3">
+                                                                <img class="img-responsive" 
+                                                                 src="{$basePath}/db/preachers/{$preacher['id']}_256.jpg" />
+                                                            </div>
+                                                            <div class="col-xs-9">
+                                                                <h4>{$preacher['name']}</h4>
+                                                                <p>{$preacher['about']|noescape}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {/if}
+                                    {/foreach}
+                                </div>
+                            </div>
+                        {/if}
+                    </div>
+
+                </div>
+                
+                <hr class="visible-sm visible-xs">
+            </div>
+            <br>
+        </div>
+    </div>
+
+</div>

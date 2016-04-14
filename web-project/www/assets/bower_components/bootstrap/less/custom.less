@@ -452,10 +452,12 @@ html,body{
         position: relative;
         max-height: 75vh;
         height: auto !important;
+        
         &.vjs-fullscreen {
             height: 100%;
             max-height: 100vh;
         }
+        
         .vjs-big-play-button {
             top: 50%;
             left: 50%;
@@ -464,6 +466,26 @@ html,body{
             background: none;
             font-size: 8em;
             text-shadow: 0 0 28px rgba(0, 0, 0, 0.45);
+        }
+        
+        .vjs-audio-switch {
+            font: normal normal normal 8px/1 FontAwesome;
+            font-size: 8px;
+            
+            &:before {
+                padding-top: 3px;
+                content: "\f1c7";
+            }
+        }
+        
+        .vjs-video-switch {
+            font: normal normal normal 8px/1 FontAwesome;
+            font-size: 8px;
+            
+            &:before {
+                padding-top: 3px;
+                content: "\f1c8";
+            }
         }
         &.vjs-paused {
             .vjs-big-play-button {
