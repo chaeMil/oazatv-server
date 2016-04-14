@@ -70,7 +70,14 @@ and open the template in the editor.
     }
     
     &.bottom {
+        background-image: url('../assets/img/footer-bg.jpg');
+        background-size: cover;
+        background-position: bottom center;
+        background-attachment: fixed;
+        
         padding-top: 50px;
+        
+        box-shadow: inset 0 8px 35px rgba(0, 0, 0, 0.4);
         
         .col-md-4 {
             div {
@@ -79,13 +86,16 @@ and open the template in the editor.
         }
 
         a {
-            color: @gray-light;
+            color: #A7BED5;
             font-size: 14px;
             text-transform: uppercase;
         }
 
         p {
+            color: #A7BED5;
+            
             &.lead {
+                color: white;
                 font-size: 16px;
                 text-transform: uppercase;
                 font-weight: bold;
@@ -96,7 +106,7 @@ and open the template in the editor.
     
     .cirkev-oaza {
         
-        border-right: 1px solid #2F2F2F;
+        border-right: 1px solid #6387AD;
         
         a.logo {
             &:hover {
@@ -132,7 +142,7 @@ and open the template in the editor.
     .find-us-on {
         
         text-align: center;
-        border-right: 1px solid #2F2F2F;
+        border-right: 1px solid #6387AD;
         
         .social  {
             transition-duration: 300ms;

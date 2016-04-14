@@ -7461,23 +7461,32 @@ and open the template in the editor.
   opacity: 0;
 }
 .footer.bottom {
+  background-image: url('../assets/img/footer-bg.jpg');
+  background-size: cover;
+  background-position: bottom center;
+  background-attachment: fixed;
   padding-top: 50px;
+  box-shadow: inset 0 8px 35px rgba(0, 0, 0, 0.4);
 }
 .footer.bottom .col-md-4 div {
   min-height: 180px;
 }
 .footer.bottom a {
-  color: #bbbbbb;
+  color: #A7BED5;
   font-size: 14px;
   text-transform: uppercase;
 }
+.footer.bottom p {
+  color: #A7BED5;
+}
 .footer.bottom p.lead {
+  color: white;
   font-size: 16px;
   text-transform: uppercase;
   font-weight: bold;
 }
 .footer .cirkev-oaza {
-  border-right: 1px solid #2F2F2F;
+  border-right: 1px solid #6387AD;
 }
 .footer .cirkev-oaza a.logo:hover img {
   transition-duration: 150ms;
@@ -7503,7 +7512,7 @@ and open the template in the editor.
 }
 .footer .find-us-on {
   text-align: center;
-  border-right: 1px solid #2F2F2F;
+  border-right: 1px solid #6387AD;
 }
 .footer .find-us-on .social {
   transition-duration: 300ms;
