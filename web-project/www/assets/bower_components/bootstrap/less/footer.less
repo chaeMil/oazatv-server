@@ -74,13 +74,15 @@ and open the template in the editor.
         background-position: bottom center;
         background-attachment: fixed;
         
-        padding-top: 50px;
+        padding-top: 90px;
         
         box-shadow: inset 0 8px 35px rgba(0, 0, 0, 0.4);
         
         .col-md-4 {
             div {
-                min-height: 180px;
+                @media (min-width: @screen-sm) {
+                    min-height: 180px;
+                }
             }
         }
 
@@ -98,6 +100,7 @@ and open the template in the editor.
                 font-size: 16px;
                 text-transform: uppercase;
                 font-weight: bold;
+                margin-bottom: 8px;
             }
         }
     }
@@ -105,7 +108,13 @@ and open the template in the editor.
     
     .cirkev-oaza {
         
-        border-right: 1px solid #6387AD;
+        @media (min-width: @screen-md) {
+            border-right: 1px solid #6387AD;
+        }
+        
+        @media (max-width: @screen-md) {
+            margin-bottom: 60px;
+        }
         
         a.logo {
             &:hover {
@@ -141,7 +150,13 @@ and open the template in the editor.
     .find-us-on {
         
         text-align: center;
-        border-right: 1px solid #6387AD;
+        @media (min-width: @screen-md) {
+            border-right: 1px solid #6387AD;
+        }
+        
+        @media (max-width: @screen-sm) {
+            margin-bottom: 60px;
+        }
         
         .social  {
             transition-duration: 300ms;
@@ -154,7 +169,7 @@ and open the template in the editor.
             
             &:hover {
                 transition-duration: 150ms;
-                opacity: 0.6;
+                box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
             }
             
             &.facebook {
@@ -185,12 +200,7 @@ and open the template in the editor.
             max-width: 180px;
             margin-bottom: 20px;
         }
-        
-        .lead {
-            &.app {
-                margin-bottom: 8px;
-            }
-        }
+       
     }
     
     .categories {
