@@ -32,6 +32,7 @@
                     <th>id</th>
                     <th>název česky</th>
                     <th>název anglicky</th>
+                    <th>barva</th>
                 </thead>
                 <tbody class="searchable">
                     <tr n:foreach="$categories as $category" 
@@ -40,6 +41,7 @@
                         <td>{$category->id}</td>
                         <td>{$category->name_cs}</td>
                         <td>{$category->name_en}</td>
+                        <td><div style="width: 80px; height: 30px; background-color: {$category->color|noescape}; color: white; text-shadow: 0 0 4px black">{$category->color}</div></td>
                     </tr>
                 </tbody>                
             </table>

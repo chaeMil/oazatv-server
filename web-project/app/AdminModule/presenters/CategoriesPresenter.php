@@ -64,10 +64,13 @@ class CategoriesPresenter extends BaseSecuredPresenter {
         $form->addText('name_en', 'název anglicky')
                 ->setRequired()
                 ->setAttribute("class", "form-control");
+        
+        $form->addText('color', 'barva (HTML)')
+                ->setRequired()
+                ->setAttribute("class", "form-control color-picker");
 
         $form->addSubmit('send', 'Uložit')
                 ->setAttribute("class", "btn-lg btn-success btn-block");
-        
 
         // call method signInFormSucceeded() on success
         $form->onSuccess[] = $this->categorySucceeded;
