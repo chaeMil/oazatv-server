@@ -9,8 +9,20 @@
             {foreach $blocks as $block}
                 {if isset($block['type'])}
                     
-                    {include 'blocks/'.$block['type'].'.latte', data => $frontPageManager->parseJsonBlock($block['json_data'])}
+                    {var $container = !($blockDefinitions[strtolower($block['type'])]['container'])}
                     
+                    {if $container}
+                        <div class="container">
+                            <div class="row">
+                    {/if}
+                    
+                        {include 'blocks/'.$block['type'].'.latte', 
+                            data => $frontPageManager->parseJsonBlock($block['json_data'])}
+                    
+                    {if $container}
+                            </div>
+                        </div>
+                    {/if}
                 {/if}   
             {/foreach}
             

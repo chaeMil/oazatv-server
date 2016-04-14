@@ -87,9 +87,13 @@ class MainPresenter extends BasePresenter {
             }
         }
         
+        $latestVideo = $this->videoManager->getLatestVideoFromDB();
+        
         $this->template->popularVideos = $templatePopularVideos;
         $this->template->newestVideos = $templateNewestVideos;
         $this->template->newestAlbums = $templateNewestAlbums;
+        $this->template->latestVideo = $this->videoManager
+                ->createLocalizedVideoObject($this->lang, $latestVideo);
         $this->template->lang = $this->lang;
         $this->template->user = $this->getUser();
         $this->template->categories = $this->categoriesManager

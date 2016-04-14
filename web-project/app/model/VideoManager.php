@@ -89,6 +89,23 @@ class VideoManager extends BaseModel {
         return $sql->id;
 
     }
+    
+    public function getLatestVideoFromDB($published = 1) {
+        if ($published != 2) {
+            return self::$database->table(self::TABLE_NAME)
+                    ->select("*")
+                    ->limit(1, 0)
+                    ->order(self::COLUMN_DATE." DESC")
+                    ->where(array(self::COLUMN_PUBLISHED => $published))
+                    ->fetch();
+        } else {
+            return self::$database->table(self::TABLE_NAME)
+                    ->select("*")
+                    ->limit(1, 0)
+                    ->order(self::COLUMN_DATE." DESC")
+                    ->fetch();
+        }
+    }
 
     public function getVideoFromDB($id, $published = 1) {
         if ($published != 2) {
