@@ -100,3 +100,13 @@ frontpage_blocks:
             text:
                 name: 'video_hash'
                 type: 'text'
+    video_fluid:
+        name: 'video_fluid'
+        info: 'Video s pozadím přes celou šířku bloku'
+        inputs:
+            text:
+                name: 'video_hash'
+                type: 'text'
+    latest_video_fluid:
+        name: 'video_fluid'
+        info: 'Nejnovější video s pozadím přes celou šířku bloku'
