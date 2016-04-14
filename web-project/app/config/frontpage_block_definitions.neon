@@ -4,7 +4,6 @@ frontpage_blocks:
     h1:
         name: 'H1'
         info: 'Nadpis H1 přes celou šířku pozice'
-        container: true
         inputs:
             text: 
                 name: 'text'
@@ -17,7 +16,6 @@ frontpage_blocks:
     h2:
         name: 'H2'
         info: 'Nadpis H2 přes celou šířku pozice'
-        container: true
         inputs:
             text: 
                 name: 'text'
@@ -30,7 +28,6 @@ frontpage_blocks:
     notification_text:
         name: 'notification_text'
         info: 'Notifikační lištička'
-        container: true
         inputs:
             name:
                 name: 'name'
@@ -47,7 +44,6 @@ frontpage_blocks:
     notification_text_closable:
         name: 'notification_text_closable'
         info: 'Notifikační lištička co se dá zavřít'
-        container: true
         inputs:
             name:
                 name: 'name'
@@ -64,7 +60,6 @@ frontpage_blocks:
     new_videos:
         name: 'new_videos'
         info: 'Nejnovější videa (standardní layout)'
-        container: true
         inputs:
             select:
                 name: 'max_videos'
@@ -73,7 +68,6 @@ frontpage_blocks:
     new_albums:
         name: 'new_albums'
         info: 'Nejnovější alba (standardní layout)'
-        container: true
         inputs:
             select:
                 name: 'max_albums'
@@ -82,7 +76,6 @@ frontpage_blocks:
     popular_videos:
         name: 'popular_videos'
         info: 'Populární videa (standardní layout)'
-        container: true
         inputs:
             select:
                 name: 'max_videos'
@@ -91,7 +84,6 @@ frontpage_blocks:
     latest_video:
         name: 'latest_video'
         info: 'Nejnovější video'
-        container: false
         inputs:
             select:
                 name: 'width'
@@ -100,7 +92,6 @@ frontpage_blocks:
     video:
         name: 'video'
         info: 'Video'
-        container: false
         inputs:
             select:
                 name: 'width'

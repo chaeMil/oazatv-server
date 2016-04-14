@@ -49,6 +49,11 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
         $form->addText('name', 'název')
                 ->setRequired()
                 ->setAttribute("class", "form-control");
+        
+        $classes = array("container" => "container", "container-fluid" => "container-fluid");
+        $form->addSelect('class', 'třída', $classes)
+                ->setRequired()
+                ->setAttribute("class", "form-control");
 
         $form->addSubmit('send', 'Vytvořit novou pozici')
                 ->setAttribute("class", "btn-lg btn-success btn-block");

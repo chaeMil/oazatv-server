@@ -26,6 +26,7 @@ class FrontPageManager extends BaseModel {
             TABLE_NAME_BLOCKS = 'frontpage_blocks',
             COLUMN_ID = 'id',
             COLUMN_SORT = 'sort',
+            COLUMN_CLASS = 'class',
             COLUMN_PUBLISHED = 'published',
             COLUMN_NAME = 'name',
             COLUMN_BLOCKS = 'blocks',

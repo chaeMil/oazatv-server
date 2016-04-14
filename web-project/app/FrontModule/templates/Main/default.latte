@@ -2,31 +2,27 @@
 
 {if isset($rows)}
     {foreach $rows as $row}
-
-        {var $blocks = $frontPageManager->getBlocksFromRow($row['id'])}
-        {if isset($blocks)}
         
-            {foreach $blocks as $block}
-                {if isset($block['type'])}
-                    
-                    {var $container = !($blockDefinitions[strtolower($block['type'])]['container'])}
-                    
-                    {if $container}
-                        <div class="container">
-                            <div class="row">
-                    {/if}
-                    
-                        {include 'blocks/'.$block['type'].'.latte', 
-                            data => $frontPageManager->parseJsonBlock($block['json_data'])}
-                    
-                    {if $container}
-                            </div>
-                        </div>
-                    {/if}
-                {/if}   
-            {/foreach}
-            
-        {/if}
+        <div class="{$row["class"]}">
+            <div class="row">
 
+                {var $blocks = $frontPageManager->getBlocksFromRow($row['id'])}
+                {if isset($blocks)}
+
+                    {foreach $blocks as $index => $block}
+                        {if isset($block['type'])}
+
+                            {include 'blocks/'.$block['type'].'.latte', 
+                                data => $frontPageManager->parseJsonBlock($block['json_data'])}
+
+                        {/if}   
+                    {/foreach}
+
+                {/if}
+
+                
+            </div>
+        </div>
+                
     {/foreach}
 {/if}
