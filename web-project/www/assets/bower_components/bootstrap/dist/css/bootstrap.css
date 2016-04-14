@@ -7627,6 +7627,9 @@ and open the template in the editor.
   overflow: hidden;
   position: relative;
 }
+.video-fluid .video-content-wrapper {
+  margin-bottom: 0;
+}
 .video-fluid.bg {
   margin-top: -18px;
   padding-top: 50px;
