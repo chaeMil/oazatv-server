@@ -31,7 +31,7 @@
         <div class="video-content-wrapper">
             <div class="thumb-wrapper">
                 <div class="thumb"
-                     {if isset($item['thumbs'])}
+                     {if isset($item['thumbs']) && (isset($item['thumbs']['512']) || isset($item['thumbs']['1024']))}
                         {if $bigThumb}
                             style="background-image: url({$basePath|noescape}/{$item['thumbs']['1024']|noescape});"
                         {else}

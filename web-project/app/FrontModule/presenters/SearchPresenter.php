@@ -4,19 +4,23 @@ namespace App\FrontModule;
 
 use Nette,
 Nette\Database\Context,
-Model\SearchManager;
+Model\SearchManager,
+Model\CategoriesManager;
 
 class SearchPresenter extends BasePresenter {
     
     public $lang;
     public $container;
     public $searchManager;
+    private $categoriesManager;
     
     public function __construct(Nette\DI\Container $container,
-            Context $database, SearchManager $searchManager) {
+            Context $database, SearchManager $searchManager,
+            CategoriesManager $categoriesManager) {
         
         parent::__construct($container, $database);
         $this->searchManager = $searchManager;
+        $this->categoriesManager = $categoriesManager;
     }
     
     public function renderDefault($page = 0, $q = '') {
@@ -42,6 +46,10 @@ class SearchPresenter extends BasePresenter {
                 $paginator->setItemCount(count($mergedSearch));
             }
         }
+        
+        $this->template->categoriesManager = $this->categoriesManager;
+        $this->template->categories = $this->categoriesManager
+                ->getLocalizedCategories($this->lang);
         
         if (isset($mergedLimitedSearch)) {
             $this->template->q = $q;

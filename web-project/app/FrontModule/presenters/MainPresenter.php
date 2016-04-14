@@ -54,6 +54,9 @@ class MainPresenter extends BasePresenter {
             }
         }
         
+        $this->template->categories = $this->categoriesManager
+                ->getLocalizedCategories($this->lang);
+        
         $this->template->rows = $this->frontPageManager->getRowsFromDB();
         $this->template->frontPageManager = $this->frontPageManager;
         $this->template->blockDefinitions = $this->frontPageManager->getBlocksDefinitions();
@@ -96,8 +99,6 @@ class MainPresenter extends BasePresenter {
                 ->createLocalizedVideoObject($this->lang, $latestVideo);
         $this->template->lang = $this->lang;
         $this->template->user = $this->getUser();
-        $this->template->categories = $this->categoriesManager
-                ->getLocalizedCategories($this->lang);
         $this->template->videoManager = $this->videoManager;
     }
     

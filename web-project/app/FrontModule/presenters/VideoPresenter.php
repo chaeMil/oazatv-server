@@ -13,7 +13,8 @@ Nette\Database\Context,
 Model\VideoManager,
 Model\AnalyticsManager,
 Model\SongsManager,
-Model\PreachersManager;
+Model\PreachersManager,
+Model\CategoriesManager;
 
 /**
  * Description of VideoPreseter
@@ -26,11 +27,13 @@ class VideoPresenter extends BasePresenter {
     private $analyticsManager;
     private $songsManager;
     private $preachersManager;
+    private $categoriesManager;
 
     public function __construct(Nette\DI\Container $container,
             Context $database, VideoManager $videoManager,
             AnalyticsManager $analyticsManager, SongsManager $songsManager,
-            PreachersManager $preachersManager) {
+            PreachersManager $preachersManager,
+            CategoriesManager $categoriesManager) {
 
         parent::__construct($container, $database);
 
@@ -38,6 +41,7 @@ class VideoPresenter extends BasePresenter {
         $this->analyticsManager = $analyticsManager;
         $this->songsManager = $songsManager;
         $this->preachersManager = $preachersManager;
+        $this->categoriesManager = $categoriesManager;
     }
     
     private function countView($id, $hash) {
@@ -75,6 +79,10 @@ class VideoPresenter extends BasePresenter {
 
         $this->countView($video->id, $hash);
 
+        $this->template->categoriesManager = $this->categoriesManager;
+        $this->template->categories = $this->categoriesManager
+                ->getLocalizedCategories($this->lang);
+        
         $this->template->serverUrl = "http://$_SERVER[HTTP_HOST]";
         $this->template->videoRaw = $video;
         $this->template->video = $this->videoManager
