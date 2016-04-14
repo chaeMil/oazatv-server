@@ -47,7 +47,7 @@
             {/if}
             
             var hash = window.location.hash;
-            hash = window.location.hash.replace('##', '').replace('#t=', '');
+            hash = window.location.hash.replace('#&', '').replace('#t=', '');
             if (hash !== 0 && hash !== '' && hash !== undefined && hash !== null) {
                 player.currentTime(hash);
             }
@@ -55,12 +55,11 @@
             player.on('pause', function() {
                saveVideoTime(player.currentTime());
                savePlayerVolume(player.volume().toString().substr(0,5));
-               window.location.hash = "t=" + parseInt(video.currentTime());
             });
             
             if (window.location.hash === "#autoplay") {
                 player.play();
-                window.location.hash = "t=" + parseInt(player.currentTime());
+                window.location.hash = "&";
             }
 
         });
