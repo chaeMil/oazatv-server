@@ -7248,6 +7248,9 @@ body {
 .onair h1 {
   display: none;
 }
+.navbar {
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+}
 .navbar-brand:hover {
   cursor: pointer;
 }
