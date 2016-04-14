@@ -24,3 +24,8 @@ homepage:
     popular_videos: "Populární videa"
 songbook:
     videos_including_this_song: "Videa obsahující tuto chválu"
+footer:
+    copyright: "Všechna práva vyhrazena | Oaza.tv"
+    contact: "Kontakt"
+    find_us_on: "Najdete nás také na"
+    app: "Mobilní aplikace"

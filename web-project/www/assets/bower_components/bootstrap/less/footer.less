@@ -10,7 +10,124 @@ and open the template in the editor.
 
 .footer {
     
-    margin-bottom: 30px;
+    &.top {
+        margin-bottom: 50px;
+    }
+    
+    &.bottom {
+        padding-top: 50px;
+        
+        .col-md-4 {
+            div {
+                min-height: 180px;
+            }
+        }
+
+        a {
+            color: @gray-light;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        p {
+            &.lead {
+                font-size: 16px;
+                text-transform: uppercase;
+                font-weight: bold;
+            }
+        }
+    }
+    
+    
+    .cirkev-oaza {
+        
+        border-right: 1px solid #2F2F2F;
+        
+        a.logo {
+            &:hover {
+                img {
+                    transition-duration: 150ms;
+                    opacity: 1.0;
+                }
+            }
+            
+            img {
+                transition-duration: 300ms;
+                opacity: 0.6;
+            }
+        }
+        
+        img.logo {
+            display: block;
+            width: 75px;
+            height: auto;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        img.text {
+            display: block;
+            width: 180px;
+            height: auto;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+    
+    .find-us-on {
+        
+        text-align: center;
+        border-right: 1px solid #2F2F2F;
+        
+        .social  {
+            transition-duration: 300ms;
+            opacity: 1.0;
+            position: relative;
+            display: inline-block;
+            width: 120px;
+            height: 120px;
+            margin-right: 4px;
+            
+            &:hover {
+                transition-duration: 150ms;
+                opacity: 0.6;
+            }
+            
+            &.facebook {
+                background-color: #3b5998
+            }
+
+            &.youtube {
+                background-color: #b31217;
+            }
+            
+            span {
+                color: white;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                text-align: center;
+                line-height: 120px;
+            }
+        }
+    }
+    
+    .navigation {
+        text-align: center;
+        
+        .play {
+            max-width: 180px;
+            margin-bottom: 20px;
+        }
+        
+        .lead {
+            &.app {
+                margin-bottom: 8px;
+            }
+        }
+    }
     
     .categories {
         

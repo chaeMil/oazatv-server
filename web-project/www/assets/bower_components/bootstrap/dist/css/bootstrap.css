@@ -7328,6 +7328,10 @@ body {
 ::-webkit-scrollbar-thumb:window-inactive {
   background: #acc9fa;
 }
+.nopadding {
+  padding: 0 !important;
+  margin: 0 !important;
+}
 /*
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
@@ -7410,8 +7414,92 @@ and open the template in the editor.
     Created on : 12.3.2016, 22:49:38
     Author     : chaemil
 */
-.footer {
-  margin-bottom: 30px;
+.footer.top {
+  margin-bottom: 50px;
+}
+.footer.bottom {
+  padding-top: 50px;
+}
+.footer.bottom .col-md-4 div {
+  min-height: 180px;
+}
+.footer.bottom a {
+  color: #bbbbbb;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+.footer.bottom p.lead {
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.footer .cirkev-oaza {
+  border-right: 1px solid #2F2F2F;
+}
+.footer .cirkev-oaza a.logo:hover img {
+  transition-duration: 150ms;
+  opacity: 1.0;
+}
+.footer .cirkev-oaza a.logo img {
+  transition-duration: 300ms;
+  opacity: 0.6;
+}
+.footer .cirkev-oaza img.logo {
+  display: block;
+  width: 75px;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+.footer .cirkev-oaza img.text {
+  display: block;
+  width: 180px;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+.footer .find-us-on {
+  text-align: center;
+  border-right: 1px solid #2F2F2F;
+}
+.footer .find-us-on .social {
+  transition-duration: 300ms;
+  opacity: 1.0;
+  position: relative;
+  display: inline-block;
+  width: 120px;
+  height: 120px;
+  margin-right: 4px;
+}
+.footer .find-us-on .social:hover {
+  transition-duration: 150ms;
+  opacity: 0.6;
+}
+.footer .find-us-on .social.facebook {
+  background-color: #3b5998;
+}
+.footer .find-us-on .social.youtube {
+  background-color: #b31217;
+}
+.footer .find-us-on .social span {
+  color: white;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  text-align: center;
+  line-height: 120px;
+}
+.footer .navigation {
+  text-align: center;
+}
+.footer .navigation .play {
+  max-width: 180px;
+  margin-bottom: 20px;
+}
+.footer .navigation .lead.app {
+  margin-bottom: 8px;
 }
 .footer .categories ul {
   list-style-type: none;

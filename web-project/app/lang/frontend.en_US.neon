@@ -24,3 +24,8 @@ homepage:
     popular_videos: "Popular videos"
 songbook:
     videos_including_this_song: "Videos including this song"
+footer:
+    copyright: "All rights reserved | Oaza.tv"
+    contact: "Contact"
+    find_us_on: "Find us on"
+    app: "Mobile app"
