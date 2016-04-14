@@ -63,23 +63,23 @@
             }
             
             if (getSavedVideoTime() !== undefined) {
-                video.currentTime(getSavedVideoTime());
+                player.currentTime(getSavedVideoTime());
             }
 
             if (getSavedPlayerVolume() !== undefined) {
-                video.volume(getSavedPlayerVolume());
+                player.volume(getSavedPlayerVolume());
             }
+            
+            setInterval(function() {
+                saveVideoTime(player.currentTime());
+                savePlayerVolume(player.volume().toString().substr(0,5));
+            }, 10000);
 
         });
 
         setInterval(function() {
             updateShareInTime(player);
         }, 1000);
-
-        setInterval(function() {
-            saveVideoTime(player.currentTime());
-            savePlayerVolume(player.volume().toString().substr(0,5));
-        }, 10000);
 
         $(window).unload(function(){
             saveVideoTime(player.currentTime());
