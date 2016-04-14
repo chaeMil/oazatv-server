@@ -12,21 +12,5 @@
 {/if}
 
 <div class="{$classes}">
-    <div class="video-box">
-        <div class="thumb"
-            {if isset($latestVideo['thumbs']) && isset($latestVideo['thumbs']['512'])}
-                style="background-image: url({$basePath|noescape}/{$latestVideo['thumbs']['512']|noescape});"
-            {/if}
-            {if isset($latestVideo['thumb_file'])}
-                style="background-image: url({$latestVideo['thumb_file']|noescape});"
-            {/if}>
-        </div>
-        <div class="info">
-          <span class="name">{$latestVideo['name']}</span>
-          <span class="date">{$latestVideo['date']}</span>
-          {if ($latestVideo['type'] == 'video')}
-              <span class="views">{$latestVideo['views']} {_frontend.basic.views}</span>
-          {/if}
-        </div>
-    </div>
+    {include '../../Shared/videoBox.latte', item => $latestVideo, responsive => false}
 </div>
