@@ -12,7 +12,7 @@
         <div class="video-player">
             <div class="column {if count($similarVideos) <= 0} col-md-8 col-md-offset-2 col-xl-10 col-xl-offset-1 {else} col-md-8 col-xl-9 {/if}">
 
-                <video id="video" class="video-js vjs-default-skin"
+                <video oncontextmenu="return false" id="video" class="video-js vjs-default-skin"
                        controls preload="auto"
                     {if isset($video['thumbs']['1024'])}
                         poster="{$basePath}/{$video['thumbs']['1024']}"
