@@ -204,7 +204,7 @@
             player = this;
             
             var hash = window.location.hash;
-            hash = window.location.hash.replace('#t=', '');
+            hash = window.location.hash.replace('##', '').replace('#t=', '');
             if (hash !== 0 && hash !== '' && hash !== undefined && hash !== null) {
                 player.currentTime(hash);
             }
@@ -213,6 +213,11 @@
                saveVideoTime(player.currentTime());
                savePlayerVolume(player.volume().toString().substr(0,5));
             });
+            
+            if (window.location.hash === "#autoplay") {
+                player.play();
+                window.location.hash = "t=" + parseInt(player.currentTime());
+            }
 
         });
 

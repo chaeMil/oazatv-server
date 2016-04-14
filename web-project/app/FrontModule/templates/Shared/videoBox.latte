@@ -23,7 +23,7 @@
      {/if}
      ">
     {if ($item['type'] == 'video')}
-        <a n:href="Video:watch $item['hash']">
+        <a href="{link Video:watch, $item['hash']}#autoplay">
     {/if}
     {if ($item['type'] == 'album')}
         <a n:href="Album:view $item['hash']">
