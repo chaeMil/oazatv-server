@@ -42,7 +42,8 @@
                          style="background-image: url({$item['thumb_file']|noescape});"
                      {/if}>
                 </div>
-                <i class="fa fa-play-circle" aria-hidden="true"></i>
+                <i class="open fa {if $item['type'] == "video"} fa-play-circle {else} fa-picture-o{/if}" 
+                   aria-hidden="true"></i>
             </div> 
             <div class="info">
                <span class="name">{$item['name']}</span>
