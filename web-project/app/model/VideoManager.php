@@ -465,8 +465,9 @@ class VideoManager extends BaseModel {
                 $similarVideo = $this->getVideoFromDBbyTag($randomTag);
 
                 if($similarVideo != false) {
-                    if ($similarVideo['id'] != $originalVideo['id']) {
-                        $similarVideos[] = $similarVideo;
+                    if ($similarVideo['id'] != $originalVideo['id']
+                            || !in_array($similarVideo['id'], $similarVideos)) {
+                        $similarVideos[] = $similarVideo['id'];
                     }
                 }
                 
@@ -476,8 +477,9 @@ class VideoManager extends BaseModel {
         
         $localizedSimilarVideos = array();
         
-        foreach($similarVideos as $video) {
-            $localizedSimilarVideos[] = $this->createLocalizedVideoObject($lang, $video);
+        foreach($similarVideos as $id) {
+            $localizedSimilarVideos[] = $this
+                    ->createLocalizedVideoObject($lang, $this->getVideoFromDB($id));
         }
         
         return $localizedSimilarVideos;

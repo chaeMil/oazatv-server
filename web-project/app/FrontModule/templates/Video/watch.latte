@@ -37,17 +37,11 @@
                 {if count($similarVideos) > 0}
                     <h3 id="similarVideosHeader">{_frontend.basic.similar_videos}</h3>
                     <div class="row similar-videos">
-                        {foreach $similarVideos as $similarVideo}
-                            <div class="col-xs-12">
-                                <a n:href="Video:watch $similarVideo['hash']">
-                                    {foreach $similarVideos as $item}
-                                        {include '../Shared/videoBox.latte', 
-                                            item => $item, 
-                                            responsive => false,
-                                            horizontal => true}
-                                    {/foreach}
-                                </a>
-                            </div>
+                        {foreach $similarVideos as $item}
+                            {include '../Shared/videoBox.latte', 
+                                item => $item, 
+                                responsive => false,
+                                horizontal => true}
                         {/foreach}
                     </div>
                 {/if}
