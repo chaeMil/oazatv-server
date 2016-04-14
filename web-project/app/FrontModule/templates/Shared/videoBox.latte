@@ -28,24 +28,29 @@
     {if ($item['type'] == 'album')}
         <a n:href="Album:view $item['hash']">
     {/if}
-        <div class="thumb"
-             {if isset($item['thumbs'])}
-                {if $bigThumb}
-                    style="background-image: url({$basePath|noescape}/{$item['thumbs']['1024']|noescape});"
-                {else}
-                    style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});"
-                {/if}
-             {/if}
-             {if isset($item['thumb_file'])}
-                 style="background-image: url({$item['thumb_file']|noescape});"
-             {/if}>
-        </div>
-        <div class="info">
-           <span class="name">{$item['name']}</span>
-           <span class="date">{$item['date']}</span>
-           {if ($item['type'] == 'video')}
-               <span class="views">{$item['views']} {_frontend.basic.views}</span>
-           {/if}
+        <div class="video-content-wrapper">
+            <div class="thumb-wrapper">
+                <div class="thumb"
+                     {if isset($item['thumbs'])}
+                        {if $bigThumb}
+                            style="background-image: url({$basePath|noescape}/{$item['thumbs']['1024']|noescape});"
+                        {else}
+                            style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});"
+                        {/if}
+                     {/if}
+                     {if isset($item['thumb_file'])}
+                         style="background-image: url({$item['thumb_file']|noescape});"
+                     {/if}>
+                </div>
+                <i class="fa fa-play-circle" aria-hidden="true"></i>
+            </div> 
+            <div class="info">
+               <span class="name">{$item['name']}</span>
+               <span class="date">{$item['date']}</span>
+               {if ($item['type'] == 'video')}
+                   <span class="views">{$item['views']} {_frontend.basic.views}</span>
+               {/if}
+            </div>
         </div>
     </a>
 </div>
