@@ -106,6 +106,7 @@ class CategoriesManager extends BaseModel {
         foreach($categories as $category) {
             
             $newCategory['id'] = $category['id'];
+            $newCategory['color'] = $category['color'];
             
             switch($lang) {
                 case 'cs':

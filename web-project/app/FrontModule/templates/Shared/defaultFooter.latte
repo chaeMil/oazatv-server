@@ -17,8 +17,15 @@
 
                                 <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
                                     <div class="text-center">
-                                        <a n:href="Archive:Category $category['id']">
-                                            {$category['name']}
+                                        <a class="category"
+                                           n:href="Archive:Category $category['id']">
+                                            
+                                            <div class="bg" 
+                                                 style="border: 4px solid {$category['color']|noescape}"></div>
+                                            <div class="bg-hover" 
+                                                 style="background-color: {$category['color']|noescape}"></div>
+                                                 
+                                            <span style="color: {$category['color']|noescape}">{$category['name']}</span>
                                         </a>
                                     </div>
                                 </div>
