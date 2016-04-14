@@ -10,6 +10,10 @@
     {var $customClasses = false}
 {/if}
 
+{if !isset($bigThumb)}
+    {var $bigThumb = false}
+{/if}
+
 <div class="video-box 
      {if $horizontal} video-box-horizontal{/if}
      {if !$customClasses}
@@ -25,8 +29,12 @@
         <a n:href="Album:view $item['hash']">
     {/if}
         <div class="thumb"
-             {if isset($item['thumbs']) && isset($item['thumbs']['512'])}
-                 style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});"
+             {if isset($item['thumbs'])}
+                {if $bigThumb}
+                    style="background-image: url({$basePath|noescape}/{$item['thumbs']['1024']|noescape});"
+                {else}
+                    style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});"
+                {/if}
              {/if}
              {if isset($item['thumb_file'])}
                  style="background-image: url({$item['thumb_file']|noescape});"

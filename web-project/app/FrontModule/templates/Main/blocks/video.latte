@@ -15,5 +15,6 @@
 {var $localizedVideo = $videoManager->createLocalizedVideoObject($lang, $video)}
 
 <div class="{$classes}">
-    {include '../../Shared/videoBox.latte', item => $localizedVideo, responsive => false}
+    {include '../../Shared/videoBox.latte', item => $localizedVideo, 
+        responsive => false, bigThumb => true}
 </div>

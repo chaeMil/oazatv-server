@@ -4,13 +4,14 @@
 {var $localizedVideo = $videoManager->createLocalizedVideoObject($lang, $video)}
 
 <div class="video-fluid bg">
-    <video oncontextmenu="return false" width="100%" height="auto" autoplay repeat>
+    <video oncontextmenu="return false" width="100%" height="auto" autoplay loop>
         <source src="{$basePath}/assets/video/oaza-title.mp4" type="video/mp4">
     </video>
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-6 col-md-offset-3">
-                {include '../../Shared/videoBox.latte', item => $localizedVideo, responsive => false}
+                {include '../../Shared/videoBox.latte', item => $localizedVideo, 
+                    responsive => false, bigThumb => true}
             </div>
         </div>
     </div>
