@@ -97,3 +97,15 @@ frontpage_blocks:
                 name: 'width'
                 type: 'select'
                 options: '1/1|1/2|1/3'
+    video:
+        name: 'video'
+        info: 'Video'
+        container: false
+        inputs:
+            select:
+                name: 'width'
+                type: 'select'
+                options: '1/1|1/2|1/3'
+            text:
+                name: 'video_hash'
+                type: 'text'

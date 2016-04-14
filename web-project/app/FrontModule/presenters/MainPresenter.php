@@ -98,6 +98,7 @@ class MainPresenter extends BasePresenter {
         $this->template->user = $this->getUser();
         $this->template->categories = $this->categoriesManager
                 ->getLocalizedCategories($this->lang);
+        $this->template->videoManager = $this->videoManager;
     }
     
 }
