@@ -157,52 +157,54 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
                     $form->addHidden('definition')
                             ->setValue($definition['name']);
                     
-                    foreach($definition['inputs'] as $input) {
-                        switch($input['type']) {
-                            case 'text':
-                                if (isset($input['mutations'])) {
-                                    $form->addGroup($input['name']);
-                                    foreach(explode('|', $input['mutations']) as $mutation) {
-                                        
-                                        if (isset($savedData)) {
-                                            $savedInput = $savedData['inputs'][$input['name']][$mutation];
-                                        } else {
-                                            $savedInput = "";
-                                        }
-                                        $form->addText($input['name'].'_'.$mutation, $mutation)
-                                                ->setValue($savedInput)
-                                                ->setAttribute("class", "form-control");
-                                    }
-                                } else {
-                                    $form->addGroup($input['name']);
-                                    
-                                    if (isset($savedData)) {
-                                            $savedInput = $savedData['inputs'][$input['name']];
-                                        } else {
-                                            $savedInput = "";
-                                        }
-                                    $form->addText($input['name'], $input['name'])
-                                            ->setValue($savedInput)
-                                                ->setAttribute("class", "form-control");
-                                }
-                                break;
-                            case 'select':
-                                $form->addGroup($input['name']);
-                                
-                                $definitionOptions = explode("|", $definition['inputs'][$input['type']]['options']);
-                                if (isset($savedData)) {
-                                    $savedValue = $savedData['inputs'][$input['name']];
-                                    $savedInput = array_search($savedValue, $definitionOptions);
-                                } else {
-                                    $savedInput = 0;
-                                }
+                    if(isset($definition['inputs'])) {
+                        foreach($definition['inputs'] as $input) {
+                            switch($input['type']) {
+                                case 'text':
+                                    if (isset($input['mutations'])) {
+                                        $form->addGroup($input['name']);
+                                        foreach(explode('|', $input['mutations']) as $mutation) {
 
-                                $form->addSelect($input['name'], $input['name'])
-                                        ->setItems($definitionOptions)
-                                        ->setValue($savedInput)
-                                        ->setAttribute("class", "form-control");
-                                
-                                break;
+                                            if (isset($savedData)) {
+                                                $savedInput = $savedData['inputs'][$input['name']][$mutation];
+                                            } else {
+                                                $savedInput = "";
+                                            }
+                                            $form->addText($input['name'].'_'.$mutation, $mutation)
+                                                    ->setValue($savedInput)
+                                                    ->setAttribute("class", "form-control");
+                                        }
+                                    } else {
+                                        $form->addGroup($input['name']);
+
+                                        if (isset($savedData)) {
+                                                $savedInput = $savedData['inputs'][$input['name']];
+                                            } else {
+                                                $savedInput = "";
+                                            }
+                                        $form->addText($input['name'], $input['name'])
+                                                ->setValue($savedInput)
+                                                    ->setAttribute("class", "form-control");
+                                    }
+                                    break;
+                                case 'select':
+                                    $form->addGroup($input['name']);
+
+                                    $definitionOptions = explode("|", $definition['inputs'][$input['type']]['options']);
+                                    if (isset($savedData)) {
+                                        $savedValue = $savedData['inputs'][$input['name']];
+                                        $savedInput = array_search($savedValue, $definitionOptions);
+                                    } else {
+                                        $savedInput = 0;
+                                    }
+
+                                    $form->addSelect($input['name'], $input['name'])
+                                            ->setItems($definitionOptions)
+                                            ->setValue($savedInput)
+                                            ->setAttribute("class", "form-control");
+
+                                    break;
+                            }
                         }
                     }
                 }

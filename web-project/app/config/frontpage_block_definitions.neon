@@ -108,5 +108,5 @@ frontpage_blocks:
                 name: 'video_hash'
                 type: 'text'
     latest_video_fluid:
-        name: 'video_fluid'
+        name: 'latest_video_fluid'
         info: 'Nejnovější video s pozadím přes celou šířku bloku'
