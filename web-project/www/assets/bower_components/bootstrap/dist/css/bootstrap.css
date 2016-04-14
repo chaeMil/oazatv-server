@@ -7145,7 +7145,9 @@ body {
   transition-duration: 150ms;
 }
 .similar-videos {
-  overflow: scroll;
+  padding-left: 16px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 .similar-videos .video-box .info .name {
   color: white;
