@@ -55,6 +55,7 @@
             player.on('pause', function() {
                saveVideoTime(player.currentTime());
                savePlayerVolume(player.volume().toString().substr(0,5));
+               window.location.hash = "t=" + video.currentTime();
             });
             
             if (window.location.hash === "#autoplay") {
