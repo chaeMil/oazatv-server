@@ -57,18 +57,19 @@
                savePlayerVolume(player.volume().toString().substr(0,5));
             });
             
+            if (getSavedVideoTime() !== undefined) {
+                player.currentTime(getSavedVideoTime());
+            }
+                
+            if (getSavedPlayerVolume() !== undefined) {
+                player.volume(getSavedPlayerVolume());
+            }
+            
             if (window.location.hash === "#autoplay") {
                 player.play();
                 window.location.hash = "&";
             }
             
-            if (getSavedVideoTime() !== undefined) {
-                player.currentTime(getSavedVideoTime());
-            }
-
-            if (getSavedPlayerVolume() !== undefined) {
-                player.volume(getSavedPlayerVolume());
-            }
         });
 
         setInterval(function() {
