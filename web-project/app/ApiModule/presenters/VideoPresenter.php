@@ -9,12 +9,8 @@
 namespace App\ApiModule;
 
 use Nette,
- Nette\Application\Responses\JsonResponse,
- Nette\Database\Context,
-  Model\PhotosManager,
  Model\VideoManager,
- Model\AnalyticsManager,
- Model\ArchiveManager;
+ Model\AnalyticsManager;
 
 /**
  * Description of MainPresenter
@@ -52,8 +48,11 @@ class VideoPresenter extends BasePresenter {
     }
     
     public function actionCountView($id) {
-        $this->videoManager->countView($id);
-        $this->analyticsManager->countVideoView($id, AnalyticsManager::WEB);
-        $this->analyticsManager->addVideoToPopular($id);
+        $hash = $id;
+        $video = $this->videoManager->getVideoFromDBbyHash($hash);
+        $videoId = $video['id'];
+        $this->videoManager->countView($videoId);
+        $this->analyticsManager->countVideoView($videoId, AnalyticsManager::API);
+        $this->analyticsManager->addVideoToPopular($videoId);
     }
 }
