@@ -55,6 +55,6 @@ class VideoPresenter extends BasePresenter {
         $this->analyticsManager->countVideoView($videoId, AnalyticsManager::API);
         $this->analyticsManager->addVideoToPopular($videoId);
         
-        $this->sendHTTPResponse(Nette\Http\Response::S200_OK);
+        $this->sendHTTPResponse(\Nette\Http\Response::S200_OK);
     }
 }

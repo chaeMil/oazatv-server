@@ -8,8 +8,6 @@
 
 namespace App\ApiModule;
 
-use Nette\Application\Responses\JsonResponse;
-
 /**
  * Description of PingAlivePresenter
  *
@@ -19,9 +17,9 @@ class PingAlivePresenter extends BasePresenter {
     
     public function actionDefault($oazaUserId, $ip, $os, $browser, $page) {
         if ($this->analyticsManager->updateAliveUser($oazaUserId, $ip, $os, $browser, $page)) {
-            $this->sendHTTPResponse(Nette\Http\Response::S200_OK);
+            $this->sendHTTPResponse(\Nette\Http\Response::S200_OK);
         } else {
-            $this->sendHTTPResponse(Nette\Http\Response::S400_BAD_REQUEST);
+            $this->sendHTTPResponse(\Nette\Http\Response::S400_BAD_REQUEST);
         }
     }
 }
