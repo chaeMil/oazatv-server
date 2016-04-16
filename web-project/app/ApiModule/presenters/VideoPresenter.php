@@ -44,12 +44,16 @@ class VideoPresenter extends BasePresenter {
             $this->sendJson($jsonArray);
         } else {
             
-            $this->createJsonError('videoFileNotFound', 
-                    Nette\Http\Response::S404_NOT_FOUND, 
-                    "Video neexistuje", 
-                    "This video does not exist");
-            
-        }
-        
+        $this->createJsonError('videoFileNotFound', 
+                Nette\Http\Response::S404_NOT_FOUND, 
+                "Video neexistuje", 
+                "This video does not exist");
+        }   
+    }
+    
+    public function actionCountView($id) {
+        $this->videoManager->countView($id);
+        $this->analyticsManager->countVideoView($id, AnalyticsManager::WEB);
+        $this->analyticsManager->addVideoToPopular($id);
     }
 }
