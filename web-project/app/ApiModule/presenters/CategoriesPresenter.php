@@ -38,7 +38,7 @@ class CategoriesPresenter extends BasePresenter{
         
         foreach($categories as $category) {
             
-            $categoryJson['category'] = $category;
+            $categoryJson['category'] = $category->toArray();
             $categoryJson['videos'] = array();
             
             $videosFromCategory = $this->videoManager->getVideosFromDBbyCategory($category['id'], 0, 120);
@@ -46,6 +46,8 @@ class CategoriesPresenter extends BasePresenter{
             foreach($videosFromCategory as $video) {
                 $categoryJson['videos'][] = $this->videoManager->getVideoFromDBtoAPI($video['id']);
             }
+            
+            $categoriesArray[] = $categoryJson;
         }
         
         $this->sendJson($categoriesArray);
