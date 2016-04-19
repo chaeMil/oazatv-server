@@ -81,16 +81,6 @@ frontpage_blocks:
                 name: 'max_videos'
                 type: 'select'
                 options: '4|8|12|16'
-<<<<<<< HEAD
-    test_image:
-        name: 'test_image'
-        info: 'testovací blok s obrázkem'
-        inputs:
-            image:
-                name: 'image'
-                type: 'image'
-                formats: 'jpg|jpeg'
-=======
     latest_video:
         name: 'latest_video'
         info: 'Nejnovější video'
@@ -120,4 +110,3 @@ frontpage_blocks:
     latest_video_fluid:
         name: 'latest_video_fluid'
         info: 'Nejnovější video s pozadím přes celou šířku bloku'
->>>>>>> e2db7a65a3e359ea976d532a37037de0f6d93a4f

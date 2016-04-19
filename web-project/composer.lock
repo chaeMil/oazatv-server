@@ -257,16 +257,16 @@
         },
         {
             "name": "latte/latte",
-            "version": "v2.3.10",
+            "version": "v2.3.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/latte.git",
-                "reference": "84d9f6d2541a7b3ca8f9c79d968c43d94643f0c5"
+                "reference": "a337509d08f5622c0baff971346a4a101416842d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/latte/zipball/84d9f6d2541a7b3ca8f9c79d968c43d94643f0c5",
-                "reference": "84d9f6d2541a7b3ca8f9c79d968c43d94643f0c5",
+                "url": "https://api.github.com/repos/nette/latte/zipball/a337509d08f5622c0baff971346a4a101416842d",
+                "reference": "a337509d08f5622c0baff971346a4a101416842d",
                 "shasum": ""
             },
             "require": {
@@ -308,7 +308,7 @@
                 "templating",
                 "twig"
             ],
-            "time": "2016-02-19 21:52:43"
+            "time": "2016-04-10 23:40:55"
         },
         {
             "name": "natxet/CssMin",
@@ -359,16 +359,16 @@
         },
         {
             "name": "nette/application",
-            "version": "v2.3.11",
+            "version": "v2.3.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/application.git",
-                "reference": "2dd99fc2711812d4f538d4d3f74a31a4aa695e35"
+                "reference": "bd834c6a97a86d384cb71a9f16d59d78990f61d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/application/zipball/2dd99fc2711812d4f538d4d3f74a31a4aa695e35",
-                "reference": "2dd99fc2711812d4f538d4d3f74a31a4aa695e35",
+                "url": "https://api.github.com/repos/nette/application/zipball/bd834c6a97a86d384cb71a9f16d59d78990f61d8",
+                "reference": "bd834c6a97a86d384cb71a9f16d59d78990f61d8",
                 "shasum": ""
             },
             "require": {
@@ -417,7 +417,7 @@
             ],
             "description": "Nette Application MVC Component",
             "homepage": "https://nette.org",
-            "time": "2016-02-09 11:42:38"
+            "time": "2016-04-06 10:25:42"
         },
         {
             "name": "nette/bootstrap",
@@ -806,16 +806,16 @@
         },
         {
             "name": "nette/http",
-            "version": "v2.3.5",
+            "version": "v2.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/http.git",
-                "reference": "0cda6627163c940ee86e6a6021943d0dd7d12e37"
+                "reference": "24459307b19456706febbff8dbd033e1ff56ba04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/http/zipball/0cda6627163c940ee86e6a6021943d0dd7d12e37",
-                "reference": "0cda6627163c940ee86e6a6021943d0dd7d12e37",
+                "url": "https://api.github.com/repos/nette/http/zipball/24459307b19456706febbff8dbd033e1ff56ba04",
+                "reference": "24459307b19456706febbff8dbd033e1ff56ba04",
                 "shasum": ""
             },
             "require": {
@@ -856,20 +856,20 @@
             ],
             "description": "Nette HTTP Component",
             "homepage": "https://nette.org",
-            "time": "2016-04-01 15:14:14"
+            "time": "2016-04-02 17:09:25"
         },
         {
             "name": "nette/mail",
-            "version": "v2.3.4",
+            "version": "v2.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/mail.git",
-                "reference": "3b8ba96407029d94d83177086bcb5e1fe0046929"
+                "reference": "44491710d30db970e731c3908c491d061a0e22df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/mail/zipball/3b8ba96407029d94d83177086bcb5e1fe0046929",
-                "reference": "3b8ba96407029d94d83177086bcb5e1fe0046929",
+                "url": "https://api.github.com/repos/nette/mail/zipball/44491710d30db970e731c3908c491d061a0e22df",
+                "reference": "44491710d30db970e731c3908c491d061a0e22df",
                 "shasum": ""
             },
             "require": {
@@ -911,7 +911,7 @@
             ],
             "description": "Nette Mail: Sending E-mails",
             "homepage": "https://nette.org",
-            "time": "2015-11-29 22:09:25"
+            "time": "2016-04-10 12:50:29"
         },
         {
             "name": "nette/neon",
