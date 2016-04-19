@@ -120,11 +120,38 @@ html,body{
 
 .video-box {
     
+    .video-content-wrapper {
+        @media (min-width: @screen-md) {
+            margin-bottom: 30px;
+        }
+        @media (max-width: @screen-sm) {
+            margin-top: -3px;
+        }
+    }
+    
     a {
         &:hover {
             text-decoration: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4),
+                        0 10px 16px rgba(0, 0, 0, 0.3);
+
+            i.open {
+                opacity: 1;
+                -moz-transform: scale(1.3);
+                -webkit-transform: scale(1.3);
+                -o-transform: scale(1.3);
+                -ms-transform: scale(1.3);
+                transform: scale(1.3);
+            }
+
+            .thumb {
+                -webkit-filter: ~"grayscale(70%)";
+                filter: ~"grayscale(70%)";
+                transition-duration: 150ms;
+            }
         }
     }
+
     
     transition-duration: 500ms;
     -webkit-ransition-duration: 500ms;
@@ -137,9 +164,29 @@ html,body{
     @media (max-width: @screen-sm) {
         width: 100% !important;
     }
+    
+    i.open {
+        display: block;
+        position: absolute;
+        font-size: 50px;
+        color: white;
+        top: 50%;
+        left: 50%;
+        margin-left: -21px;
+        margin-top: -25px;
+        opacity: 0;
+        transition-duration: 250ms;
+        text-shadow: 0 0 4px black;
+    }
+    
+    .thumb-wrapper{
+        position: relative;
+    }
+    
     .thumb {
         width: 100%;
-        display: inline-block;
+        background-color: black;
+        margin-bottom: 8px;
         position: relative;
         background-size: cover;
         background-color: @gray-darker;
@@ -153,19 +200,19 @@ html,body{
             /* 16:9 ratio */
             display: block;
             content: '';
-        }
+        }    
     }
+    
     .info {
         overflow: hidden;
-        @media (min-width: @screen-md) {
-            margin-bottom: 30px;
-        }
+        
         @media (max-width: @screen-sm) {
             margin-top: -3px;
             width: calc(100% - 170px);
             padding-left: @padding-small-horizontal;
             font-size: 90%;
         }
+        
         .name {
             @media (max-width: @screen-sm) {
                 line-height: 18px;
@@ -215,6 +262,14 @@ html,body{
         min-height: 100px;
         overflow: hidden;
         
+        .thumb-wrapper {
+            overflow: visible;
+            
+            i {
+                display: none;
+            }
+        }
+        
         .thumb {
             max-width: 150px;
             float: left;
@@ -241,11 +296,37 @@ html,body{
             width: 100%;
             font-weight: normal;
         }
+        
+        a {
+            &:hover {
+
+                i.open {
+                    opacity: 0;
+                }
+
+                .thumb {
+                    -webkit-filter: ~"grayscale(70%)";
+                    filter: ~"grayscale(70%)";
+                    transition-duration: 150ms;
+
+                }
+            }
+        }
     }
 }
 
 .similar-videos {
-    overflow: scroll;
+    padding-left: 16px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    
+    .video-box {
+        .info {
+            .name {
+                color: white;
+            }
+        }
+    }
 }
 
 .dropdown-search {
@@ -371,10 +452,12 @@ html,body{
         position: relative;
         max-height: 75vh;
         height: auto !important;
+        
         &.vjs-fullscreen {
             height: 100%;
             max-height: 100vh;
         }
+        
         .vjs-big-play-button {
             top: 50%;
             left: 50%;
@@ -383,6 +466,26 @@ html,body{
             background: none;
             font-size: 8em;
             text-shadow: 0 0 28px rgba(0, 0, 0, 0.45);
+        }
+        
+        .vjs-audio-switch {
+            font: normal normal normal 8px/1 FontAwesome;
+            font-size: 8px;
+            
+            &:before {
+                padding-top: 3px;
+                content: "\f1c7";
+            }
+        }
+        
+        .vjs-video-switch {
+            font: normal normal normal 8px/1 FontAwesome;
+            font-size: 8px;
+            
+            &:before {
+                padding-top: 3px;
+                content: "\f1c8";
+            }
         }
         &.vjs-paused {
             .vjs-big-play-button {
@@ -431,6 +534,10 @@ html,body{
     h1 {
         display: none;
     }
+}
+
+.navbar {
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
 }
 
 .navbar-brand {
@@ -531,4 +638,9 @@ html,body{
 }
 ::-webkit-scrollbar-thumb:window-inactive {
     background: lighten(@brand-primary, 22);
+}
+
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
 }

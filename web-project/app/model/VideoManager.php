@@ -89,6 +89,23 @@ class VideoManager extends BaseModel {
         return $sql->id;
 
     }
+    
+    public function getLatestVideoFromDB($published = 1) {
+        if ($published != 2) {
+            return self::$database->table(self::TABLE_NAME)
+                    ->select("*")
+                    ->limit(1, 0)
+                    ->order(self::COLUMN_DATE." DESC")
+                    ->where(array(self::COLUMN_PUBLISHED => $published))
+                    ->fetch();
+        } else {
+            return self::$database->table(self::TABLE_NAME)
+                    ->select("*")
+                    ->limit(1, 0)
+                    ->order(self::COLUMN_DATE." DESC")
+                    ->fetch();
+        }
+    }
 
     public function getVideoFromDB($id, $published = 1) {
         if ($published != 2) {
@@ -448,8 +465,9 @@ class VideoManager extends BaseModel {
                 $similarVideo = $this->getVideoFromDBbyTag($randomTag);
 
                 if($similarVideo != false) {
-                    if ($similarVideo['id'] != $originalVideo['id']) {
-                        $similarVideos[] = $similarVideo;
+                    if ($similarVideo['id'] != $originalVideo['id']
+                            || !in_array($similarVideo['id'], $similarVideos)) {
+                        $similarVideos[] = $similarVideo['id'];
                     }
                 }
                 
@@ -459,8 +477,9 @@ class VideoManager extends BaseModel {
         
         $localizedSimilarVideos = array();
         
-        foreach($similarVideos as $video) {
-            $localizedSimilarVideos[] = $this->createLocalizedVideoObject($lang, $video);
+        foreach($similarVideos as $id) {
+            $localizedSimilarVideos[] = $this
+                    ->createLocalizedVideoObject($lang, $this->getVideoFromDB($id));
         }
         
         return $localizedSimilarVideos;

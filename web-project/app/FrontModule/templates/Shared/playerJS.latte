@@ -1,0 +1,150 @@
+<script>
+    
+    var player;
+
+    $('document').ready(function() {
+        
+        $('#share-fb').click(function() {
+           shareToFB(); 
+        });
+        
+        $('#share-google-plus').click(function() {
+           shareToGooglePlus(); 
+        });
+        
+        $('#share-link').click(function() {
+           shareLink({_frontend.basic.share}); 
+        });
+        
+        $('#video-time').click(function() {
+            player.pause();
+            $(this).select();
+        });
+
+        $('#playerTags a').tagcloud({
+            size: {
+                start: 12,
+                end: 25,
+                unit: 'px'
+            },
+            color: {
+                start: "#444444",
+                end: "#206ff2"
+            }
+        });
+        
+        var video = videojs('video').ready(function(){
+            player = this;
+            
+            {if !isset($listen)} 
+                videoJSAddCustomButton(player, videojs, "audio-switch", function() {
+                    window.location.href = {link Audio:listen $video['hash']} + "#t=autoplay";
+                });
+            {else}
+                videoJSAddCustomButton(player, videojs, "video-switch", function() {
+                    window.location.href = {link Video:watch $video['hash']} + "#t=autoplay";
+                });
+            {/if}
+            
+            var hash = window.location.hash;
+            hash = window.location.hash.replace('#&', '').replace('#t=', '');
+            if (hash !== 0 && hash !== '' && hash !== undefined && hash !== null) {
+                player.currentTime(hash);
+            }
+
+            player.on('pause', function() {
+               saveVideoTime(player.currentTime());
+               savePlayerVolume(player.volume().toString().substr(0,5));
+            });
+            
+            if (getSavedVideoTime() !== undefined) {
+                player.currentTime(getSavedVideoTime());
+            }
+                
+            if (getSavedPlayerVolume() !== undefined) {
+                player.volume(getSavedPlayerVolume());
+            }
+            
+            if (window.location.hash === "#autoplay") {
+                player.play();
+                window.location.hash = "&";
+            }
+            
+        });
+
+        setInterval(function() {
+            saveVideoTime(player.currentTime());
+            savePlayerVolume(player.volume().toString().substr(0,5));
+        }, 10000);
+
+        setInterval(function() {
+            updateShareInTime(player);
+        }, 1000);
+
+        $(window).unload(function(){
+            saveVideoTime(player.currentTime());
+            savePlayerVolume(player.volume().toString().substr(0,5));
+        });
+        
+        
+    });
+
+    $(document).ready(function() {
+       adjustSimilarVideosPane();
+
+       $(window).resize(function() {
+           adjustSimilarVideosPane();
+       });
+    });
+    
+    function videoJSAddCustomButton(player, videojs, name, callback) {
+        var videoJsButtonClass = videojs.getComponent('Button');
+        var concreteButtonClass = videojs.extend(videoJsButtonClass, {
+
+          // The `init()` method will also work for constructor logic here, but it is 
+          // deprecated. If you provide an `init()` method, it will override the
+          // `constructor()` method!
+          constructor: function() {
+            videoJsButtonClass.call(this, player);
+          }, // notice the comma
+
+          handleClick: function(){
+            callback();
+          }
+        });
+
+        var concreteButtonInstance = player.controlBar.addChild(new concreteButtonClass());
+            concreteButtonInstance.addClass("vjs-" + name);
+    }
+
+    function saveVideoTime(time) {
+        setCookie({$video['hash']} + '_time', time);
+    }
+
+    function getSavedVideoTime() {
+        return getCookie({$video['hash']} + '_time');
+    }
+
+    function savePlayerVolume(volume) {
+        setCookie('player_volume', volume);
+    }
+
+    function getSavedPlayerVolume() {
+        return getCookie('player_volume');
+    }
+
+    function adjustSimilarVideosPane() {
+        $('.similar-videos').height($('#video').height() - $('#similarVideosHeader').outerHeight());
+    }
+    
+    function updateShareInTime() {
+        var input = $('#video-time');
+        var url = location.href.replace(location.hash,"") + "#t=" + parseInt(player.currentTime());
+        
+        if (input.val() === '' || !player.paused()) {
+            input.val(url);
+        }
+    }
+ 
+
+</script>

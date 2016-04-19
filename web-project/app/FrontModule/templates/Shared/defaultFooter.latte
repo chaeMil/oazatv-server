@@ -1,41 +1,97 @@
 {block defaultFooter}
 
-<div class="container">
+{if isset($categories)}
 
-    <hr>
+    <div class="container">
 
-    <div class="row footer">
+        <hr>
 
-        {if isset($categories)}
-            <div  class="categories col-md-4">
+        <div class="footer top">
+            <div  class="categories">
 
-                <h4 class="text-center">{_frontend.basic.categories}</h4>
-                <ul>
+                {*<h4 class="text-center">{_frontend.basic.categories}</h4>*}
+                <div class="row">
                     {foreach $categories as $category}
+                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+                            <div class="text-center">
+                                <a class="category"
+                                   n:href="Archive:Category $category['id']">
 
-                        <li class="text-center">
-                            <a n:href="Archive:Category $category['id']">
-                                {$category['name']}
-                            </a>
-                        </li>
+                                    <div class="bg" 
+                                         style="border: 4px solid {$category['color']|noescape}"></div>
+                                    <div class="bg-hover" 
+                                         style="background-color: {$category['color']|noescape}"></div>
 
+                                    <span style="color: {$category['color']|noescape}">{$category['name']}</span>
+                                </a>
+                            </div>
+                        </div>
                     {/foreach}
-                </ul>
-
+                </div>
             </div>
-        {/if}
+
+
+        </div>
 
     </div>
-    
-</div>
+            
+{/if}
         
 <div class="container-fluid footer bottom">
     
     <div class="container">
         
+        <div class="row">
+            
+            <div class="col-sm-12 col-md-4">
+                <div class="cirkev-oaza">
+                    <br>
+                    <a class="logo" href="http://cirkevoaza.cz/" target="_blank">
+                        <img class="logo" src="{$basePath}/assets/img/logo-shadow.png" />
+                        <img class="text" src="{$basePath}/assets/img/cirkev-oaza.png" />
+                    </a>
+                </div>
+            </div>
+                    
+            <div class="col-sm-6 col-md-4">
+                <div class="find-us-on">
+                    <p class="lead">{_frontend.footer.find_us_on}</p>
+                    
+                    <a href="https://www.facebook.com/oazatv/?fref=ts" 
+                       class="facebook social" title="Facebook" target="_blank">
+                        <span>
+                            <i class="fa fa-facebook-square"></i>
+                            Facebook
+                        </span>
+                    </a>
+                    
+                    <a href="https://www.youtube.com/user/oazaTVCZ" 
+                       class="youtube social" title="Youtube" target="_blank">
+                        <span>
+                            <i class="fa fa-youtube"></i>
+                            Youtube
+                        </span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="col-sm-6 col-md-4">
+                <div class="navigation">
+                    <p class="lead app">{_frontend.footer.app}</p>
+                    <a target="_blank" href="https://play.google.com/store/apps/details?id=com.chaemil.hgms&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"><img class="play" alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"/></a>
+                    
+                    <br>
+                    <a n:href="Page:Contact">{_frontend.footer.contact}</a><br>
+                </div>
+            </div>
+            
+        </div>
+        
+        <br>
+                
         <div class="row text-center">
             
-            <p>{_lang.basic.copyright} {date("Y")}</p>
+            <p>{_frontend.footer.copyright} | {date("Y")}</p>
             
         </div>
         

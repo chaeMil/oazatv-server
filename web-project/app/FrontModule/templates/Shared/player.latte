@@ -1,0 +1,48 @@
+<div class="container-fluid video-player-bg">
+    <div class="container">
+        <div class="video-player">
+            <div class="column {if count($similarVideos) <= 0} col-md-8 col-md-offset-2 col-xl-10 col-xl-offset-1 {else} col-md-8 col-xl-9 {/if}">
+
+                <video oncontextmenu="return false" id="video" class="video-js vjs-default-skin"
+                       controls preload="auto"
+                    {if isset($video['thumbs']['1024'])}
+                        poster="{$basePath}/{$video['thumbs']['1024']}"
+                    {/if}>
+
+                    {if !isset($listen)}
+                        {if isset($video['mp4'])}
+                            <source src="{$basePath}/{$video['mp4']}" type='video/mp4'>
+                        {/if}
+                        {if isset($video['webm'])}
+                            <source src="{$basePath}/{$video['webm']}" type='video/webm'>
+                        {/if}
+                    {else}
+                        {if isset($video['mp3'])}
+                            <source src="{$basePath}/{$video['mp3']}" type='audio/mp3'>
+                        {/if}
+                    {/if}
+
+                    <p class="vjs-no-js">
+                      To view this video please enable JavaScript, and consider upgrading to a web browser that
+                      <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                    </p>
+                </video>
+
+            </div>
+                    
+            <div class="col-md-4 col-xl-3">
+                {if count($similarVideos) > 0}
+                    <h3 id="similarVideosHeader">{_frontend.basic.similar_videos}</h3>
+                    <div class="row similar-videos">
+                        {foreach $similarVideos as $item}
+                            {include '../Shared/videoBox.latte', 
+                                item => $item, 
+                                responsive => false,
+                                horizontal => true}
+                        {/foreach}
+                    </div>
+                {/if}
+            </div>
+        </div>
+    </div>
+</div>

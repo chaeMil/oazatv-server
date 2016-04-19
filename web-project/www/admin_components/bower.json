@@ -22,6 +22,7 @@
     "jquery-sortable": "~0.9.13",
     "resumable.js": "~2.9.0",
     "resumablejs": "~1.0.2",
-    "startbootstrap-sb-admin-2": "~1.0.7"
+    "startbootstrap-sb-admin-2": "~1.0.7",
+    "mjolnic-bootstrap-colorpicker": "bootstrap-colorpicker#^2.3.3"
   }
 }

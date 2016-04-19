@@ -10,7 +10,198 @@ and open the template in the editor.
 
 .footer {
     
-    margin-bottom: 30px;
+    &.top {
+        margin-bottom: 50px;
+        
+        .categories {
+            
+            .category {
+                margin-top: 15px;
+                margin-bottom: 15px;
+                display: block;
+                border-radius: 4px;
+                width: 100%;
+                position: relative;
+                text-align: center;
+                line-height: 60px;
+                min-height: 60px;
+                
+                span {
+                    transition-duration: 300ms;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    font-size: 18px;
+                    font-family: 'Roboto Slab', serif;
+                }
+                
+                .bg, .bg-hover {
+                    border-radius: 2px;
+                    width: 100%;
+                    height: 100%;
+                    display: block;
+                    position: absolute;
+                    top: 0;
+                }
+                
+                &:hover {
+                    .bg-hover {
+                        transition-duration: 150ms;
+                        opacity: 1.0;
+                    }
+                    
+                    span {
+                        transition-duration: 150ms;
+                        color: white !important;
+                    }
+                    
+                } 
+                
+                .bg-hover {
+                    transition-duration: 300ms;
+                    opacity: 0;
+                }
+            }
+            
+        }
+    }
+    
+    &.bottom {
+        background-image: url('../assets/img/footer-bg.jpg');
+        background-size: cover;
+        background-position: bottom center;
+        background-attachment: fixed;
+        
+        padding-top: 90px;
+        
+        box-shadow: inset 0 8px 35px rgba(0, 0, 0, 0.4);
+        
+        .col-md-4 {
+            div {
+                @media (min-width: @screen-sm) {
+                    min-height: 180px;
+                }
+            }
+        }
+
+        a {
+            color: #A7BED5;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        p {
+            color: #A7BED5;
+            
+            &.lead {
+                color: white;
+                font-size: 16px;
+                text-transform: uppercase;
+                font-weight: bold;
+                margin-bottom: 8px;
+            }
+        }
+    }
+    
+    
+    .cirkev-oaza {
+        
+        @media (min-width: @screen-md) {
+            border-right: 1px solid #6387AD;
+        }
+        
+        @media (max-width: @screen-md) {
+            margin-bottom: 60px;
+        }
+        
+        a.logo {
+            &:hover {
+                img {
+                    transition-duration: 150ms;
+                    opacity: 1.0;
+                }
+            }
+            
+            img {
+                transition-duration: 300ms;
+                opacity: 0.6;
+            }
+        }
+        
+        img.logo {
+            display: block;
+            width: 75px;
+            height: auto;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        img.text {
+            display: block;
+            width: 180px;
+            height: auto;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+    
+    .find-us-on {
+        
+        text-align: center;
+        @media (min-width: @screen-md) {
+            border-right: 1px solid #6387AD;
+        }
+        
+        @media (max-width: @screen-sm) {
+            margin-bottom: 60px;
+        }
+        
+        .social  {
+            transition-duration: 300ms;
+            opacity: 1.0;
+            position: relative;
+            display: inline-block;
+            width: 120px;
+            height: 120px;
+            margin-right: 4px;
+            
+            &:hover {
+                transition-duration: 150ms;
+                box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+            }
+            
+            &.facebook {
+                background-color: #3b5998
+            }
+
+            &.youtube {
+                background-color: #b31217;
+            }
+            
+            span {
+                color: white;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                text-align: center;
+                line-height: 120px;
+            }
+        }
+    }
+    
+    .navigation {
+        text-align: center;
+        
+        .play {
+            max-width: 180px;
+            margin-bottom: 20px;
+        }
+       
+    }
     
     .categories {
         

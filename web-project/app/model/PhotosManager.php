@@ -207,6 +207,11 @@ class PhotosManager {
 
         if (file_exists(ALBUMS_FOLDER.$photo->album_id.'/'.$photo->file)) {
 
+            $thumbsDir = ALBUMS_FOLDER.$photo->album_id.'/thumbs/';
+            if (!file_exists($thumbsDir)) {
+               mkdir($thumbsDir); 
+            }
+            
             ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file,
                     self::THUMB_2048, self::THUMB_2048, ALBUMS_FOLDER.$photo->album_id.'/thumbs/');
             ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file,

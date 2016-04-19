@@ -81,6 +81,7 @@ frontpage_blocks:
                 name: 'max_videos'
                 type: 'select'
                 options: '4|8|12|16'
+<<<<<<< HEAD
     test_image:
         name: 'test_image'
         info: 'testovací blok s obrázkem'
@@ -89,3 +90,34 @@ frontpage_blocks:
                 name: 'image'
                 type: 'image'
                 formats: 'jpg|jpeg'
+=======
+    latest_video:
+        name: 'latest_video'
+        info: 'Nejnovější video'
+        inputs:
+            select:
+                name: 'width'
+                type: 'select'
+                options: '1/1|1/2|1/3'
+    video:
+        name: 'video'
+        info: 'Video'
+        inputs:
+            select:
+                name: 'width'
+                type: 'select'
+                options: '1/1|1/2|1/3'
+            text:
+                name: 'video_hash'
+                type: 'text'
+    video_fluid:
+        name: 'video_fluid'
+        info: 'Video s pozadím přes celou šířku bloku'
+        inputs:
+            text:
+                name: 'video_hash'
+                type: 'text'
+    latest_video_fluid:
+        name: 'latest_video_fluid'
+        info: 'Nejnovější video s pozadím přes celou šířku bloku'
+>>>>>>> e2db7a65a3e359ea976d532a37037de0f6d93a4f

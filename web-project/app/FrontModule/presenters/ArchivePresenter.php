@@ -46,6 +46,9 @@ class ArchivePresenter extends BasePresenter {
                         $paginator->getItemsPerPage(), 
                         $this->lang);
         
+        $this->template->categories = $this->categoriesManager
+                ->getLocalizedCategories($this->lang);
+        
         $this->template->archiveItems = $archive;
         $this->template->paginator = $paginator;
         $this->template->page = $paginator->getPage();
@@ -70,6 +73,9 @@ class ArchivePresenter extends BasePresenter {
             $localizedVideos[] = $this->videoManager
                     ->createLocalizedVideoObject($this->lang, $video);
         }
+        
+        $this->template->categories = $this->categoriesManager
+                ->getLocalizedCategories($this->lang);
         
         $this->template->archiveItems = $localizedVideos;
         $this->template->paginator = $paginator;

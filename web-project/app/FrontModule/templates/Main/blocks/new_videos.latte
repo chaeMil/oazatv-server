@@ -1,15 +1,12 @@
 {block content}
 
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12">
-            {if isset($newestVideos)}
-                <div class="row videos-box">
-                    {foreach $newestVideos as $item}
-                        {include '../../Shared/videoBox.latte', item => $item}
-                    {/foreach}
-                </div>
-            {/if}
+<div class="col-xs-12">
+    {if isset($newestVideos)}
+        <div class="row videos-box">
+            {foreach $newestVideos as $item}
+                {breakIf $iterator->getCounter() > $data['inputs']['max_videos']}
+                {include '../../Shared/videoBox.latte', item => $item}
+            {/foreach}
         </div>
-    </div>
+    {/if}
 </div>

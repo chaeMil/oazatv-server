@@ -120,4 +120,10 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
         
         return $item;
     }
+    
+    public function sendHTTPResponse($response) {
+        $httpResponse = $this->container->getByType('Nette\Http\Response');
+        $httpResponse->setCode($response);
+        $this->terminate();
+    }
 }

@@ -25,7 +25,8 @@ class CategoriesManager extends BaseModel {
             TABLE_NAME = 'db_video_categories',
             COLUMN_ID = 'id',
             COLUMN_NAME_CS = 'name_cs',
-            COLUMN_NAME_EN = 'name_en';
+            COLUMN_NAME_EN = 'name_en',
+            COLUMN_COLOR = 'color';
 
     /** @var Nette\Database\Context */
     public static $database;
@@ -105,6 +106,7 @@ class CategoriesManager extends BaseModel {
         foreach($categories as $category) {
             
             $newCategory['id'] = $category['id'];
+            $newCategory['color'] = $category['color'];
             
             switch($lang) {
                 case 'cs':

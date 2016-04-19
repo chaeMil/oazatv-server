@@ -9,12 +9,8 @@
 namespace App\ApiModule;
 
 use Nette,
- Nette\Application\Responses\JsonResponse,
- Nette\Database\Context,
-  Model\PhotosManager,
  Model\VideoManager,
- Model\AnalyticsManager,
- Model\ArchiveManager;
+ Model\AnalyticsManager;
 
 /**
  * Description of MainPresenter
@@ -44,12 +40,21 @@ class VideoPresenter extends BasePresenter {
             $this->sendJson($jsonArray);
         } else {
             
-            $this->createJsonError('videoFileNotFound', 
-                    Nette\Http\Response::S404_NOT_FOUND, 
-                    "Video neexistuje", 
-                    "This video does not exist");
-            
-        }
+        $this->createJsonError('videoFileNotFound', 
+                Nette\Http\Response::S404_NOT_FOUND, 
+                "Video neexistuje", 
+                "This video does not exist");
+        }   
+    }
+    
+    public function actionCountView($id) {
+        $hash = $id;
+        $video = $this->videoManager->getVideoFromDBbyHash($hash);
+        $videoId = $video['id'];
+        $this->videoManager->countView($videoId);
+        $this->analyticsManager->countVideoView($videoId, AnalyticsManager::API);
+        $this->analyticsManager->addVideoToPopular($videoId);
         
+        $this->sendHTTPResponse(\Nette\Http\Response::S200_OK);
     }
 }

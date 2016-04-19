@@ -1,0 +1,15 @@
+{block content}
+
+<div class="video-fluid bg">
+    <video oncontextmenu="return false" width="100%" height="auto" autoplay loop>
+        <source src="{$basePath}/assets/video/oaza-title.mp4#t=<?php echo rand(0, 120); ?>" type="video/mp4">
+    </video>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-6 col-md-offset-3">
+                {include '../../Shared/videoBox.latte', item => $latestVideo, 
+                    responsive => false, bigThumb => true}
+            </div>
+        </div>
+    </div>
+</div>

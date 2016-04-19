@@ -49,6 +49,11 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
         $form->addText('name', 'název')
                 ->setRequired()
                 ->setAttribute("class", "form-control");
+        
+        $classes = array("container" => "container", "container-fluid" => "container-fluid");
+        $form->addSelect('class', 'třída', $classes)
+                ->setRequired()
+                ->setAttribute("class", "form-control");
 
         $form->addSubmit('send', 'Vytvořit novou pozici')
                 ->setAttribute("class", "btn-lg btn-success btn-block");
@@ -152,32 +157,51 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
                     $form->addHidden('definition')
                             ->setValue($definition['name']);
                     
-                    foreach($definition['inputs'] as $input) {
-                        switch($input['type']) {
-                            case 'text':
-                                if (isset($input['mutations'])) {
-                                    $form->addGroup($input['name']);
-                                    foreach(explode('|', $input['mutations']) as $mutation) {
-                                        
+                    if(isset($definition['inputs'])) {
+                        foreach($definition['inputs'] as $input) {
+                            switch($input['type']) {
+                                case 'text':
+                                    if (isset($input['mutations'])) {
+                                        $form->addGroup($input['name']);
+                                        foreach(explode('|', $input['mutations']) as $mutation) {
+
+                                            if (isset($savedData)) {
+                                                $savedInput = $savedData['inputs'][$input['name']][$mutation];
+                                            } else {
+                                                $savedInput = "";
+                                            }
+                                            $form->addText($input['name'].'_'.$mutation, $mutation)
+                                                    ->setValue($savedInput)
+                                                    ->setAttribute("class", "form-control");
+                                        }
+                                    } else {
+                                        $form->addGroup($input['name']);
+
                                         if (isset($savedData)) {
-                                            $savedInput = $savedData['inputs'][$input['name']][$mutation];
-                                        } else {
-                                            $savedInput = "";
-                                        }
-                                        $form->addText($input['name'].'_'.$mutation, $mutation)
+                                                $savedInput = $savedData['inputs'][$input['name']];
+                                            } else {
+                                                $savedInput = "";
+                                            }
+                                        $form->addText($input['name'], $input['name'])
                                                 ->setValue($savedInput)
-                                                ->setAttribute("class", "form-control");
+                                                    ->setAttribute("class", "form-control");
                                     }
-                                } else {
+                                    break;
+                                case 'select':
                                     $form->addGroup($input['name']);
-                                    
+
+                                    $definitionOptions = explode("|", $definition['inputs'][$input['type']]['options']);
                                     if (isset($savedData)) {
-                                            $savedInput = $savedData['inputs'][$input['name']];
-                                        } else {
-                                            $savedInput = "";
-                                        }
-                                    $form->addText($input['name'], $input['name'])
+                                        $savedValue = $savedData['inputs'][$input['name']];
+                                        $savedInput = array_search($savedValue, $definitionOptions);
+                                    } else {
+                                        $savedInput = 0;
+                                    }
+
+                                    $form->addSelect($input['name'], $input['name'])
+                                            ->setItems($definitionOptions)
                                             ->setValue($savedInput)
+<<<<<<< HEAD
                                                 ->setAttribute("class", "form-control");
                                 }
                                 break;
@@ -206,6 +230,12 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
                                 $imageFormats = $definition['inputs'][$input['type']]['formats'];
                                 $form->addUpload($input['name'], $input['name']." [".$imageFormats."]")
                                         ->setAttribute("class", "form-control");
+=======
+                                            ->setAttribute("class", "form-control");
+
+                                    break;
+                            }
+>>>>>>> e2db7a65a3e359ea976d532a37037de0f6d93a4f
                         }
                     }
                 }
