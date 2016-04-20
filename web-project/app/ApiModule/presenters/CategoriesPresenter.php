@@ -34,6 +34,7 @@ class CategoriesPresenter extends BasePresenter{
         
         $categories = $this->categoriesManager->getCategoriesFromDB();
         
+        $response = array();
         $categoriesArray = array();
         
         foreach($categories as $category) {
@@ -52,7 +53,9 @@ class CategoriesPresenter extends BasePresenter{
             $categoriesArray[] = $categoryJson;
         }
         
-        $this->sendJson($categoriesArray);
+        $response['categories'] = $categoriesArray;
+        
+        $this->sendJson($response);
         
     }
     
