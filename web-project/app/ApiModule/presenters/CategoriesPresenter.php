@@ -43,7 +43,9 @@ class CategoriesPresenter extends BasePresenter{
             $videosFromCategory = $this->videoManager->getVideosFromDBbyCategory($category['id'], 0, 120);
             $videosArray = array();
             foreach($videosFromCategory as $video) {
-                $videosArray[] = $this->videoManager->getVideoFromDBtoAPI($video['id']);
+                $videoNew = $video->toArray();
+                $videoNew['type'] = 'video';
+                $videosArray[] = $this->createArchiveItem($videoNew);
             }
             
             $categoryJson['videos'] = $videosArray;
