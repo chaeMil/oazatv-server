@@ -17,6 +17,7 @@ basic:
     share_in_time: "Sdílet v čase"
     category: "Kategorie"
     show_all: "Zobrazit vše"
+    show_next: "Zobrazit další"
 search:
     more: "další výsledky"
 homepage:

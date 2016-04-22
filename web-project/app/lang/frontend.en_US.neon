@@ -17,6 +17,7 @@ basic:
     share_in_time: "Share in time"
     category: "Category"
     show_all: "Show all"
+    show_next: "Show next"
 search:
     more: "more results"
 homepage:
