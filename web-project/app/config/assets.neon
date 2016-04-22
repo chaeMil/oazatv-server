@@ -24,4 +24,3 @@ assets:
         - '/assets/js/share.js'
         - '/assets/js/utils.js'
         - '/assets/js/detect-mobile-browser.js'
-        - '/assets/js/google-analytics.js'
