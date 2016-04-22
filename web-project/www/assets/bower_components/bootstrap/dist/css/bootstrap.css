@@ -7361,10 +7361,12 @@ body {
   border-radius: 3px;
 }
 .archive.category h1 small {
+  transition-duration: 250ms;
   color: white;
   opacity: 0.7;
 }
 .archive.category h1 .hash {
+  transition-duration: 250ms;
   height: 66px;
   padding-left: 16px;
   padding-right: 16px;
@@ -7374,7 +7376,14 @@ body {
   margin: 2px;
 }
 .archive.category h1 .hash:hover {
+  transition-duration: 150ms;
   text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.archive.category h1 .hash:hover small {
+  transition-duration: 150ms;
+  color: white !important;
+  opacity: 1.0;
 }
 @keyframes blink {
   0% {
