@@ -7757,7 +7757,7 @@ and open the template in the editor.
   font-family: 'Roboto Slab', serif;
 }
 .video-fluid.categories .categories .category .bg {
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 .video-fluid.categories .categories .category .bg,
 .video-fluid.categories .categories .category .bg-hover {
