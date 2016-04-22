@@ -53,8 +53,13 @@
             }
 
             player.on('pause', function() {
-               saveVideoTime(player.currentTime());
-               savePlayerVolume(player.volume().toString().substr(0,5));
+                saveVideoTime(player.currentTime());
+                savePlayerVolume(player.volume().toString().substr(0,5));
+            });
+            
+            player.on('play', function() {
+                saveVideoTime(player.currentTime());
+                savePlayerVolume(player.volume().toString().substr(0,5));
             });
             
             if (getSavedVideoTime() !== undefined) {
@@ -75,7 +80,7 @@
         setInterval(function() {
             saveVideoTime(player.currentTime());
             savePlayerVolume(player.volume().toString().substr(0,5));
-        }, 10000);
+        }, 10 * 1000);
 
         setInterval(function() {
             updateShareInTime(player);
@@ -118,14 +123,18 @@
     }
 
     function saveVideoTime(time) {
+        console.log('saving video time: ' + time);
         setCookie({$video['hash']} + '_time', time);
     }
 
     function getSavedVideoTime() {
-        return getCookie({$video['hash']} + '_time');
+        var time = getCookie({$video['hash']} + '_time');
+        console.log('loading video time: ' + time);
+        return time;
     }
 
     function savePlayerVolume(volume) {
+        console.log('saving player volume: ' + volume);
         setCookie('player_volume', volume);
     }
 
