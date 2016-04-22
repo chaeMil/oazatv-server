@@ -110,3 +110,6 @@ frontpage_blocks:
     latest_video_fluid:
         name: 'latest_video_fluid'
         info: 'Nejnovější video s pozadím přes celou šířku bloku'
+    latest_video_fluid_categories:
+        name: 'latest_video_fluid_categories'
+        info: 'Nejnovější video + kategorie s pozadím přes celou šířku bloku'

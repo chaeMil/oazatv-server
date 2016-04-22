@@ -3,26 +3,28 @@
 {if isset($rows)}
     {foreach $rows as $row}
         
-        <div class="{$row["class"]}">
-            <div class="row">
+        {if $row['published']}
+            <div class="{$row["class"]}">
+                <div class="row">
 
-                {var $blocks = $frontPageManager->getBlocksFromRow($row['id'])}
-                {if isset($blocks)}
+                    {var $blocks = $frontPageManager->getBlocksFromRow($row['id'])}
+                    {if isset($blocks)}
 
-                    {foreach $blocks as $index => $block}
-                        {if isset($block['type'])}
+                        {foreach $blocks as $index => $block}
+                            {if isset($block['type'])}
 
-                            {include 'blocks/'.$block['type'].'.latte', 
-                                data => $frontPageManager->parseJsonBlock($block['json_data'])}
+                                {include 'blocks/'.$block['type'].'.latte', 
+                                    data => $frontPageManager->parseJsonBlock($block['json_data'])}
 
-                        {/if}   
-                    {/foreach}
+                            {/if}   
+                        {/foreach}
 
-                {/if}
+                    {/if}
 
-                
+
+                </div>
             </div>
-        </div>
-                
+        {/if}
+        
     {/foreach}
 {/if}
