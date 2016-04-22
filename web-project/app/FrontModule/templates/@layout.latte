@@ -312,6 +312,22 @@
             });
             
         </script>
+        
+        <script>
+
+            $(document).ready(function() {
+                if (detectMobileBrowser()) {
+                    $('.bg video').remove();
+                    
+                    $('.video-fluid.bg').each(function(e) {
+                        var rand = getRandomIntInclusive(1, 8);
+                        $(this).css('background-image', 'url(' + {$basePath} + '/assets/video/oaza-title-slides/' + rand + '.jpg)');
+                    });
+                }
+            });
+
+        </script>
+
     {/block}
 
     {block pageScripts}

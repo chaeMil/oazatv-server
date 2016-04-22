@@ -23,3 +23,4 @@ assets:
         - '/assets/js/gplus.js'
         - '/assets/js/share.js'
         - '/assets/js/utils.js'
+        - '/assets/js/detect-mobile-browser.js'

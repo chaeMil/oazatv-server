@@ -7662,6 +7662,20 @@ and open the template in the editor.
   overflow: hidden;
   position: relative;
 }
+@media (max-width: 768px) {
+  .video-fluid .thumb {
+    max-width: 100%;
+  }
+}
+@media (max-width: 768px) {
+  .video-fluid .info {
+    width: 100%;
+  }
+  .video-fluid .info .views {
+    width: auto;
+    float: right;
+  }
+}
 .video-fluid .video-content-wrapper {
   margin-bottom: 0;
 }
@@ -7671,6 +7685,7 @@ and open the template in the editor.
   padding-bottom: 50px;
   margin-bottom: 50px;
   box-shadow: inset 0 8px 35px rgba(0, 0, 0, 0.2), inset 0 -8px 35px rgba(0, 0, 0, 0.2);
+  background-size: cover;
 }
 .video-fluid.bg video {
   position: absolute;
