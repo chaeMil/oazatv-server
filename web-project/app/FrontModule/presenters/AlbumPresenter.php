@@ -11,7 +11,8 @@ namespace App\FrontModule;
 use Nette,
 Nette\Database\Context,
 Model\PhotosManager,
-Model\TagsManager;
+Model\TagsManager,
+Model\CategoriesManager;
 
 /**
  * Description of VideoPreseter
@@ -22,12 +23,15 @@ class AlbumPresenter extends BasePresenter {
 
     private $photosManager;
     private $tagsManager;
+    private $categoriesManager;
 
     public function __construct(Nette\DI\Container $container,
-            Context $database, PhotosManager $photosManager, TagsManager $tagsManager) {
+            Context $database, PhotosManager $photosManager, TagsManager $tagsManager,
+            CategoriesManager $categoriesManager) {
         parent::__construct($container, $database);
         $this->photosManager = $photosManager;
         $this->tagsManager = $tagsManager;
+        $this->categoriesManager = $categoriesManager;
     }
 
     public function renderView($id) {
@@ -47,6 +51,9 @@ class AlbumPresenter extends BasePresenter {
 
         $this->template->photos = $this->photosManager
                 ->createLocalizedAlbumPhotosObject($this->lang, $album['id']);
+        
+        $this->template->categories = $this->categoriesManager
+                ->getLocalizedCategories($this->lang);
     }
 
 }

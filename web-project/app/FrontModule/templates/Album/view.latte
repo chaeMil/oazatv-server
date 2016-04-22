@@ -1,7 +1,7 @@
 {block content}
 
 <div class="container">
-    <div class="col-xl-10 col-xl-offset-1">
+    <div class="col-xl-12">
     <h1>{$album['name']} <small>{$album['date']}{if $album['days'] > 1} - {_frontend.basic.number_of_days}: {$album['days']}{/if}</small></h1>
         <div class="row">
             <div class="col-xl-8 col-lg-8 col-md-8">
@@ -23,7 +23,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-xl-10 col-xl-offset-1">
+        <div class="col-xl-12">
             <div id="gallery">
                 <a n:foreach="$photos as $photo" href="{$basePath}/{$photo['thumbs']['2048']}" data-size="{$photo['dimensions']['width']}x{$photo['dimensions']['height']}">
                     <img class="img-responsive" src="{$basePath}/{$photo['thumbs']['512']}" />
