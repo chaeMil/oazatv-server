@@ -83,6 +83,7 @@ class CategoriesManager extends BaseModel {
     public function getLocalizedCategory($id, $lang) {
         $category = $this->getCategoryFromDB($id);
         
+        $newCategory['color'] = $category['color'];
         $newCategory['id'] = $category['id'];
         switch($lang) {
             case 'cs':

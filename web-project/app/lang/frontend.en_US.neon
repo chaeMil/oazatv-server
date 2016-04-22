@@ -16,6 +16,7 @@ basic:
     share: "Share"
     share_in_time: "Share in time"
     category: "Category"
+    show_all: "Show all"
 search:
     more: "more results"
 homepage:
