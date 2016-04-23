@@ -2,8 +2,25 @@
 
 <div class="container archive category">
 
-    <div class="row">
-        <div class="col-xs-12" >
+    <div class="row videos-box">
+        <div class="col-xl-2 col-md-3 col-sm-12 col-xs-12 pull-right">
+            <div class="archive-sidemenu" id="archive-menu-affix">
+                <ul class="list-group">
+                    {foreach $archiveMenu as $menu}
+                        <li class="list-group-item">
+                            <a n:href="Archive:Menu $menu['tags']">
+                                {$menu['name']}
+                            </a>
+                            <span class="badge">
+                                {$archiveMenuManager->countVideosInMenuByTag($menu['tags'])}
+                            </span>
+                        </li>
+                    {/foreach}
+                </ul>
+            </div>
+        </div>
+                    
+        <div class="col-xl-10 col-md-9 col-sm-12 col-xs-12">
             <h1 class="header" style="background-color: {$category['color']|noescape}">
                 <small class="hidden-xs">{_frontend.basic.category}:</small> {$category['name']}
                 <a class="hash pull-right" data-time="800" href="#footer-categories">
@@ -12,18 +29,36 @@
                     </small>
                 </a>
             </h1>
-            <hr>
+            {if isset($archiveItems)}
+                <div class="row">
+                    {foreach $archiveItems as $item}
+                        {include '../Shared/videoBox.latte', item => $item, 
+                            customClasses => "col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-3"}
+                    {/foreach}
+                </div>
+            {/if}
         </div>
     </div>
 
-    {if isset($archiveItems)}
-        <div class="row videos-box">
-            {foreach $archiveItems as $item}
-                {include '../Shared/videoBox.latte', item => $item}
-            {/foreach}
-        </div>
-    {/if}
-
     {include '../Shared/pagination.latte', pages => $pages, page => $page, 
         baseLink => '/archive/category/'.$category['id'].'/'}
+        
 </div>
+{/block}
+    
+{block pageScripts}
+
+<script>
+    $(document).ready(function() {
+        $('#archive-menu-affix').affix({
+            offset: {
+                top: 10,
+                bottom: function () {
+                  return (this.bottom = $(document).height() - $('.videos-box').outerHeight(true));
+                }
+            }
+        });
+    });
+</script>
+
+{/block}

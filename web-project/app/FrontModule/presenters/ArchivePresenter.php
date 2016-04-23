@@ -89,6 +89,7 @@ class ArchivePresenter extends BasePresenter {
         $this->template->pages = $paginator->getPageCount();
         $this->template->category = $category;
         $this->template->archiveMenu = $this->archiveMenuManager->getLocalizedMenus($this->lang);
+        $this->template->archiveMenuManager = $this->archiveMenuManager;
         
     }
     

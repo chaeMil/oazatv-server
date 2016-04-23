@@ -7356,6 +7356,8 @@ body {
   display: none;
 }
 .archive.category .header {
+  margin-top: 0;
+  margin-bottom: 35px;
   height: 70px;
   line-height: 70px;
   padding-left: 18px;
@@ -7389,6 +7391,9 @@ body {
   transition-duration: 150ms;
   color: white !important;
   opacity: 1.0;
+}
+.archive .videos-box {
+  margin-top: 24px;
 }
 .archive-sidemenu .badge {
   line-height: 22px;
