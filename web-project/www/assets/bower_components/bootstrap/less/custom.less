@@ -641,16 +641,39 @@ html,body{
     .badge {
         line-height: 22px;
         font-size: 14px;
+        background-color: @brand-primary;
     }
     
     &.affix {
         position: fixed !important;
     }
     
+    .list-group-item {
+        &.active {
+            a {
+                color: white;
+            }
+        }
+        
+    }
+    
     @media (max-width: @screen-md) {
         width: 100%;
+        text-align: center;
+        
         &.affix {
             position: relative !important;
+        }
+        
+        .list-group-item {
+            display: inline-block;
+            border-radius: 32px;
+            margin-bottom: 12px;
+            margin-right: 12px;
+            
+            .badge {
+                margin-left: 15px;
+            }
         }
         
     }

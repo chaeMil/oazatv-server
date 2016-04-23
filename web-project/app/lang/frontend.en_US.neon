@@ -18,6 +18,7 @@ basic:
     category: "Category"
     show_all: "Show all"
     show_next: "Show next"
+    show_menu: "Show menu"
 search:
     more: "more results"
 homepage:

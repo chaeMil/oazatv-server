@@ -7398,16 +7398,30 @@ body {
 .archive-sidemenu .badge {
   line-height: 22px;
   font-size: 14px;
+  background-color: #4285f4;
 }
 .archive-sidemenu.affix {
   position: fixed !important;
 }
+.archive-sidemenu .list-group-item.active a {
+  color: white;
+}
 @media (max-width: 992px) {
   .archive-sidemenu {
     width: 100%;
+    text-align: center;
   }
   .archive-sidemenu.affix {
     position: relative !important;
+  }
+  .archive-sidemenu .list-group-item {
+    display: inline-block;
+    border-radius: 32px;
+    margin-bottom: 12px;
+    margin-right: 12px;
+  }
+  .archive-sidemenu .list-group-item .badge {
+    margin-left: 15px;
   }
 }
 @media (min-width: 992px) {

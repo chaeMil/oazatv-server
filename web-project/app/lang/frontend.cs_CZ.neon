@@ -18,6 +18,7 @@ basic:
     category: "Kategorie"
     show_all: "Zobrazit vše"
     show_next: "Zobrazit další"
+    show_menu: "Zobrazit menu"
 search:
     more: "další výsledky"
 homepage:
