@@ -29,6 +29,7 @@ songbook:
     videos_including_this_song: "Videos including this song"
     chord_to_find: "Find chord"
     alternative_tuning: "Alternative tuning"
+    show_chords: "Show chords"
 footer:
     copyright: "All rights reserved | Oaza.tv"
     contact: "Contact"

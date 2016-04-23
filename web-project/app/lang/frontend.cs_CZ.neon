@@ -29,6 +29,7 @@ songbook:
     videos_including_this_song: "Videa obsahující tuto chválu"
     chord_to_find: "Najít akord"
     alternative_tuning: "Alernativní ladění"
+    show_chords: "Zobrazit akordy"
 footer:
     copyright: "Všechna práva vyhrazena | Oaza.tv"
     contact: "Kontakt"

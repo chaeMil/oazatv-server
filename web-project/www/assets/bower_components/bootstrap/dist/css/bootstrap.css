@@ -7593,6 +7593,18 @@ and open the template in the editor.
 .songbook.all .songs-block .song a {
   color: #666666;
 }
+.songbook #chordform .form-control {
+  border: 1px solid #4285f4 !important;
+}
+.songbook #chordform .show-button {
+  text-transform: uppercase;
+}
+.songbook .chordBox .chordInnerBox {
+  border-bottom: 2px solid #DDE4F6;
+  margin-bottom: 25px;
+  min-height: 250px;
+  text-align: center;
+}
 /*
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates

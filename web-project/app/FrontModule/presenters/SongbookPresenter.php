@@ -19,7 +19,7 @@ Model\CategoriesManager;
  *
  * @author Michal Mlejnek <chaemil72 at gmail.com>
  */
-class SongPresenter extends BasePresenter {
+class SongbookPresenter extends BasePresenter {
 
     private $songsManager;
     private $videoManager;
@@ -75,10 +75,11 @@ class SongPresenter extends BasePresenter {
         $this->template->songs = $songs;
     }
     
-    public function renderChord() {
+    public function renderChord($id) {
+        $this->template->chord = $id;
         $this->template->categoriesManager = $this->categoriesManager;
         $this->template->categories = $this->categoriesManager
-                ->getLocalizedCategories($this->lang);
+                ->getLocalizedCategories($this->lang);  
     }
     
     
