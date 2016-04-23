@@ -75,6 +75,12 @@ class SongPresenter extends BasePresenter {
         $this->template->songs = $songs;
     }
     
+    public function renderChord() {
+        $this->template->categoriesManager = $this->categoriesManager;
+        $this->template->categories = $this->categoriesManager
+                ->getLocalizedCategories($this->lang);
+    }
+    
     
 
 }

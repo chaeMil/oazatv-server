@@ -27,6 +27,8 @@ homepage:
     popular_videos: "Popular videos"
 songbook:
     videos_including_this_song: "Videos including this song"
+    chord_to_find: "Find chord"
+    alternative_tuning: "Alternative tuning"
 footer:
     copyright: "All rights reserved | Oaza.tv"
     contact: "Contact"

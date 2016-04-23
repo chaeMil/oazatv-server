@@ -1,0 +1,64 @@
+{block content}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel">
+                <div class="panel-body">
+                    <form id="chordform">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <label for="chordval">{_frontend.songbook.chord_to_find}:</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <input class="form-control" id="chordval" name="ch" value="Am">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <label for="chordval">{_frontend.songbook.alternative_tuning}:</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <select class="form-control" id="s1"><option>x<option>A<option>B<option>C<option>D<option selected>E<option>F<option>G<option>A#<option>B#<option>C#<option>D#<option>E#<option>F#<option>G#<option>Ab<option>Bb<option>Cb<option>Db<option>Eb<option>Fb<option>Gb</select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <select class="form-control" id="s2"><option>x<option selected>A<option>B<option>C<option>D<option>E<option>F<option>G<option>A#<option>B#<option>C#<option>D#<option>E#<option>F#<option>G#<option>Ab<option>Bb<option>Cb<option>Db<option>Eb<option>Fb<option>Gb</select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <select class="form-control" id="s3"><option>x<option>A<option>B<option>C<option selected>D<option>E<option>F<option>G<option>A#<option>B#<option>C#<option>D#<option>E#<option>F#<option>G#<option>Ab<option>Bb<option>Cb<option>Db<option>Eb<option>Fb<option>Gb</select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <select class="form-control" id="s4"><option>x<option>A<option>B<option>C<option>D<option>E<option>F<option selected>G<option>A#<option>B#<option>C#<option>D#<option>E#<option>F#<option>G#<option>Ab<option>Bb<option>Cb<option>Db<option>Eb<option>Fb<option>Gb</select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <select class="form-control" id="s5"><option>x<option>A<option selected>B<option>C<option>D<option>E<option>F<option>G<option>A#<option>B#<option>C#<option>D#<option>E#<option>F#<option>G#<option>Ab<option>Bb<option>Cb<option>Db<option>Eb<option>Fb<option>Gb</select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <select class="form-control" id="s6"><option>x<option>A<option>B<option>C<option>D<option selected>E<option>F<option>G<option>A#<option>B#<option>C#<option>D#<option>E#<option>F#<option>G#<option>Ab<option>Bb<option>Cb<option>Db<option>Eb<option>Fb<option>Gb</select>
+                                </div>
+                            </div>
+                        </div>
+                    <input type="button" value="Find Voicings " onclick="findvoice()">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="resultsdiv"></div>
+    </div>
+</div>
+
+
+{/block}
+
+{block pageScripts}
+<script>
+    $(document).ready(function() {
+        findargs();
+    });
+</script>
+{/block}

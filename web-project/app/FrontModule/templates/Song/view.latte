@@ -58,8 +58,6 @@
 
 {block pageScripts}
 
-<link rel="import" href="{$basePath}/html_components/XChord.html" />
-
 <script>
     
     $(document).ready(function() {
@@ -105,7 +103,6 @@
             chord = chord.replace("[","");
             chord = chord.replace("]","");
             $(this).text("["+transposeChord(chord,step)+"]");
-            $(this).attr("onclick","displayChord('"+transposeChord(chord,step)+"');");
         });
     }
 
@@ -128,6 +125,10 @@
     function adjustSongToHash() {
         var hash = window.location.hash.replace("#","") | 0;
         transposeSong(parseInt(hash));
+    }
+    
+    function displayChord(chord) {
+        
     }
     
 </script>

@@ -25,3 +25,4 @@ assets:
         - '/assets/js/utils.js'
         - '/assets/js/detect-mobile-browser.js'
         - '/assets/js/smooth-scroll-hash.js'
+        - '/assets/js/jschords.js'
