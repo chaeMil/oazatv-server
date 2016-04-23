@@ -640,6 +640,10 @@ html,body{
     max-height: calc(100vh - 140px);
     overflow-y: scroll;
     
+    .show-menu {
+        margin-bottom: 30px;
+    }
+    
     &::-webkit-scrollbar-track {
         -webkit-box-shadow: none;
     }
@@ -671,6 +675,7 @@ html,body{
     @media (max-width: @screen-md) {
         width: 100%;
         text-align: center;
+        max-height: none;
         
         &.affix {
             position: relative !important;
@@ -696,6 +701,10 @@ html,body{
 
     @media (min-width: @screen-md) {
         width: 212px;
+        
+        .collapse {
+            display: block;
+        }
     }
     
     @media (min-width: @screen-lg) {

@@ -7399,6 +7399,9 @@ body {
   max-height: calc(100vh - 140px);
   overflow-y: scroll;
 }
+.archive-sidemenu .show-menu {
+  margin-bottom: 30px;
+}
 .archive-sidemenu::-webkit-scrollbar-track {
   -webkit-box-shadow: none;
 }
@@ -7420,6 +7423,7 @@ body {
   .archive-sidemenu {
     width: 100%;
     text-align: center;
+    max-height: none;
   }
   .archive-sidemenu.affix {
     position: relative !important;
@@ -7440,6 +7444,9 @@ body {
 @media (min-width: 992px) {
   .archive-sidemenu {
     width: 212px;
+  }
+  .archive-sidemenu .collapse {
+    display: block;
   }
 }
 @media (min-width: 1200px) {

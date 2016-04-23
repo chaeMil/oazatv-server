@@ -1,5 +1,12 @@
 <div class="archive-sidemenu" id="archive-menu-affix">
-    <ul class="list-group">
+    <div class="visible-xs visible-sm">
+        <a class="show-menu btn btn-primary" 
+           data-toggle="collapse" 
+           data-target="#archive-menu">
+            {_frontend.basic.show_menu}
+        </a>
+    </div>
+    <ul id="archive-menu" class="list-group collapse">
         {foreach $archiveMenu as $menu}
             <li class="list-group-item {if isset($activeMenu) && $activeMenu['id'] == $menu['id']}active{/if}">
                 <a n:href="Archive:Menu $menu['tags']">
