@@ -77,7 +77,7 @@ class ArchiveMenuManager extends BaseModel {
     public function getMenuFromDBByTags($tags) {
         return self::$database
                     ->query("SELECT * FROM ".self::TABLE_NAME." WHERE ".self::COLUMN_TAGS." LIKE '%"
-                            .str_replace(array(' ', '.'), '', $tags)."%'")
+                            .$tags."%'")
                     ->fetch();
     }
     
