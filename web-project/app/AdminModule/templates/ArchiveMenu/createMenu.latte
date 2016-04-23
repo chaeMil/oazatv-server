@@ -1,0 +1,22 @@
+{block content}
+
+<div id="wrapper">
+    
+    {include ../navbar.latte}
+    
+    <div class="container">
+        <div class="row">
+            <a href="javascript:history.go(-1);"> 
+                <h2>
+                    <span class="glyphicon glyphicon-chevron-left pull-left">
+                    </span>Vytvořit menu
+                </h2>
+            </a>  
+            
+            {control menuForm}
+                        
+        </div>
+    </div>
+    
+</div>
+{/block}

@@ -96,6 +96,7 @@ class CategoriesPresenter extends BaseSecuredPresenter {
         } else {
             $this->flashMessage("Nic nebylo změněno", "info");
         }
+        $this->redirect("Categories:List");
     }
     
     public function actionDeleteCategory($id) {

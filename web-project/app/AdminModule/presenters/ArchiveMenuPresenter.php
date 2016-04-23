@@ -9,7 +9,7 @@
 namespace App\AdminModule;
 
 use Nette,
- Model\SongsManager,
+Model\ArchiveMenuManager,
  App\EventLogger;
 
 /**
@@ -17,71 +17,72 @@ use Nette,
  *
  * @author chaemil
  */
-class SongsPresenter extends BaseSecuredPresenter {
+class ArchiveMenuPresenter extends BaseSecuredPresenter {
     
     public $database;
-    public $songsManager;
+    public $archiveMenuManager;
 
     function __construct(Nette\Database\Context $database, 
-            SongsManager $songsManager) {
+            ArchiveMenuManager $archiveMenuManager) {
         $this->database = $database;
-        $this->songsManager = $songsManager;
+        $this->archiveMenuManager = $archiveMenuManager;
     }
     
     public function renderList() {       
         $this->getTemplateVariables($this->getUser()->getId());
         
-        $this->template->songs = $this->songsManager
-                ->getSongsFromDB();
+        $this->template->menus = $this->archiveMenuManager
+                ->getMenusFromDB();
     }
     
-    public function renderCreateSong() {
+    public function renderCreateMenu() {
         $this->getTemplateVariables($this->getUser()->getId());
     }
     
     public function renderDetail($id) {
         $this->getTemplateVariables($this->getUser()->getId());
-        $song = $this->songsManager->getSongFromDB($id);
-        $this->template->song = $song;
+        $menu = $this->archiveMenuManager->getMenuFromDB($id);
+        $this->template->menu = $menu;
         
-        if (!isset($song['id'])) {
-            $this->error('Požadovaná chvála neexistuje!');
+        if (!isset($menu['id'])) {
+            $this->error('Požadované menu neexistuje!');
         }
         
-        $songArray = $song->toArray();
-        $songArray['body'] = htmlspecialchars_decode($songArray['body']);
-        $songArray['body'] = \App\StringUtils::removeStyleTag($songArray['body']);
-        
-        $this['songForm']->setDefaults($songArray);
+        $this['menuForm']->setDefaults($menu->toArray());
         
     }
     
-    public function createComponentSongForm() {        
+    public function createComponentMenuForm() {        
         $form = new Nette\Application\UI\Form;
+        
+        $published = array(
+            '0' => 'Ne',
+            '1' => 'Ano',
+        );
         
         $form->addHidden('id');
         
-        $form->addText('name', 'název')
-                ->setAttribute("class", "form-control")
-                ->setRequired();
+        $form->addText('name_cs', 'název česky')
+                ->setRequired()
+                ->setAttribute("class", "form-control");
 
-        $form->addText('tag', 'TAG')
+        $form->addText('name_en', 'název anglicky')
                 ->setRequired()
                 ->setAttribute("class", "form-control");
         
-        $form->addText('author', 'autor')
+        $form->addText('tags', 'tagy')
+                ->setRequired()
                 ->setAttribute("class", "form-control");
         
-        $form->addTextArea('body', 'text')
-                ->setHtmlId('bodyEditor')
+        $form->addSelect("visible", "zveřejneno")
+                ->setItems($published)
                 ->setAttribute("class", "form-control");
 
         $form->addSubmit('send', 'Uložit')
                 ->setAttribute("class", "btn-lg btn-success btn-block");
-        
 
         // call method signInFormSucceeded() on success
-        $form->onSuccess[] = $this->songSucceeded;
+        $form->onSuccess[] = $this->menuSucceeded;
 
         // setup Bootstrap form rendering
         $this->bootstrapFormRendering($form);
@@ -90,29 +91,30 @@ class SongsPresenter extends BaseSecuredPresenter {
     }
     
     
-    public function songSucceeded($form) {
+    public function menuSucceeded($form) {
         $vals = $form->getValues();
         
-        $status = $this->songsManager->saveSongToDB($vals);
+        $status = $this->archiveMenuManager->saveMenuToDB($vals);
         
         if ($status) {
             EventLogger::log('user '.$this->getUser()->getIdentity()
-                    ->login.' updated song '.$vals->id,
+                    ->login.' updated menu '.$vals->id,
                 EventLogger::ACTIONS_LOG);
             
             $this->flashMessage("Změny úspěšně uloženy", "success");
         } else {
             $this->flashMessage("Nic nebylo změněno", "info");
         }
-        $this->redirect("Songs:List");
+        
+        $this->redirect("ArchiveMenu:List");
     }
     
-    public function actionDeleteSong($id) {
-        $this->songsManager->deleteSong($id);
-        EventLogger::log('user '.$this->getUser()->getIdentity()->login.' deleted song '.$id, 
+    public function actionDeleteMenu($id) {
+        $this->archiveMenuManager->deleteMenu($id);
+        EventLogger::log('user '.$this->getUser()->getIdentity()->login.' deleted menu '.$id, 
                 EventLogger::ACTIONS_LOG);
-        $this->flashMessage("Chvála byla smazána!", "danger");
-        $this->redirect("Songs:List");
+        $this->flashMessage("Menu bylo smazáno!", "danger");
+        $this->redirect("ArchiveMenu:List");
     }
 }
 

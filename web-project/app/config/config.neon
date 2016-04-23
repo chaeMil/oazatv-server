@@ -40,6 +40,7 @@ services:
     - Model\PreachersManager
     - Model\FrontPageManager
     - Model\LiveStreamManager
+    - Model\ArchiveMenuManager
     - App\RouterFactory
     webDir: App\Services\WebDir(%wwwDir%)
     router: @App\RouterFactory::createRouter

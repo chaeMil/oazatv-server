@@ -1,0 +1,74 @@
+{block content}
+
+<div id="wrapper">
+    
+    {include ../navbar.latte}
+    
+    <div class="container">
+        <div class="row">
+            <a href="javascript:history.go(-1);"> 
+                <h2><span class="glyphicon glyphicon-chevron-left pull-left"></span>
+                    Seznam menu
+                </h2>
+            </a>  
+            
+        </div>
+        
+        <br>
+        
+        <div class="row">
+            <div class="col-md-10">
+                <input id="filter" type="text" class="form-control" placeholder="Vyhledávání...">
+            </div>
+            <div class="col-md-2">
+                <a n:href="ArchiveMenu:createMenu" class="btn btn-primary">Vytvořit menu</a>
+            </div>
+        </div>
+        
+        <br>
+        <div class="row">
+            <table class="table table-hover">
+                <thead>
+                    <th>id</th>
+                    <th>název česky</th>
+                    <th>název anglicky</th>
+                    <th>tagy</th>
+                </thead>
+                <tbody class="searchable">
+                    <tr n:foreach="$menus as $menu" 
+                        class="clickable-row {if ($menu->visible == 1)}active{/if}"
+                        data-href="{$presenter->link('ArchiveMenu:Detail', $menu->id)}">
+                        <td>{$menu->id}</td>
+                        <td>{$menu->name_cs}</td>
+                        <td>{$menu->name_en}</td>
+                        <td>{$menu->tags}</td>
+                    </tr>
+                </tbody>                
+            </table>
+        </div>
+        
+    </div>
+    
+    
+</div>
+{/block}
+
+{block pageScripts}
+    <script>
+        $(document).ready(function() {
+            (function ($) {
+
+                $('#filter').keyup(function () {
+
+                    var rex = new RegExp($(this).val(), 'i');
+                    $('.searchable tr').hide();
+                    $('.searchable tr').filter(function () {
+                        return rex.test($(this).text());
+                    }).show();
+
+                })
+
+            }(jQuery));
+        });
+    </script>
+{/block}

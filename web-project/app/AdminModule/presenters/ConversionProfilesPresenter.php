@@ -105,6 +105,7 @@ class ConversionProfilesPresenter extends BaseSecuredPresenter {
         } else {
             $this->flashMessage("Nic nebylo změněno", "info");
         }
+        $this->redirect("ConversionProfiles:List");
     }
     
     public function actionDeleteProfile($id) {
