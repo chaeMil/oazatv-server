@@ -184,13 +184,13 @@ class ArchiveManager extends BaseModel {
             ", ".VideoManager::COLUMN_DATE.
             ", 'video' AS type ".
             " FROM ".VideoManager::TABLE_NAME.
-            " WHERE ".$tagsQuery.
+            " WHERE ".$tagsQuery." AND ".VideoManager::COLUMN_PUBLISHED."=1".
             ") UNION ALL (SELECT ".
             PhotosManager::COLUMN_ID.
             ", ".PhotosManager::COLUMN_DATE.
             ", 'album' AS type ".
             " FROM ".PhotosManager::TABLE_NAME_ALBUMS.
-            " WHERE ".$tagsQuery.
+            " WHERE ".$tagsQuery. " AND ".PhotosManager::COLUMN_PUBLISHED."=1".
             ") ORDER BY date DESC ".
             " LIMIT ".$count.
             " OFFSET ".$from;
