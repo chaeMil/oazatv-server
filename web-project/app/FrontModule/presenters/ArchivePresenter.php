@@ -78,7 +78,7 @@ class ArchivePresenter extends BasePresenter {
         $videosForCount = $this->videoManager
                 ->getVideosFromDBbyCategory($category['id'], 
                         0,
-                        999);
+                        $this->archiveManager->countArchive());
 
         $paginator->setItemCount(sizeof($videosForCount));
         
@@ -112,26 +112,24 @@ class ArchivePresenter extends BasePresenter {
         
         $menu = $this->archiveMenuManager->getMenuFromDBByTags($tags);
         
-        $videos = $this->videoManager->getVideosFromDBbyTags($tags, 
-                $paginator->getOffset(),
-                $paginator->getItemsPerPage());
+        $items = $this->archiveManager
+                ->getVideosAndPhotoAlbumsFromDBByTags($paginator->getOffset(), 
+                        $paginator->getItemsPerPage(), 
+                        $this->lang, 
+                        $tags);
         
-        $videosCount = $this->videoManager->getVideosFromDBbyTags($tags, 
-                0,
-                999);
+        $itemsForCount = $this->archiveManager
+                ->getVideosAndPhotoAlbumsFromDBByTags(0, 
+                        $this->archiveManager->countArchive(), 
+                        $this->lang, 
+                        $tags);
         
-        $paginator->setItemCount(sizeof($videosCount));
-        
-        $localizedVideos = array();
-        foreach($videos as $video) {
-            $localizedVideos[] = $this->videoManager
-                    ->createLocalizedVideoObject($this->lang, $video);
-        }
+        $paginator->setItemCount(sizeof($itemsForCount));
         
         $this->template->categories = $this->categoriesManager
                 ->getLocalizedCategories($this->lang);
         
-        $this->template->archiveItems = $localizedVideos;
+        $this->template->archiveItems = $items;
         $this->template->paginator = $paginator;
         $this->template->page = $paginator->getPage();
         $this->template->pages = $paginator->getPageCount();

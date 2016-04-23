@@ -159,6 +159,81 @@ class ArchiveManager extends BaseModel {
         }
         
         return $outputArray;
+    }
+    
+    public function getVideosAndPhotoAlbumsFromDBByTags($from, $count, $lang, 
+        $tags) {
+        
+        $tagsArray = explode(",", str_replace(" ", "", $tags));
+        
+        $tagsQuery = "";
+        
+        $i = 0;
+        $len = count($tagsArray);
+        foreach($tagsArray as $tag) {
+            $tagsQuery .= VideoManager::COLUMN_TAGS." LIKE '%".$tag."%' ";
+            
+            if ($i != $len - 1) {
+                $tagsQuery .= "AND ";
+            }
+            
+            $i++;
+        }
+            
+        $query = '(SELECT '.VideoManager::COLUMN_ID.
+            ", ".VideoManager::COLUMN_DATE.
+            ", 'video' AS type ".
+            " FROM ".VideoManager::TABLE_NAME.
+            " WHERE ".$tagsQuery.
+            ") UNION ALL (SELECT ".
+            PhotosManager::COLUMN_ID.
+            ", ".PhotosManager::COLUMN_DATE.
+            ", 'album' AS type ".
+            " FROM ".PhotosManager::TABLE_NAME_ALBUMS.
+            " WHERE ".$tagsQuery.
+            ") ORDER BY date DESC ".
+            " LIMIT ".$count.
+            " OFFSET ".$from;
+
+        $dbOutput = self::$database->query($query)->fetchAll();
+        
+        $outputArray = array();
+            
+        foreach($dbOutput as $output) {
+            
+            switch($output['type']) {
+                case 'video':
+
+                    $rawItemFromDB = $this->videoManager
+                        ->getVideoFromDB($output['id']);
+
+                    $video = $this->videoManager
+                            ->createLocalizedVideoObject($lang,
+                                    $rawItemFromDB);
+                    
+                    $video['type'] = 'video';
+
+                    $outputArray[] = $video;
+                    break;
+
+                case 'album':
+
+                    $rawItemFromDB = $this->photosManager
+                        ->getAlbumFromDB($output['id']);
+
+                    $album = $this->photosManager
+                            ->createLocalizedAlbumThumbObject($lang,
+                                    $rawItemFromDB);
+                    
+                    $album['type'] = 'album';
+
+                    $outputArray[] = $album;
+                    break;
+            }
+        
+        }
+        
+        return $outputArray;
     } 
     
     
