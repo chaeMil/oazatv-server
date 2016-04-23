@@ -64,6 +64,10 @@
         adjustSongToHash();
         
         affixButtons();
+        
+        $('chord').click(function() {
+           displayChord($(this).text().replace('[','').replace(']','')); 
+        });
     });
     
     $(window).on('scroll', function() {
@@ -111,7 +115,7 @@
         var howMuch = 0 - hash;
         transposeSong(howMuch);
         setHash('0');
-}
+    }
 
     function adjustHash(step) {
         var hash = window.location.hash.replace("#","") | 0;

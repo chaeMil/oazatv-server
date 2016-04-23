@@ -1,0 +1,91 @@
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top noselect" role="navigation">
+    <div class="container" class="position: relative;">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            {*<button type="button" class="navbar-toggle pull-left" data-toggle="collapse"
+                    data-target="#navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>*}
+
+            <a class="navbar-brand">
+                <img class="logo" src="{$basePath}/assets/img/logo.png"/>
+                <span class="text hidden-xs">Oáza.tv</span>
+                <div class="onair offline"> 
+                    <div class="dot"></div>
+                    OnAir 
+                </div>
+            </a>
+
+
+        </div>
+
+        <div class="pull-right navbar-user-menu">
+            <a class="btn btn-primary btn-archive"
+                   n:href="Archive:Default">
+                    {_frontend.basic.archive}
+            </a>
+
+            <a class="btn btn-primary btn-archive"
+               n:href="Songbook:all">
+                {_frontend.basic.songbook}
+            </a>
+
+            {*if $user->isLoggedIn()}
+                <a class="dropdown-toggle"
+                   type="button" data-toggle="dropdown">
+                    <i class="fa fa-user"></i>
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu pull-right">
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="#">Logout</a></li>
+                </ul>
+            {else}
+                <a type="button" class="btn btn-primary btn-archive" href="#">
+                    <i class="fa fa-user"></i>
+                </a>
+            {/if*}
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <form class="navbar-form navbar-search" role="search" action="{plink Search:default}">
+                <div class="input-group">
+                    <input type="text" class="form-control"
+                           autocomplete="off"
+                           placeholder="{_frontend.basic.search}" name="q"
+                           id="search">
+
+                    <i id="search-animation" class="fa fa-spinner search-animation glyphicon-refresh-animate hidden"></i>
+
+                    <ul class="dropdown-menu dropdown-search" id="dropdown-search">
+
+                    </ul>
+
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- /.navbar-collapse -->
+
+
+    </div>
+    <!-- /.container -->
+</nav>
+
+<div class="fab-buttons">
+
+    <a type="button" data-toggle="collapse" data-target="#navbar-collapse" 
+       class="btn search visible-xs">
+        <i class="fa fa-search"></i>
+    </a>
+
+</div>
