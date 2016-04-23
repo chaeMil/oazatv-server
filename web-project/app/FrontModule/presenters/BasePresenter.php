@@ -5,7 +5,8 @@ namespace App\FrontModule;
 use Nette,
 App\Services\WebDir,
 CssMin,
-WebLoader;
+WebLoader,
+Mexitek\PHPColors\Color;
 
 
 /**
@@ -38,6 +39,30 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         parent::beforeRender();
         $routerLang = $this->getParameter('locale');
         $this->setupLanguage($this->container, $this->translator->getLocale());
+        
+        $this->registerCustomHelpers($this->template);
+        
+    }
+    
+    private function registerCustomHelpers($template) {
+        //make HEX color from string
+        $template->registerHelper('makeColor', function ($s) {
+            return '#'.substr(md5($s), 0, 6);
+        });
+        
+        //lighten HEX color
+        $template->registerHelper('lighten', function ($s, 
+                $amount = Color::DEFAULT_ADJUST) {
+            $color = new Color($s);
+            return '#'.$color->lighten($amount);
+        });
+        
+        //darken HEX color
+        $template->registerHelper('darken', function ($s, 
+                $amount = Color::DEFAULT_ADJUST) {
+            $color = new Color($s);
+            return '#'.$color->darken($amount);
+        });
     }
     
     public function setupLanguage($container, $lang = null) {
