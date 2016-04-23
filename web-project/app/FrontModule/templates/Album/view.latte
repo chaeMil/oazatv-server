@@ -1,3 +1,10 @@
+{block meta}
+    <meta property="og:image" content="{$baseUri}/{$album['thumbs']['1024']}"/>
+    <meta property="og:title" content="{$albumRaw['name_cs']} | {$albumRaw['name_en']}"/>
+    <meta property="og:description" content="{$albumRaw['description_cs']} | {$albumRaw['description_en']}"/>	
+{/block}
+
+
 {block content}
 
 <div class="container">
