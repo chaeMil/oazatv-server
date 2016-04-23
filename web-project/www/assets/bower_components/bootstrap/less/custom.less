@@ -637,6 +637,8 @@ html,body{
 }
 
 .archive-sidemenu {
+    max-height: calc(100vh - 140px);
+    overflow-y: scroll;
     
     .badge {
         line-height: 22px;
@@ -648,14 +650,19 @@ html,body{
         position: fixed !important;
     }
     
-    .list-group-item {
-        &.active {
-            a {
-                color: white;
+    .list-group {
+        margin-bottom: 0;
+        
+        .list-group-item {
+            &.active {
+                a {
+                    color: white;
+                }
             }
         }
-        
     }
+    
+    
     
     @media (max-width: @screen-md) {
         width: 100%;

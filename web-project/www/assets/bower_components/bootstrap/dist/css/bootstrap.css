@@ -7395,6 +7395,10 @@ body {
 .archive .videos-box {
   margin-top: 24px;
 }
+.archive-sidemenu {
+  max-height: calc(100vh - 140px);
+  overflow-y: scroll;
+}
 .archive-sidemenu .badge {
   line-height: 22px;
   font-size: 14px;
@@ -7403,7 +7407,10 @@ body {
 .archive-sidemenu.affix {
   position: fixed !important;
 }
-.archive-sidemenu .list-group-item.active a {
+.archive-sidemenu .list-group {
+  margin-bottom: 0;
+}
+.archive-sidemenu .list-group .list-group-item.active a {
   color: white;
 }
 @media (max-width: 992px) {
