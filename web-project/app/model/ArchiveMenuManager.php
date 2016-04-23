@@ -13,7 +13,8 @@
  */
 namespace Model;
 
-use Nette;
+use Nette,
+ Model\VideoManager;
 /**
  * Description of VideoManager
  *
@@ -32,9 +33,12 @@ class ArchiveMenuManager extends BaseModel {
 
     /** @var Nette\Database\Context */
     public static $database;
+    private $videoManager;
 
-    public function __construct(Nette\Database\Context $database) {
+    public function __construct(Nette\Database\Context $database,
+            VideoManager $videoManager) {
         self::$database = $database;
+        $this->videoManager = $videoManager;
     }
     
     private function checkIfMenuExists($id) {
@@ -70,6 +74,13 @@ class ArchiveMenuManager extends BaseModel {
                 ->fetch();
     }
     
+    public function getMenuFromDBByTags($tags) {
+        return self::$database
+                    ->query("SELECT * FROM ".self::TABLE_NAME." WHERE ".self::COLUMN_TAGS." LIKE '%"
+                            .str_replace(array(' ', '.'), '', $tags)."%'")
+                    ->fetch();
+    }
+    
     public function getMenusFromDB() {
         return self::$database->table(self::TABLE_NAME)
             ->select('*')
@@ -83,15 +94,9 @@ class ArchiveMenuManager extends BaseModel {
     }
     
     public function countVideosInMenuByTag($tags) {
-        $tagsArray = explode(",", str_replace(" ", "", $tags));
-        $count = 0;
+        $videos = $this->videoManager->getVideosFromDBbyTags($tags, 0, 999);
         
-        foreach($tagsArray as $tag) {
-            $count += self::$database->query("SELECT COUNT(*) FROM " . VideoManager::TABLE_NAME
-                . " WHERE " . VideoManager::COLUMN_TAGS. " LIKE '%" . $tag . "%'")->fetch()[0];
-        }
-        
-        return $count;
+        return count($videos);
     }
     
     public function getLocalizedMenu($id, $lang) {

@@ -42,7 +42,7 @@ class ArchivePresenter extends BasePresenter {
         
         $paginator = new Nette\Utils\Paginator;
         $paginator->setItemCount($this->archiveManager->countArchive());
-        $paginator->setItemsPerPage(64);
+        $paginator->setItemsPerPage(32);
         $paginator->setPage($page);
 
         $archive = $this->archiveManager
@@ -61,18 +61,26 @@ class ArchivePresenter extends BasePresenter {
         $this->template->archiveMenuManager = $this->archiveMenuManager;
     }
     
-    public function renderCategory($id, $attr) {
+    public function renderCategory($id, $attr = 1) {
 
         $category = $this->categoriesManager->getLocalizedCategory($id, $this->lang);
-        $itemsPerPage = 64;
-        
-        $videos = $this->videoManager
-                ->getVideosFromDBbyCategory($category['id'], $attr * $itemsPerPage, 999);
+        $itemsPerPage = 32;
         
         $paginator = new Nette\Utils\Paginator;
-        $paginator->setItemCount(sizeof($videos));
         $paginator->setItemsPerPage($itemsPerPage);
         $paginator->setPage($attr);
+        
+        $videos = $this->videoManager
+                ->getVideosFromDBbyCategory($category['id'], 
+                        $paginator->getOffset(),
+                        $paginator->getItemsPerPage());
+        
+        $videosForCount = $this->videoManager
+                ->getVideosFromDBbyCategory($category['id'], 
+                        0,
+                        999);
+
+        $paginator->setItemCount(sizeof($videosForCount));
         
         $localizedVideos = array();
         foreach($videos as $video) {
@@ -90,6 +98,46 @@ class ArchivePresenter extends BasePresenter {
         $this->template->category = $category;
         $this->template->archiveMenu = $this->archiveMenuManager->getLocalizedMenus($this->lang);
         $this->template->archiveMenuManager = $this->archiveMenuManager;
+        
+    }
+    
+    public function renderMenu($id, $attr = 1) {
+
+        $tags = $id;
+        $itemsPerPage = 32;
+        
+        $paginator = new Nette\Utils\Paginator;
+        $paginator->setItemsPerPage($itemsPerPage);
+        $paginator->setPage($attr);
+        
+        $menu = $this->archiveMenuManager->getMenuFromDBByTags($tags);
+        
+        $videos = $this->videoManager->getVideosFromDBbyTags($tags, 
+                $paginator->getOffset(),
+                $paginator->getItemsPerPage());
+        
+        $videosCount = $this->videoManager->getVideosFromDBbyTags($tags, 
+                0,
+                999);
+        
+        $paginator->setItemCount(sizeof($videosCount));
+        
+        $localizedVideos = array();
+        foreach($videos as $video) {
+            $localizedVideos[] = $this->videoManager
+                    ->createLocalizedVideoObject($this->lang, $video);
+        }
+        
+        $this->template->categories = $this->categoriesManager
+                ->getLocalizedCategories($this->lang);
+        
+        $this->template->archiveItems = $localizedVideos;
+        $this->template->paginator = $paginator;
+        $this->template->page = $paginator->getPage();
+        $this->template->pages = $paginator->getPageCount();
+        $this->template->archiveMenu = $this->archiveMenuManager->getLocalizedMenus($this->lang);
+        $this->template->archiveMenuManager = $this->archiveMenuManager;
+        $this->template->menu = $menu;
         
     }
     

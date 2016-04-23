@@ -1,21 +1,12 @@
 {block content}
 
-<div class="container archive category">
-
+<div class="container archive">
+    
     <div class="row videos-box">
         <div class="col-xl-2 col-md-3 col-sm-12 col-xs-12 pull-right">
             {include ../Shared/archiveSideMenu.latte, archiveMenu => $archiveMenu}
         </div>
-                    
         <div class="col-xl-10 col-md-9 col-sm-12 col-xs-12">
-            <h1 class="header" style="background-color: {$category['color']|noescape}">
-                <small class="hidden-xs">{_frontend.basic.category}:</small> {$category['name']}
-                <a class="hash pull-right" data-time="800" href="#footer-categories">
-                    <small style="color: {$category['color']|noescape};">
-                        {_frontend.basic.show_all}
-                    </small>
-                </a>
-            </h1>
             {if isset($archiveItems)}
                 <div class="row">
                     {foreach $archiveItems as $item}
@@ -26,10 +17,10 @@
             {/if}
         </div>
     </div>
+    
 
     {include ../Shared/pagination.latte, pages => $pages, page => $page, 
-        baseLink => '/archive/category/'.$category['id'].'/'}
-        
+        baseLink => '/archive/menu/'.$menu['tags'].'/'}
 </div>
 {/block}
     

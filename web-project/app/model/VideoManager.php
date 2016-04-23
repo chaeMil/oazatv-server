@@ -242,6 +242,31 @@ class VideoManager extends BaseModel {
                 ->limit($limit)
                 ->fetchAll();
     }
+    
+    public function getVideosFromDBbyTags($tags, $offset = 0, $limit = 10) {
+        $tagsArray = explode(",", str_replace(" ", "", $tags));
+        
+        $tagsQuery = "";
+        
+        $i = 0;
+        $len = count($tagsArray);
+        foreach($tagsArray as $tag) {
+            $tagsQuery .= self::COLUMN_TAGS." LIKE '%".$tag."%' ";
+            
+            if ($i != $len - 1) {
+                $tagsQuery .= "AND ";
+            }
+            
+            $i++;
+        }
+        
+        $videos = self::$database->query("SELECT * FROM ".self::TABLE_NAME." WHERE ".$tagsQuery.
+                " ORDER BY ".VideoManager::COLUMN_DATE. " DESC".
+                " LIMIT ".$limit." OFFSET ".$offset)->fetchAll();
+        
+        return $videos;
+        
+    }
 
     public function getOriginalFileInfo($id) {
         $video = $this->getVideoFromDB($id, 2);

@@ -4,20 +4,7 @@
     
     <div class="row videos-box">
         <div class="col-xl-2 col-md-3 col-sm-12 col-xs-12 pull-right">
-            <div class="archive-sidemenu" id="archive-menu-affix">
-                <ul class="list-group">
-                    {foreach $archiveMenu as $menu}
-                        <li class="list-group-item">
-                            <a n:href="Archive:Menu $menu['tags']">
-                                {$menu['name']}
-                            </a>
-                            <span class="badge">
-                                {$archiveMenuManager->countVideosInMenuByTag($menu['tags'])}
-                            </span>
-                        </li>
-                    {/foreach}
-                </ul>
-            </div>
+           {include ../Shared/archiveSideMenu.latte, archiveMenu => $archiveMenu}
         </div>
         <div class="col-xl-10 col-md-9 col-sm-12 col-xs-12">
             {if isset($archiveItems)}
@@ -32,23 +19,12 @@
     </div>
     
 
-    {include '../Shared/pagination.latte', pages => $pages, page => $page}
+    {include ../Shared/pagination.latte, pages => $pages, page => $page}
 </div>
 {/block}
-    
+
 {block pageScripts}
 
-<script>
-    $(document).ready(function() {
-        $('#archive-menu-affix').affix({
-            offset: {
-                top: 10,
-                bottom: function () {
-                  return (this.bottom = $(document).height() - $('.videos-box').outerHeight(true));
-                }
-            }
-        });
-    });
-</script>
+    {include ../Shared/archiveSideMenuJS.latte}
 
 {/block}
