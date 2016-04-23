@@ -4277,6 +4277,12 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     max-height: 200px;
   }
 }
+@media (max-width: 768px) {
+  .navbar-fixed-top,
+  .navbar-fixed-bottom {
+    padding-top: 6px;
+  }
+}
 .container > .navbar-header,
 .container-fluid > .navbar-header,
 .container > .navbar-collapse,
