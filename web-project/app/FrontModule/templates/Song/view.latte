@@ -1,10 +1,24 @@
 {block content}
 
+{if mb_substr($song['tag'], 0, 2) == 'CH'}
+    {var $initial = 'CH'}
+{else}
+    {var $initial = mb_substr($song['tag'], 0, 1, 'UTF-8')}
+{/if}
+
 <div class="container">
     
     <hr>
     
-    <h1 class="text-center">{$song['name']} <br><small>{$song['author']}</small></h1>
+    <h1 class="text-center">
+        {$song['name']} <br>
+        <small style="color: {$initial|makeColor|darken:20|noescape}">
+            [{$song['tag']}]&nbsp;&nbsp;
+        </small>
+        <small style="color: {$initial|makeColor|darken:8|noescape}">
+            {$song['author']}
+        </small>
+    </h1>
     
     <hr>
     

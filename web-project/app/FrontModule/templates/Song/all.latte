@@ -23,16 +23,18 @@
 
                 {if !isset($lastInitial) || $initial != $lastInitial}
                     <div class="songs-block">
-                    <h2 style="color: {$initial|makeColor|darken:20|noescape}">{$initial}</h2>
+                    <h2 style="color: {$initial|makeColor|darken:25|noescape}">{$initial}</h2>
                 {/if}
 
                 <h5 class="song" data-tag="{$song['tag']}">
-                    <span style="color: {$initial|makeColor|darken:20|noescape}">
+                    <span style="color: {$initial|makeColor|darken:25|noescape}">
                         {$song['tag']}
-                    </span> 
+                    </span> &nbsp;
                     <a n:href="Song:view $song['tag']">{$song['name']}</a>
                     <br>
-                    <small>{$song['author']}</small>
+                    <small class="author" style="color: {$initial|makeColor|darken:18|noescape}">
+                        {$song['author']}
+                    </small>
                 </h5>
                 
                 {if $iterator->last}</div>{/if}
