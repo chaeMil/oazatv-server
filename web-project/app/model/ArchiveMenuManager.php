@@ -108,7 +108,6 @@ class ArchiveMenuManager extends BaseModel {
         foreach($menus as $menu) {
             
             $newMenu['id'] = $menu['id'];
-            $newMenu['color'] = $menu['color'];
             
             switch($lang) {
                 case 'cs':

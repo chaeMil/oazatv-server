@@ -626,8 +626,33 @@ html,body{
             }
         }
     }
+}
+
+.archive-sidemenu {
     
+    &.affix {
+        position: fixed !important;
+    }
     
+    @media (max-width: @screen-md) {
+        width: 100%;
+        &.affix {
+            position: relative !important;
+        }
+        
+    }
+
+    @media (min-width: @screen-md) {
+        width: 212px;
+    }
+    
+    @media (min-width: @screen-lg) {
+        width: 262px;
+    }
+    
+    @media (min-width: @screen-xl) {
+        width: 232px;
+    }
 }
 
 @keyframes blink {

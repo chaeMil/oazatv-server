@@ -1,13 +1,50 @@
 {block content}
 
 <div class="container">
-    {if isset($archiveItems)}
-        <div class="row videos-box">
-            {foreach $archiveItems as $item}
-                {include '../Shared/videoBox.latte', item => $item}
-            {/foreach}
+    
+    <div class="row videos-box">
+        <div class="col-xl-2 col-md-3 col-sm-12 col-xs-12 pull-right">
+            <div class="archive-sidemenu" id="archive-menu-affix">
+                <ul class="list-group">
+                    {foreach $archiveMenu as $menu}
+                        <li class="list-group-item">
+                            {$menu['name']}
+                            <span class="badge">14</span>
+                        </li>
+                    {/foreach}
+                </ul>
+            </div>
         </div>
-    {/if}
+        <div class="col-xl-10 col-md-9 col-sm-12 col-xs-12">
+            {if isset($archiveItems)}
+                <div class="row">
+                    {foreach $archiveItems as $item}
+                        {include '../Shared/videoBox.latte', item => $item, 
+                            customClasses => "col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-3"}
+                    {/foreach}
+                </div>
+            {/if}
+        </div>
+    </div>
+    
 
     {include '../Shared/pagination.latte', pages => $pages, page => $page}
 </div>
+{/block}
+    
+{block pageScripts}
+
+<script>
+    $(document).ready(function() {
+        $('#archive-menu-affix').affix({
+            offset: {
+                top: 10,
+                bottom: function () {
+                  return (this.bottom = $(document).height() - $('.videos-box').outerHeight(true));
+                }
+            }
+        });
+    });
+</script>
+
+{/block}

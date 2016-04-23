@@ -6,7 +6,8 @@ use Nette,
 Nette\Database\Context,
 Model\ArchiveManager,
 Model\CategoriesManager,
-Model\VideoManager;
+Model\VideoManager,
+Model\ArchiveMenuManager;
 
 
 class ArchivePresenter extends BasePresenter {
@@ -14,18 +15,21 @@ class ArchivePresenter extends BasePresenter {
     private $archiveManager;
     private $categoriesManager;
     private $videoManager;
+    private $archiveMenuManager;
     public $lang;
     public $container;
     
     public function __construct(Nette\DI\Container $container,
             Context $database, ArchiveManager $archiveManager,
             CategoriesManager $categoriesManager,
-            VideoManager $videoManager) {
+            VideoManager $videoManager,
+            ArchiveMenuManager $archiveMenuManager) {
         
         parent::__construct($container, $database);
         $this->archiveManager = $archiveManager;
         $this->categoriesManager = $categoriesManager;
         $this->videoManager = $videoManager;
+        $this->archiveMenuManager = $archiveMenuManager;
     }
     
     public function renderDefault() {
@@ -53,6 +57,7 @@ class ArchivePresenter extends BasePresenter {
         $this->template->paginator = $paginator;
         $this->template->page = $paginator->getPage();
         $this->template->pages = $paginator->getPageCount();
+        $this->template->archiveMenu = $this->archiveMenuManager->getLocalizedMenus($this->lang);
     }
     
     public function renderCategory($id, $attr) {
@@ -82,6 +87,7 @@ class ArchivePresenter extends BasePresenter {
         $this->template->page = $paginator->getPage();
         $this->template->pages = $paginator->getPageCount();
         $this->template->category = $category;
+        $this->template->archiveMenu = $this->archiveMenuManager->getLocalizedMenus($this->lang);
         
     }
     

@@ -7390,6 +7390,32 @@ body {
   color: white !important;
   opacity: 1.0;
 }
+.archive-sidemenu.affix {
+  position: fixed !important;
+}
+@media (max-width: 992px) {
+  .archive-sidemenu {
+    width: 100%;
+  }
+  .archive-sidemenu.affix {
+    position: relative !important;
+  }
+}
+@media (min-width: 992px) {
+  .archive-sidemenu {
+    width: 212px;
+  }
+}
+@media (min-width: 1200px) {
+  .archive-sidemenu {
+    width: 262px;
+  }
+}
+@media (min-width: 1600px) {
+  .archive-sidemenu {
+    width: 232px;
+  }
+}
 @keyframes blink {
   0% {
     opacity: .2;
