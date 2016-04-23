@@ -15,8 +15,6 @@
                 {if isset($lastInitial) && $lastInitial != $initial}
                     </div>
                 {/if}
-                
-                {if $iterator->last}</div>{/if}
 
                 {if !isset($lastInitial) || $initial != $lastInitial}
                     <div class="songs-block">
@@ -28,6 +26,8 @@
                     <br>
                     <small>{$song['author']}</small>
                 </h5>
+                
+                {if $iterator->last}</div>{/if}
 
                 {var $lastInitial = $initial}
             {/foreach}

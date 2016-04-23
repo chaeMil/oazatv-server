@@ -64,6 +64,7 @@ class SongPresenter extends BasePresenter {
         $this->template->categories = $this->categoriesManager
                 ->getLocalizedCategories($this->lang);
         $this->template->songs = $this->songsManager->getSongsFromDB();
+        $this->template->latteUtils = new \App\LatteUtils();
     }
 
 }
