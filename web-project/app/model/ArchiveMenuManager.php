@@ -82,10 +82,24 @@ class ArchiveMenuManager extends BaseModel {
         $video->delete();
     }
     
+    public function countVideosInMenuByTag($tags) {
+        $tagsArray = explode(",", str_replace(" ", "", $tags));
+        $count = 0;
+        
+        foreach($tagsArray as $tag) {
+            $count += self::$database->query("SELECT COUNT(*) FROM " . VideoManager::TABLE_NAME
+                . " WHERE " . VideoManager::COLUMN_TAGS. " LIKE '%" . $tag . "%'")->fetch()[0];
+        }
+        
+        return $count;
+    }
+    
     public function getLocalizedMenu($id, $lang) {
         $menu = $this->getMenuFromDB($id);
         
         $newMenu['id'] = $$menu['id'];
+        $newMenu['tags'] = $menu['tags'];
+        
         switch($lang) {
             case 'cs':
                 $newMenu['name'] = $$menu['name_cs'];
@@ -108,6 +122,7 @@ class ArchiveMenuManager extends BaseModel {
         foreach($menus as $menu) {
             
             $newMenu['id'] = $menu['id'];
+            $newMenu['tags'] = $menu['tags'];
             
             switch($lang) {
                 case 'cs':

@@ -7390,6 +7390,10 @@ body {
   color: white !important;
   opacity: 1.0;
 }
+.archive-sidemenu .badge {
+  line-height: 22px;
+  font-size: 14px;
+}
 .archive-sidemenu.affix {
   position: fixed !important;
 }

@@ -8,8 +8,12 @@
                 <ul class="list-group">
                     {foreach $archiveMenu as $menu}
                         <li class="list-group-item">
-                            {$menu['name']}
-                            <span class="badge">14</span>
+                            <a n:href="Archive:Menu $menu['tags']">
+                                {$menu['name']}
+                            </a>
+                            <span class="badge">
+                                {$archiveMenuManager->countVideosInMenuByTag($menu['tags'])}
+                            </span>
                         </li>
                     {/foreach}
                 </ul>
