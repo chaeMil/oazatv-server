@@ -23,7 +23,7 @@
         {include 'Shared/navigation.latte'}
     {/if}
     
-    <div class="container main-content {if !isset($_GET['hideNav'])}padded{/if}">
+    <div class="container main-content {if !isset($_GET['hideNav'])}padded{else}padded-small{/if}">
 
         <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 

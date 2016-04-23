@@ -1585,6 +1585,9 @@ pre code {
   margin-top: 64px;
   padding-top: 18.5px;
 }
+.container.main-content.padded-small {
+  margin-top: 20px;
+}
 @media (min-width: 768px) {
   .container {
     width: 750px;
