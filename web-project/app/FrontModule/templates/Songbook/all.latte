@@ -1,12 +1,43 @@
 {block content}
 
-<div class="container">
+<div class="container songbook">
     <div class="row">
     
         <hr>
 
-        <h1 class="text-center">{_frontend.basic.songbook}</h1>
-
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1>{_frontend.basic.songbook}</h1>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+                    <form action="{plink Songbook:chord}">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <div class="form-group find-chord-form">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <label for="chordval">{_frontend.songbook.chord_to_find}:</label>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-6">
+                                            <input class="form-control" id="chordval" name="ch" value="{if isset($_GET['ch'])}{$_GET['ch']}{/if}">
+                                        </div>
+                                        <div class="col-xs-4 col-sm-3">
+                                            <input class="btn btn-primary pull-right show-button" 
+                                               type="submit" value="{_frontend.songbook.show_chords}"">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <br>
         <hr>
 
         <div class="songbook all" data-masonry='{ "itemSelector": ".songs-block", "columnWidth": 320, "isFitWidth": true }'>

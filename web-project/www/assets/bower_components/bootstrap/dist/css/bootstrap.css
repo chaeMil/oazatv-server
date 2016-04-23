@@ -7593,6 +7593,15 @@ and open the template in the editor.
 .songbook.all .songs-block .song a {
   color: #666666;
 }
+.songbook .find-chord-form {
+  margin-bottom: 0;
+}
+.songbook .find-chord-form .form-control {
+  border: 1px solid #4285f4 !important;
+}
+.songbook .find-chord-form label {
+  line-height: 41px;
+}
 .songbook #chordform .form-control {
   border: 1px solid #4285f4 !important;
 }
