@@ -640,6 +640,10 @@ html,body{
     max-height: calc(100vh - 140px);
     overflow-y: scroll;
     
+    &::-webkit-scrollbar-track {
+        -webkit-box-shadow: none;
+    }
+    
     .badge {
         line-height: 22px;
         font-size: 14px;
@@ -672,16 +676,21 @@ html,body{
             position: relative !important;
         }
         
-        .list-group-item {
-            display: inline-block;
-            border-radius: 32px;
-            margin-bottom: 12px;
-            margin-right: 12px;
+        .list-group {
+            margin-bottom: 30px;
             
-            .badge {
-                margin-left: 15px;
+            .list-group-item {
+                display: inline-block;
+                border-radius: 32px;
+                margin-bottom: 12px;
+                margin-right: 12px;
+
+                .badge {
+                    margin-left: 15px;
+                }
             }
         }
+        
         
     }
 

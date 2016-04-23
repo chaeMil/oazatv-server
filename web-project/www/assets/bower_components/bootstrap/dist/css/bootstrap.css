@@ -7399,6 +7399,9 @@ body {
   max-height: calc(100vh - 140px);
   overflow-y: scroll;
 }
+.archive-sidemenu::-webkit-scrollbar-track {
+  -webkit-box-shadow: none;
+}
 .archive-sidemenu .badge {
   line-height: 22px;
   font-size: 14px;
@@ -7421,13 +7424,16 @@ body {
   .archive-sidemenu.affix {
     position: relative !important;
   }
-  .archive-sidemenu .list-group-item {
+  .archive-sidemenu .list-group {
+    margin-bottom: 30px;
+  }
+  .archive-sidemenu .list-group .list-group-item {
     display: inline-block;
     border-radius: 32px;
     margin-bottom: 12px;
     margin-right: 12px;
   }
-  .archive-sidemenu .list-group-item .badge {
+  .archive-sidemenu .list-group .list-group-item .badge {
     margin-left: 15px;
   }
 }
