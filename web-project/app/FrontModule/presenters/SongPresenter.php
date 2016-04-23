@@ -63,7 +63,18 @@ class SongPresenter extends BasePresenter {
         $this->template->categoriesManager = $this->categoriesManager;
         $this->template->categories = $this->categoriesManager
                 ->getLocalizedCategories($this->lang);
-        $this->template->songs = $this->songsManager->getSongsFromDB();
+        $songs = $this->songsManager->getSongsFromDB();
+        
+        usort($songs, function($a, $b) {
+            if ($a['tag'] == $b['tag']) {
+                return 0;
+            }
+            return strnatcmp($a['tag'], $b['tag']);
+        }); 
+        
+        $this->template->songs = $songs;
     }
+    
+    
 
 }
