@@ -132,7 +132,7 @@
     }
     
     function displayChord(chord) {
-        var url = {plink Songbook:chord} + '&hideNav&hideForm' + '?ch=' + chord ;
+        var url = {plink Songbook:chord} + '?hideNav&hideForm' + '&ch=' + chord ;
         bootbox.alert({
             title: {_frontend.songbook.chord} + ': ' + chord,
             message: '<iframe style="width: 100%; height: 500px; border: none;" src="' + url + '" />'
