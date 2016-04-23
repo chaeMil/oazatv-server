@@ -19,6 +19,7 @@ basic:
     show_all: "Show all"
     show_next: "Show next"
     show_menu: "Show menu"
+    show: "Show"
 search:
     more: "more results"
 homepage:

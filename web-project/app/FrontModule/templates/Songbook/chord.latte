@@ -12,17 +12,24 @@
                                     <label for="chordval">{_frontend.songbook.chord_to_find}:</label>
                                 </div>
                                 <div class="col-xs-8">
-                                    <input class="form-control" id="chordval" name="ch" value="Am">
+                                    <input class="form-control" id="chordval" name="ch" value="{if isset($_GET['ch'])}{$_GET['ch']}{/if}">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-xs-12">
+                                <div class="col-xs-4">
                                     <label for="chordval">{_frontend.songbook.alternative_tuning}:</label>
                                 </div>
+                                <div class="col-xs-8">
+                                    <a class="btn btn-info" 
+                                       data-toggle="collapse" 
+                                       data-target="#alternative-tuning">
+                                        {_frontend.basic.show}
+                                    </a>
+                                </div>
                             </div>
-                            <div class="row">
+                            <div class="row collapse" id="alternative-tuning">
                                 <div class="col-sm-2">
                                     <select class="form-control" id="s1"><option>x<option>A<option>B<option>C<option>D<option selected>E<option>F<option>G<option>A#<option>B#<option>C#<option>D#<option>E#<option>F#<option>G#<option>Ab<option>Bb<option>Cb<option>Db<option>Eb<option>Fb<option>Gb</select>
                                 </div>
@@ -44,7 +51,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <input class="btn btn-primary btn-lg pull-right show-button" 
+                            <input class="btn btn-primary btn-lg pull-left show-button" 
                                    type="button" value="{_frontend.songbook.show_chords}" 
                                    onclick="findvoice();">
                         </div>

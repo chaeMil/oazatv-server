@@ -19,6 +19,7 @@ basic:
     show_all: "Zobrazit vše"
     show_next: "Zobrazit další"
     show_menu: "Zobrazit menu"
+    show: "Zobrazit"
 search:
     more: "další výsledky"
 homepage:

@@ -7599,6 +7599,15 @@ and open the template in the editor.
 .songbook #chordform .show-button {
   text-transform: uppercase;
 }
+.songbook #chordform #chordval {
+  text-transform: uppercase;
+}
+.songbook #chordform label {
+  line-height: 41px;
+}
+.songbook #chordform #alternative-tuning {
+  margin-top: 12px;
+}
 .songbook .chordBox .chordInnerBox {
   border-bottom: 2px solid #DDE4F6;
   margin-bottom: 25px;
