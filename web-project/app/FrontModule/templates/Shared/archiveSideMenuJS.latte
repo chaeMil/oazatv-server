@@ -1,12 +1,26 @@
 <script>
     $(document).ready(function() {
-        $('#archive-menu-affix').affix({
-            offset: {
-                top: 10,
-                bottom: function () {
-                  return (this.bottom = $(document).height() - $('.videos-box').outerHeight(true));
+        
+        function setupAffix() {
+            $(window).off('.affix');
+            $("#archive-menu-affix")
+                .removeClass("affix affix-top affix-bottom")
+                .removeData("bs.affix");
+        
+            $('#archive-menu-affix').affix({
+                offset: {
+                    top: 10,
+                    bottom: function () {
+                      return (this.bottom = $(document).height() - $('.videos-box').outerHeight(true));
+                    }
                 }
-            }
+            });
+        }
+        
+        $(window).resize(function() {
+           setupAffix(); 
         });
+        
+        setupAffix();
     });
 </script>
