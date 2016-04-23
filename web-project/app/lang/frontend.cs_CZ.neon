@@ -31,6 +31,7 @@ songbook:
     chord_to_find: "Najít akord"
     alternative_tuning: "Alernativní ladění"
     show_chords: "Zobrazit akordy"
+    chord: "Akord"
 footer:
     copyright: "Všechna práva vyhrazena | Oaza.tv"
     contact: "Kontakt"

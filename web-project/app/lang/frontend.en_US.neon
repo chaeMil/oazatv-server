@@ -31,6 +31,7 @@ songbook:
     chord_to_find: "Find chord"
     alternative_tuning: "Alternative tuning"
     show_chords: "Show chords"
+    chord: "Chord"
 footer:
     copyright: "All rights reserved | Oaza.tv"
     contact: "Contact"
