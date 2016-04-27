@@ -34,14 +34,16 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
 
         $form->addText('featured', 'Vybraná videa / alba')
                 ->setRequired()
-                ->setAttribute("class", "form-control");
+                ->setAttribute("class", "form-control")
+                ->setHtmlId("featured")
+                ->setAttribute("data-role", "tagsinput");
         
         $form->addSubmit('send', 'Uložit')
                 ->setAttribute("class", "btn-lg btn-success btn-block");
 
 
         // call method signInFormSucceeded() on success
-        $form->onSuccess[] = $this->featuredSucceeded($form);
+        $form->onSuccess[] = $this->featuredSucceeded;
 
         // setup Bootstrap form rendering
         $this->bootstrapFormRendering($form);
@@ -53,17 +55,14 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
         $vals = $form->getValues();
         $featured = $vals['featured'];
 
-        $status = $this->frontPageManager->saveFeatured($featured);
+        $this->frontPageManager->saveFeatured($featured);
+        
+        EventLogger::log('user '.$this->getUser()->getIdentity()
+                ->login.' updated featured '.$featured,
+            EventLogger::ACTIONS_LOG);
 
-        if ($status) {
-            EventLogger::log('user '.$this->getUser()->getIdentity()
-                    ->login.' updated featured '.$featured,
-                EventLogger::ACTIONS_LOG);
-
-            $this->flashMessage("Změny úspěšně uloženy", "success");
-        } else {
-            $this->flashMessage("Nic nebylo změněno", "info");
-        }
+        $this->flashMessage("Změny úspěšně uloženy", "success");
+        $this->redirect("FrontPageManager:rowsList");
     }
 
     public function renderRowsList() {
@@ -72,6 +71,9 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
         $this->template->rows = $this->frontPageManager->getRowsFromDB();
         $this->template->frontPageManager = $this->frontPageManager;
         $this->template->blockDefinitions = $this->frontPageManager->getBlocksDefinitions();
+        
+        $featured = implode("," ,$this->frontPageManager->loadFeatured());
+        $this['featuredForm']->setDefaults(array("featured" => $featured));
     }
 
     public function renderCreateRow() {

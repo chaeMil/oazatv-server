@@ -22,6 +22,7 @@ use Nette;
 class FrontPageManager extends BaseModel {
 
     const
+            FEATURED_FILE = '/../config/home_featured.json',
             TABLE_NAME_ROWS = 'frontpage_rows',
             TABLE_NAME_BLOCKS = 'frontpage_blocks',
             COLUMN_ID = 'id',
@@ -42,8 +43,13 @@ class FrontPageManager extends BaseModel {
         $this->neonAdapter = new Nette\DI\Config\Adapters\NeonAdapter();
     }
     
-    private function saveFeatured($input) {
-        dump($input);
+    public function loadFeatured() {
+        return json_decode(file_get_contents(__DIR__.self::FEATURED_FILE), true)['featured'];
+    }
+    
+    public function saveFeatured($values) {
+        $jsonValues = json_encode(array('featured' => explode(',', $values)));
+        file_put_contents(__DIR__.self::FEATURED_FILE, $jsonValues);
     }
     
     private function checkIfRowExists($id) {

@@ -177,6 +177,13 @@
         );
         return dialog;
     });
+    
+    $(document).ready(function() {
+        $("#featured").tagsinput({
+            allowDuplicates: false,
+            itemValue: 'hash'
+        });
+    });
 </script>
 
 {/block}
