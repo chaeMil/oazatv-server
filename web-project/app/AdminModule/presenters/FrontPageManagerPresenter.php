@@ -28,6 +28,43 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
         $this->database = $database;
         $this->frontPageManager = $frontPageManager;
     }
+    
+    public function createComponentFeaturedForm() {
+        $form = new Nette\Application\UI\Form;
+
+        $form->addText('featured', 'Vybraná videa / alba')
+                ->setRequired()
+                ->setAttribute("class", "form-control");
+        
+        $form->addSubmit('send', 'Uložit')
+                ->setAttribute("class", "btn-lg btn-success btn-block");
+
+
+        // call method signInFormSucceeded() on success
+        $form->onSuccess[] = $this->featuredSucceeded($form);
+
+        // setup Bootstrap form rendering
+        $this->bootstrapFormRendering($form);
+
+        return $form;
+    }
+    
+    public function featuredSucceeded($form) {
+        $vals = $form->getValues();
+        $featured = $vals['featured'];
+
+        $status = $this->frontPageManager->saveFeatured($featured);
+
+        if ($status) {
+            EventLogger::log('user '.$this->getUser()->getIdentity()
+                    ->login.' updated featured '.$featured,
+                EventLogger::ACTIONS_LOG);
+
+            $this->flashMessage("Změny úspěšně uloženy", "success");
+        } else {
+            $this->flashMessage("Nic nebylo změněno", "info");
+        }
+    }
 
     public function renderRowsList() {
         $this->getTemplateVariables($this->getUser()->getId());

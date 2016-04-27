@@ -42,6 +42,10 @@ class FrontPageManager extends BaseModel {
         $this->neonAdapter = new Nette\DI\Config\Adapters\NeonAdapter();
     }
     
+    private function saveFeatured($input) {
+        dump($input);
+    }
+    
     private function checkIfRowExists($id) {
         return self::$database->table(self::TABLE_NAME_ROWS)
                 ->where(self::COLUMN_ID, $id)->count();
