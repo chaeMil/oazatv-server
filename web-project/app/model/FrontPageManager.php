@@ -68,13 +68,16 @@ class FrontPageManager extends BaseModel {
         
         foreach($featuredJson as $hash) {
             $featuredVideo = $this->videoManager->getVideoFromDBbyHash($hash);
-            $featuredAlbum = $this->photosManager->getAlbumFromDBbyHash($hash);
-            
+
             if ($featuredVideo) {
                 $featuredVideoOut = $featuredVideo->toArray();
                 $featuredVideoOut['type'] = "video";
                 $featuredOutput[] = $featuredVideoOut;
             }
+        }
+        
+        foreach($featuredJson as $hash) {
+            $featuredAlbum = $this->photosManager->getAlbumFromDBbyHash($hash);
             
             if ($featuredAlbum) {
                 $featuredAlbumOut = $featuredAlbum->toArray();
