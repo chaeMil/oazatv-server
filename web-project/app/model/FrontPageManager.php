@@ -71,11 +71,15 @@ class FrontPageManager extends BaseModel {
             $featuredAlbum = $this->photosManager->getAlbumFromDBbyHash($hash);
             
             if ($featuredVideo) {
-                $featuredJson[] = $featuredVideo;
+                $featuredVideoOut = $featuredVideo->toArray();
+                $featuredVideoOut['type'] = "video";
+                $featuredOutput[] = $featuredVideoOut;
             }
             
             if ($featuredAlbum) {
-                $featuredOutput[] = $featuredAlbum;
+                $featuredAlbumOut = $featuredAlbum->toArray();
+                $featuredAlbumOut['type'] = "album";
+                $featuredOutput[] = $featuredAlbumOut;
             }
         }
         
