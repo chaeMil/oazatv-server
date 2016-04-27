@@ -24,6 +24,7 @@ class MainPresenter extends BasePresenter {
         $newestVideos = $this->videoManager->getVideosFromDBtoAPI(0, 16);
         $newestAlbums = $this->photosManager->getAlbumsFromDBtoAPI(0, 16);
         $popularVideosIds = $this->analyticsManager->getPopularVideosIds(7, 16);
+        $featuredItems = $this->frontPageManager->getFeaturedItems();
         
         $popularVideos = array();
         if (isset($popularVideosIds)) {
@@ -54,9 +55,9 @@ class MainPresenter extends BasePresenter {
         }     
         
         $response['featured'] = array(); //TODO!!! implement featured items
-        if (isset($newestVideos)) {
-            foreach($newestVideos as $video) {
-                $response['featured'][] = $this->createArchiveItem($video);
+        if (isset($featuredItems)) {
+            foreach($featuredItems as $item) {
+                $response['featured'][] = $this->createArchiveItem($item);
             }
         } 
         

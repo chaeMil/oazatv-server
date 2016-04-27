@@ -13,7 +13,9 @@
  */
 namespace Model;
 
-use Nette;
+use Nette,
+ Model\VideoManager,
+ Model\PhotosManager;
 /**
  * Description of VideoManager
  *
@@ -37,9 +39,16 @@ class FrontPageManager extends BaseModel {
     /** @var Nette\Database\Context */
     public static $database;
     private $neonAdapter;
+    private $photosManager;
+    private $videoManager;
 
-    public function __construct(Nette\Database\Context $database) {
+    public function __construct(Nette\Database\Context $database,
+            VideoManager $videoManager, 
+            PhotosManager $photosManager) {
+        
         self::$database = $database;
+        $this->videoManager = $videoManager;
+        $this->photosManager = $photosManager;
         $this->neonAdapter = new Nette\DI\Config\Adapters\NeonAdapter();
     }
     
@@ -50,6 +59,27 @@ class FrontPageManager extends BaseModel {
     public function saveFeatured($values) {
         $jsonValues = json_encode(array('featured' => explode(',', $values)));
         file_put_contents(__DIR__.self::FEATURED_FILE, $jsonValues);
+    }
+    
+    public function getFeaturedItems() {
+        $featuredJson['featured'] = $this->loadFeatured();
+        
+        $featuredOutput = array();
+        
+        foreach($featuredJson as $hash) {
+            $featuredVideo = $this->videoManager->getVideoFromDBbyHash($hash);
+            $featuredAlbum = $this->photosManager->getAlbumFromDBbyHash($hash);
+            
+            if ($featuredVideo) {
+                $featuredJson[] = $featuredVideo;
+            }
+            
+            if ($featuredAlbum) {
+                $featuredOutput[] = $featuredAlbum;
+            }
+        }
+        
+        return $featuredOutput;
     }
     
     private function checkIfRowExists($id) {
