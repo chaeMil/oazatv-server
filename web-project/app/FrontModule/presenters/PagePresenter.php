@@ -15,5 +15,5 @@ namespace App\FrontModule;
  * @author chaemil
  */
 class PagePresenter extends BasePresenter {
-    //put your code here
+        
 }
