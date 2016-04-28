@@ -62,13 +62,13 @@ class FrontPageManager extends BaseModel {
     }
     
     public function getFeaturedItems() {
-        $featuredJson['featured'] = $this->loadFeatured();
+        $featuredJson = $this->loadFeatured();
         
         $featuredOutput = array();
         
         foreach($featuredJson as $hash) {
             $featuredVideo = $this->videoManager->getVideoFromDBbyHash($hash);
-
+            
             if ($featuredVideo) {
                 $featuredVideoOut = $featuredVideo->toArray();
                 $featuredVideoOut['type'] = "video";
