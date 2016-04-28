@@ -48,6 +48,7 @@
             
             var hash = window.location.hash;
             hash = window.location.hash.replace('#&', '').replace('#t=', '');
+            console.log(hash);
             if (hash !== 0 && hash !== '' && hash !== undefined && hash !== null) {
                 player.currentTime(hash);
             } else {
