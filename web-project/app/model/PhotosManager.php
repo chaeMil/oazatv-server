@@ -187,16 +187,21 @@ class PhotosManager {
 
     public function getPhotoThumbnails($photoId) {
         $photo = $this->getPhotoFromDB($photoId);
-        $thumb = ALBUMS_FOLDER.$photo->album_id.'/thumbs/'.str_replace(".jpg", "_".self::THUMB_1024.".jpg", $photo->file);
-        $thumbfile = ALBUMS_FOLDER.$photo->album_id.'/thumbs/'.str_replace(".jpg", "", $photo->file);
-        if (!file_exists($thumb)) {
-            $this->generatePhotoThumbnails($photoId);
+        if ($photo) {
+            $thumbLocation = ALBUMS_FOLDER.$photo->album_id.'/thumbs/'.str_replace(".jpg", "_".self::THUMB_1024.".jpg", $photo->file);
+            if (file_exists($thumbLocation)) {
+                $thumb = $thumbLocation;
+                $thumbfile = ALBUMS_FOLDER.$photo->album_id.'/thumbs/'.str_replace(".jpg", "", $photo->file);
+                if (!file_exists($thumb)) {
+                    $this->generatePhotoThumbnails($photoId);
+                }
+                return array(self::THUMB_2048 => $thumbfile."_".self::THUMB_2048.".jpg",
+                        self::THUMB_1024 => $thumbfile."_".self::THUMB_1024.".jpg",
+                        self::THUMB_512 => $thumbfile."_".self::THUMB_512.".jpg",
+                        self::THUMB_256 => $thumbfile."_".self::THUMB_256.".jpg",
+                        self::THUMB_128 => $thumbfile."_".self::THUMB_128.".jpg");
+            }
         }
-        return array(self::THUMB_2048 => $thumbfile."_".self::THUMB_2048.".jpg",
-                self::THUMB_1024 => $thumbfile."_".self::THUMB_1024.".jpg",
-                self::THUMB_512 => $thumbfile."_".self::THUMB_512.".jpg",
-                self::THUMB_256 => $thumbfile."_".self::THUMB_256.".jpg",
-                self::THUMB_128 => $thumbfile."_".self::THUMB_128.".jpg");
     }
 
     public function generatePhotoThumbnails($photoId) {
