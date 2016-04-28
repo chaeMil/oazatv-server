@@ -50,6 +50,8 @@
             hash = window.location.hash.replace('#&', '').replace('#t=', '');
             if (hash !== 0 && hash !== '' && hash !== undefined && hash !== null) {
                 player.currentTime(hash);
+            } else if (getSavedVideoTime() !== undefined) {
+                player.currentTime(getSavedVideoTime());
             }
 
             player.on('pause', function() {
@@ -61,10 +63,6 @@
                 saveVideoTime(player.currentTime());
                 savePlayerVolume(player.volume().toString().substr(0,5));
             });
-            
-            if (getSavedVideoTime() !== undefined) {
-                player.currentTime(getSavedVideoTime());
-            }
                 
             if (getSavedPlayerVolume() !== undefined) {
                 player.volume(getSavedPlayerVolume());
