@@ -1,0 +1,48 @@
+<br>
+<div class="col-md-8"> 
+    {control videoBasicInfoForm}
+</div>
+
+<div class="col-md-4">
+    <input id="filter" type="text" class="form-control" placeholder="Vyhledávání...">
+    <br>
+
+    <div id="tagsTableWrapper" style="overflow-y: scroll">
+        <table class="table table-hover">
+            <thead>
+                <th>tag</th>
+                <th>počet</th>
+            </thead>
+            <tbody class="searchable">
+                {foreach $tagsArray as $tag => $count}
+                    <tr class="addableTag" id="tag_{$tag|strip}" data-tag="{$tag|strip}">
+                        <td>{$tag|strip}</td>
+                        <td>{$count}x</td>
+                    </tr>
+                {/foreach}
+            </tbody>                
+        </table>
+    </div>
+
+    <br>
+
+    <h4>Kategorie:</h4>
+
+    <div id="categoriesWrapper" style="overflow-y: scroll">
+        <table class="table table-hover">
+            <tbody>
+                {foreach $categories as $category}
+                    <tr class="addableCategory" 
+                       id="category_{$category['id']}" 
+                       data-id="{$category['id']|strip}"
+                       data-text="{$category['name_cs']|strip} | {$category['name_en']|strip}">
+                        <td>
+                            {$category['name_cs']|strip} | {$category['name_en']|strip}
+                        </td>
+                    </tr>
+                {/foreach}
+            </tbody>                
+        </table>
+    </div>
+
+</div>
