@@ -50,8 +50,10 @@
             hash = window.location.hash.replace('#&', '').replace('#t=', '');
             if (hash !== 0 && hash !== '' && hash !== undefined && hash !== null) {
                 player.currentTime(hash);
-            } else if (getSavedVideoTime() !== undefined) {
-                player.currentTime(getSavedVideoTime());
+            } else {
+                if (getSavedVideoTime() !== undefined) {
+                    player.currentTime(getSavedVideoTime());
+                }
             }
 
             player.on('pause', function() {
