@@ -126,7 +126,7 @@ class VideoManager extends BaseModel {
         
         $video = self::$database->table(self::TABLE_NAME)
                 ->select('id')
-                ->where(array(self::COLUMN_PUBLISHED => 1))
+                ->where(array(self::COLUMN_PUBLISHED => 1, self::COLUMN_ID => $id))
                 ->fetch();
         
         $arrayItemFromDB = $this->getVideoFromDB($video['id'])->toArray();

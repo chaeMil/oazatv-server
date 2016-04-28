@@ -19,7 +19,7 @@ class MainPresenter extends BasePresenter {
    
     public function renderDefault() {
         $response = array('apiVersion' => 2.0,
-                          'appVersion' => VERSION);
+                          'serverVersion' => VERSION);
         
         $newestVideos = $this->videoManager->getVideosFromDBtoAPI(0, 16);
         $newestAlbums = $this->photosManager->getAlbumsFromDBtoAPI(0, 16);
@@ -28,11 +28,11 @@ class MainPresenter extends BasePresenter {
         
         $popularVideos = array();
         if (isset($popularVideosIds)) {
-            foreach($popularVideosIds as $video) {
-                $popularVideos[] = $this->videoManager->getVideoFromDBtoAPI($video['id']);
+            foreach($popularVideosIds as $videoId) {
+                $popularVideos[] = $this->videoManager->getVideoFromDBtoAPI($videoId);
             }
         }
-                
+        
         $response['newestVideos'] = array();
         if (isset($newestVideos)) {
             foreach($newestVideos as $video) {
