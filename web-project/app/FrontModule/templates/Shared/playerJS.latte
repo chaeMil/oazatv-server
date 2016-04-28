@@ -47,9 +47,9 @@
             {/if}
             
             var hash = window.location.hash;
-            hash = window.location.hash.replace('#&', '').replace('#t=', '');
+            hash = window.location.hash.replace('#&', '').replace('#t=', '').replace('#', '');
             console.log(hash);
-            if (hash !== 0 && hash !== '' && hash !== undefined && hash !== null) {
+            if (hash !== 0 && hash !== '' && hash !== undefined && hash !== null && hash != 'autoplay') {
                 player.currentTime(hash);
             } else {
                 if (getSavedVideoTime() !== undefined) {
