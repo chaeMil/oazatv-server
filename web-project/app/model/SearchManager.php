@@ -44,6 +44,7 @@ class SearchManager extends BaseModel {
             }
 
             $userInput = preg_replace('!\s+!', ' ', $userInput);
+            $userInput = str_replace(array(",","."), "", $userInput); // remove invalid characters
             //$userInput = str_replace(' ', '%', $userInput);
             $userInputAscii = \Nette\Utils\Strings::toAscii($userInput);
             

@@ -18,8 +18,12 @@
                                     <span class="names">
                                         {foreach $nameArray as $name}
                                             {foreach $inputArray as $input}
-                                                <span class="name {if (strpos($name, $input) !== false)} highlight {/if}">{$name}</span>
+                                                {if (strpos($name, $input) !== false)}
+                                                    {var $highlight = true}
+                                                {/if}
                                             {/foreach}
+                                            
+                                            <span class="name {if isset($highlight)}highlight{/if}">{$name}</span>
                                         {/foreach}
                                     </span>
                                 <br>
@@ -27,8 +31,10 @@
                                     {var $tags = explode(',', str_replace(' ', '', trim($video['tags'])))}
                                     {foreach $tags as $tag}
                                         {foreach $inputArray as $input}
-                                            <span class="tag {if $input == $tag} highlight {/if}">#{$tag}</span>
+                                            {var $highlight = true}
                                         {/foreach}
+                                        
+                                        <span class="tag {if isset($highlight)}highlight{/if}">#{$tag}</span>
                                     {/foreach}
                                 </span>
                             </div>
