@@ -7235,15 +7235,16 @@ body {
 }
 .search-results li a .row .text-info .names .name.highlight {
   background-color: yellow;
-  margin-right: 4px;
 }
 .search-results li a .row .text-info .tags {
   color: #4285f4;
   white-space: nowrap;
+  float: left;
 }
 .search-results li a .row .text-info .tags .tag.highlight {
   background-color: yellow;
   margin-right: 4px;
+  float: left;
 }
 .pswp__button--share {
   display: none !important;
