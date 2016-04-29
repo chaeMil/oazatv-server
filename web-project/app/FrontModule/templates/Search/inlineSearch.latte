@@ -24,7 +24,9 @@
                                 <span class="tags">
                                     {var $tags = explode(',', str_replace(' ', '', trim($video['tags'])))}
                                     {foreach $tags as $tag}
-                                        <span class="tag">#{$tag}</span>
+                                        {foreach $inputArray as $input}
+                                            <span class="tag {if $input == $tag} highlight {/if}">#{$tag}</span>
+                                        {/foreach}
                                     {/foreach}
                                 </span>
                             </div>

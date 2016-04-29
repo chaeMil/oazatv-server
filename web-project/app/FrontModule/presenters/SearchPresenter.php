@@ -66,16 +66,20 @@ class SearchPresenter extends BasePresenter {
         
         $limit = 7;
         $q = $id;
+        $inputArray = explode(' ', str_replace('#', '', $q));
         $search = $this->searchManager->search($q, 0, $limit, $this->lang);
         $this->template->search = $search;
         $this->template->limit = $limit;
         $this->template->q = $q;
+        $this->template->inputArray = $inputArray;
         
     }
     
     private function sortItemsByDate($a, $b) {
-	if($a['date'] == $b['date']){ return 0 ; }
+	if($a['date'] == $b['date']){ 
+            return 0 ;
+        }
 	return ($a['date'] > $b['date']) ? -1 : 1;
-}
+    }
     
 }
