@@ -17,7 +17,9 @@
                                 {var $nameArray = explode(' ', $video['name'])}
                                     <span class="names">
                                         {foreach $nameArray as $name}
-                                            <span class="name">{$name}</span>
+                                            {foreach $inputArray as $input}
+                                                <span class="name {if (strpos($name, $input) !== false)} highlight {/if}">{$name}</span>
+                                            {/foreach}
                                         {/foreach}
                                     </span>
                                 <br>

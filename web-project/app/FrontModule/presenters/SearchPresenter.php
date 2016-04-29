@@ -64,7 +64,7 @@ class SearchPresenter extends BasePresenter {
     
     public function renderInlineSearch($id = '') {
         
-        $limit = 7;
+        $limit = 15;
         $q = $id;
         $inputArray = explode(' ', str_replace('#', '', $q));
         $search = $this->searchManager->search($q, 0, $limit, $this->lang);
