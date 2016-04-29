@@ -44,22 +44,29 @@ class SearchManager extends BaseModel {
             }
 
             $userInput = preg_replace('!\s+!', ' ', $userInput);
-            $userInput = str_replace(' ', '%', $userInput);
+            //$userInput = str_replace(' ', '%', $userInput);
             $userInputAscii = \Nette\Utils\Strings::toAscii($userInput);
             
             if ($hashTag) {
-                $videoSearch = self::$database->table(VideoManager::TABLE_NAME)
-                    ->select('*')
-                    ->where(VideoManager::COLUMN_PUBLISHED." = 1 AND (".
-                            VideoManager::COLUMN_TAGS." LIKE ? OR ".
-
-                            VideoManager::COLUMN_TAGS." LIKE ? )",
-
-                            "%".substr($userInput, 1)."%",
-                            "%".substr($userInputAscii, 1)."%")
-                    ->limit($limit, $offset)
-                    ->order(VideoManager::COLUMN_DATE. " DESC")
-                    ->fetchAll();
+                
+                $query = "SELECT * FROM ".VideoManager::TABLE_NAME." WHERE ".VideoManager::COLUMN_PUBLISHED." = 1 AND ";
+                $tagsArray = explode(' ', $userInput);
+                
+                $i = 0;
+                $len = count($tagsArray);
+                foreach($tagsArray as $tag) {
+                    $query .= " ".VideoManager::COLUMN_TAGS." LIKE '%".str_replace('#', '', $tag)."%' ";
+                    
+                    if ($i != $len - 1) {
+                        $query .= " AND ";
+                    }
+                    $i++;
+                }
+                
+                $query .= " ORDER BY ".VideoManager::COLUMN_DATE." DESC";
+                
+                $videoSearch = self::$database->query($query)->fetchAll();
+                
             } else {
                 $videoSearch = self::$database->table(VideoManager::TABLE_NAME)
                         ->select('*')
@@ -82,7 +89,11 @@ class SearchManager extends BaseModel {
             $videoSearchOut = array();
 
             foreach($videoSearch as $video) {
-                $videoOut = $video->toArray();
+                if ($video instanceof \Nette\Database\Table\ActiveRow) {
+                    $videoOut = $video->toArray();
+                } else {
+                    $videoOut = $video;
+                }
 
                 $videoUrlPrefix = SERVER . "/". VIDEOS_FOLDER . $videoOut[VideoManager::COLUMN_ID] . "/";
 
