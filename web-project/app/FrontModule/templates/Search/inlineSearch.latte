@@ -17,24 +17,30 @@
                                 {var $nameArray = explode(' ', $video['name'])}
                                     <span class="names">
                                         {foreach $nameArray as $name}
+                                            {var $highlight = false}
                                             {foreach $inputArray as $input}
-                                                {if (strpos($name, $input) !== false)}
+                                                
+                                                {if (strpos(strtolower($name), strtolower($input)) !== false)}
                                                     {var $highlight = true}
                                                 {/if}
                                             {/foreach}
                                             
-                                            <span class="name {if isset($highlight)}highlight{/if}">{$name}</span>
+                                            <span class="name {if $highlight}highlight{/if}">{$name}</span>
                                         {/foreach}
                                     </span>
                                 <br>
                                 <span class="tags">
                                     {var $tags = explode(',', str_replace(' ', '', trim($video['tags'])))}
                                     {foreach $tags as $tag}
+                                        {var $highlight = false}
                                         {foreach $inputArray as $input}
-                                            {var $highlight = true}
+                                            
+                                            {if (strpos($tag, $input) !== false)}
+                                                {var $highlight = true}
+                                            {/if}
                                         {/foreach}
                                         
-                                        <span class="tag {if isset($highlight)}highlight{/if}">#{$tag}</span>
+                                        <span class="tag {if $highlight}highlight{/if}">#{$tag}</span>
                                     {/foreach}
                                 </span>
                             </div>
