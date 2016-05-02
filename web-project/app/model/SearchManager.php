@@ -39,7 +39,7 @@ class SearchManager extends BaseModel {
         
         $hashTag = false;
         
-        if (strlen($userInput) >= 3) {
+        if (strlen($userInput) >= 3 && strlen($userInput) <= 100) {
             
             if (substr($userInput, 0, 1) === "#") {
                 $hashTag = true;
