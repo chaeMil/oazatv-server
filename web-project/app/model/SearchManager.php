@@ -70,7 +70,37 @@ class SearchManager extends BaseModel {
                 $videoSearch = self::$database->query($query)->fetchAll();
                 
             } else {
-                $videoSearch = self::$database->table(VideoManager::TABLE_NAME)
+                
+                $inputArray = explode(' ', urldecode($userInput));
+                
+                $query = "SELECT * FROM ".VideoManager::TABLE_NAME." WHERE ".VideoManager::COLUMN_PUBLISHED." = 1 AND ";
+
+                $i = 0;
+                $len = count($inputArray);
+                foreach($inputArray as $input) {
+                    
+                    $inputAscii = \Nette\Utils\Strings::toAscii($input);
+                    
+                    $query .= " ((".VideoManager::COLUMN_NAME_CS." LIKE '%".$input."%' OR ".
+                            VideoManager::COLUMN_DESCRIPTION_EN." LIKE '%".$input."%' ) OR (".
+                            VideoManager::COLUMN_TAGS." LIKE '%".$input."%' ) OR ( "
+                            
+                            .VideoManager::COLUMN_NAME_CS." LIKE '%".$inputAscii."%' OR ".
+                            VideoManager::COLUMN_DESCRIPTION_EN." LIKE '%".$inputAscii."%' ) OR (".
+                            VideoManager::COLUMN_TAGS." LIKE '%".$inputAscii."%' )) ";;
+                    
+                    if ($i != $len - 1) {
+                        $query .= " AND ";
+                    }
+                    $i++;
+                }
+                
+                $query .= " ORDER BY ".VideoManager::COLUMN_DATE." DESC";
+                
+                $videoSearch = self::$database->query($query)->fetchAll();
+                
+                
+                /*$videoSearch = self::$database->table(VideoManager::TABLE_NAME)
                         ->select('*')
                         ->where(VideoManager::COLUMN_PUBLISHED." = 1 AND ((".
                                 VideoManager::COLUMN_NAME_CS." LIKE ? OR ".
@@ -85,7 +115,7 @@ class SearchManager extends BaseModel {
                                 "%".$userInputAscii."%", "%".$userInputAscii."%", "%".$userInputAscii ."%")
                         ->limit($limit, $offset)
                         ->order(VideoManager::COLUMN_DATE . " DESC")
-                        ->fetchAll();
+                        ->fetchAll();*/
             }
 
             $videoSearchOut = array();
