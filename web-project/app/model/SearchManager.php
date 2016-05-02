@@ -34,7 +34,9 @@ class SearchManager extends BaseModel {
 
 
     public function search($userInput, $offset = 0, $limit = 5, $lang = 'cs') {
-
+        
+        $userInput = trim(urldecode($userInput));
+        
         $hashTag = false;
         
         if (strlen($userInput) >= 3) {
@@ -43,7 +45,7 @@ class SearchManager extends BaseModel {
                 $hashTag = true;
             }
 
-            $userInput = preg_replace('!\s+!', ' ', urldecode($userInput));
+            $userInput = preg_replace('!\s+!', ' ', $userInput);
             $userInput = str_replace('%20', ' ', $userInput);
             $userInput = str_replace(array(",","."), "", $userInput); // remove invalid characters
             //$userInput = str_replace(' ', '%', $userInput);
@@ -71,7 +73,7 @@ class SearchManager extends BaseModel {
                 
             } else {
                 
-                $inputArray = explode(' ', urldecode($userInput));
+                $inputArray = explode(' ', $userInput);
                 
                 $query = "SELECT * FROM ".VideoManager::TABLE_NAME." WHERE ".VideoManager::COLUMN_PUBLISHED." = 1 AND ";
 

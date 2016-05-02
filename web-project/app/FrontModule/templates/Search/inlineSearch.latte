@@ -14,14 +14,16 @@
                                 </div>
                             </div>
                             <div class="col-xs-8 col-sm-9 text-info">
-                                {var $nameArray = explode(' ', $video['name'])}
+                                {var $nameArray = explode(' ', trim($video['name']))}
                                     <span class="names">
                                         {foreach $nameArray as $name}
                                             {var $highlight = false}
                                             {foreach $inputArray as $input}
                                                 
-                                                {if (strpos(strtolower($name), strtolower($input)) !== false)}
-                                                    {var $highlight = true}
+                                                {if $input != '' && $name != ''}
+                                                    {if (strpos(strtolower($name), strtolower($input)) !== false)}
+                                                        {var $highlight = true}
+                                                    {/if}
                                                 {/if}
                                             {/foreach}
                                             
@@ -35,8 +37,10 @@
                                         {var $highlight = false}
                                         {foreach $inputArray as $input}
                                             
-                                            {if (strpos($tag, $input) !== false)}
-                                                {var $highlight = true}
+                                            {if $input != '' && $tag != ''}
+                                                {if (strpos(strtolower($tag), strtolower($input)) !== false)}
+                                                    {var $highlight = true}
+                                                {/if}
                                             {/if}
                                         {/foreach}
                                         
