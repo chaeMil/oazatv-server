@@ -98,24 +98,7 @@ class SearchManager extends BaseModel {
                 $query .= " ORDER BY ".VideoManager::COLUMN_DATE." DESC";
                 
                 $videoSearch = self::$database->query($query)->fetchAll();
-                
-                
-                /*$videoSearch = self::$database->table(VideoManager::TABLE_NAME)
-                        ->select('*')
-                        ->where(VideoManager::COLUMN_PUBLISHED." = 1 AND ((".
-                                VideoManager::COLUMN_NAME_CS." LIKE ? OR ".
-                                VideoManager::COLUMN_NAME_EN." LIKE ? ) OR (".
-                                VideoManager::COLUMN_TAGS." LIKE ? ) OR (".
-
-                                VideoManager::COLUMN_NAME_CS." LIKE ? OR ".
-                                VideoManager::COLUMN_NAME_EN." LIKE ? ) OR (".
-                                VideoManager::COLUMN_TAGS." LIKE ? ))",
-
-                                "%".$userInput."%", "%".$userInput."%", "%".$userInput ."%",
-                                "%".$userInputAscii."%", "%".$userInputAscii."%", "%".$userInputAscii ."%")
-                        ->limit($limit, $offset)
-                        ->order(VideoManager::COLUMN_DATE . " DESC")
-                        ->fetchAll();*/
+               
             }
 
             $videoSearchOut = array();
