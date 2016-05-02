@@ -43,7 +43,7 @@ class SearchManager extends BaseModel {
                 $hashTag = true;
             }
 
-            $userInput = preg_replace('!\s+!', ' ', $userInput);
+            $userInput = preg_replace('!\s+!', ' ', urldecode($userInput));
             $userInput = str_replace('%20', ' ', $userInput);
             $userInput = str_replace(array(",","."), "", $userInput); // remove invalid characters
             //$userInput = str_replace(' ', '%', $userInput);
