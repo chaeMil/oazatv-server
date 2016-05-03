@@ -67,7 +67,7 @@ class SearchManager extends BaseModel {
                     $i++;
                 }
                 
-                $query .= " ORDER BY ".VideoManager::COLUMN_DATE." DESC";
+                $query .= " ORDER BY ".VideoManager::COLUMN_DATE." DESC LIMIT ".$limit." OFFSET ".$offset;
                 
                 $videoSearch = self::$database->query($query)->fetchAll();
                 
@@ -97,7 +97,7 @@ class SearchManager extends BaseModel {
                     $i++;
                 }
                 
-                $query .= " ORDER BY ".VideoManager::COLUMN_DATE." DESC";
+                $query .= " ORDER BY ".VideoManager::COLUMN_DATE." DESC LIMIT ".$limit." OFFSET ".$offset;
                 
                 $videoSearch = self::$database->query($query)->fetchAll();
                
