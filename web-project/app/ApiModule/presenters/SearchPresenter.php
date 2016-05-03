@@ -24,7 +24,7 @@ class SearchPresenter extends BasePresenter {
     public function renderDefault($id, $limit) {
         
         if ($limit == null) {
-            $limit = 5;
+            $limit = 16;
         }
         
         $input = $id;
