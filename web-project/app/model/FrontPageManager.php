@@ -120,8 +120,6 @@ class FrontPageManager extends BaseModel {
             $sql = self::$database->table(self::TABLE_NAME_ROWS)->insert($values);
         }
 
-        return $sql->id;
-
     }
     
     
