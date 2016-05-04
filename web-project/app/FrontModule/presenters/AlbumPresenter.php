@@ -52,9 +52,8 @@ class AlbumPresenter extends BasePresenter {
 
         $photos = $this->photosManager
                 ->createLocalizedAlbumPhotosObject($this->lang, $album['id']);
-        dump($photos); exit;
         
-        $this->template->photos = 
+        $this->template->photos = $photos;
         
         $this->template->categories = $this->categoriesManager
                 ->getLocalizedCategories($this->lang);
