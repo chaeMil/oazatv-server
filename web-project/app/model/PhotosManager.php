@@ -194,7 +194,7 @@ class PhotosManager {
                 mkdir($thumbsLocation);
                 chmod($thumbsLocation, 0777);
             }      
-            if (file_exists($thumbLocation)) {
+            if (file_exists($thumbsLocation)) {
                 $thumb = $thumbLocation;
                 $thumbfile = ALBUMS_FOLDER.$photo->album_id.'/thumbs/'.str_replace(".jpg", "", $photo->file);
                 if (!file_exists($thumb)) {
