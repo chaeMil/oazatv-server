@@ -189,7 +189,7 @@ class PhotosManager {
         $photo = $this->getPhotoFromDB($photoId);
         if ($photo) {
             $thumbLocation = ALBUMS_FOLDER.$photo->album_id.'/thumbs/'.str_replace(".jpg", "_".self::THUMB_1024.".jpg", $photo->file);          
-            if (file_exists($thumbLocation)) {
+            //if (file_exists($thumbLocation)) {
                 $thumb = $thumbLocation;
                 $thumbfile = ALBUMS_FOLDER.$photo->album_id.'/thumbs/'.str_replace(".jpg", "", $photo->file);
                 if (!file_exists($thumb)) {
@@ -200,7 +200,7 @@ class PhotosManager {
                         self::THUMB_512 => $thumbfile."_".self::THUMB_512.".jpg",
                         self::THUMB_256 => $thumbfile."_".self::THUMB_256.".jpg",
                         self::THUMB_128 => $thumbfile."_".self::THUMB_128.".jpg");
-            }
+            //}
         }
     }
 
