@@ -36,8 +36,6 @@ class CronPresenter extends BasePresenter {
     
     public function actionCheckVideoConversionQueue() {
         
-        dump($this->queueManager->isConvertingNow());
-        dump($this->queueManager->isFFMPEGRunning());
         if ($this->queueManager->isConvertingNow() && $this->queueManager->isFFMPEGRunning()) {
             $convertedVideo = $this->queueManager->getCurrentlyConvertedVideo();
             $convertedVideoFromDB = $this->videoManager->getVideoFromDB($convertedVideo->video_id, 2);
@@ -53,8 +51,6 @@ class CronPresenter extends BasePresenter {
         } else {
             
             $videoToConvert = $this->queueManager->getFirstVideoToConvert();
-            dump($videoToConvert);
-            exit;
             if ($videoToConvert) {
                 $videoToConvertFromDB = $this->videoManager->getVideoFromDB($videoToConvert->video_id, 2);
                 $this->flashMessage("found video to convert: [".$videoToConvertFromDB->id."] ".
