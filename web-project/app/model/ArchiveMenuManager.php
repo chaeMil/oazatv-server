@@ -67,11 +67,19 @@ class ArchiveMenuManager extends BaseModel {
     }
     
     
-    public function getMenuFromDB($id) {
-        return self::$database->table(self::TABLE_NAME)
+    public function getMenuFromDB($id, $visible = 1) {
+        if ($visible != 2) {
+            return self::$database->table(self::TABLE_NAME)
                 ->select("*")
-                ->where(array(self::COLUMN_ID => $id))
+                ->where(array(self::COLUMN_ID => $id, self::COLUMN_VISIBLE => $visible))
                 ->fetch();
+        } else {
+            return self::$database->table(self::TABLE_NAME)
+                    ->select("*")
+                    ->where(array(self::COLUMN_ID => $id))
+                    ->fetch();
+        }
+        
     }
     
     public function getMenuFromDBByTags($tags) {
@@ -81,15 +89,22 @@ class ArchiveMenuManager extends BaseModel {
                     ->fetch();
     }
     
-    public function getMenusFromDB() {
-        return self::$database->table(self::TABLE_NAME)
-            ->select('*')
-            ->fetchAll();
+    public function getMenusFromDB($visible = 1) {
+        if ($visible != 2) {
+            return self::$database->table(self::TABLE_NAME)
+                ->where(array(self::COLUMN_VISIBLE => $visible))
+                ->select('*')
+                ->fetchAll();
+        } else {
+            return self::$database->table(self::TABLE_NAME)
+                ->select('*')
+                ->fetchAll();
+        }
 
     }
     
     public function deleteMenu($id) {
-        $video = $this->getMenuFromDB($id);
+        $video = $this->getMenuFromDB($id, 2);
         $video->delete();
     }
     

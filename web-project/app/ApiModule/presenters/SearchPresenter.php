@@ -24,17 +24,26 @@ class SearchPresenter extends BasePresenter {
     public function renderDefault($id, $limit) {
         
         if ($limit == null) {
-            $limit = 5;
+            $limit = 16;
         }
         
         $input = $id;
         
         $response = $this->searchManager->search($input, 0, $limit, true);
-                       
-        $jsonArray['search'] = $response;
+        
+        $mergedSearch = array_merge($response['videos'], $response['albums']);
+        usort($mergedSearch, array($this, 'sortItemsByDate'));
+
+        $jsonArray['search'] = $mergedSearch;
         
         $this->sendJson($jsonArray);
         
     }
     
+    private function sortItemsByDate($a, $b) {
+	if($a['date'] == $b['date']){ 
+            return 0 ;
+        }
+	return ($a['date'] > $b['date']) ? -1 : 1;
+    }
 }

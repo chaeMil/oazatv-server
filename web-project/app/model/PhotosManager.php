@@ -136,7 +136,7 @@ class PhotosManager {
     }
 
     public function getAlbumsFromDB($from, $count, $published = 1,
-        $order = self::COLUMN_DATE) {
+        $order = self::COLUMN_DATE." DESC") {
 
         if($published != 2) {
             return $this->database->table(self::TABLE_NAME_ALBUMS)
@@ -188,8 +188,13 @@ class PhotosManager {
     public function getPhotoThumbnails($photoId) {
         $photo = $this->getPhotoFromDB($photoId);
         if ($photo) {
+            $thumbsLocation = ALBUMS_FOLDER.$photo->album_id.'/thumbs/';
             $thumbLocation = ALBUMS_FOLDER.$photo->album_id.'/thumbs/'.str_replace(".jpg", "_".self::THUMB_1024.".jpg", $photo->file);
-            if (file_exists($thumbLocation)) {
+            if (!file_exists($thumbsLocation)) {
+                mkdir($thumbsLocation);
+                chmod($thumbsLocation, 0777);
+            }      
+            if (file_exists($thumbsLocation)) {
                 $thumb = $thumbLocation;
                 $thumbfile = ALBUMS_FOLDER.$photo->album_id.'/thumbs/'.str_replace(".jpg", "", $photo->file);
                 if (!file_exists($thumb)) {
