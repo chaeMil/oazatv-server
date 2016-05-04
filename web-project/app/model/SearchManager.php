@@ -20,6 +20,11 @@ use Nette,
  */
 class SearchManager extends BaseModel {
 
+    const
+        TABLE_NAME = 'search_logs',
+        COLUMN_ID = 'id',
+        COLUMN_INPUT = 'input';
+    
     /** @var Nette\Database\Context */
     public static $database;
     private $videoManager;
@@ -36,6 +41,10 @@ class SearchManager extends BaseModel {
     public function search($userInput, $offset = 0, $limit = 5, $lang = 'cs') {
         
         $userInput = trim(urldecode($userInput));
+        
+        //log user inpupt
+        self::$database->table(self::TABLE_NAME)
+                ->insert(array(self::COLUMN_INPUT => $userInput));
         
         $hashTag = false;
         
