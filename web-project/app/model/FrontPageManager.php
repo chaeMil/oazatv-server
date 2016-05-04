@@ -116,6 +116,7 @@ class FrontPageManager extends BaseModel {
             if (isset($maxSort)) {
                 $values['sort'] = intval($maxSort) + 1;
             }
+            unset($values['id']);
             $sql = self::$database->table(self::TABLE_NAME_ROWS)->insert($values);
         }
 
