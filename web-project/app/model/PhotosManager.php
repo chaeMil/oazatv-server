@@ -189,6 +189,10 @@ class PhotosManager {
         $photo = $this->getPhotoFromDB($photoId);
         if ($photo) {
             $thumbLocation = ALBUMS_FOLDER.$photo->album_id.'/thumbs/'.str_replace(".jpg", "_".self::THUMB_1024.".jpg", $photo->file);
+            if (!file_exists($thumbLocation)) {
+                mkdir($thumbLocation);
+                chmod($thumbLocation, 0777);
+            }            
             if (file_exists($thumbLocation)) {
                 $thumb = $thumbLocation;
                 $thumbfile = ALBUMS_FOLDER.$photo->album_id.'/thumbs/'.str_replace(".jpg", "", $photo->file);
