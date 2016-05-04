@@ -32,7 +32,7 @@ class ArchiveMenuPresenter extends BaseSecuredPresenter {
         $this->getTemplateVariables($this->getUser()->getId());
         
         $this->template->menus = $this->archiveMenuManager
-                ->getMenusFromDB();
+                ->getMenusFromDB(2);
     }
     
     public function renderCreateMenu() {
@@ -41,7 +41,7 @@ class ArchiveMenuPresenter extends BaseSecuredPresenter {
     
     public function renderDetail($id) {
         $this->getTemplateVariables($this->getUser()->getId());
-        $menu = $this->archiveMenuManager->getMenuFromDB($id);
+        $menu = $this->archiveMenuManager->getMenuFromDB($id, 2);
         $this->template->menu = $menu;
         
         if (!isset($menu['id'])) {
