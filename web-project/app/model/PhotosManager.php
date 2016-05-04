@@ -136,7 +136,7 @@ class PhotosManager {
     }
 
     public function getAlbumsFromDB($from, $count, $published = 1,
-        $order = self::COLUMN_DATE) {
+        $order = self::COLUMN_DATE." DESC") {
 
         if($published != 2) {
             return $this->database->table(self::TABLE_NAME_ALBUMS)
