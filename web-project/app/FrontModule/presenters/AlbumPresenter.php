@@ -42,6 +42,8 @@ class AlbumPresenter extends BasePresenter {
             $hash = $id; //id only in router, actualy its hash
             $album = $this->photosManager->getAlbumFromDBbyHash($hash);
         }
+        
+        dump($album); exit;
 
         $tags = explode(",", $album['tags']);
         $tagsWithUsage = $this->tagsManager->tagsUsage($tags);
