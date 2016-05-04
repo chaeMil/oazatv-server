@@ -42,8 +42,6 @@ class AlbumPresenter extends BasePresenter {
             $hash = $id; //id only in router, actualy its hash
             $album = $this->photosManager->getAlbumFromDBbyHash($hash);
         }
-        
-        dump($album); exit;
 
         $tags = explode(",", $album['tags']);
         $tagsWithUsage = $this->tagsManager->tagsUsage($tags);
@@ -52,8 +50,11 @@ class AlbumPresenter extends BasePresenter {
         $this->template->album = $this->photosManager
                 ->createLocalizedAlbumThumbObject($this->lang, $album);
 
-        $this->template->photos = $this->photosManager
+        $photos = $this->photosManager
                 ->createLocalizedAlbumPhotosObject($this->lang, $album['id']);
+        dump($photos); exit;
+        
+        $this->template->photos = 
         
         $this->template->categories = $this->categoriesManager
                 ->getLocalizedCategories($this->lang);
