@@ -73,7 +73,7 @@ class ConversionProfilesPresenter extends BaseSecuredPresenter {
                 ->setRequired()
                 ->setAttribute("type", "number")
                 ->setAttribute("min", 350)
-                ->setAttribute("max", 3500)
+                ->setAttribute("max", 10000)
                 ->setAttribute("step", 1)
                 ->setAttribute("class", "form-control");
 
