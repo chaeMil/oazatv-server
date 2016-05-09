@@ -3,6 +3,9 @@
 
 parameters:
 
+http:
+    headers:
+        X-Powered-By: off
 
 php:
     date.timezone: Europe/Prague
