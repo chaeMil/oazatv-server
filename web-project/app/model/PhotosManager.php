@@ -152,7 +152,7 @@ class PhotosManager {
         }
     }
     
-     public function getAlbumsFromDBtoAPI($from, $count, $order = self::COLUMN_DATE) {
+     public function getAlbumsFromDBtoAPI($from, $count, $order = self::COLUMN_DATE." DESC") {
 
         $albums = $this->database->table(self::TABLE_NAME_ALBUMS)
                 ->select('id')
