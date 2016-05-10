@@ -31,4 +31,11 @@ class FileUtils {
             rmdir($dir);
         }
     }
+    
+    public static function humanReadableFileSize($file, $decimals = 2) {
+        $bytes = filesize($file);
+        $size = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
+        $factor = floor((strlen($bytes) - 1) / 3);
+        return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
+    }
 }

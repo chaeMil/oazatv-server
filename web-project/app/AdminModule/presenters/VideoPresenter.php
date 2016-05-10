@@ -14,7 +14,8 @@ use Nette,
  App\EventLogger,
  Model\TagsManager,
  Model\CategoriesManager,
- Model\ConversionProfilesManager;
+ Model\ConversionProfilesManager,
+ App\FileUtils;
 
 /**
  * Description of VideoPresenter
@@ -64,12 +65,23 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->template->video = $video;
         if (!file_exists(VIDEOS_FOLDER.$id.'/'.$video['mp4_file'])) {
             $this->template->mp4FileMissing = true;
+        } else {
+            $mp4FileSize = FileUtils::humanReadableFileSize(VIDEOS_FOLDER.$id.'/'.$video['mp4_file']);
+            $this->template->mp4FileSize = $mp4FileSize;
         }
+        
         if (!file_exists(VIDEOS_FOLDER.$id.'/'.$video['mp3_file'])) {
             $this->template->mp3FileMissing = true;
+        } else {
+            $mp3FileSize = FileUtils::humanReadableFileSize(VIDEOS_FOLDER.$id.'/'.$video['mp3_file']);
+            $this->template->mp3FileSize = $mp3FileSize;
         }
+        
         if (!file_exists(VIDEOS_FOLDER.$id.'/'.$video['webm_file'])) {
             $this->template->webmFileMissing = true;
+        } else {
+            $webmFileSize = FileUtils::humanReadableFileSize(VIDEOS_FOLDER.$id.'/'.$video['webm_file']);
+            $this->template->webmFileSize = $webmFileSize;
         }
         
         $this->template->originalFileInfo = $this->videoManager->getOriginalFileInfo($video->id);;

@@ -3,152 +3,52 @@
 
 <div class="row">
 
-    <div class="col-md-12">
-        {if ($video->original_file != "")}
-            <div class="col-md-6 col-lg-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4>Zdrojový soubor: <small>{$video->original_file}</small></h4>     
-                        <i onclick="openPlayer({$video->original_file});" 
-                           class="open-player fa fa-play-circle-o fa-3x pull-right"></i>
-                    </div>
-                    <div class="panel-body">
-                        <span>{$originalFileInfo}</span>
-                        <hr>
-                        <a n:href="Video:deleteVideoFile, $video->id, $originalFile"
-                           data-confirm="smazat originální soubor?"
-                           class="btn btn-danger confirm pull-right">smazat</a>
-
-                        <div class="btn-group">
-                            <button type="button" 
-                                    class="btn btn-default dropdown-toggle" 
-                                    data-toggle="dropdown" 
-                                    aria-haspopup="true" 
-                                    aria-expanded="false">
-                                použít jako <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                {if (!$video->mp4_file && strpos($originalFileInfo,'mp4') !== false)}
-                                    <li><a n:href="Video:useOriginalFileAs, $video->id, $mp4File">MP4 soubor</a></li>
-                                {/if}
-                                {if (!$video->mp3_file && strpos($originalFileInfo,'mp3') !== false)}
-                                    <li><a n:href="Video:useOriginalFileAs, $video->id, $mp3File">MP3 soubor</a></li>
-                                {/if}
-                                {if (!$video->webm_file && strpos($originalFileInfo,'webm') !== false)}
-                                    <li><a n:href="Video:useOriginalFileAs, $video->id, $webmFile">WEBM soubor</a></li>
-                                {/if}
-                                {if (!$video->thumb_file && strpos($originalFileInfo,'jpeg') !== false)}
-                                    <li><a n:href="Video:useOriginalFileAs, $video->id, $thumbFile">miniatura</a></li>
-                                {/if}
-                            </ul>
-                        </div>
-
-                        <div class="btn-group">
-                            <button type="button" 
-                                    class="btn btn-default dropdown-toggle" 
-                                    data-toggle="dropdown" 
-                                    aria-haspopup="true" 
-                                    aria-expanded="false">
-                                zkonvertovat <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                {if (!$video->mp4_file)}
-                                    <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'original_file', '{$mp4File|noescape}')">MP4 soubor</a></li>
-                                {/if}
-                                {if (!$video->mp3_file)}
-                                    <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'original_file', '{$mp3File|noescape}')">MP3 soubor</a></li>
-                                {/if}
-                                {if (!$video->webm_file)}
-                                    <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'original_file', '{$webmFile|noescape}')">WEBM soubor</a></li>
-                                {/if}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+    <div class="col-md-4">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Zdrojový soubor:</h3>
+                <br>
             </div>
-        {/if}
-
-        {if ($video->mp4_file != "")}
-            <div class="col-md-6 col-lg-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4>MP4 soubor: <small>{$video->mp4_file}</small></h4>
-                        {if isset($mp4FileMissing)}
-                            <i onClick="fileMissing({$video->mp4_file});"
-                               class="file-missing fa fa-warning fa-3x pull-right"></i>
-                        {else}
-                            <i onclick="openPlayer({$video->mp4_file});" 
-                           class="open-player fa fa-play-circle-o fa-3x pull-right"></i>
-                        {/if}
-                    </div>
-                    <div class="panel-body">
-                        <a n:href="Video:deleteVideoFile, $video->id, $mp4File"
-                           data-confirm="smazat MP4 soubor?"
-                           class="btn btn-danger confirm pull-right">smazat</a>
-
-                        <div class="btn-group">
-                            <button type="button" 
-                                    class="btn btn-default dropdown-toggle" 
-                                    data-toggle="dropdown" 
-                                    aria-haspopup="true" 
-                                    aria-expanded="false">
-                                zkonvertovat <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                {if (!$video->mp3_file)}
-                                    <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'mp4_file', '{$mp3File|noescape}')">MP3 soubor</a></li>
-                                {/if}
-                                {if (!$video->webm_file)}
-                                    <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'mp4_file', '{$webmFile|noescape}')">WEBM soubor</a></li>
-                                {/if}
-                            </ul>
+            {if ($video->original_file != "")}
+                <div class="col-md-6 col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4>Zdrojový soubor: <small>{$video->original_file}</small></h4>     
+                            <i onclick="openPlayer({$video->original_file});" 
+                               class="open-player fa fa-play-circle-o fa-3x pull-right"></i>
                         </div>
-                    </div>
-                </div>
-            </div>
-        {/if}
+                        <div class="panel-body">
+                            <span>{$originalFileInfo}</span>
+                            <hr>
+                            <a n:href="Video:deleteVideoFile, $video->id, $originalFile"
+                               data-confirm="smazat originální soubor?"
+                               class="btn btn-danger confirm pull-right">smazat</a>
 
-        {if ($video->mp3_file != "")}
-            <div class="col-md-6 col-lg-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4>MP3 soubor: <small>{$video->mp3_file}</small></h4>
-                        {if isset($mp3FileMissing)}
-                            <i onClick="fileMissing({$video->mp3_file});"
-                               class="file-missing fa fa-warning fa-3x pull-right"></i>
-                        {else}
-                            <i onclick="openPlayer({$video->mp3_file});" 
-                           class="open-player fa fa-play-circle-o fa-3x pull-right"></i>
-                        {/if}
-                    </div>
-                    <div class="panel-body">
-                        <a n:href="Video:deleteVideoFile, $video->id, $mp3File"
-                           data-confirm="smazat MP3 soubor?"
-                           class="btn btn-danger confirm pull-right">smazat</a>
-                    </div>
-                </div>
-            </div>
-        {/if}
+                            <div class="btn-group">
+                                <button type="button" 
+                                        class="btn btn-default dropdown-toggle" 
+                                        data-toggle="dropdown" 
+                                        aria-haspopup="true" 
+                                        aria-expanded="false">
+                                    použít jako <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    {if (!$video->mp4_file && strpos($originalFileInfo,'mp4') !== false)}
+                                        <li><a n:href="Video:useOriginalFileAs, $video->id, $mp4File">MP4 soubor</a></li>
+                                    {/if}
+                                    {if (!$video->mp3_file && strpos($originalFileInfo,'mp3') !== false)}
+                                        <li><a n:href="Video:useOriginalFileAs, $video->id, $mp3File">MP3 soubor</a></li>
+                                    {/if}
+                                    {if (!$video->webm_file && strpos($originalFileInfo,'webm') !== false)}
+                                        <li><a n:href="Video:useOriginalFileAs, $video->id, $webmFile">WEBM soubor</a></li>
+                                    {/if}
+                                    {if (!$video->thumb_file && strpos($originalFileInfo,'jpeg') !== false)}
+                                        <li><a n:href="Video:useOriginalFileAs, $video->id, $thumbFile">miniatura</a></li>
+                                    {/if}
+                                </ul>
+                            </div>
 
-        {if ($video->webm_file != "")}
-            <div class="col-md-6 col-lg-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4>WEBM soubor: <small>{$video->webm_file}</small></h4>
-                        {if isset($webmFileMissing)}
-                            <i onClick="fileMissing({$video->webm_file});"
-                               class="file-missing fa fa-warning fa-3x pull-right"></i>
-                        {else}
-                            <i onclick="openPlayer({$video->webm_file});" 
-                           class="open-player fa fa-play-circle-o fa-3x pull-right"></i>
-                        {/if}
-                    </div>
-                    <div class="panel-body">
-                        <a n:href="Video:deleteVideoFile, $video->id, $webmFile"
-                           data-confirm="smazat WEBM soubor?"
-                           class="btn btn-danger confirm pull-right">smazat</a>
-
-                           <div class="btn-group">
+                            <div class="btn-group">
                                 <button type="button" 
                                         class="btn btn-default dropdown-toggle" 
                                         data-toggle="dropdown" 
@@ -158,35 +58,169 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     {if (!$video->mp4_file)}
-                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'webm_file', '{$mp4File|noescape}')">MP4 soubor</a></li>
+                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'original_file', '{$mp4File|noescape}')">MP4 soubor</a></li>
                                     {/if}
                                     {if (!$video->mp3_file)}
-                                            <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'webm_file', '{$mp3File|noescape}')">MP3 soubor</a></li>
+                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'original_file', '{$mp3File|noescape}')">MP3 soubor</a></li>
+                                    {/if}
+                                    {if (!$video->webm_file)}
+                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'original_file', '{$webmFile|noescape}')">WEBM soubor</a></li>
                                     {/if}
                                 </ul>
                             </div>
+                        </div>
                     </div>
                 </div>
+            {/if}
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Zpracované soubory:</h3>
+                <br>
             </div>
-        {/if}
+            {if ($video->mp4_file != "")}
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4>MP4 soubor: <small>{$video->mp4_file}</small></h4>
+                            {if isset($mp4FileMissing)}
+                                <i onClick="fileMissing({$video->mp4_file});"
+                                   class="file-missing fa fa-warning fa-3x pull-right"></i>
+                            {else}
+                                <i onclick="openPlayer({$video->mp4_file});" 
+                               class="open-player fa fa-play-circle-o fa-3x pull-right"></i>
+                            {/if}
+                        </div>
+                        <div class="panel-body">
 
-        {if ($video->thumb_file != "")}
-            <div class="col-md-6 col-lg-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4>miniatura: <small>{$video->thumb_file}</small></h4>
-                        <img onclick="openImageViewer({$video->thumb_file});" 
-                             src="{$basePath}/{$thumbs['128']}"
-                             class="img-responsive thumb-clickable"/>
-                    </div>
-                    <div class="panel-body">
-                        <a n:href="Video:deleteVideoFile, $video->id, $thumbFile"
-                           data-confirm="smazat miniaturu?"
-                           class="btn btn-danger confirm pull-right">smazat</a>
+                            <p>
+                                velikost souboru: {if isset($mp4FileMissing)}0{else}{$mp4FileSize}{/if}
+                            </p>
+                            
+                            <hr>
+
+                            <a n:href="Video:deleteVideoFile, $video->id, $mp4File"
+                               data-confirm="smazat MP4 soubor?"
+                               class="btn btn-danger confirm pull-right">smazat</a>
+
+                            <div class="btn-group">
+                                <button type="button" 
+                                        class="btn btn-default dropdown-toggle" 
+                                        data-toggle="dropdown" 
+                                        aria-haspopup="true" 
+                                        aria-expanded="false">
+                                    zkonvertovat <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    {if (!$video->mp3_file)}
+                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'mp4_file', '{$mp3File|noescape}')">MP3 soubor</a></li>
+                                    {/if}
+                                    {if (!$video->webm_file)}
+                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'mp4_file', '{$webmFile|noescape}')">WEBM soubor</a></li>
+                                    {/if}
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {/if}
+            {/if}
+
+            {if ($video->mp3_file != "")}
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4>MP3 soubor: <small>{$video->mp3_file}</small></h4>
+                            {if isset($mp3FileMissing)}
+                                <i onClick="fileMissing({$video->mp3_file});"
+                                   class="file-missing fa fa-warning fa-3x pull-right"></i>
+                            {else}
+                                <i onclick="openPlayer({$video->mp3_file});" 
+                               class="open-player fa fa-play-circle-o fa-3x pull-right"></i>
+                            {/if}
+                        </div>
+                        <div class="panel-body">
+                            
+                            <p>
+                                velikost souboru: {if isset($mp3FileMissing)}0{else}{$mp3FileSize}{/if}
+                            </p>
+                            
+                            <hr>
+                            
+                            <a n:href="Video:deleteVideoFile, $video->id, $mp3File"
+                               data-confirm="smazat MP3 soubor?"
+                               class="btn btn-danger confirm pull-right">smazat</a>
+                        </div>
+                    </div>
+                </div>
+            {/if}
+
+            {if ($video->webm_file != "")}
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4>WEBM soubor: <small>{$video->webm_file}</small></h4>
+                            {if isset($webmFileMissing)}
+                                <i onClick="fileMissing({$video->webm_file});"
+                                   class="file-missing fa fa-warning fa-3x pull-right"></i>
+                            {else}
+                                <i onclick="openPlayer({$video->webm_file});" 
+                               class="open-player fa fa-play-circle-o fa-3x pull-right"></i>
+                            {/if}
+                        </div>
+                        <div class="panel-body">
+                            
+                            <p>
+                                velikost souboru: {if isset($webmFileMissing)}0{else}{$webmFileSize}{/if}
+                            </p>
+                            
+                            <hr>
+                            
+                            <a n:href="Video:deleteVideoFile, $video->id, $webmFile"
+                               data-confirm="smazat WEBM soubor?"
+                               class="btn btn-danger confirm pull-right">smazat</a>
+
+                               <div class="btn-group">
+                                    <button type="button" 
+                                            class="btn btn-default dropdown-toggle" 
+                                            data-toggle="dropdown" 
+                                            aria-haspopup="true" 
+                                            aria-expanded="false">
+                                        zkonvertovat <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        {if (!$video->mp4_file)}
+                                            <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'webm_file', '{$mp4File|noescape}')">MP4 soubor</a></li>
+                                        {/if}
+                                        {if (!$video->mp3_file)}
+                                                <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'webm_file', '{$mp3File|noescape}')">MP3 soubor</a></li>
+                                        {/if}
+                                    </ul>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            {/if}
+
+            {if ($video->thumb_file != "")}
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4>miniatura: <small>{$video->thumb_file}</small></h4>
+                            <img onclick="openImageViewer({$video->thumb_file});" 
+                                 src="{$basePath}/{$thumbs['128']}"
+                                 class="img-responsive thumb-clickable"/>
+                        </div>
+                        <div class="panel-body">
+                            <a n:href="Video:deleteVideoFile, $video->id, $thumbFile"
+                               data-confirm="smazat miniaturu?"
+                               class="btn btn-danger confirm pull-right">smazat</a>
+                        </div>
+                    </div>
+                </div>
+            {/if}
+        </div>
     </div>
 
 </div>
