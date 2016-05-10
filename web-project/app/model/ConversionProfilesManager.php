@@ -48,7 +48,7 @@ class ConversionProfilesManager extends BaseModel {
             $id = 0;
         }
 
-        if ($id != 0 && $this->checkIfProfileExistsExists($id) > 0) {
+        if ($id != 0 && $this->checkIfProfileExists($id) > 0) {
             $profile = self::$database->table(self::TABLE_NAME)->get($id);
             $sql = $profile->update($values);
             return $sql;
