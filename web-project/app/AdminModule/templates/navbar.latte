@@ -17,9 +17,37 @@
             <!-- /.dropdown -->
             <li>
                 <a target="_blank" n:href=":Front:Main:default">
-                    <i class="fa fa-globe"></i><span class="hidden-xs hidden-sm"> &nbsp; přejít na web</span>
+                    <i class="fa fa-globe"></i>
+                    <span class="hidden-xs hidden-sm">
+                        &nbsp; přejít na web
+                    </span>
                 </a>
             </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-google fa-fw"></i>
+                    <span class="hidden-xs hidden-sm">
+                        Google Docs 
+                    </span>
+                    <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="https://docs.google.com/spreadsheets/d/1ryFbkfAVcaxA_1vaCEPSHig_5Y038ejbFezjE5YWnGQ/edit?usp=sharing" 
+                           target="_blank">
+                            <i class="fa fa-fw fa-file-text-o" aria-hidden="true"></i> Seznam kázání a alb
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://docs.google.com/document/d/1ZChfEOaBqg6ueETjst9dPdZt64FmxP1B71pMrUVZ_DI/edit"
+                           target="_blank">
+                            <i class="fa fa-fw fa-bug" aria-hidden="true"></i> Hlášení chyb
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.dropdown-tasks -->
+            </li>
+            <!-- /.dropdown -->
             <li class="dropdown">
                 <a onclick="loadNavbarQueue(true)" class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-sort-amount-desc fa-fw"></i>  <i class="fa fa-caret-down"></i>
@@ -138,15 +166,14 @@
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
-                <li>
+                <!--<li>
                     <a href="#"><i class="fa fa-list fa-fw"></i> Ostatní<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
                             <a n:href="BugReport:"><i class="fa fa-bug fa-fw"></i> Hlášení chyb</a>
                         </li>
                     </ul>
-                    <!-- /.nav-second-level -->
-                </li>
+                </li>-->
             </ul>
         </div>
         <!-- /.sidebar-collapse -->
