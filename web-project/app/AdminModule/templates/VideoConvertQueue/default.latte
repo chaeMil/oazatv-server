@@ -54,7 +54,8 @@
                             {if ($video->status == 1)}konvertuje se{/if}
                             {if ($video->status == 2)}hotovo{/if}</td>
                         <td><a n:href="VideoConvertQueue:removeFromQueue $video->id" 
-                               class="btn btn-danger btn-sm">odebrat</a>
+                               class="btn btn-danger btn-sm confirm"
+                               data-confirm="Odebrat?">odebrat</a>
                     </tr>
                 </tbody>                
             </table>
