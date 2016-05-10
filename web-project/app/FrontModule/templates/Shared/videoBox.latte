@@ -38,8 +38,8 @@
                             style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});"
                         {/if}
                      {/if}
-                     {if isset($item['thumb_file'])}
-                         style="background-image: url({$item['thumb_file']|noescape});"
+                     {if isset($item['thumbs']) && isset($item['thumbs']['thumb_512'])}
+                         style="background-image: url({$item['thumbs']['thumb_512']|noescape});"
                      {/if}>
                 </div>
                 <i class="open fa {if $item['type'] == "video"} fa-play-circle {else} fa-picture-o{/if}" 
