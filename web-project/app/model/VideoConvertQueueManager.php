@@ -49,6 +49,10 @@ class VideoConvertQueueManager extends BaseModel {
     }
     
     public function addVideoToQueue($videoId, $inputFile, $target, $profile) {
+        if ($profile == '') {
+            $profile = 0;
+        }
+        
         if ($this->checkIfAlreadyExists($videoId, $inputFile, $target) == 0) {
             $this::$database->table(self::TABLE_NAME)
                 ->insert(array (self::COLUMN_VIDEO_ID => $videoId,
