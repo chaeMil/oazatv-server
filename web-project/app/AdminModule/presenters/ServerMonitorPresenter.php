@@ -36,10 +36,10 @@ class ServerMonitorPresenter  extends BaseSecuredPresenter {
         $dataVolume['free'] = $this->serverMonitorManager->getFreeDataDiskSpace();
         $dataVolume['usedPercent'] = $this->serverMonitorManager->getUsedDataDiskPercent();
         
-        $systemVolume['used'] = $this->serverMonitorManager->getUsedDataDiskSpace();
-        $systemVolume['total'] = $this->serverMonitorManager->getTotalDataDiskSpace();
-        $systemVolume['free'] = $this->serverMonitorManager->getFreeDataDiskSpace();
-        $systemVolume['usedPercent'] = $this->serverMonitorManager->getUsedDataDiskPercent();
+        $systemVolume['used'] = $this->serverMonitorManager->getUsedSystemDiskSpace();
+        $systemVolume['total'] = $this->serverMonitorManager->getTotalsystemDiskSpace();
+        $systemVolume['free'] = $this->serverMonitorManager->getFreeSystemDiskSpace();
+        $systemVolume['usedPercent'] = $this->serverMonitorManager->getUsedSystemDiskPercent();
         
         $this->template->dataVolume = $dataVolume;
         $this->template->systemVolume = $systemVolume;
