@@ -4,7 +4,7 @@
     
     {include ../navbar.latte}
     
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <a href="javascript:history.go(-1);"> 
                 <h2><span class="glyphicon glyphicon-chevron-left pull-left"></span>
@@ -16,6 +16,27 @@
 
         <br>
         
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Úložiště
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="lead">System volume<p>
+                                <div id="system-volume" style="height: 250px;"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="lead">Data volume<p>
+                                <div id="data-volume" style="height: 250px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -26,6 +47,54 @@
 
 {block pageScripts}
     <script>
-    
+        
+        $(document).ready(function() {
+            Morris.Donut({
+                element: 'data-volume',
+                resize: true,
+                colors: ['#ED9D48', '#62C462'],
+                labelColor: '#FFFFFF',
+                backgroundColor: '#272B30',
+                formatter: function(y, data) {
+                    return humanFileSize(y * 1024, true);
+                },
+                data: [
+                  { label: "Použito", value: {$dataVolume['used']} },
+                  { label: "Volno", value: {$dataVolume['free']} },
+                ]
+            });
+            
+            Morris.Donut({
+                element: 'system-volume',
+                resize: true,
+                colors: ['#ED9D48', '#62C462'],
+                labelColor: '#FFFFFF',
+                backgroundColor: '#272B30',
+                formatter: function(y, data) {
+                    return humanFileSize(y * 1024, true);
+                },
+                data: [
+                  { label: "Použito", value: {$systemVolume['used']} },
+                  { label: "Volno", value: {$systemVolume['free']} },
+                ]
+            });
+            
+            
+            function humanFileSize(bytes, si) {
+                var thresh = si ? 1000 : 1024;
+                if(Math.abs(bytes) < thresh) {
+                    return bytes + ' B';
+                }
+                var units = si
+                    ? ['kB','MB','GB','TB','PB','EB','ZB','YB']
+                    : ['KiB','MiB','GiB','TiB','PiB','EiB','ZiB','YiB'];
+                var u = -1;
+                do {
+                    bytes /= thresh;
+                    ++u;
+                } while(Math.abs(bytes) >= thresh && u < units.length - 1);
+                return bytes.toFixed(1)+' '+units[u];
+            }
+        });
     </script>
 {/block}

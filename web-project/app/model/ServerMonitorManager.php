@@ -18,20 +18,76 @@ use Nette,
  */
 class ServerMonitorManager {
 
-    public function getTotalDataDiskSpace() {
-        return exec('df -aT | grep '.DATA_MOUNTPOINT.' | head -n1 | awk \'{print $3}\'');
+    public function getTotalDataDiskSpace($humanReadable = false) {
+        if ($humanReadable) {
+            $h = 'h';
+        } else {
+            $h = '';
+        }
+        return exec('df -aT'.$h.' | grep '.DATA_MOUNTPOINT.' | head -n1 | awk \'{print $3}\'');
     }
     
-    public function getUsedDataDiskSpace() {
-        return exec('df -aTh | grep '.DATA_MOUNTPOINT.' | head -n1 | awk \'{print $4}\'');
+    public function getUsedDataDiskSpace($humanReadable = false) {
+        if ($humanReadable) {
+            $h = 'h';
+        } else {
+            $h = '';
+        }
+        return exec('df -aT'.$h.' | grep '.DATA_MOUNTPOINT.' | head -n1 | awk \'{print $4}\'');
     }
     
-    public function getFreeDataDiskSpace() {
-        return exec('df -aTh | grep '.DATA_MOUNTPOINT.' | head -n1 | awk \'{print $5}\'');
+    public function getFreeDataDiskSpace($humanReadable = false) {
+        if ($humanReadable) {
+            $h = 'h';
+        } else {
+            $h = '';
+        }
+        return exec('df -aT'.$h.' | grep '.DATA_MOUNTPOINT.' | head -n1 | awk \'{print $5}\'');
     }
     
-    public function getUsedDataDiskPercent() {
-        return exec('df -aTh | grep '.DATA_MOUNTPOINT.' | head -n1 | awk \'{print $6}\'');
+    public function getUsedDataDiskPercent($humanReadable = false) {
+        if ($humanReadable) {
+            $h = 'h';
+        } else {
+            $h = '';
+        }
+        return exec('df -aT'.$h.' | grep '.DATA_MOUNTPOINT.' | head -n1 | awk \'{print $6}\'');
+    }
+    
+    public function getTotalSystemDiskSpace($humanReadable = false) {
+        if ($humanReadable) {
+            $h = 'h';
+        } else {
+            $h = '';
+        }
+        return exec('df -aT'.$h.' | grep '.SYSTEM_MOUNTPOINT.' | head -n1 | awk \'{print $3}\'');
+    }
+    
+    public function getUsedSystemDiskSpace($humanReadable = false) {
+        if ($humanReadable) {
+            $h = 'h';
+        } else {
+            $h = '';
+        }
+        return exec('df -aT'.$h.' | grep '.SYSTEM_MOUNTPOINT.' | head -n1 | awk \'{print $4}\'');
+    }
+    
+    public function getFreeSystemDiskSpace($humanReadable = false) {
+        if ($humanReadable) {
+            $h = 'h';
+        } else {
+            $h = '';
+        }
+        return exec('df -aT'.$h.' | grep '.SYSTEM_MOUNTPOINT.' | head -n1 | awk \'{print $5}\'');
+    }
+    
+    public function getUsedSystemDiskPercent($humanReadable = false) {
+        if ($humanReadable) {
+            $h = 'h';
+        } else {
+            $h = '';
+        }
+        return exec('df -aT'.$h.' | grep '.SYSTEM_MOUNTPOINT.' | head -n1 | awk \'{print $6}\'');
     }
     
 }
