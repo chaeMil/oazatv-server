@@ -24,13 +24,25 @@
                     </div>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-6">
-                                <p class="lead">System volume<p>
+                            <div class="col-md-4">
+                                <p class="lead text-center">System volume<p>
                                 <div id="system-volume" style="height: 250px;"></div>
                             </div>
-                            <div class="col-md-6">
-                                <p class="lead">Data volume<p>
+                            <div class="col-md-4">
+                                <p class="lead text-center">Data volume<p>
                                 <div id="data-volume" style="height: 250px;"></div>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="lead">Podrobný výpis</p>
+                                <p><b>System volume</b></p>
+                                <p>Volné: {$systemVolume['freeH']}</p>
+                                <p>Použito: {$systemVolume['usedH']} / {$systemVolume['usedPercent']}</p>
+                                <p>Celkem: {$systemVolume['totalH']}</p>
+                                <hr>
+                                <p><b>Data volume</b></p>
+                                <p>Volné: {$dataVolume['freeH']}</p>
+                                <p>Použito: {$dataVolume['usedH']} / {$dataVolume['usedPercent']}</p>
+                                <p>Celkem: {$dataVolume['totalH']}</p>
                             </div>
                         </div>
                     </div>
