@@ -44,6 +44,7 @@ services:
     - Model\FrontPageManager
     - Model\LiveStreamManager
     - Model\ArchiveMenuManager
+    - Model\ServerMonitorManager
     - App\RouterFactory
     webDir: App\Services\WebDir(%wwwDir%)
     router: @App\RouterFactory::createRouter

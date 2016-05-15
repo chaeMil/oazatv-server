@@ -11,7 +11,7 @@ use Nette,
  *
  * @author chaemil
  */
-class MigratePresenter extends BasePresenter {
+class MigratePresenter extends BaseSecuredPresenter {
     public $database;
     public $videoManager;
     public $videoFolderPrefix = 'db/videos/';
