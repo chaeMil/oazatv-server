@@ -49,6 +49,29 @@
                 </div>
             </div>
         </div>
+                            
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Výkon
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                            </div>
+                            <div class="col-md-4">
+                            </div>
+                            <div class="col-md-4">
+                                <p class="lead">CPU<p>
+                                <p>Vytížení cpu: <span id="cpu-load"></span></p>
+                                <p>Teplota cpu: <span id="cpu-temp"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -66,13 +89,13 @@
                 resize: true,
                 colors: ['#ED9D48', '#62C462'],
                 labelColor: '#FFFFFF',
-                backgroundColor: '#272B30',
+                backgroundColor: '#2E3338',
                 formatter: function(y, data) {
                     return humanFileSize(y * 1024, true);
                 },
                 data: [
                   { label: "Použito", value: {$dataVolume['used']} },
-                  { label: "Volno", value: {$dataVolume['free']} },
+                  { label: "Volno", value: {$dataVolume['free']} }
                 ]
             });
             
@@ -87,26 +110,53 @@
                 },
                 data: [
                   { label: "Použito", value: {$systemVolume['used']} },
-                  { label: "Volno", value: {$systemVolume['free']} },
+                  { label: "Volno", value: {$systemVolume['free']} }
                 ]
             });
-            
-            
-            function humanFileSize(bytes, si) {
-                var thresh = si ? 1000 : 1024;
-                if(Math.abs(bytes) < thresh) {
-                    return bytes + ' B';
-                }
-                var units = si
-                    ? ['kB','MB','GB','TB','PB','EB','ZB','YB']
-                    : ['KiB','MiB','GiB','TiB','PiB','EiB','ZiB','YiB'];
-                var u = -1;
-                do {
-                    bytes /= thresh;
-                    ++u;
-                } while(Math.abs(bytes) >= thresh && u < units.length - 1);
-                return bytes.toFixed(1)+' '+units[u];
-            }
+
+            getAjaxData();
+            setInterval(function() {
+                getAjaxData();
+            }, 5 * 1000);
         });
+        
+        function humanFileSize(bytes, si) {
+            var thresh = si ? 1000 : 1024;
+            if(Math.abs(bytes) < thresh) {
+                return bytes + ' B';
+            }
+            var units = si
+                ? ['kB','MB','GB','TB','PB','EB','ZB','YB']
+                : ['KiB','MiB','GiB','TiB','PiB','EiB','ZiB','YiB'];
+            var u = -1;
+            do {
+                bytes /= thresh;
+                ++u;
+            } while(Math.abs(bytes) >= thresh && u < units.length - 1);
+            return bytes.toFixed(1)+' '+units[u];
+        }
+
+        function getAjaxData() {
+            $.ajax({ 
+                url: {$server} + "/admin/server-monitor/ajax-data", 
+                success: function(result){
+                    var cpuTemp = result.cpu.cpuTemp;
+                    var cpuLoad = result.cpu.cpuLoad;
+                    
+                    $('#cpu-load').text(cpuLoad + "%");
+                    $('#cpu-temp').text(cpuTemp + "°C");
+                }
+            });
+            
+            /*$.ajax({ 
+                url: {$server} + "/admin/server-monitor/load-cpu-log", 
+                success: function(result){
+                    var load = result.load;
+                    var temp = result.temp;
+                    console.log(temp);
+
+                }
+            });*/
+        }
     </script>
 {/block}
