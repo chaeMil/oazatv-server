@@ -105,7 +105,7 @@ class ServerMonitorManager {
     }
     
     public function getCPUTemp($intVal = false) {
-        $exec = exec(CPU_TEMP_COMMAND);;
+        $exec = exec(CPU_TEMP_COMMAND);
         if ($intVal) {
             return preg_replace('/[^a-zA-Z]/', '', $exec);
         } else {

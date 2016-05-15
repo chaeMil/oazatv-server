@@ -41,13 +41,13 @@ class ServerMonitorPresenter  extends BaseSecuredPresenter {
     }
     
     public function actionAjaxData() {
-        $cpuTemp = $this->serverMonitorManager->getCPUTemp(true);
+        $cpuTemp = $this->serverMonitorManager->getCPUTemp();
         $cpuLoad = $this->serverMonitorManager->getCPULoad();
-        $dataVolume = $this->getDataVolume();
-        $systemVolume = $this->getSystemVolume();
+        //$dataVolume = $this->getDataVolume();
+        //$systemVolume = $this->getSystemVolume();
         
         $response['cpu'] = array('cpuTemp' => $cpuTemp, 'cpuLoad' => $cpuLoad);
-        $response['volumes'] = array('dataVolume' => $dataVolume, 'systemVolume' => $systemVolume);
+        //$response['volumes'] = array('dataVolume' => $dataVolume, 'systemVolume' => $systemVolume);
         
         $this->sendResponse(new JsonResponse($response));
     }
