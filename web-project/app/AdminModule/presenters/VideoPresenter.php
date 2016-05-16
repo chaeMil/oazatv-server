@@ -48,6 +48,8 @@ class VideoPresenter extends BaseSecuredPresenter {
         
         $this->template->videos = $this->videoManager
                 ->getVideosFromDB(0, 9999, 2, VideoManager::COLUMN_DATE." DESC");
+        
+        $this->template->videosFolder = VIDEOS_FOLDER;
     }
     
     public function renderDetail($id) {

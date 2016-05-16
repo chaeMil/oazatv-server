@@ -33,7 +33,9 @@
                     <tr n:foreach="$videos as $video" 
                         class="clickable-row {if ($video->published == 1)}active{/if}"
                         data-href="{$presenter->link('Video:Detail', $video->id)}">
-                        <td><img class="im-responsive" src="{$basePath}/{$video['thumb_file']}"/></td>
+                        <td><img class="img-responsive" 
+                                 style="max-width: 200px"
+                                 src="{$basePath}/{$videosFolder}/{$video['id']}/{$video['thumb_file']}"/></td>
                         <td>{$video->name_cs}</td>
                         <td>{$video->name_en}</td>
                         <td>{$video->date|date:'j.n.Y'}</td>
