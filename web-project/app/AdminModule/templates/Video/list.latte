@@ -21,7 +21,7 @@
         <div class="row">
             <table class="table table-hover">
                 <thead>
-                    <th class="hidden-xs">id</th>
+                    <th>náhled</th>
                     <th>název česky</th>
                     <th>název anglicky</th>
                     <th style="min-width: 100px">datum</th>
@@ -33,7 +33,7 @@
                     <tr n:foreach="$videos as $video" 
                         class="clickable-row {if ($video->published == 1)}active{/if}"
                         data-href="{$presenter->link('Video:Detail', $video->id)}">
-                        <td class="hidden-xs">{$video->id}</td>
+                        <td><img class="im-responsive" src="{$basePath}/{$video['thumb_file']}"/></td>
                         <td>{$video->name_cs}</td>
                         <td>{$video->name_en}</td>
                         <td>{$video->date|date:'j.n.Y'}</td>
