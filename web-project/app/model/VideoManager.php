@@ -28,6 +28,7 @@ class VideoManager extends BaseModel {
             COLUMN_PUBLISHED = 'published',
             COLUMN_ORIGINAL_FILE = 'original_file',
             COLUMN_MP4_FILE = 'mp4_file',
+            COLUMN_MP4_FILE_LOWRES = 'mp4_file_lowres',
             COLUMN_WEBM_FILE = 'webm_file',
             COLUMN_MP3_FILE = 'mp3_file',
             COLUMN_THUMB_FILE = 'thumb_file',
@@ -297,7 +298,7 @@ class VideoManager extends BaseModel {
         FileUtils::recursiveDelete(VIDEOS_FOLDER . $id ."/");
         $video->delete();
     }
-    public $tagsManager;
+    
     public function useOriginalFileAs($id, $target) {
         $video = $this->getVideoFromDB($id, 2);
         $video->update(array(self::COLUMN_ORIGINAL_FILE => "", $target => $video->original_file));

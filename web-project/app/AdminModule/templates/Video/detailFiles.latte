@@ -66,6 +66,9 @@
                                     {if (!$video->webm_file)}
                                         <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'original_file', '{$webmFile|noescape}')">WEBM soubor</a></li>
                                     {/if}
+                                    {if (!$video->mp4_file_lowres)}
+                                        <li><a n:href="Video:convertFile, $video->id, 'original_file', $mp4FileLowres">MP4 lowres (480p)</a></li>
+                                    {/if}
                                 </ul>
                             </div>
                         </div>
@@ -198,6 +201,35 @@
                                         {/if}
                                     </ul>
                                 </div>
+                        </div>
+                    </div>
+                </div>
+            {/if}
+            
+            {if ($video->mp4_file_lowres != "")}
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4>MP4 (lowres 480p) soubor: <small>{$video->mp4_file_lowres}</small></h4>
+                            {if isset($mp4FileLowresMissing)}
+                                <i onClick="fileMissing({$video->mp4_file_lowres});"
+                                   class="file-missing fa fa-warning fa-3x pull-right"></i>
+                            {else}
+                                <i onclick="openPlayer({$video->mp4_file_lowres});" 
+                               class="open-player fa fa-play-circle-o fa-3x pull-right"></i>
+                            {/if}
+                        </div>
+                        <div class="panel-body">
+
+                            <p>
+                                velikost souboru: {if isset($mp4FileLowresMissing)}0{else}{$mp4FileLowresSize}{/if}
+                            </p>
+                            
+                            <hr>
+
+                            <a n:href="Video:deleteVideoFile, $video->id, $mp4FileLowres"
+                               data-confirm="smazat MP4 (lowres 480p) soubor?"
+                               class="btn btn-danger confirm pull-right">smazat</a>
                         </div>
                     </div>
                 </div>

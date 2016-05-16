@@ -84,9 +84,17 @@ class VideoPresenter extends BaseSecuredPresenter {
             $this->template->webmFileSize = $webmFileSize;
         }
         
+        if (!file_exists(VIDEOS_FOLDER.$id.'/'.$video['mp4_file_lowres'])) {
+            $this->template->mp4FileLowresMissing = true;
+        } else {
+            $mp4FileLowresSize = FileUtils::humanReadableFileSize(VIDEOS_FOLDER.$id.'/'.$video['mp4_file_lowres']);
+            $this->template->mp4FileLowresSize = $mp4FileLowresSize;
+        }
+        
         $this->template->originalFileInfo = $this->videoManager->getOriginalFileInfo($video->id);;
         $this->template->originalFile = VideoManager::COLUMN_ORIGINAL_FILE;
         $this->template->mp4File = VideoManager::COLUMN_MP4_FILE;
+        $this->template->mp4FileLowres = VideoManager::COLUMN_MP4_FILE_LOWRES;
         $this->template->mp3File = VideoManager::COLUMN_MP3_FILE;
         $this->template->webmFile = VideoManager::COLUMN_WEBM_FILE;
         $this->template->thumbFile = VideoManager::COLUMN_THUMB_FILE;

@@ -74,6 +74,15 @@ class ConversionManager {
                 $CONVcodecAudio = "libvorbis";
                 $CONVextraParam = "-async 1";
                 break;
+            case VideoManager::COLUMN_MP4_FILE_LOWRES:
+                if ($queueItem['profile'] == 0) {
+                    $CONVaudioBitrate = $this->serverSettings->loadValue("mp4_lowres_audio_bitrate");
+                    $CONVvideoBitrate = $this->serverSettings->loadValue("mp4_lowres_video_bitrate");
+                }
+                $CONVextension = ".mp4";
+                $CONVcodecVideo = "libx264 -preset medium -profile:v baseline -level 3 -vf scale=-1:480";
+                $CONVcodecAudio = "aac -strict -2";
+                $CONVextraParam = "-deinterlace -movflags faststart -async 1";
         }
         
         if ($queueItem['profile'] != 0) {
@@ -136,7 +145,7 @@ class ConversionManager {
                 ." 2>&1 &";
         
         //dump($CONVcommand);
-        //echo $CONVcommand;
+        //echo $CONVcommand; exit;
         
         EventLogger::log('conversion of '.$CONVinput. ' to '.$CONVtarget.' started', 
                 EventLogger::CONVERSION_LOG);
