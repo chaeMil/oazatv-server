@@ -123,6 +123,9 @@
                                     {if (!$video->webm_file)}
                                         <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'mp4_file', '{$webmFile|noescape}')">WEBM soubor</a></li>
                                     {/if}
+                                    {if (!$video->mp4_file_lowres)}
+                                        <li><a n:href="Video:convertFile, $video->id, 'original_file', $mp4FileLowres">MP4 lowres (480p)</a></li>
+                                    {/if}
                                 </ul>
                             </div>
                         </div>
@@ -199,6 +202,9 @@
                                         {if (!$video->mp3_file)}
                                                 <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'webm_file', '{$mp3File|noescape}')">MP3 soubor</a></li>
                                         {/if}
+                                        {if (!$video->mp4_file_lowres)}
+                                        <li><a n:href="Video:convertFile, $video->id, 'original_file', $mp4FileLowres">MP4 lowres (480p)</a></li>
+                                    {/if}
                                     </ul>
                                 </div>
                         </div>
