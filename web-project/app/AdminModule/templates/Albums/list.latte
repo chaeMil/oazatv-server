@@ -16,6 +16,8 @@
         
         <br>
         
+        <input id="filter" type="text" class="form-control" placeholder="Vyhledávání...">
+        <br>
         <div class="row">
             <table class="table table-hover">
                 <thead>
@@ -24,7 +26,7 @@
                     <th>název anglicky</th>
                     <th>datum</th>
                 </thead>
-                <tbody>
+                <tbody class="searchable">
                     <tr n:foreach="$albums as $album" 
                         class="clickable-row {if ($album['published'] == 1)}active{/if}"
                         data-href="{$presenter->link('Albums:albumDetail', $album['id'])}">
@@ -40,4 +42,24 @@
     
     
 </div>
+{/block}
+
+{block pageScripts}
+    <script>
+        $(document).ready(function() {
+            (function ($) {
+
+                $('#filter').keyup(function () {
+
+                    var rex = new RegExp($(this).val(), 'i');
+                    $('.searchable tr').hide();
+                    $('.searchable tr').filter(function () {
+                        return rex.test($(this).text());
+                    }).show();
+
+                })
+
+            }(jQuery));
+        });
+    </script>
 {/block}
