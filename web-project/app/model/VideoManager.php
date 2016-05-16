@@ -410,6 +410,9 @@ class VideoManager extends BaseModel {
         if ($input[self::COLUMN_MP4_FILE] != '') {
             $video['mp4'] = VIDEOS_FOLDER.$videoId.'/'.$input[self::COLUMN_MP4_FILE];
         }
+        if ($input[self::COLUMN_MP4_FILE_LOWRES] != '') {
+            $video['mp4_lowres'] = VIDEOS_FOLDER.$videoId.'/'.$input[self::COLUMN_MP4_FILE_LOWRES];
+        }
         if ($input[self::COLUMN_WEBM_FILE] != '') {
             $video['webm'] = VIDEOS_FOLDER.$videoId.'/'.$input[self::COLUMN_WEBM_FILE];
         }

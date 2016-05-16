@@ -33,18 +33,14 @@
             }
         });
         
-        var video = videojs('video').ready(function(){
+        var video = videojs('video', {
+                plugins: {
+                    videoJsResolutionSwitcher: {
+                        
+                    }
+                }
+            }).ready(function(){
             player = this;
-            
-            {if !isset($listen)} 
-                videoJSAddCustomButton(player, videojs, "audio-switch", function() {
-                    window.location.href = {link Audio:listen $video['hash']} + "#t=autoplay";
-                });
-            {else}
-                videoJSAddCustomButton(player, videojs, "video-switch", function() {
-                    window.location.href = {link Video:watch $video['hash']} + "#t=autoplay";
-                });
-            {/if}
             
             var hash = window.location.hash;
             hash = window.location.hash.replace('#&', '').replace('#t=', '').replace('#', '');
@@ -75,6 +71,8 @@
                 player.play();
                 window.location.hash = "&";
             }
+            
+            player.currentResolution('original');
             
         });
 
