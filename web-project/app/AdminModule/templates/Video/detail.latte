@@ -59,6 +59,8 @@
 
 {block pageScripts}
 
+{include sharedJS.latte}
+
 <script>
     // Javascript to enable link to tab
     var url = document.location.toString();
@@ -122,10 +124,33 @@
         if (resumable.isUploading()) {
             return "Probíhá nahrávání videa.";
         }
+    };
+    
+    function adjustTagsWrapper() {
+        $('#tagsTableWrapper').height(($('#frm-videoBasicInfoForm').height()) / 2);
     }
-</script>
-
-<script>
+    
+    function hideUsedTags() {
+        var usedTags = $('#tags').tagsinput('items');
+        
+        $.each(usedTags, function(index, value) {
+            $('#tag_' + $.trim(value)).addClass('hidden');
+        });
+    }
+    
+    function hideUsedCategories() {
+        var usedCategories = $('#categories').val();
+        
+        var usedCategoriesArray = usedCategories.toString().replace(" ", "").split(",");
+        
+        $('#categories').tagsinput('removeAll');
+        
+        $.each(usedCategoriesArray, function(index, value) {
+            $('#categories').tagsinput('add', value);
+            $('#category_' + $.trim(value)).addClass('hidden');
+        });
+    }
+    
     function openPlayer(file) {
         var downloadName = {$video->date} + '-' + {$video->hash};
         bootbox.dialog({
@@ -158,25 +183,6 @@
         });
     }
     
-    function convertVideoFileDialog(id, inputFormat, targetFormat) {
-        bootbox.dialog({
-            title: "vybrat profil",
-            message: '<select id="convertVideoProfileDropdown" class="form-control">' + 
-                    '<option></option>{foreach $conversionProfiles as $profile}' + '\
-                    <option value="{$profile['id']|noescape}">{$profile['name']|noescape}' + 
-                    ' | A: {$profile['audio_bitrate']|noescape}kbps' + 
-                    ' | V: {$profile['video_bitrate']|noescape}kbps</option> {/foreach} </select>' + 
-                    '<br> <a class="player-download btn btn-primary" onclick="convertProfileConfirmButton(' + id + ',\'' + inputFormat + '\',\'' +  targetFormat + '\');" >zkonvertovat</a>',
-            buttons: {
-                main: {
-                    label: "zavřít",
-                    className: "btn-primary"
-                }
-            },
-            className: "modal60"
-        });
-    }
-    
     function fileMissing(file) {
         bootbox.dialog({
             title: "CHYBA: soubor nenalezen!",
@@ -191,9 +197,6 @@
         });
     }
     
-</script>
-
-<script>
     $(document).ready(function() {
         (function ($) {
 
@@ -243,37 +246,5 @@
 
         }(jQuery));
     });
-    
-    function convertProfileConfirmButton(id, originalFile, targetFormat) {
-        var profile = $('#convertVideoProfileDropdown').val();
-        if (profile !== null) {
-            window.location.replace("{$presenter->link('Video:convertFile', $video->id)|noescape}" + "/?input=" + originalFile + "&target=" + targetFormat + "&profile=" + profile);
-        }
-    }
-    
-    function adjustTagsWrapper() {
-        $('#tagsTableWrapper').height(($('#frm-videoBasicInfoForm').height()) / 2);
-    }
-    
-    function hideUsedTags() {
-        var usedTags = $('#tags').tagsinput('items');
-        
-        $.each(usedTags, function(index, value) {
-            $('#tag_' + $.trim(value)).addClass('hidden');
-        });
-    }
-    
-    function hideUsedCategories() {
-        var usedCategories = $('#categories').val();
-        
-        var usedCategoriesArray = usedCategories.toString().replace(" ", "").split(",");
-        
-        $('#categories').tagsinput('removeAll');
-        
-        $.each(usedCategoriesArray, function(index, value) {
-            $('#categories').tagsinput('add', value);
-            $('#category_' + $.trim(value)).addClass('hidden');
-        });
-    }
 </script>
 {/block}

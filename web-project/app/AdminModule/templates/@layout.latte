@@ -136,8 +136,10 @@
     
     <script>
         $("document").ready(function($) {
-            $(".clickable-row").click(function() {
-                window.document.location = $(this).data("href");
+            $(".clickable-row").click(function(e) {
+                if (!$(e.target).hasClass('clickable-row-disable')) {
+                    window.document.location = $(this).data("href");
+                }
             });
             
             //bg ajax worker called every 10 seconds

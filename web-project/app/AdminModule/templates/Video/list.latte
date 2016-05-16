@@ -28,6 +28,7 @@
                     {*<th class="hidden-xs">tagy</th>*}
                     <th class="hidden-xs">kategorie</th>
                     <th class="hidden-xs">poznámka</th>
+                    <th class="hidden-xs"></th>
                 </thead>
                 <tbody class="searchable">
                     <tr n:foreach="$videos as $video" 
@@ -42,6 +43,21 @@
                         {*<td class="hidden-xs">{$video->tags}<td>*}
                         <td class="hidden-xs">{$video->categories}</td>
                         <td class="hidden-xs">{$video->note}</td>
+                        <td class="hidden-xs">
+                            <div class="dropdown clickable-row-disable">
+                            <button class="btn btn-default dropdown-toggle clickable-row-disable" type="button" id="dropdown_{$video['id']}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <i class="fa fa-bars clickable-row-disable" aria-hidden="true"></i>
+                                <span class="caret clickable-row-disable"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown_{$video['id']}">
+                                <li><a class="clickable-row-disable" href="#">Action</a></li>
+                                <li><a class="clickable-row-disable" href="#">Another action</a></li>
+                                <li><a class="clickable-row-disable" href="#">Something else here</a></li>
+                                <li role="separator" class="divider clickable-row-disable"></li>
+                                <li><a class="clickable-row-disable" href="#">Separated link</a></li>
+                            </ul>
+                          </div>
+                        </td>
                     </tr>
                 </tbody>                
             </table>
@@ -54,6 +70,9 @@
 {/block}
 
 {block pageScripts}
+
+{include sharedJS.latte}
+
     <script>
         $(document).ready(function() {
             (function ($) {

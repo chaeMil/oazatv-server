@@ -1,0 +1,30 @@
+{block content}
+<script>
+    
+    function convertVideoFileDialog(id, inputFormat, targetFormat) {
+        bootbox.dialog({
+            title: "vybrat profil",
+            message: '<select id="convertVideoProfileDropdown" class="form-control">' + 
+                    '<option></option>{foreach $conversionProfiles as $profile}' + '\
+                    <option value="{$profile['id']|noescape}">{$profile['name']|noescape}' + 
+                    ' | A: {$profile['audio_bitrate']|noescape}kbps' + 
+                    ' | V: {$profile['video_bitrate']|noescape}kbps</option> {/foreach} </select>' + 
+                    '<br> <a class="player-download btn btn-primary" onclick="convertProfileConfirmButton(' + id + ',\'' + inputFormat + '\',\'' +  targetFormat + '\');" >zkonvertovat</a>',
+            buttons: {
+                main: {
+                    label: "zavřít",
+                    className: "btn-primary"
+                }
+            },
+            className: "modal60"
+        });
+    }
+    
+    function convertProfileConfirmButton(id, originalFile, targetFormat) {
+        var profile = $('#convertVideoProfileDropdown').val();
+        if (profile !== null) {
+            window.location.replace("{$presenter->link('Video:convertFile')|noescape}" + "/" + id + "/?input=" + originalFile + "&target=" + targetFormat + "&profile=" + profile);
+        }
+    }
+</script>
+{/block}

@@ -50,6 +50,7 @@ class VideoPresenter extends BaseSecuredPresenter {
                 ->getVideosFromDB(0, 9999, 2, VideoManager::COLUMN_DATE." DESC");
         
         $this->template->videosFolder = VIDEOS_FOLDER;
+        $this->template->conversionProfiles = $this->conversionProfilesManager->getProfilesFromDB();
     }
     
     public function renderDetail($id) {
