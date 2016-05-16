@@ -34,6 +34,7 @@ class VideoPresenter extends BasePresenter {
             $videoArray[VideoManager::COLUMN_MP4_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_MP4_FILE];
             $videoArray[VideoManager::COLUMN_WEBM_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_WEBM_FILE];
             $videoArray[VideoManager::COLUMN_THUMB_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_THUMB_FILE];
+            $videoArray[VideoManager::COLUMN_MP4_FILE_LOWRES] = $videoUrlPrefix . $video[VideoManager::COLUMN_MP4_FILE_LOWRES];
             
             $jsonArray['video'] = $videoArray;
             

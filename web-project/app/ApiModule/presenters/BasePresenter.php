@@ -98,7 +98,8 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
             $item[VideoManager::COLUMN_MP4_FILE] = $videoUrlPrefix . $item[VideoManager::COLUMN_MP4_FILE];
             $item[VideoManager::COLUMN_WEBM_FILE] = $videoUrlPrefix . $item[VideoManager::COLUMN_WEBM_FILE];
             $item[VideoManager::COLUMN_THUMB_FILE] = $videoUrlPrefix . $item[VideoManager::COLUMN_THUMB_FILE];
-
+            $item[VideoManager::COLUMN_MP4_FILE_LOWRES] = $videoUrlPrefix . $item[VideoManager::COLUMN_MP4_FILE_LOWRES];
+            
         }
 
         if ($item['type'] == "album") {
