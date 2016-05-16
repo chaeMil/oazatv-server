@@ -83,6 +83,7 @@ class ConversionManager {
                 $CONVcodecVideo = "libx264 -preset medium -profile:v baseline -level 3 -vf scale=-1:480";
                 $CONVcodecAudio = "aac -strict -2";
                 $CONVextraParam = "-deinterlace -movflags faststart -async 1";
+                break;
         }
         
         if ($queueItem['profile'] != 0) {
