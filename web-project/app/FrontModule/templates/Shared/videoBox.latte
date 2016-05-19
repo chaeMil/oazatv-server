@@ -40,6 +40,8 @@
                      {/if}
                      {if isset($item['thumbs']) && isset($item['thumbs']['thumb_512'])}
                          style="background-image: url({$item['thumbs']['thumb_512']|noescape});"
+                     {else}
+                         style="background-image: url({$item['thumb_file']|noescape});"
                      {/if}>
                 </div>
                 <i class="open fa {if $item['type'] == "video"} fa-play-circle {else} fa-picture-o{/if}" 
