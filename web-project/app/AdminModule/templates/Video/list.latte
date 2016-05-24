@@ -16,6 +16,9 @@
         
         <br>
         
+        {control videosGrid}
+        
+        {*
         <input id="filter" type="text" class="form-control" placeholder="Vyhledávání...">
         <br>
         <div class="row">
@@ -25,7 +28,6 @@
                     <th>název česky</th>
                     <th>název anglicky</th>
                     <th style="min-width: 100px">datum</th>
-                    {*<th class="hidden-xs">tagy</th>*}
                     <th class="hidden-xs">kategorie</th>
                     <th class="hidden-xs">poznámka</th>
                     <th class="hidden-xs"></th>
@@ -40,7 +42,6 @@
                         <td>{$video->name_cs}</td>
                         <td>{$video->name_en}</td>
                         <td>{$video->date|date:'j.n.Y'}</td>
-                        {*<td class="hidden-xs">{$video->tags}<td>*}
                         <td class="hidden-xs">{$video->categories}</td>
                         <td class="hidden-xs">{$video->note}</td>
                         <td class="hidden-xs">
@@ -61,7 +62,7 @@
                     </tr>
                 </tbody>                
             </table>
-        </div>
+        </div>*}
         
     </div>
     

@@ -24,7 +24,8 @@
 		"kdyby/translation": "^2.2",
 		"janmarek/webloader": "^2.5",
 		"joseki/webloader-filters": "^1.1",
-		"mexitek/phpcolors": "dev-master"
+		"mexitek/phpcolors": "dev-master",
+		"nextras/datagrid": "^2.1"
 	},
 	"require-dev": {
 		"nette/tester": "~1.4"

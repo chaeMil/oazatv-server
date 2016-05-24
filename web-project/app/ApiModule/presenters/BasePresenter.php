@@ -122,6 +122,11 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
 
             $item['thumbs'] = $thumbs;
         }
+
+        unset($item['published']);
+        unset($item['id']);
+        unset($item['note']);
+        unset($item['original_file']);
         
         return $item;
     }

@@ -15,7 +15,8 @@ use Nette,
  Model\TagsManager,
  Model\CategoriesManager,
  Model\ConversionProfilesManager,
- App\FileUtils;
+ App\FileUtils,
+ Nextras\Datagrid\Datagrid;
 
 /**
  * Description of VideoPresenter
@@ -46,11 +47,51 @@ class VideoPresenter extends BaseSecuredPresenter {
     public function renderList() {       
         $this->getTemplateVariables($this->getUser()->getId());
         
+        
+        
         $this->template->videos = $this->videoManager
                 ->getVideosFromDB(0, 9999, 2, VideoManager::COLUMN_DATE." DESC");
         
         $this->template->videosFolder = VIDEOS_FOLDER;
         $this->template->conversionProfiles = $this->conversionProfilesManager->getProfilesFromDB();
+    }
+    
+    public function createComponentVideosGrid() {
+        $grid = new Datagrid;
+        $grid->addColumn('id')->enableSort();
+        $grid->addColumn('name_cs', 'název česky');
+        $grid->addColumn('name_en', 'název anglicky');
+        $grid->addColumn('published', 'zveřejněno');
+        $grid->addColumn('date', 'datum')->enableSort();
+        $grid->addColumn('categories', 'kategorie');
+        $grid->addColumn('note', 'poznámka');
+        
+        $grid->setFilterFormFactory(function() {
+            $form = new Nette\Application\UI\Form;
+            $form->addText('date', 'datum')
+                ->setHtmlId("datepicker");
+            return $form;
+        });
+        
+        $grid->setDatasourceCallback(function($filter, $order) {
+            $filters = array();
+            foreach ($filter as $k => $v) {
+                if ($k == 'id' || is_array($v)) {
+                    $filters[$k] = $v;
+                } else {
+                    $filters[$k. ' LIKE ?'] = "%$v%";
+                }
+            }
+
+            $selection = $this->database->table(VideoManager::TABLE_NAME)->where($filters);
+            if ($order[0]) {
+                $selection->order(implode(' ', $order));
+            }
+
+            return $selection;
+        });
+        
+        return $grid;
     }
     
     public function renderDetail($id) {
