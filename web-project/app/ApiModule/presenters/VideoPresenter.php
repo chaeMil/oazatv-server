@@ -9,7 +9,6 @@
 namespace App\ApiModule;
 
 use Nette,
- Model\VideoManager,
  Model\AnalyticsManager;
 
 /**
@@ -26,17 +25,11 @@ class VideoPresenter extends BasePresenter {
         
         if ($video != false) {
 
-            $videoArray = $video->toArray();
-            
-            $videoUrlPrefix = SERVER . "/". VIDEOS_FOLDER . $videoArray[VideoManager::COLUMN_ID] . "/";
-            
-            $videoArray[VideoManager::COLUMN_MP3_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_MP3_FILE];
-            $videoArray[VideoManager::COLUMN_MP4_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_MP4_FILE];
-            $videoArray[VideoManager::COLUMN_WEBM_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_WEBM_FILE];
-            $videoArray[VideoManager::COLUMN_THUMB_FILE] = $videoUrlPrefix . $video[VideoManager::COLUMN_THUMB_FILE];
-            $videoArray[VideoManager::COLUMN_MP4_FILE_LOWRES] = $videoUrlPrefix . $video[VideoManager::COLUMN_MP4_FILE_LOWRES];
-            
-            $jsonArray['video'] = $videoArray;
+            $videoItem = $video->toArray();
+            $videoItem['type'] = 'video';
+            $videoItem = $this->createArchiveItem($videoItem);
+
+            $jsonArray['video'] = $videoItem;
             
             $this->sendJson($jsonArray);
         } else {
