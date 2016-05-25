@@ -24,7 +24,7 @@ use Nette,
  * @author chaemil
  */
 class VideoPresenter extends BaseSecuredPresenter {
-    
+
     public $database;
     private $videoManager;
     private $convertQueueManager;
@@ -33,7 +33,7 @@ class VideoPresenter extends BaseSecuredPresenter {
     private $conversionProfilesManager;
 
     function __construct(Nette\Database\Context $database, VideoManager $videoManager,
-     VideoConvertQueueManager $convertQueueManager, TagsManager $tagsManager, 
+     VideoConvertQueueManager $convertQueueManager, TagsManager $tagsManager,
             CategoriesManager $categoriesManager,
             ConversionProfilesManager $conversionProfilesManager) {
         $this->database = $database;
@@ -43,19 +43,19 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->categoriesManager = $categoriesManager;
         $this->conversionProfilesManager = $conversionProfilesManager;
     }
-    
-    public function renderList() {       
+
+    public function renderList() {
         $this->getTemplateVariables($this->getUser()->getId());
-        
-        
-        
+
+
+
         $this->template->videos = $this->videoManager
                 ->getVideosFromDB(0, 9999, 2, VideoManager::COLUMN_DATE." DESC");
-        
+
         $this->template->videosFolder = VIDEOS_FOLDER;
         $this->template->conversionProfiles = $this->conversionProfilesManager->getProfilesFromDB();
     }
-    
+
     public function createComponentVideosGrid() {
         $grid = new Datagrid;
         $grid->addColumn('id')->enableSort();
@@ -65,14 +65,14 @@ class VideoPresenter extends BaseSecuredPresenter {
         $grid->addColumn('date', 'datum')->enableSort();
         $grid->addColumn('categories', 'kategorie');
         $grid->addColumn('note', 'poznámka');
-        
+
         $grid->setFilterFormFactory(function() {
             $form = new Nette\Application\UI\Form;
             $form->addText('date', 'datum')
                 ->setHtmlId("datepicker");
             return $form;
         });
-        
+
         $grid->setDatasourceCallback(function($filter, $order) {
             $filters = array();
             foreach ($filter as $k => $v) {
@@ -90,7 +90,7 @@ class VideoPresenter extends BaseSecuredPresenter {
 
             return $selection;
         });
-        
+
         return $grid;
     }
     
