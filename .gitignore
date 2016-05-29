@@ -3,3 +3,5 @@
 /web-project/www/db/albums/
 /web-project/www/db/preachers/
 /web-project/www/uploaded/resumable_log.txt
+/web-project/app/config/home_featured.json
+/web-project/app/config/live_stream.json
