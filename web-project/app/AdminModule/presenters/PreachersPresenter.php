@@ -109,6 +109,7 @@ class PreachersPresenter extends BaseSecuredPresenter {
             $newName = PREACHERS_FOLDER.$filename.".".$extension;
             if(file_exists($newName)) {
                 unlink($newName);
+                $this->preachersManager->deletePhotoThumbnails($filename);
             }
             $file->move($newName);
             chmod($newName, 0777);
