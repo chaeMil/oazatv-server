@@ -60,6 +60,7 @@ class SongsManager extends BaseModel {
             $sql = $category->update($values);
             return $sql;
         } else {
+            unset($values['id']);
             $sql = self::$database->table(self::TABLE_NAME)->insert($values);
         }
 
