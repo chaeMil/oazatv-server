@@ -60,7 +60,7 @@ class ConversionManager {
                     $CONVvideoBitrate = $this->serverSettings->loadValue("mp4_video_bitrate");
                 }
                 $CONVextension = ".mp4";
-                $CONVcodecVideo = "libx264 -preset medium -profile:v baseline -level 3";
+                $CONVcodecVideo = "libx264 -preset medium -profile:v baseline -level 3 -pix_fmt yuv420p ";
                 $CONVcodecAudio = "aac -strict -2";
                 $CONVextraParam = "-deinterlace -movflags faststart -async 1";
                 break;
@@ -80,7 +80,7 @@ class ConversionManager {
                     $CONVvideoBitrate = $this->serverSettings->loadValue("mp4_lowres_video_bitrate");
                 }
                 $CONVextension = ".mp4";
-                $CONVcodecVideo = "libx264 -preset medium -profile:v baseline -level 3 -vf scale=-2:480";
+                $CONVcodecVideo = "libx264 -preset medium -profile:v baseline -level 3 -vf scale=-2:480 -pix_fmt yuv420p ";
                 $CONVcodecAudio = "aac -strict -2";
                 $CONVextraParam = "-deinterlace -movflags faststart -async 1";
                 break;
