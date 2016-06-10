@@ -15,7 +15,8 @@ use Nette,
  Model\TagsManager,
  Model\CategoriesManager,
  Model\ConversionProfilesManager,
- App\FileUtils;
+ App\FileUtils,
+ Nextras\Datagrid\Datagrid;
 
 /**
  * Description of VideoPresenter
@@ -168,19 +169,19 @@ class VideoPresenter extends BaseSecuredPresenter {
 
     public function createComponentVideoBasicInfoForm() {
         $form = new Nette\Application\UI\Form;
-        
+
         $form->addHidden('id')
                 ->setRequired();
-        
+
         $published = array(
             '0' => 'Ne',
             '1' => 'Ano',
         );
-        
+
         $form->addSelect("published", "zveřejneno")
                 ->setItems($published)
                 ->setAttribute("class", "form-control");
-        
+
         $form->addText('name_cs', 'název česky')
                 ->setRequired()
                 ->setAttribute("class", "form-control");
@@ -188,35 +189,35 @@ class VideoPresenter extends BaseSecuredPresenter {
         $form->addText('name_en', 'název anglicky')
                 ->setRequired()
                 ->setAttribute("class", "form-control");
-        
+
         $form->addText('date', 'datum')
                 ->setRequired()
                 ->setHtmlId("datepicker")
                 ->setAttribute("class", "form-control");
-        
+
         $form->addText('tags', 'tagy')
                 ->setRequired()
                 ->setHtmlId("tags")
                 ->setAttribute("class", "form-control")
                 ->setAttribute("data-role", "tagsinput");
-        
+
         $form->addText("categories", "kategorie:")
                 ->setHtmlId("categories")
                 ->setAttribute("data-role", "tagsinput")
                 ->setAttribute("class", "form-control");
-        
+
         $form->addTextArea('description_cs', 'popis česky')
                 ->setAttribute("class", "form-control");
-        
+
         $form->addTextArea('description_en', 'popis anglicky')
                 ->setAttribute("class", "form-control");
-        
+
         $form->addTextArea("note", "interní poznámka")
                 ->setAttribute("class", "form-control");
 
         $form->addSubmit('send', 'Uložit')
                 ->setAttribute("class", "btn-lg btn-success btn-block");
-        
+
 
         // call method signInFormSucceeded() on success
         $form->onSuccess[] = $this->videoBasicInfoSucceeded;
@@ -226,34 +227,34 @@ class VideoPresenter extends BaseSecuredPresenter {
 
         return $form;
     }
-    
+
     public function videoBasicInfoSucceeded($form) {
         $vals = $form->getValues();
-        
+
         $status = $this->videoManager->saveVideoToDB($vals);
-        
+
         if ($status) {
             EventLogger::log('user '.$this->getUser()->getIdentity()
                     ->login.' updated video '.$vals->id,
                 EventLogger::ACTIONS_LOG);
-            
+
             $this->flashMessage("Změny úspěšně uloženy", "success");
         } else {
             $this->flashMessage("Nic nebylo změněno", "info");
         }
     }
-    
+
     public function actionUseOriginalFileAs($id, $target) {
         $this->videoManager->useOriginalFileAs($id, $target);
-        
+
         EventLogger::log('user '.$this->getUser()->getIdentity()
                 ->login.' used original file as '.$target.' in video '.$id,
                 EventLogger::ACTIONS_LOG);
-        
+
         $this->flashMessage("Originání soubor použit jako: ".$target, "success");
         $this->redirect("Video:Detail#files", $id);
     }
-    
+
     public function actionDeleteVideoFile($id, $file) {
         $this->videoManager->deleteVideoFile($id, $file);
         if ($file == VideoManager::COLUMN_THUMB_FILE) {
@@ -265,7 +266,7 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->flashMessage("Soubor byl smazán", "danger");
         $this->redirect("Video:Detail#files", $id);
     }
-    
+
     public function actionConvertFile($id, $input, $target, $profile) {
         $this->videoManager->addVideoToConvertQueue($id, $input, $target, $profile);
         EventLogger::log('user '.$this->getUser()
@@ -275,10 +276,10 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->flashMessage("Soubor byl přidán do fronty", "info");
         $this->redirect("Video:Detail#files", $id);
     }
-    
+
     public function actionDeleteVideo($id) {
         $this->videoManager->deleteVideo($id);
-        EventLogger::log('user '.$this->getUser()->getIdentity()->login.' deleted video '.$id, 
+        EventLogger::log('user '.$this->getUser()->getIdentity()->login.' deleted video '.$id,
                 EventLogger::ACTIONS_LOG);
         $this->flashMessage("Video bylo smazáno!", "danger");
         $this->redirect("Video:List");
