@@ -47,8 +47,6 @@ class VideoPresenter extends BaseSecuredPresenter {
     public function renderList() {
         $this->getTemplateVariables($this->getUser()->getId());
 
-
-
         $this->template->videos = $this->videoManager
                 ->getVideosFromDB(0, 9999, 2, VideoManager::COLUMN_DATE." DESC");
 
@@ -56,56 +54,77 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->template->conversionProfiles = $this->conversionProfilesManager->getProfilesFromDB();
     }
 
+    public function getDataSource($filter, $order, Nette\Utils\Paginator $paginator = NULL){
+        $selection = $this->prepareDataSource($filter, $order);
+        if ($paginator) {
+            $selection->limit($paginator->getItemsPerPage(), $paginator->getOffset());
+        }
+        return $selection;
+    }
+
+    public function getDataSourceSum($filter, $order) {
+        return $this->prepareDataSource($filter, $order)->count('*');
+    }
+
+    private function prepareDataSource($filter, $order) {
+        $filters = array();
+        foreach ($filter as $k => $v) {
+            if ($k == 'id' || is_array($v)) {
+                $filters[$k] = $v;
+            } else {
+                $filters[$k. ' LIKE ?'] = "%$v%";
+            }
+        }
+
+        $selection = $this->database->table(VideoManager::TABLE_NAME)->where($filters);
+        if ($order[0]) {
+            $selection->order(implode(' ', $order));
+        }
+
+        return $selection;
+    }
+
+
     public function createComponentVideosGrid() {
         $grid = new Datagrid;
-        $grid->addColumn('id')->enableSort();
-        $grid->addColumn('name_cs', 'název česky');
-        $grid->addColumn('name_en', 'název anglicky');
-        $grid->addColumn('published', 'zveřejněno');
-        $grid->addColumn('date', 'datum')->enableSort();
+        $grid->addColumn('hash', '#');
+        $grid->addColumn('thumb_file', ' ');
+        $grid->addColumn('name_cs', 'název česky')
+            ->enableSort(Datagrid::ORDER_DESC)
+            ->enableSort(Datagrid::ORDER_ASC);
+        $grid->addColumn('name_en', 'název anglicky')
+            ->enableSort(Datagrid::ORDER_DESC)
+            ->enableSort(Datagrid::ORDER_ASC);
+        $grid->addColumn('published', 'zveřejněno')
+            ->enableSort(Datagrid::ORDER_DESC)
+            ->enableSort(Datagrid::ORDER_ASC);
+        $grid->addColumn('date', 'datum')
+            ->enableSort(Datagrid::ORDER_DESC)
+            ->enableSort(Datagrid::ORDER_ASC);
         $grid->addColumn('categories', 'kategorie');
         $grid->addColumn('note', 'poznámka');
 
-        $grid->setFilterFormFactory(function() {
-            $form = new Nette\Application\UI\Form;
-            $form->addText('date', 'datum')
-                ->setHtmlId("datepicker");
-            return $form;
-        });
+        $grid->addCellsTemplate(__DIR__.'/../templates/Video/listCell.latte');
 
-        $grid->setDatasourceCallback(function($filter, $order) {
-            $filters = array();
-            foreach ($filter as $k => $v) {
-                if ($k == 'id' || is_array($v)) {
-                    $filters[$k] = $v;
-                } else {
-                    $filters[$k. ' LIKE ?'] = "%$v%";
-                }
-            }
+        $grid->setPagination(30, $this->getDataSourceSum);
 
-            $selection = $this->database->table(VideoManager::TABLE_NAME)->where($filters);
-            if ($order[0]) {
-                $selection->order(implode(' ', $order));
-            }
-
-            return $selection;
-        });
+        $grid->setDataSourceCallback($this->getDataSource);
 
         return $grid;
     }
-    
+
     public function renderDetail($id) {
         $this->getTemplateVariables($this->getUser()->getId());
         $video = $this->videoManager->getVideoFromDB($id, 2);
-        
+
         $this->template->tagsArray = $this->tagsManager->tagCloud();
         $this->template->categories = $this->categoriesManager->getCategoriesFromDB();
         $this->template->conversionProfiles = $this->conversionProfilesManager->getProfilesFromDB();
-        
+
         if (!isset($video['id'])) {
             $this->error('Požadované video neexistuje!');
         }
-        
+
         $this->template->video = $video;
         if (!file_exists(VIDEOS_FOLDER.$id.'/'.$video['mp4_file'])) {
             $this->template->mp4FileMissing = true;
@@ -113,28 +132,28 @@ class VideoPresenter extends BaseSecuredPresenter {
             $mp4FileSize = FileUtils::humanReadableFileSize(VIDEOS_FOLDER.$id.'/'.$video['mp4_file']);
             $this->template->mp4FileSize = $mp4FileSize;
         }
-        
+
         if (!file_exists(VIDEOS_FOLDER.$id.'/'.$video['mp3_file'])) {
             $this->template->mp3FileMissing = true;
         } else {
             $mp3FileSize = FileUtils::humanReadableFileSize(VIDEOS_FOLDER.$id.'/'.$video['mp3_file']);
             $this->template->mp3FileSize = $mp3FileSize;
         }
-        
+
         if (!file_exists(VIDEOS_FOLDER.$id.'/'.$video['webm_file'])) {
             $this->template->webmFileMissing = true;
         } else {
             $webmFileSize = FileUtils::humanReadableFileSize(VIDEOS_FOLDER.$id.'/'.$video['webm_file']);
             $this->template->webmFileSize = $webmFileSize;
         }
-        
+
         if (!file_exists(VIDEOS_FOLDER.$id.'/'.$video['mp4_file_lowres'])) {
             $this->template->mp4FileLowresMissing = true;
         } else {
             $mp4FileLowresSize = FileUtils::humanReadableFileSize(VIDEOS_FOLDER.$id.'/'.$video['mp4_file_lowres']);
             $this->template->mp4FileLowresSize = $mp4FileLowresSize;
         }
-        
+
         $this->template->originalFileInfo = $this->videoManager->getOriginalFileInfo($video->id);;
         $this->template->originalFile = VideoManager::COLUMN_ORIGINAL_FILE;
         $this->template->mp4File = VideoManager::COLUMN_MP4_FILE;
@@ -145,24 +164,24 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->template->thumbs = $this->videoManager->getThumbnails($id);
         $this->template->convertQueueManager = $this->convertQueueManager;
         $this['videoBasicInfoForm']->setDefaults($video->toArray());
-        
+
     }
-    
-    public function createComponentVideoBasicInfoForm() {        
+
+    public function createComponentVideoBasicInfoForm() {
         $form = new Nette\Application\UI\Form;
-        
+
         $form->addHidden('id')
                 ->setRequired();
-        
+
         $published = array(
             '0' => 'Ne',
             '1' => 'Ano',
         );
-        
+
         $form->addSelect("published", "zveřejneno")
                 ->setItems($published)
                 ->setAttribute("class", "form-control");
-        
+
         $form->addText('name_cs', 'název česky')
                 ->setRequired()
                 ->setAttribute("class", "form-control");
@@ -170,35 +189,35 @@ class VideoPresenter extends BaseSecuredPresenter {
         $form->addText('name_en', 'název anglicky')
                 ->setRequired()
                 ->setAttribute("class", "form-control");
-        
+
         $form->addText('date', 'datum')
                 ->setRequired()
                 ->setHtmlId("datepicker")
                 ->setAttribute("class", "form-control");
-        
+
         $form->addText('tags', 'tagy')
                 ->setRequired()
                 ->setHtmlId("tags")
                 ->setAttribute("class", "form-control")
                 ->setAttribute("data-role", "tagsinput");
-        
+
         $form->addText("categories", "kategorie:")
                 ->setHtmlId("categories")
                 ->setAttribute("data-role", "tagsinput")
                 ->setAttribute("class", "form-control");
-        
+
         $form->addTextArea('description_cs', 'popis česky')
                 ->setAttribute("class", "form-control");
-        
+
         $form->addTextArea('description_en', 'popis anglicky')
                 ->setAttribute("class", "form-control");
-        
+
         $form->addTextArea("note", "interní poznámka")
                 ->setAttribute("class", "form-control");
 
         $form->addSubmit('send', 'Uložit')
                 ->setAttribute("class", "btn-lg btn-success btn-block");
-        
+
 
         // call method signInFormSucceeded() on success
         $form->onSuccess[] = $this->videoBasicInfoSucceeded;
@@ -208,34 +227,34 @@ class VideoPresenter extends BaseSecuredPresenter {
 
         return $form;
     }
-    
+
     public function videoBasicInfoSucceeded($form) {
         $vals = $form->getValues();
-        
+
         $status = $this->videoManager->saveVideoToDB($vals);
-        
+
         if ($status) {
             EventLogger::log('user '.$this->getUser()->getIdentity()
                     ->login.' updated video '.$vals->id,
                 EventLogger::ACTIONS_LOG);
-            
+
             $this->flashMessage("Změny úspěšně uloženy", "success");
         } else {
             $this->flashMessage("Nic nebylo změněno", "info");
         }
     }
-    
+
     public function actionUseOriginalFileAs($id, $target) {
         $this->videoManager->useOriginalFileAs($id, $target);
-        
+
         EventLogger::log('user '.$this->getUser()->getIdentity()
                 ->login.' used original file as '.$target.' in video '.$id,
                 EventLogger::ACTIONS_LOG);
-        
+
         $this->flashMessage("Originání soubor použit jako: ".$target, "success");
         $this->redirect("Video:Detail#files", $id);
     }
-    
+
     public function actionDeleteVideoFile($id, $file) {
         $this->videoManager->deleteVideoFile($id, $file);
         if ($file == VideoManager::COLUMN_THUMB_FILE) {
@@ -247,7 +266,7 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->flashMessage("Soubor byl smazán", "danger");
         $this->redirect("Video:Detail#files", $id);
     }
-    
+
     public function actionConvertFile($id, $input, $target, $profile) {
         $this->videoManager->addVideoToConvertQueue($id, $input, $target, $profile);
         EventLogger::log('user '.$this->getUser()
@@ -257,10 +276,10 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->flashMessage("Soubor byl přidán do fronty", "info");
         $this->redirect("Video:Detail#files", $id);
     }
-    
+
     public function actionDeleteVideo($id) {
         $this->videoManager->deleteVideo($id);
-        EventLogger::log('user '.$this->getUser()->getIdentity()->login.' deleted video '.$id, 
+        EventLogger::log('user '.$this->getUser()->getIdentity()->login.' deleted video '.$id,
                 EventLogger::ACTIONS_LOG);
         $this->flashMessage("Video bylo smazáno!", "danger");
         $this->redirect("Video:List");

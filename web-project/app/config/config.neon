@@ -17,6 +17,9 @@ nette:
         mapping:
             *: App\*Module\*Presenter
 
+latte:
+    macros:
+        - Nextras\Latte\Macros\RedefineMacro::install
 
 session:
     expiration: 3 day
