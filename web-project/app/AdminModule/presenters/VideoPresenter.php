@@ -99,8 +99,8 @@ class VideoPresenter extends BaseSecuredPresenter {
             ->enableSort(Datagrid::ORDER_DESC)
             ->enableSort(Datagrid::ORDER_ASC);
         $grid->addColumn('date', 'datum')
-            ->enableSort(Datagrid::ORDER_DESC)
-            ->enableSort(Datagrid::ORDER_ASC);
+            ->enableSort(Datagrid::ORDER_ASC)
+            ->enableSort(Datagrid::ORDER_DESC);
         $grid->addColumn('categories', 'kategorie');
         $grid->addColumn('note', 'poznámka');
 
