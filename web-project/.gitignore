@@ -38,3 +38,6 @@ db/videos
 db/albums
 nbproject/private/private.xml
 www/webtemp/
+www/uploaded/resumable-temp
+www/majestat/
+www/log
