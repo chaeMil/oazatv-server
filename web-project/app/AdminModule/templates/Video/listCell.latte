@@ -3,9 +3,19 @@
 {/redefine}
 
 {define row-actions}
-    <span class="hidden-xs">
-        <div class="dropdown clickable-row-disable">
-            <button class="btn btn-default dropdown-toggle clickable-row-disable" type="button" id="dropdown_{$row['id']}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <div class="hidden-xs" style="min-width: 150px">
+        <a target="_blank"
+            href="{plink Video:Detail $row['id']}"
+            class="btn btn-default">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+        </a>
+        <a target="_blank"
+            href="{plink :Front:Video:Watch $row['hash']}"
+            class="btn btn-default">
+            <i class="fa fa-globe"></i>
+        </a>
+        {*<div class="dropdown clickable-row-disable">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdown_{$row['id']}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 <i class="fa fa-bars clickable-row-disable" aria-hidden="true"></i>
                 <span class="caret clickable-row-disable"></span>
             </button>
@@ -16,8 +26,8 @@
                 <li role="separator" class="divider clickable-row-disable"></li>
                 <li><a class="clickable-row-disable" href="#">Separated link</a></li>
             </ul>
-          </div>
-    </span>
+        </div>*}
+    </div>
 {/define}
 
 {define col-name_cs}

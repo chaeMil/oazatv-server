@@ -104,6 +104,32 @@ class VideoPresenter extends BaseSecuredPresenter {
         $grid->addColumn('categories', 'kategorie');
         $grid->addColumn('note', 'poznámka');
 
+        $grid->setFilterFormFactory(function() {
+            $form = new Nette\Forms\Container;
+            $form->addText('hash')
+                ->setAttribute("class", "form-control");
+            $form->addText('published')
+                ->setAttribute("placeholder", "0 / 1")
+                ->setAttribute("class", "form-control");
+            $form->addText('name_cs')
+                ->setAttribute("class", "form-control");
+            $form->addText('name_en')
+                ->setAttribute("class", "form-control");
+            $form->addText('date')
+                ->setAttribute("placeholder", "RRRR-MM-DD")
+                ->setAttribute("class", "form-control");
+            $form->addText('categories')
+                ->setAttribute("class", "form-control");
+            $form->addText('note')
+                ->setAttribute("class", "form-control");
+
+            // these buttons are not compulsory
+            $form->addSubmit('filter', 'Filtrovat')->getControlPrototype()->class = 'btn btn-primary';
+            $form->addSubmit('cancel', 'Zrušit')->getControlPrototype()->class = 'btn';
+
+            return $form;
+        });
+
         $grid->addCellsTemplate(__DIR__.'/../templates/Video/listCell.latte');
 
         $grid->setPagination(30, $this->getDataSourceSum);
