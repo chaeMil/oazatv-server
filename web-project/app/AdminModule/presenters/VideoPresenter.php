@@ -23,7 +23,7 @@ use Nette,
  * @author chaemil
  */
 class VideoPresenter extends BaseSecuredPresenter {
-    
+
     public $database;
     private $videoManager;
     private $convertQueueManager;
@@ -32,7 +32,7 @@ class VideoPresenter extends BaseSecuredPresenter {
     private $conversionProfilesManager;
 
     function __construct(Nette\Database\Context $database, VideoManager $videoManager,
-     VideoConvertQueueManager $convertQueueManager, TagsManager $tagsManager, 
+     VideoConvertQueueManager $convertQueueManager, TagsManager $tagsManager,
             CategoriesManager $categoriesManager,
             ConversionProfilesManager $conversionProfilesManager) {
         $this->database = $database;
@@ -42,29 +42,88 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->categoriesManager = $categoriesManager;
         $this->conversionProfilesManager = $conversionProfilesManager;
     }
-    
-    public function renderList() {       
+
+    public function renderList() {
         $this->getTemplateVariables($this->getUser()->getId());
-        
+
         $this->template->videos = $this->videoManager
                 ->getVideosFromDB(0, 9999, 2, VideoManager::COLUMN_DATE." DESC");
-        
+
         $this->template->videosFolder = VIDEOS_FOLDER;
         $this->template->conversionProfiles = $this->conversionProfilesManager->getProfilesFromDB();
     }
-    
+
+    public function getDataSource($filter, $order, Nette\Utils\Paginator $paginator = NULL){
+        $selection = $this->prepareDataSource($filter, $order);
+        if ($paginator) {
+            $selection->limit($paginator->getItemsPerPage(), $paginator->getOffset());
+        }
+        return $selection;
+    }
+
+    public function getDataSourceSum($filter, $order) {
+        return $this->prepareDataSource($filter, $order)->count('*');
+    }
+
+    private function prepareDataSource($filter, $order) {
+        $filters = array();
+        foreach ($filter as $k => $v) {
+            if ($k == 'id' || is_array($v)) {
+                $filters[$k] = $v;
+            } else {
+                $filters[$k. ' LIKE ?'] = "%$v%";
+            }
+        }
+
+        $selection = $this->database->table(VideoManager::TABLE_NAME)->where($filters);
+        if ($order[0]) {
+            $selection->order(implode(' ', $order));
+        }
+
+        return $selection;
+    }
+
+
+    public function createComponentVideosGrid() {
+        $grid = new Datagrid;
+        $grid->addColumn('hash', '#');
+        $grid->addColumn('published', 'veřejné')
+            ->enableSort(Datagrid::ORDER_DESC)
+            ->enableSort(Datagrid::ORDER_ASC);
+        $grid->addColumn('thumb_file', ' ');
+        $grid->addColumn('name_cs', 'název česky')
+            ->enableSort(Datagrid::ORDER_DESC)
+            ->enableSort(Datagrid::ORDER_ASC);
+        $grid->addColumn('name_en', 'název anglicky')
+            ->enableSort(Datagrid::ORDER_DESC)
+            ->enableSort(Datagrid::ORDER_ASC);
+        $grid->addColumn('date', 'datum')
+            ->enableSort(Datagrid::ORDER_DESC)
+            ->enableSort(Datagrid::ORDER_ASC);
+        $grid->addColumn('categories', 'kategorie');
+        $grid->addColumn('note', 'poznámka');
+
+        $grid->addCellsTemplate(__DIR__.'/../templates/Video/listCell.latte');
+
+        $grid->setPagination(30, $this->getDataSourceSum);
+
+        $grid->setDataSourceCallback($this->getDataSource);
+
+        return $grid;
+    }
+
     public function renderDetail($id) {
         $this->getTemplateVariables($this->getUser()->getId());
         $video = $this->videoManager->getVideoFromDB($id, 2);
-        
+
         $this->template->tagsArray = $this->tagsManager->tagCloud();
         $this->template->categories = $this->categoriesManager->getCategoriesFromDB();
         $this->template->conversionProfiles = $this->conversionProfilesManager->getProfilesFromDB();
-        
+
         if (!isset($video['id'])) {
             $this->error('Požadované video neexistuje!');
         }
-        
+
         $this->template->video = $video;
         if (!file_exists(VIDEOS_FOLDER.$id.'/'.$video['mp4_file'])) {
             $this->template->mp4FileMissing = true;
@@ -72,28 +131,28 @@ class VideoPresenter extends BaseSecuredPresenter {
             $mp4FileSize = FileUtils::humanReadableFileSize(VIDEOS_FOLDER.$id.'/'.$video['mp4_file']);
             $this->template->mp4FileSize = $mp4FileSize;
         }
-        
+
         if (!file_exists(VIDEOS_FOLDER.$id.'/'.$video['mp3_file'])) {
             $this->template->mp3FileMissing = true;
         } else {
             $mp3FileSize = FileUtils::humanReadableFileSize(VIDEOS_FOLDER.$id.'/'.$video['mp3_file']);
             $this->template->mp3FileSize = $mp3FileSize;
         }
-        
+
         if (!file_exists(VIDEOS_FOLDER.$id.'/'.$video['webm_file'])) {
             $this->template->webmFileMissing = true;
         } else {
             $webmFileSize = FileUtils::humanReadableFileSize(VIDEOS_FOLDER.$id.'/'.$video['webm_file']);
             $this->template->webmFileSize = $webmFileSize;
         }
-        
+
         if (!file_exists(VIDEOS_FOLDER.$id.'/'.$video['mp4_file_lowres'])) {
             $this->template->mp4FileLowresMissing = true;
         } else {
             $mp4FileLowresSize = FileUtils::humanReadableFileSize(VIDEOS_FOLDER.$id.'/'.$video['mp4_file_lowres']);
             $this->template->mp4FileLowresSize = $mp4FileLowresSize;
         }
-        
+
         $this->template->originalFileInfo = $this->videoManager->getOriginalFileInfo($video->id);;
         $this->template->originalFile = VideoManager::COLUMN_ORIGINAL_FILE;
         $this->template->mp4File = VideoManager::COLUMN_MP4_FILE;
@@ -104,10 +163,10 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->template->thumbs = $this->videoManager->getThumbnails($id);
         $this->template->convertQueueManager = $this->convertQueueManager;
         $this['videoBasicInfoForm']->setDefaults($video->toArray());
-        
+
     }
-    
-    public function createComponentVideoBasicInfoForm() {        
+
+    public function createComponentVideoBasicInfoForm() {
         $form = new Nette\Application\UI\Form;
         
         $form->addHidden('id')
