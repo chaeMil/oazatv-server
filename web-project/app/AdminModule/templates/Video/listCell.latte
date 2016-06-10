@@ -34,9 +34,11 @@
 
 {define col-thumb_file}
     <td>
-        <img style="max-width: 180px"
-        class="img-responsive"
-        src="{$basePath}/db/videos/{$row['id']}/{$row['thumb_file']}" />
+        <a href="{plink Video:detail $row['id']}">{$cell}</a>
+            <img style="max-width: 180px"
+                class="img-responsive"
+                src="{$basePath}/db/videos/{$row['id']}/{$row['thumb_file']}" />
+        </a>
     </td>
 {/define}
 
