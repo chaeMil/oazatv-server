@@ -20,6 +20,8 @@ basic:
     show_next: "Show next"
     show_menu: "Show menu"
     show: "Show"
+    onair: "On Air"
+    livestream: "Live stream"
 search:
     more: "more results"
 homepage:

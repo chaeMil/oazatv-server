@@ -16,7 +16,7 @@
                 <span class="text hidden-xs">Oáza.tv</span>
                 <div class="onair offline"> 
                     <div class="dot"></div>
-                    OnAir 
+                    {_frontend.basic.onair}
                 </div>
             </a>
 
@@ -24,6 +24,12 @@
         </div>
 
         <div class="pull-right navbar-user-menu">
+
+            <a class="btn btn-primary btn-archive"
+                    n:href="LiveStream:Default">
+                {_frontend.basic.livestream}
+            </a>
+
             <a class="btn btn-primary btn-archive"
                    n:href="Archive:Default">
                     {_frontend.basic.archive}

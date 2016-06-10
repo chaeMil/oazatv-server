@@ -20,6 +20,8 @@ basic:
     show_next: "Zobrazit další"
     show_menu: "Zobrazit menu"
     show: "Zobrazit"
+    onair: "vysíláme živě"
+    livestream: "Živé vysílání"
 search:
     more: "další výsledky"
 homepage:
