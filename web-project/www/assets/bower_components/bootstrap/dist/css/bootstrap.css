@@ -4798,7 +4798,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 }
 @media (min-width: 992px) {
   .navbar-inverse .navbar-search .form-control {
-    width: 400px;
+    width: 350px;
   }
 }
 .navbar-inverse .navbar-search .form-control::-webkit-input-placeholder {
