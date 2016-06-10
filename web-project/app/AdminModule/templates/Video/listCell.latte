@@ -1,17 +1,55 @@
-{define table-open-tag}
+{redefine table-open-tag}
     <table class="table table-hover">
+{/redefine}
+
+{define row-actions}
+    <span class="hidden-xs">
+        <div class="dropdown clickable-row-disable">
+            <button class="btn btn-default dropdown-toggle clickable-row-disable" type="button" id="dropdown_{$row['id']}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <i class="fa fa-bars clickable-row-disable" aria-hidden="true"></i>
+                <span class="caret clickable-row-disable"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown_{$row['id']}">
+                <li><a class="clickable-row-disable" href="#">Action</a></li>
+                <li><a class="clickable-row-disable" href="#">Another action</a></li>
+                <li><a class="clickable-row-disable" href="#">Something else here</a></li>
+                <li role="separator" class="divider clickable-row-disable"></li>
+                <li><a class="clickable-row-disable" href="#">Separated link</a></li>
+            </ul>
+          </div>
+    </span>
 {/define}
 
-{define table-close-tag}
-    </table>
+{define col-name_cs}
+    <td>
+        <a href="{plink Video:detail $row['id']}">{$cell}</a>
+    </td>
 {/define}
 
-{define col-filter}
-    <span>sdfsdf</span>
+{define col-name_en}
+    <td>
+        <a href="{plink Video:detail $row['id']}">{$cell}</a>
+    </td>
 {/define}
 
 {define col-thumb_file}
     <td>
         <img class="img-responsive" src="{$basePath}/db/videos/{$row['id']}/{$row['thumb_file']}" />
+    </td>
+{/define}
+
+{define col-published}
+    <td>
+        {if $cell == 1}
+            <i class="fa fa-check" aria-hidden="true" style="color: green; font-size: 24px;"></i>
+        {else}
+            <i class="fa fa-times" aria-hidden="true" style="color: red; font-size: 24px;"></i>
+        {/if}
+    </td>
+{/define}
+
+{define col-date}
+    <td>
+        <span>{$cell|date:'j.n.Y'}</span>
     </td>
 {/define}
