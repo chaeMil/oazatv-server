@@ -42,3 +42,5 @@ www/uploaded/resumable-temp
 www/majestat/
 www/majestat-2014/
 www/log
+/app/config/home_featured.json
+/app/config/live_stream.json
