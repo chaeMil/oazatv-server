@@ -96,7 +96,7 @@ class VideoManager extends BaseModel {
             return self::$database->table(self::TABLE_NAME)
                     ->select("*")
                     ->limit(1, 0)
-                    ->order(self::COLUMN_DATE." DESC")
+                    ->order(self::COLUMN_DATE." DESC". ", ".self::COLUMN_ID." DESC")
                     ->where(array(self::COLUMN_PUBLISHED => $published))
                     ->fetch();
         } else {
