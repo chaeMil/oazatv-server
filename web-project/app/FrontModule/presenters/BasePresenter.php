@@ -41,6 +41,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         $this->setupLanguage($this->container, $this->translator->getLocale());
         
         $this->registerCustomHelpers($this->template);
+      
+        $this->template->isCrOS = $this->detectChromeOS();
         
     }
     
@@ -142,5 +144,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
                 }
         }
     }
+  
+  public function detectChromeOS() {
+    return strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome') !== false;
+  }
 
 }

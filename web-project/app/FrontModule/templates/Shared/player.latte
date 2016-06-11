@@ -9,7 +9,7 @@
                         poster="{$basePath}/{$video['thumbs']['1024']}"
                     {/if}>
 
-                    {if isset($video['mp4'])}
+                    {if isset($video['mp4']) && !$isCrOS} {*hack to work on chromebooks*}
                         <source src="{$basePath}/{$video['mp4']}" type='video/mp4' label='original'>
                     {/if}
                     {if isset($video['webm'])}
