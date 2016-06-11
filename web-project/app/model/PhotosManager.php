@@ -136,7 +136,7 @@ class PhotosManager {
     }
 
     public function getAlbumsFromDB($from, $count, $published = 1,
-        $order = self::COLUMN_DATE." DESC") {
+        $order = "date DESC, id DESC") {
 
         if($published != 2) {
             return $this->database->table(self::TABLE_NAME_ALBUMS)
@@ -152,7 +152,7 @@ class PhotosManager {
         }
     }
     
-     public function getAlbumsFromDBtoAPI($from, $count, $order = self::COLUMN_DATE." DESC") {
+     public function getAlbumsFromDBtoAPI($from, $count, $order = "date DESC, id DESC") {
 
         $albums = $this->database->table(self::TABLE_NAME_ALBUMS)
                 ->select('id')

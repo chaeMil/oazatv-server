@@ -198,7 +198,7 @@ class VideoManager extends BaseModel {
 
     }
 
-    public function getVideosFromDB($from, $count, $published = 1, $order = "date DESC") {
+    public function getVideosFromDB($from, $count, $published = 1, $order = "date DESC, id DESC") {
 
         if($published != 2) {
             return self::$database->table(self::TABLE_NAME)
@@ -215,7 +215,7 @@ class VideoManager extends BaseModel {
 
     }
     
-    public function getVideosFromDBtoAPI($from, $count, $order = "date DESC") {
+    public function getVideosFromDBtoAPI($from, $count, $order = "date DESC, id DESC") {
         
         $videos = self::$database->table(self::TABLE_NAME)
                 ->select('*')
