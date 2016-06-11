@@ -44,7 +44,7 @@ class ArchiveManager extends BaseModel {
                 ", 'album' AS type FROM ".
                 PhotosManager::TABLE_NAME_ALBUMS.
                 " WHERE ".PhotosManager::COLUMN_PUBLISHED." = 1 ".
-                ") ORDER BY ".$order.
+                ") ORDER BY ".$order. " created_at DESC".
                 " LIMIT ".$count.
                 " OFFSET ".$from;
 
