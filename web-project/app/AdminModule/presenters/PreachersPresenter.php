@@ -118,7 +118,7 @@ class PreachersPresenter extends BaseSecuredPresenter {
         
         if ($status) {
             EventLogger::log('user '.$this->getUser()->getIdentity()
-                    ->login.' updated preacher '.$vals->id,
+                    ->login.' updated preacher '.$status,
                 EventLogger::ACTIONS_LOG);
             
             $this->flashMessage("Změny úspěšně uloženy", "success");
