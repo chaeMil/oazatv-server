@@ -162,7 +162,12 @@ class PhotosManager {
         $outputArray = array();
         
         foreach($albums as $album) {
-            $arrayItemFromDB = $this->getAlbumFromDB($album['id'])->toArray();
+            $arrayItemFromDB = $this->getAlbumFromDB($album['id']);
+            if ($arrayItemFromDB != false) {
+                $arrayItemFromDB = $arrayItemFromDB->toArray();
+            } else {
+                return null;
+            }
             $arrayItemFromDB['type'] = 'album';
             $outputArray[] = $arrayItemFromDB;
         }
