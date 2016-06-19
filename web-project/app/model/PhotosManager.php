@@ -156,6 +156,7 @@ class PhotosManager {
 
         $albums = $this->database->table(self::TABLE_NAME_ALBUMS)
                 ->select('id')
+                ->where(self::COLUMN_PUBLISHED, 1)
                 ->limit($count, $from)
                 ->order($order);
         
@@ -163,11 +164,7 @@ class PhotosManager {
         
         foreach($albums as $album) {
             $arrayItemFromDB = $this->getAlbumFromDB($album['id']);
-            if ($arrayItemFromDB != false) {
-                $arrayItemFromDB = $arrayItemFromDB->toArray();
-            } else {
-                return null;
-            }
+            $arrayItemFromDB = $arrayItemFromDB->toArray();
             $arrayItemFromDB['type'] = 'album';
             $outputArray[] = $arrayItemFromDB;
         }
