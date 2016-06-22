@@ -19,6 +19,7 @@ class MainPresenter extends BasePresenter {
     private $analyticsManager;
     private $categoriesManager;
     private $frontPageManager;
+    private $anyVariable;
     
     public function __construct(Nette\DI\Container $container,
             Context $database, LoaderFactory $webLoader,
@@ -35,9 +36,21 @@ class MainPresenter extends BasePresenter {
         $this->categoriesManager = $categoriesManager;
         $this->frontPageManager = $frontPageManager;
     }
+  
+    public function handleChangeVariable() {
+        $this->anyVariable = 'changed value via ajax';
+        if ($this->isAjax()) {
+            $this->redrawControl('ajaxChange');
+        }
+    }
     
     public function renderDefault() {
-        
+      
+        if ($this->anyVariable === NULL) {
+            $this->anyVariable = 'default value';
+        }
+        $this->template->anyVariable = $this->anyVariable;
+      
         //support legacy links
         $params = $this->getHttpRequest()->getQuery();
         if (isset($params['page'])) {

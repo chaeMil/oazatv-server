@@ -11,6 +11,7 @@ assets:
     js:
         - '/assets/bower_components/jquery/dist/jquery.min.js'
         - '/assets/bower_components/bootstrap/dist/js/bootstrap.min.js'
+        - '/assets/js/nette.ajax.js'
         - '/assets/bower_components/video.js/dist/video.min.js'
         - '/assets/js/jquery.bootstrap-autohidingnavbar.min.js'
         - '/assets/bower_components/photoswipe/dist/photoswipe.min.js'

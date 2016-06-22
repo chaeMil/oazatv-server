@@ -44,6 +44,13 @@
     </div>
 
     <!-- Page Content -->
+  
+    <a n:href="changeVariable!" class="ajax">ajax</a>
+  
+    {*snippet ajaxChange}
+      <p>{$anyVariable}</p>
+    {/snippet*}
+  
     {include content}
     
     {if !isset($_GET['hideNav'])}
@@ -53,6 +60,12 @@
     {block scripts}
     
         {control js}
+  
+        <script>
+            $(function () {
+                $.nette.init();
+            });
+        </script>
 
         {*<script>
             //autohidding navbar for mobile devices
