@@ -48,5 +48,5 @@
 </IfModule>
 
 php_value upload_max_filesize 8G
-php_value post_max_size 1GB
+php_value post_max_size 1G
 php_value memory_limit 64M
