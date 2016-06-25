@@ -112,17 +112,19 @@ class VideoManager extends BaseModel {
 
     public function getVideoFromDB($id, $published = 1) {
         if ($published != 2) {
-            return self::$database->table(self::TABLE_NAME)
+            $video = self::$database->table(self::TABLE_NAME)
                     ->select("*")
                     ->where(array(self::COLUMN_ID => $id,
                         self::COLUMN_PUBLISHED => $published))
                     ->fetch();
         } else {
-            return self::$database->table(self::TABLE_NAME)
+            $video = self::$database->table(self::TABLE_NAME)
                     ->select("*")
                     ->where(array(self::COLUMN_ID => $id))
                     ->fetch();
         }
+
+        return $video;
     }
     
     public function getVideoFromDBtoAPI($id) {
@@ -560,14 +562,21 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         return $localizedSimilarVideos;
     }
 
-    public function getVideoThumbDominantColor($videoId) {
-        $thumbsArray = $this->getThumbnails($videoId);
-        if ($thumbsArray != null) {
-            $thumbFile = $thumbsArray[self::THUMB_128];
+    public function getVideoThumbDominantColor($thumbFile, $quality = 30) {
+        if ($thumbFile != null) {
             if (file_exists($thumbFile)) {
-                return ColorUtils::rgb2hex(ColorThief::getColor($thumbFile, 10));
+                return ColorUtils::rgb2hex(ColorThief::getColor($thumbFile, $quality));
             }
         }
         return null;
+    }
+
+    public function saveVideoThumbDominantColor($videoId) {
+        $video = $this->getVideoFromDB($videoId, 2);
+        if ($video[self::COLUMN_THUMB_COLOR] == NULL) {
+            $thumbFile = VIDEOS_FOLDER . $videoId . "/thumbs/" . str_replace(".jpg", "_128.jpg", $video[self::COLUMN_THUMB_FILE]);
+            $thumbColor = $this->getVideoThumbDominantColor($thumbFile);
+            $video->update(array(self::COLUMN_THUMB_COLOR => $thumbColor));
+        }
     }
 }

@@ -277,9 +277,33 @@
                                  class="img-responsive thumb-clickable"/>
                         </div>
                         <div class="panel-body">
-                            <a n:href="Video:deleteVideoFile, $video->id, $thumbFile"
-                               data-confirm="smazat miniaturu?"
-                               class="btn btn-danger confirm pull-right">smazat</a>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="pull-left" style="width: 80px; height: 80px; border: 1px solid black;
+                                            background-color: {$video['thumb_color']|noescape};
+                                            text-align: center; line-height: 80px">
+                                        <span style="color: white; background-color: black; padding: 4px">
+                                            {$video['thumb_color']|noescape}
+                                        </span>
+                                    </div>
+                                    <br>
+                                    <a n:href="Video:saveThumbDominantColor, $video->id"
+                                            class="btn btn-info pull-left" style="margin-left: 12px">
+                                        přegenerovat dominantní barvu
+                                    </a>
+
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <a n:href="Video:deleteVideoFile, $video->id, $thumbFile"
+                                            data-confirm="smazat miniaturu?"
+                                            class="btn btn-danger confirm pull-right">
+                                        smazat
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

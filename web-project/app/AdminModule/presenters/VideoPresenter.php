@@ -94,6 +94,7 @@ class VideoPresenter extends BaseSecuredPresenter {
         $grid->addColumn('published', 'veřejné')
             ->enableSort(Datagrid::ORDER_DESC)
             ->enableSort(Datagrid::ORDER_ASC);
+        $grid->addColumn('thumb_color', 'dominantní barva');
         $grid->addColumn('thumb_file', ' ');
         $grid->addColumn('name_cs', 'název česky')
             ->enableSort(Datagrid::ORDER_DESC)
@@ -320,5 +321,13 @@ class VideoPresenter extends BaseSecuredPresenter {
                 EventLogger::ACTIONS_LOG);
         $this->flashMessage("Video bylo smazáno!", "danger");
         $this->redirect("Video:List");
+    }
+
+    public function actionSaveThumbDominantColor($id) {
+        $this->videoManager->saveVideoThumbDominantColor($id);
+        EventLogger::log('user '.$this->getUser()->getIdentity()->login.' saved video thumb dominant color: '.$id,
+            EventLogger::ACTIONS_LOG);
+        $this->flashMessage("Uloženo!", "danger");
+        $this->redirect("Video:Detail#files", $id);
     }
 }

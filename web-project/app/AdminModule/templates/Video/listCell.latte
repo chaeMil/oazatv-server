@@ -62,6 +62,18 @@
     </td>
 {/define}
 
+{define col-thumb_color}
+    <td>
+        {if $row['thumb_color'] != NULL}
+            <div style="border: 1px solid black; width: 50px; height: 50px; background-color: {$row['thumb_color']|noescape}"></div>
+        {else}
+            <div style="border: 1px solid black; width: 50px; height: 50px; text-align: center; line-height: 50px">
+                <a href="{plink Video:detail, $row['id']}#files">NULL</a>
+            </div>
+        {/if}
+    </td>
+{/define}
+
 {define col-date}
     <td>
         <span>{$cell|date:'j.n.Y'}</span>
