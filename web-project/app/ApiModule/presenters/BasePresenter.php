@@ -100,7 +100,6 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
             $item[VideoManager::COLUMN_THUMB_FILE] = $videoUrlPrefix . $item[VideoManager::COLUMN_THUMB_FILE];
             $item[VideoManager::COLUMN_MP4_FILE_LOWRES] = $videoUrlPrefix . $item[VideoManager::COLUMN_MP4_FILE_LOWRES];
             $item[VideoManager::COLUMN_SUBTITLES_FILE] = $videoUrlPrefix . $item[VideoManager::COLUMN_SUBTITLES_FILE];
-            $item[VideoManager::COLUMN_THUMB_COLOR] = $item[VideoManager::COLUMN_THUMB_COLOR];
             
         }
 
