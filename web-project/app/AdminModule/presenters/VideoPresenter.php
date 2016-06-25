@@ -327,7 +327,7 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->videoManager->saveVideoThumbDominantColor($id);
         EventLogger::log('user '.$this->getUser()->getIdentity()->login.' saved video thumb dominant color: '.$id,
             EventLogger::ACTIONS_LOG);
-        $this->flashMessage("Uloženo!", "danger");
+        $this->flashMessage("Uloženo!", "success");
         $this->redirect("Video:Detail#files", $id);
     }
 }
