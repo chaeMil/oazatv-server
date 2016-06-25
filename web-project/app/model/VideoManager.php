@@ -11,8 +11,7 @@ namespace Model;
 use Nette,
  App\StringUtils,
  App\FileUtils,
- Model\VideoConvertQueueManager,
- Model\TagsManager;
+ ColorThief\ColorThief;
 
 /**
  * Description of VideoManager
@@ -454,6 +453,7 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         $video['categories'] = $input[self::COLUMN_CATEGORIES];
         $video['views'] = $input[self::COLUMN_VIEWS];
         $video['thumbs'] = $this->getThumbnails($videoId);
+        $video['thumb_color'] = $this->getVideoThumbDominantColor($videoId);
         $video['type'] = "video";
 
         return $video;
@@ -547,5 +547,17 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         }
         
         return $localizedSimilarVideos;
+    }
+
+    public function getVideoThumbDominantColor($videoId) {
+        $thumbsArray = $this->getThumbnails($videoId);
+        if ($thumbsArray != null) {
+            //dump(VIDEOS_FOLDER . $videoId . "/" . $thumbsArray[self::THUMB_256]); exit;
+            $thumbFile = VIDEOS_FOLDER . $videoId . "/" . $thumbsArray[self::THUMB_256];
+            if (file_exists($thumbFile)) {
+                return ColorThief::getColor($thumbFile);
+            }
+        }
+        return null;
     }
 }
