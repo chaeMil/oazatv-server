@@ -65,7 +65,13 @@
 {define col-thumb_color}
     <td>
         {if $row['thumb_color'] != NULL}
-            <div style="border: 1px solid black; width: 50px; height: 50px; background-color: {$row['thumb_color']|noescape}"></div>
+            <div style="width: 80px; height: 80px; border: 1px solid black;
+                    background-color: {$video['thumb_color']|noescape};
+                    text-align: center; line-height: 80px">
+                <span style="color: white; background-color: black; padding: 4px">
+                    {$video['thumb_color']|noescape}
+                </span>
+            </div>
         {else}
             <div style="border: 1px solid black; width: 50px; height: 50px; text-align: center; line-height: 50px">
                 <a href="{plink Video:detail, $row['id']}#files">NULL</a>
