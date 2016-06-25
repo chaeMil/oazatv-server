@@ -66,10 +66,10 @@
     <td>
         {if $row['thumb_color'] != NULL}
             <div style="width: 80px; height: 80px; border: 1px solid black;
-                    background-color: {$video['thumb_color']|noescape};
+                    background-color: {$row['thumb_color']|noescape};
                     text-align: center; line-height: 80px">
                 <span style="color: white; background-color: black; padding: 4px">
-                    {$video['thumb_color']|noescape}
+                    {$row['thumb_color']|noescape}
                 </span>
             </div>
         {else}
