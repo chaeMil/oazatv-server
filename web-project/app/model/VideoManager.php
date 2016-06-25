@@ -33,6 +33,7 @@ class VideoManager extends BaseModel {
             COLUMN_MP3_FILE = 'mp3_file',
             COLUMN_THUMB_FILE = 'thumb_file',
             COLUMN_SUBTITLES_FILE = 'subtitles_file',
+            COLUMN_THUMB_COLOR = 'thumb_color',
             COLUMN_DATE = 'date',
             COLUMN_NAME_CS = 'name_cs',
             COLUMN_NAME_EN = 'name_en',
@@ -309,6 +310,11 @@ class VideoManager extends BaseModel {
             $subtitlesFile = VIDEOS_FOLDER . $id . "/" . $videoWithSubtitles[self::COLUMN_SUBTITLES_FILE];
             self::fixSubtitlesFile($subtitlesFile);
         }
+
+        if ($target == self::COLUMN_THUMB_FILE) {
+            $newThumbColor = $this->getVideoThumbDominantColor($id);
+            $video->update(array(self::COLUMN_THUMB_COLOR => $newThumbColor));
+        }
     }
 
     public function fixSubtitlesFile($subtitlesFile) {
@@ -342,7 +348,11 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         $this->deleteThumbnails($id);
         $newThumbName = StringUtils::rand(6).".jpg";
         copy($file, VIDEOS_FOLDER.$id."/".$newThumbName);
-        $video->update(array(self::COLUMN_THUMB_FILE => $newThumbName));
+
+        $newThumbColor = $this->getVideoThumbDominantColor($id);
+        $video->update(array(self::COLUMN_THUMB_FILE => $newThumbName,
+            self::COLUMN_THUMB_COLOR => $newThumbColor));
+
     }
 
     public function addVideoToConvertQueue($id, $input, $target, $profile) {
@@ -454,7 +464,7 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         $video['categories'] = $input[self::COLUMN_CATEGORIES];
         $video['views'] = $input[self::COLUMN_VIEWS];
         $video['thumbs'] = $this->getThumbnails($videoId);
-        $video['thumb_color'] = $this->getVideoThumbDominantColor($videoId);
+        $video['thumb_color'] = $input[self::COLUMN_THUMB_COLOR];
         $video['type'] = "video";
 
         return $video;
@@ -555,7 +565,7 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         if ($thumbsArray != null) {
             $thumbFile = $thumbsArray[self::THUMB_128];
             if (file_exists($thumbFile)) {
-                return ColorUtils::rgb2hex(ColorThief::getColor($thumbFile, 50));
+                return ColorUtils::rgb2hex(ColorThief::getColor($thumbFile, 10));
             }
         }
         return null;
