@@ -23,6 +23,7 @@
     "mixitup": "~2.1.10",
     "photoswipe": "~4.1.1",
     "video.js": "videojs#~5.8.6",
-    "masonry": "^4.0.0"
+    "masonry": "^4.0.0",
+    "videojs-ass": "^0.6.0"
   }
 }

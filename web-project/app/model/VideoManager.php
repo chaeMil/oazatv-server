@@ -32,6 +32,7 @@ class VideoManager extends BaseModel {
             COLUMN_WEBM_FILE = 'webm_file',
             COLUMN_MP3_FILE = 'mp3_file',
             COLUMN_THUMB_FILE = 'thumb_file',
+            COLUMN_SUBTITLES_FILE = 'subtitles_file',
             COLUMN_DATE = 'date',
             COLUMN_NAME_CS = 'name_cs',
             COLUMN_NAME_EN = 'name_en',
@@ -302,9 +303,40 @@ class VideoManager extends BaseModel {
     public function useOriginalFileAs($id, $target) {
         $video = $this->getVideoFromDB($id, 2);
         $video->update(array(self::COLUMN_ORIGINAL_FILE => "", $target => $video->original_file));
+
+        if ($target == self::COLUMN_SUBTITLES_FILE) {
+            $videoWithSubtitles = $this->getVideoFromDB($id, 2);
+            $subtitlesFile = VIDEOS_FOLDER . $id . "/" . $videoWithSubtitles[self::COLUMN_SUBTITLES_FILE];
+            self::fixSubtitlesFile($subtitlesFile);
+        }
     }
 
-    public function useExternaFileAsThumb($id, $file) {
+    public function fixSubtitlesFile($subtitlesFile) {
+
+        $header = "[Script Info]
+ScriptType: v4.00+
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+YCbCr Matrix: None
+PlayResX: 480
+PlayResY: 320
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,0,100,100,0,0,1,1.5,2,2,10,10,10,1
+
+[Events]";
+
+        $originalFile = file_get_contents($subtitlesFile);
+        $justSubtitles = substr(strstr($originalFile, '[Events]'), strlen('[Events]'));
+        $newContent = $header . $justSubtitles;
+
+        $file = fopen($subtitlesFile, "w") or die("Unable to open file!");
+        fwrite($file, $newContent);
+        fclose($file);
+    }
+
+    public function useExternalFileAsThumb($id, $file) {
         $video = $this->getVideoFromDB($id, 2);
         $this->deleteVideoFile($id, self::COLUMN_THUMB_FILE);
         $this->deleteThumbnails($id);
@@ -415,6 +447,9 @@ class VideoManager extends BaseModel {
         }
         if ($input[self::COLUMN_WEBM_FILE] != '') {
             $video['webm'] = VIDEOS_FOLDER.$videoId.'/'.$input[self::COLUMN_WEBM_FILE];
+        }
+        if ($input[self::COLUMN_SUBTITLES_FILE] != '') {
+            $video['ass'] = VIDEOS_FOLDER.$videoId.'/'.$input[self::COLUMN_SUBTITLES_FILE];
         }
         $video['categories'] = $input[self::COLUMN_CATEGORIES];
         $video['views'] = $input[self::COLUMN_VIEWS];

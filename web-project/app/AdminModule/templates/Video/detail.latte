@@ -100,7 +100,8 @@
     });
 
     resumable.on('complete', function() {
-        window.location = ('{$basePath|noescape}/admin/upload/upload-original-file-succeeded?id={$video->id|noescape}&date={$video->date|noescape}');
+        window.location = ('{$basePath|noescape}/admin/upload/upload-original-file-succeeded' +
+                '?id={$video->id|noescape}&date={$video->date|noescape}');
     });
 
     resumable.on('fileAdded', function(file, event){
@@ -155,8 +156,10 @@
         var downloadName = {$video->date} + '-' + {$video->hash};
         bootbox.dialog({
             title: "přehrává se: " + file,
-            message: '<video width="100%" controls><source src="{$basePath|noescape}/db/videos/{$video->id}/' +  file +'"></video>\n\
-                        <a class="player-download btn btn-primary" href="{$basePath|noescape}/db/videos/{$video->id}/' +  file +'" download="' + downloadName + '">stáhnout</a>',
+            message: '<video width="100%" controls><source src="{$basePath|noescape}/db/videos/{$video->id}/'
+                            +  file +'"></video>\n\
+                        <a class="player-download btn btn-primary" href="{$basePath|noescape}/db/videos/{$video->id}/'
+                            +  file +'" download="' + downloadName + '">stáhnout</a>',
             buttons: {
                 main: {
                     label: "zavřít",
@@ -168,11 +171,32 @@
     }
     
     function openImageViewer(file) {
-        var downloadName = {$video->date} + '-' + {$video->hash};
+        var downloadName = {$video->date} + '-' + {$video->hash} + ".jpg";
         bootbox.dialog({
             title: "zobrazuje se: " + file,
-            message: '<img width="100%" class="img-responsive" src="{$basePath|noescape}/db/videos/{$video->id}/' +  file +'" />\n\
-                        <a class="player-download btn btn-primary" href="{$basePath|noescape}/db/videos/{$video->id}/' +  file +'" download="' + downloadName + '">stáhnout</a>',
+            message: '<img width="100%" class="img-responsive" src="{$basePath|noescape}/db/videos/{$video->id}/'
+                            +  file +'" />\n\
+                        <a class="player-download btn btn-primary" href="{$basePath|noescape}/db/videos/{$video->id}/'
+                            +  file +'" download="' + downloadName + '">stáhnout</a>',
+            buttons: {
+                main: {
+                    label: "zavřít",
+                    className: "btn-primary"
+                }
+            },
+            className: "modal60"
+        });
+    }
+
+    function openSubtitlesViewer(file) {
+        var downloadName = {$video->date} + '-' + {$video->hash} + ".ass";
+        bootbox.dialog({
+            title: "zobrazuje se: " + file,
+            message: '<iframe src="{$basePath|noescape}/db/videos/{$video->id}/' +  file
+                + '" width="100%" height="450px" ' +
+                'style="background-color: white;" frameborder=0/>' +
+                '<a class="player-download btn btn-primary" href="{$basePath|noescape}/db/videos/{$video->id}/'
+                +  file +'" download="' + downloadName + '">stáhnout</a>',
             buttons: {
                 main: {
                     label: "zavřít",

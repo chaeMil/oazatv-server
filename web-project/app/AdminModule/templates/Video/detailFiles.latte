@@ -13,9 +13,21 @@
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h4>Zdrojový soubor: <small>{$video->original_file}</small></h4>     
-                            <i onclick="openPlayer({$video->original_file});" 
-                               class="open-player fa fa-play-circle-o fa-3x pull-right"></i>
+                            <h4>Zdrojový soubor: <small>{$video->original_file}</small></h4>
+                            {if (strpos($originalFileInfo,'mp4') !== false
+                                    || strpos($originalFileInfo,'mp3') !== false
+                                    || strpos($originalFileInfo,'webm') !== false)}
+                                <i onclick="openPlayer({$video->original_file});"
+                                   class="open-player fa fa-play-circle-o fa-3x pull-right"></i>
+                            {/if}
+                            {if (strpos($originalFileInfo,'text') !== false)}
+                                <i onclick="openSubtitlesViewer({$video->original_file});"
+                                   class="open-player fa fa-file-text fa-3x pull-right"></i>
+                            {/if}
+                            {if (strpos($originalFileInfo,'jpeg') !== false)}
+                                <i onclick="openImageViewer({$video->original_file});"
+                                   class="open-player fa fa-picture-o fa-3x pull-right"></i>
+                            {/if}
                         </div>
                         <div class="panel-body">
                             <span>{$originalFileInfo}</span>
@@ -45,6 +57,10 @@
                                     {if (!$video->thumb_file && strpos($originalFileInfo,'jpeg') !== false)}
                                         <li><a n:href="Video:useOriginalFileAs, $video->id, $thumbFile">miniatura</a></li>
                                     {/if}
+                                    {if (!$video->subtitles_file && strpos($originalFileInfo,'text') !== false
+                                            && strpos($video->original_file, '.ass') !== false)}
+                                        <li><a n:href="Video:useOriginalFileAs, $video->id, $subtitlesFile">titulky</a></li>
+                                    {/if}
                                 </ul>
                             </div>
 
@@ -58,16 +74,20 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     {if (!$video->mp4_file)}
-                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'original_file', '{$mp4File|noescape}')">MP4 soubor</a></li>
+                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'original_file',
+                                                    '{$mp4File|noescape}')">MP4 soubor</a></li>
                                     {/if}
                                     {if (!$video->mp3_file)}
-                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'original_file', '{$mp3File|noescape}')">MP3 soubor</a></li>
+                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'original_file',
+                                                    '{$mp3File|noescape}')">MP3 soubor</a></li>
                                     {/if}
                                     {if (!$video->webm_file)}
-                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'original_file', '{$webmFile|noescape}')">WEBM soubor</a></li>
+                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'original_file',
+                                                    '{$webmFile|noescape}')">WEBM soubor</a></li>
                                     {/if}
                                     {if (!$video->mp4_file_lowres)}
-                                        <li><a n:href="Video:convertFile, $video->id, 'original_file', $mp4FileLowres">MP4 lowres (480p)</a></li>
+                                        <li><a n:href="Video:convertFile, $video->id, 'original_file',
+                                            $mp4FileLowres">MP4 lowres (480p)</a></li>
                                     {/if}
                                 </ul>
                             </div>
@@ -118,13 +138,16 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     {if (!$video->mp3_file)}
-                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'mp4_file', '{$mp3File|noescape}')">MP3 soubor</a></li>
+                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'mp4_file',
+                                                    '{$mp3File|noescape}')">MP3 soubor</a></li>
                                     {/if}
                                     {if (!$video->webm_file)}
-                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'mp4_file', '{$webmFile|noescape}')">WEBM soubor</a></li>
+                                        <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'mp4_file',
+                                                    '{$webmFile|noescape}')">WEBM soubor</a></li>
                                     {/if}
                                     {if (!$video->mp4_file_lowres)}
-                                        <li><a n:href="Video:convertFile, $video->id, 'mp4_file', $mp4FileLowres">MP4 lowres (480p)</a></li>
+                                        <li><a n:href="Video:convertFile, $video->id, 'mp4_file',
+                                            $mp4FileLowres">MP4 lowres (480p)</a></li>
                                     {/if}
                                 </ul>
                             </div>
@@ -197,13 +220,16 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         {if (!$video->mp4_file)}
-                                            <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'webm_file', '{$mp4File|noescape}')">MP4 soubor</a></li>
+                                            <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'webm_file',
+                                                        '{$mp4File|noescape}')">MP4 soubor</a></li>
                                         {/if}
                                         {if (!$video->mp3_file)}
-                                                <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'webm_file', '{$mp3File|noescape}')">MP3 soubor</a></li>
+                                                <li><a onclick="convertVideoFileDialog({$video->id|noescape}, 'webm_file',
+                                                            '{$mp3File|noescape}')">MP3 soubor</a></li>
                                         {/if}
                                         {if (!$video->mp4_file_lowres)}
-                                        <li><a n:href="Video:convertFile, $video->id, 'webm_file', $mp4FileLowres">MP4 lowres (480p)</a></li>
+                                        <li><a n:href="Video:convertFile, $video->id, 'webm_file',
+                                            $mp4FileLowres">MP4 lowres (480p)</a></li>
                                     {/if}
                                     </ul>
                                 </div>
@@ -258,6 +284,28 @@
                     </div>
                 </div>
             {/if}
+
+            {if ($video->subtitles_file != "")}
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4>titulky: <small>{$video->subtitles_file}</small></h4>
+                            {if isset($subtitlesFileMissing)}
+                                <i onClick="fileMissing({$video->subtitles_file});"
+                                   class="file-missing fa fa-warning fa-3x pull-right"></i>
+                            {else}
+                                <i onclick="openSubtitlesViewer({$video->subtitles_file});"
+                                   class="open-player fa fa-file-text fa-3x pull-right"></i>
+                            {/if}
+                        </div>
+                        <div class="panel-body">
+                            <a n:href="Video:deleteVideoFile, $video->id, $subtitlesFile"
+                                    data-confirm="smazat titulky?"
+                                    class="btn btn-danger confirm pull-right">smazat</a>
+                        </div>
+                    </div>
+                </div>
+            {/if}
         </div>
     </div>
 
@@ -275,7 +323,8 @@
         </div>
         <div class="col-xs-12">
             <div id="progress" class="progress hidden">
-                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+                     aria-valuemin="0" aria-valuemax="100" style="width: 40%">
                 </div>
             </div>
         </div>

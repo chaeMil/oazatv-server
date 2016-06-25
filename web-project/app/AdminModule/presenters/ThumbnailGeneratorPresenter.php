@@ -54,7 +54,7 @@ class ThumbnailGeneratorPresenter extends BaseSecuredPresenter {
     }
     
     public function actionUseAsThumb($videoId, $file) {
-        $this->videoManager->useExternaFileAsThumb($videoId, $file);
+        $this->videoManager->useExternalFileAsThumb($videoId, $file);
         $this->flashMessage("Miniatura nastavena", "success");
         $this->redirect("ThumbnailGenerator:create", $videoId);
     }

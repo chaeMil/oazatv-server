@@ -183,6 +183,13 @@ class VideoPresenter extends BaseSecuredPresenter {
             $this->template->mp4FileLowresSize = $mp4FileLowresSize;
         }
 
+        if (!file_exists(VIDEOS_FOLDER.$id.'/'.$video['subtitles_file'])) {
+            $this->template->subtitlesFileMissing = true;
+        } else {
+            $subtitlesFileSize = FileUtils::humanReadableFileSize(VIDEOS_FOLDER.$id.'/'.$video['subtitles_file']);
+            $this->template->$subtitlesFileSize = $subtitlesFileSize;
+        }
+
         $this->template->originalFileInfo = $this->videoManager->getOriginalFileInfo($video->id);;
         $this->template->originalFile = VideoManager::COLUMN_ORIGINAL_FILE;
         $this->template->mp4File = VideoManager::COLUMN_MP4_FILE;
@@ -190,6 +197,7 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->template->mp3File = VideoManager::COLUMN_MP3_FILE;
         $this->template->webmFile = VideoManager::COLUMN_WEBM_FILE;
         $this->template->thumbFile = VideoManager::COLUMN_THUMB_FILE;
+        $this->template->subtitlesFile = VideoManager::COLUMN_SUBTITLES_FILE;
         $this->template->thumbs = $this->videoManager->getThumbnails($id);
         $this->template->convertQueueManager = $this->convertQueueManager;
         $this['videoBasicInfoForm']->setDefaults($video->toArray());
@@ -292,7 +300,7 @@ class VideoPresenter extends BaseSecuredPresenter {
         EventLogger::log('user '.$this->getUser()->getIdentity()
                 ->login.' deleted '.$file.' from video '.$id,
                 EventLogger::ACTIONS_LOG);
-        $this->flashMessage("Soubor byl smazán", "danger");
+        $this->flashMessage("Soubor ".$file." byl smazán", "danger");
         $this->redirect("Video:Detail#files", $id);
     }
 

@@ -37,13 +37,18 @@
                 plugins: {
                     videoJsResolutionSwitcher: {
                         
-                    }
+                    },
+                    {if isset($video['ass'])}
+                        ass: {
+                            src: '{$basePath|noescape}/{$video['ass']|noescape}',
+                            rate: 1
+                        }
+                    {/if}
                 }
             }).ready(function(){
             player = this;
-            
-            var hash = window.location.hash;
-            hash = window.location.hash.replace('#&', '').replace('#t=', '').replace('#', '');
+
+            var hash = window.location.hash.replace('#&', '').replace('#t=', '').replace('#', '');
             console.log(hash);
             if (hash !== 0 && hash !== '' && hash !== undefined && hash !== null && hash != 'autoplay') {
                 player.currentTime(hash);
