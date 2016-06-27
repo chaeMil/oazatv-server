@@ -110,7 +110,7 @@ class VideoManager extends BaseModel {
         }
     }
 
-    public function getVideoFromDB($id, $published = 1) {
+    public function getVideoFromDB($id, $published = 1, $metadata = false) {
         if ($published != 2) {
             $video = self::$database->table(self::TABLE_NAME)
                     ->select("*")
@@ -123,9 +123,29 @@ class VideoManager extends BaseModel {
                     ->where(array(self::COLUMN_ID => $id))
                     ->fetch();
         }
+		
+		$result = $video;
+      
+        if ($metadata) {
 
-        return $video;
+        	$result['metadata'] = $this->getVideoFileMetadata($video[self::COLUMN_MP4_FILE]);
+        }
+
+        return $result;
     }
+  
+    private function getVideoFileMetadata($file) {
+		$metadata = array();
+		
+		$time =  exec(PATH_TO_FFMPEG." -i $file 2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//");   
+		$duration = explode(":",$time);   
+		$duration_in_seconds = $duration[0]*3600 + $duration[1]*60+ round($duration[2]);   
+
+		
+		$metadata['duration'] = $duration_in_seconds;
+		
+		return $metadata;   
+	}
     
     public function getVideoFromDBtoAPI($id) {
         
