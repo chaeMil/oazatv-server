@@ -94,13 +94,43 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
                 
             $videoUrlPrefix = SERVER . "/". VIDEOS_FOLDER . $item[VideoManager::COLUMN_ID] . "/";
 
-            $item[VideoManager::COLUMN_MP3_FILE] = $videoUrlPrefix . $item[VideoManager::COLUMN_MP3_FILE];
-            $item[VideoManager::COLUMN_MP4_FILE] = $videoUrlPrefix . $item[VideoManager::COLUMN_MP4_FILE];
-            $item[VideoManager::COLUMN_WEBM_FILE] = $videoUrlPrefix . $item[VideoManager::COLUMN_WEBM_FILE];
-            $item[VideoManager::COLUMN_THUMB_FILE] = $videoUrlPrefix . $item[VideoManager::COLUMN_THUMB_FILE];
-            $item[VideoManager::COLUMN_MP4_FILE_LOWRES] = $videoUrlPrefix . $item[VideoManager::COLUMN_MP4_FILE_LOWRES];
-            $item[VideoManager::COLUMN_SUBTITLES_FILE] = $videoUrlPrefix . $item[VideoManager::COLUMN_SUBTITLES_FILE];
-            
+            $mp3 = $videoUrlPrefix . $item[VideoManager::COLUMN_MP3_FILE];
+            $mp4 = $videoUrlPrefix . $item[VideoManager::COLUMN_MP4_FILE];
+            $webm = $videoUrlPrefix . $item[VideoManager::COLUMN_WEBM_FILE];
+            $thumb = $videoUrlPrefix . $item[VideoManager::COLUMN_THUMB_FILE];
+            $mp4LowRes = $videoUrlPrefix . $item[VideoManager::COLUMN_MP4_FILE_LOWRES];
+            $subtitles = $videoUrlPrefix . $item[VideoManager::COLUMN_SUBTITLES_FILE];
+
+            $item[VideoManager::COLUMN_MP3_FILE] = NULL;
+            $item[VideoManager::COLUMN_MP4_FILE] = NULL;
+            $item[VideoManager::COLUMN_WEBM_FILE] = NULL;
+            $item[VideoManager::COLUMN_THUMB_FILE] = NULL;
+            $item[VideoManager::COLUMN_MP4_FILE_LOWRES] = NULL;
+            $item[VideoManager::COLUMN_SUBTITLES_FILE] = NULL;
+
+            if (file_exists($mp3)) {
+                $item[VideoManager::COLUMN_MP3_FILE] = $mp3;
+            }
+
+            if (file_exists($mp4)) {
+                $item[VideoManager::COLUMN_MP4_FILE] = $mp4;
+            }
+
+            if (file_exists($webm)) {
+                $item[VideoManager::COLUMN_WEBM_FILE] = $webm;
+            }
+
+            if (file_exists($webm)) {
+                $item[VideoManager::COLUMN_THUMB_FILE] = $thumb;;
+            }
+
+            if (file_exists($mp4LowRes)) {
+                $item[VideoManager::COLUMN_MP4_FILE_LOWRES] = $mp4LowRes;
+            }
+
+            if (file_exists($subtitles)) {
+                $item[VideoManager::COLUMN_SUBTITLES_FILE] = $subtitles;
+            }
         }
 
         if ($item['type'] == "album") {
