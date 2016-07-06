@@ -92,7 +92,7 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
     public function createArchiveItem($item) {
         if ($item['type'] == "video") {
                 
-            $videoUrlPrefix = SERVER . "/". VIDEOS_FOLDER . $item[VideoManager::COLUMN_ID] . "/";
+            $videoUrlPrefix = VIDEOS_FOLDER . $item[VideoManager::COLUMN_ID] . "/";
 
             $mp3 = $videoUrlPrefix . $item[VideoManager::COLUMN_MP3_FILE];
             $mp4 = $videoUrlPrefix . $item[VideoManager::COLUMN_MP4_FILE];
@@ -109,27 +109,27 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
             $item[VideoManager::COLUMN_SUBTITLES_FILE] = NULL;
 
             if (file_exists($mp3)) {
-                $item[VideoManager::COLUMN_MP3_FILE] = $mp3;
+                $item[VideoManager::COLUMN_MP3_FILE] = SERVER . $mp3;
             }
 
             if (file_exists($mp4)) {
-                $item[VideoManager::COLUMN_MP4_FILE] = $mp4;
+                $item[VideoManager::COLUMN_MP4_FILE] = SERVER . $mp4;
             }
 
             if (file_exists($webm)) {
-                $item[VideoManager::COLUMN_WEBM_FILE] = $webm;
+                $item[VideoManager::COLUMN_WEBM_FILE] = SERVER . $webm;
             }
 
             if (file_exists($thumb)) {
-                $item[VideoManager::COLUMN_THUMB_FILE] = $thumb;;
+                $item[VideoManager::COLUMN_THUMB_FILE] = SERVER . $thumb;;
             }
 
             if (file_exists($mp4LowRes)) {
-                $item[VideoManager::COLUMN_MP4_FILE_LOWRES] = $mp4LowRes;
+                $item[VideoManager::COLUMN_MP4_FILE_LOWRES] = SERVER . $mp4LowRes;
             }
 
             if (file_exists($subtitles)) {
-                $item[VideoManager::COLUMN_SUBTITLES_FILE] = $subtitles;
+                $item[VideoManager::COLUMN_SUBTITLES_FILE] = SERVER . $subtitles;
             }
         }
 
