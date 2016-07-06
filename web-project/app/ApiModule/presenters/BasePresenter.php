@@ -120,7 +120,7 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
                 $item[VideoManager::COLUMN_WEBM_FILE] = $webm;
             }
 
-            if (file_exists($webm)) {
+            if (file_exists($thumb)) {
                 $item[VideoManager::COLUMN_THUMB_FILE] = $thumb;;
             }
 
