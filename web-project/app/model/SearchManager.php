@@ -137,27 +137,27 @@ class SearchManager extends BaseModel {
                 $videoOut[VideoManager::COLUMN_MP4_FILE_LOWRES] = NULL;
                 $videoOut[VideoManager::COLUMN_SUBTITLES_FILE] = NULL;
 
-                if (file_exists($mp3)) {
+                if (file_exists($mp3) && is_file($mp3)) {
                     $videoOut[VideoManager::COLUMN_MP3_FILE] = SERVER . $mp3;
                 }
 
-                if (file_exists($mp4)) {
+                if (file_exists($mp4) && is_file($mp4)) {
                     $videoOut[VideoManager::COLUMN_MP4_FILE] = SERVER . $mp4;
                 }
 
-                if (file_exists($webm)) {
+                if (file_exists($webm) && is_file($webm)) {
                     $videoOut[VideoManager::COLUMN_WEBM_FILE] = SERVER . $webm;
                 }
 
-                if (file_exists($thumb)) {
+                if (file_exists($thumb) && is_file($thumb)) {
                     $videoOut[VideoManager::COLUMN_THUMB_FILE] = SERVER . $thumb;;
                 }
 
-                if (file_exists($mp4LowRes)) {
+                if (file_exists($mp4LowRes) && is_file($mp4LowRes)) {
                     $videoOut[VideoManager::COLUMN_MP4_FILE_LOWRES] = SERVER . $mp4LowRes;
                 }
 
-                if (file_exists($subtitles)) {
+                if (file_exists($subtitles) && is_file($subtitles)) {
                     $videoOut[VideoManager::COLUMN_SUBTITLES_FILE] = SERVER . $subtitles;
                 }
 
