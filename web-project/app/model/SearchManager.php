@@ -121,14 +121,14 @@ class SearchManager extends BaseModel {
                     $videoOut = $video;
                 }
 
-                $videoUrlPrefix = SERVER . "/". VIDEOS_FOLDER . $video[VideoManager::COLUMN_ID] . "/";
+                $videoPrefix = VIDEOS_FOLDER . $video[VideoManager::COLUMN_ID] . "/";
 
-                $mp3 = $videoUrlPrefix . $video[VideoManager::COLUMN_MP3_FILE];
-                $mp4 = $videoUrlPrefix . $video[VideoManager::COLUMN_MP4_FILE];
-                $webm = $videoUrlPrefix . $video[VideoManager::COLUMN_WEBM_FILE];
-                $thumb = $videoUrlPrefix . $video[VideoManager::COLUMN_THUMB_FILE];
-                $mp4LowRes = $videoUrlPrefix . $video[VideoManager::COLUMN_MP4_FILE_LOWRES];
-                $subtitles = $videoUrlPrefix . $video[VideoManager::COLUMN_SUBTITLES_FILE];
+                $mp3 = $videoPrefix . $video[VideoManager::COLUMN_MP3_FILE];
+                $mp4 = $videoPrefix . $video[VideoManager::COLUMN_MP4_FILE];
+                $webm = $videoPrefix . $video[VideoManager::COLUMN_WEBM_FILE];
+                $thumb = $videoPrefix . $video[VideoManager::COLUMN_THUMB_FILE];
+                $mp4LowRes = $videoPrefix . $video[VideoManager::COLUMN_MP4_FILE_LOWRES];
+                $subtitles = $videoPrefix . $video[VideoManager::COLUMN_SUBTITLES_FILE];
 
                 $videoOut[VideoManager::COLUMN_MP3_FILE] = NULL;
                 $videoOut[VideoManager::COLUMN_MP4_FILE] = NULL;
@@ -138,27 +138,27 @@ class SearchManager extends BaseModel {
                 $videoOut[VideoManager::COLUMN_SUBTITLES_FILE] = NULL;
 
                 if (file_exists($mp3)) {
-                    $videoOut[VideoManager::COLUMN_MP3_FILE] = $mp3;
+                    $videoOut[VideoManager::COLUMN_MP3_FILE] = SERVER . $mp3;
                 }
 
                 if (file_exists($mp4)) {
-                    $videoOut[VideoManager::COLUMN_MP4_FILE] = $mp4;
+                    $videoOut[VideoManager::COLUMN_MP4_FILE] = SERVER . $mp4;
                 }
 
                 if (file_exists($webm)) {
-                    $videoOut[VideoManager::COLUMN_WEBM_FILE] = $webm;
+                    $videoOut[VideoManager::COLUMN_WEBM_FILE] = SERVER . $webm;
                 }
 
                 if (file_exists($thumb)) {
-                    $videoOut[VideoManager::COLUMN_THUMB_FILE] = $thumb;;
+                    $videoOut[VideoManager::COLUMN_THUMB_FILE] = SERVER . $thumb;;
                 }
 
                 if (file_exists($mp4LowRes)) {
-                    $videoOut[VideoManager::COLUMN_MP4_FILE_LOWRES] = $mp4LowRes;
+                    $videoOut[VideoManager::COLUMN_MP4_FILE_LOWRES] = SERVER . $mp4LowRes;
                 }
 
                 if (file_exists($subtitles)) {
-                    $videoOut[VideoManager::COLUMN_SUBTITLES_FILE] = $subtitles;
+                    $videoOut[VideoManager::COLUMN_SUBTITLES_FILE] = SERVER . $subtitles;
                 }
 
                 $videoOut['type'] = 'video';
