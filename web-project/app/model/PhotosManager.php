@@ -378,7 +378,7 @@ class PhotosManager {
             $i++;
         }
 
-        $albums = $this->database->query("SELECT * FROM ".$this->TABLE_NAME_ALBUMS." WHERE ".$tagsQuery.
+        $albums = $this->database->query("SELECT * FROM ".self::TABLE_NAME_ALBUMS." WHERE ".$tagsQuery.
             " ORDER BY ".PhotosManager::COLUMN_DATE. " DESC".
             " LIMIT ".$limit." OFFSET ".$offset)->fetchAll();
 
