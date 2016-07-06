@@ -34,11 +34,13 @@ class ArchiveMenuManager extends BaseModel {
     /** @var Nette\Database\Context */
     public static $database;
     private $videoManager;
+    private $photosManager;
 
     public function __construct(Nette\Database\Context $database,
-            VideoManager $videoManager) {
+            VideoManager $videoManager, PhotosManager $photosManager) {
         self::$database = $database;
         $this->videoManager = $videoManager;
+        $this->photosManager = $photosManager;
     }
     
     private function checkIfMenuExists($id) {
@@ -108,10 +110,11 @@ class ArchiveMenuManager extends BaseModel {
         $video->delete();
     }
     
-    public function countVideosInMenuByTag($tags) {
-        $videos = $this->videoManager->getVideosFromDBbyTags($tags, 0, 999);
+    public function countItemsInMenuByTag($tags) {
+        $videos = $this->videoManager->getVideosFromDBbyTags($tags, 0, 5000);
+        $albums = $this->photosManager->getAlbumsFromDBbyTags($tags, 0, 5000);
         
-        return count($videos);
+        return count($videos) + count($albums);
     }
     
     public function getLocalizedMenu($id, $lang) {

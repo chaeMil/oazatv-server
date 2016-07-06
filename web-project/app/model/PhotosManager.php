@@ -360,4 +360,29 @@ class PhotosManager {
 
         return $photos;
     }
+
+    public function getAlbumsFromDBbyTags($tags, $offset = 0, $limit = 10) {
+        $tagsArray = explode(",", str_replace(" ", "", $tags));
+
+        $tagsQuery = "";
+
+        $i = 0;
+        $len = count($tagsArray);
+        foreach($tagsArray as $tag) {
+            $tagsQuery .= self::COLUMN_TAGS." LIKE '%".$tag."%' ";
+
+            if ($i != $len - 1) {
+                $tagsQuery .= "AND ";
+            }
+
+            $i++;
+        }
+
+        $albums = $this->database->query("SELECT * FROM ".$this->TABLE_NAME_ALBUMS." WHERE ".$tagsQuery.
+            " ORDER BY ".PhotosManager::COLUMN_DATE. " DESC".
+            " LIMIT ".$limit." OFFSET ".$offset)->fetchAll();
+
+        return $albums;
+
+    }
 }
