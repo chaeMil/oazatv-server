@@ -8,6 +8,8 @@
 
 namespace App\AdminModule;
 
+use App\ImageUtils;
+use Model\PhotosManager;
 use Nette,
  Model\FrontPageManager,
  App\EventLogger,
@@ -173,6 +175,29 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
 
     public function actionEditBlock($id) {
         $this->getTemplateVariables($this->getUser()->getId());
+
+        $definitions = $this->frontPageManager->getBlocksDefinitions();
+
+        $blockImages = array();
+
+        $block = $this->frontPageManager->getBlockFromDB($id);
+        $blockJsonData = json_decode($block['json_data'], true);
+
+        foreach($definitions[$block['type']]['inputs'] as $input) {
+
+            if ($input['type'] == "image") {
+                if (isset($input['mutations'])) {
+
+                    $mutations = explode("|", $input['mutations']);
+                    foreach ($mutations as $mutation) {
+                        $blockImages[$input['name']][$mutation] = $blockJsonData['inputs'][$input['name']][$mutation];
+                    }
+                }
+            }
+        }
+
+        $this->template->blockImages = $blockImages;
+
     }
 
     public function createComponentEditBlock() {
@@ -243,6 +268,34 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
                                             ->setAttribute("class", "form-control");
 
                                     break;
+
+                                case 'image':
+                                    if (isset($input['mutations'])) {
+                                        $form->addGroup($input['name']);
+                                        foreach(explode('|', $input['mutations']) as $mutation) {
+
+                                            if (isset($savedData)) {
+                                                $savedInput = $savedData['inputs'][$input['name']][$mutation];
+                                            } else {
+                                                $savedInput = "";
+                                            }
+                                            $form->addUpload($input['name'].'_'.$mutation, $mutation)
+                                                //->setValue($savedInput)
+                                                ->setAttribute("class", "form-control");
+                                        }
+                                    } else {
+                                        $form->addGroup($input['name']);
+
+                                        if (isset($savedData)) {
+                                            $savedInput = $savedData['inputs'][$input['name']];
+                                        } else {
+                                            $savedInput = "";
+                                        }
+                                        $form->addUpload($input['name'], $input['name'])
+                                            //->setValue($savedInput)
+                                            ->setAttribute("class", "form-control");
+                                    }
+                                    break;
                             }
                         }
                     }
@@ -265,6 +318,51 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
 
     public function editBlockSucceeded($form) {
         $vals = $form->getValues();
+
+        foreach($vals as $input => $val) {
+
+            if (gettype($val) == "object" && $val instanceof Nette\Http\FileUpload) {
+
+                $fileName = "";
+
+                if ($val->error == 0 && $val->size > 0) {
+
+                    $fileName = "block_" . $vals['id'] . "_" . $input. ".jpg";
+
+                    if (file_exists($fileName)) {
+                        unlink($fileName);
+                    }
+
+                    $val->move(FRONTPAGE_IMAGES_FOLDER . $fileName);
+
+                    ImageUtils::resizeImage(FRONTPAGE_IMAGES_FOLDER,
+                        $fileName,
+                        FrontPageManager::THUMB_256,
+                        FrontPageManager::THUMB_256,
+                        FRONTPAGE_IMAGES_FOLDER);
+
+                    ImageUtils::resizeImage(FRONTPAGE_IMAGES_FOLDER,
+                        $fileName,
+                        FrontPageManager::THUMB_512,
+                        FrontPageManager::THUMB_512,
+                        FRONTPAGE_IMAGES_FOLDER);
+
+                    ImageUtils::resizeImage(FRONTPAGE_IMAGES_FOLDER,
+                        $fileName,
+                        FrontPageManager::THUMB_1024,
+                        FrontPageManager::THUMB_1024,
+                        FRONTPAGE_IMAGES_FOLDER);
+
+                    ImageUtils::resizeImage(FRONTPAGE_IMAGES_FOLDER,
+                        $fileName,
+                        FrontPageManager::THUMB_2048,
+                        FrontPageManager::THUMB_2048,
+                        FRONTPAGE_IMAGES_FOLDER);
+                }
+
+                $vals[$input] = $fileName;
+            }
+        }
 
         $jsonData = $this->frontPageManager->createJsonBlock($vals);
         $dbValues = array(

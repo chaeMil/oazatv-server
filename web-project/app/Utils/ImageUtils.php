@@ -33,14 +33,18 @@ class ImageUtils {
                     $dir = $outputDir;
                 }
 
+                $finalName = $dir."/".$imagefile_without_extension.$separator.$postfix.".".$extension;
+
+                if (file_exists($finalName)) {
+                    unlink($finalName);
+                }
+
                 switch($extension) {
                     case 'jpg':
-                        $image->save($dir."/".$imagefile_without_extension.$separator.$postfix.".".$extension,
-                            80, Image::JPEG);
+                        $image->save($finalName, 80, Image::JPEG);
                         break;
                     case 'png':
-                        $image->save($dir."/".$imagefile_without_extension.$separator.$postfix.".".$extension,
-                            100, Image::PNG);
+                        $image->save($finalName, 100, Image::PNG);
                         break;
             }
         } catch(Exception $e) {

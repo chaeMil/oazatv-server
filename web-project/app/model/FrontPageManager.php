@@ -34,7 +34,12 @@ class FrontPageManager extends BaseModel {
             COLUMN_NAME = 'name',
             COLUMN_BLOCKS = 'blocks',
             COLUMN_TYPE = 'type',
-            COLUMN_JSON_DATA = 'json_data';
+            COLUMN_JSON_DATA = 'json_data',
+            THUMB_2048 = 2048,
+            THUMB_1024 = 1024,
+            THUMB_512 = 512,
+            THUMB_256 = 256,
+            THUMB_128 = 128;
 
     /** @var Nette\Database\Context */
     public static $database;
@@ -296,7 +301,15 @@ class FrontPageManager extends BaseModel {
                             break;
                         
                         case 'image':
-                            
+                            if (isset($input['mutations'])) {
+                                $output['inputs'][$input['name']] = array();
+                                foreach(explode("|", $input['mutations']) as $mutation) {
+                                    $output['inputs'][$input['name']][$mutation] = $vals[$input['name'].'_'.$mutation];
+                                }
+                            } else {
+                                $output['inputs'][$input['name']] = $vals[$input['name']];
+                            }
+                            break;
                             
                     }
                 }

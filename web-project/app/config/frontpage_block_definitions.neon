@@ -113,3 +113,11 @@ frontpage_blocks:
     latest_video_fluid_categories:
         name: 'latest_video_fluid_categories'
         info: 'Nejnovější video + kategorie s pozadím přes celou šířku bloku'
+    image:
+        name: 'image'
+        info: 'Obrázek'
+        inputs:
+            image:
+                name: 'image'
+                type: 'image'
+                mutations: 'cs|en'

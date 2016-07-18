@@ -14,12 +14,33 @@
                 </h2>
             </a>  
             
-            <br
+            <br>
 
-            <form>
-                {control editBlock}
-            </form>
-            
+            <h3>obrázky z bloku:</h3>
+            {if isset($blockImages)}
+                {foreach $blockImages as $image}
+                    {if is_array($image)}
+                        {foreach $image as $mutation => $value}
+                            <div class="thumbnail">
+                                <img class="img-responsive" src="{$basePath}/db/front_page/images/{$value}"/>
+                                <p>{$value} - {$mutation}</p>
+                            </div>
+                            <br>
+                        {/foreach}
+                    {else}
+                        <div class="thumbnail">
+                            <img class="img-responsive" src="{$basePath}/db/front_page/images/{$image}"/>
+                            <p>{$image}</p>
+                        </div>
+                        <br>
+                    {/if}
+                {/foreach}
+            {/if}
+
+            <br>
+
+            {control editBlock}
+
         </div>
     </div>
     

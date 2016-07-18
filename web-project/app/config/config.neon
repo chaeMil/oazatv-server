@@ -75,3 +75,4 @@ constants:
     ALBUMS_FOLDER: "db/albums/"
     PREACHERS_FOLDER: "db/preachers/"
     USER_TEMP_FOLDER: "temp/users/"
+    FRONTPAGE_IMAGES_FOLDER: "db/front_page/images/"
