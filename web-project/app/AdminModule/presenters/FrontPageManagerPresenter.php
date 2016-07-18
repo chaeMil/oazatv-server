@@ -323,11 +323,9 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
 
             if (gettype($val) == "object" && $val instanceof Nette\Http\FileUpload) {
 
-                $fileName = "";
+                $fileName = "block_" . $vals['id'] . "_" . $input. ".jpg";
 
-                if ($val->error == 0 && $val->size > 0) {
-
-                    $fileName = "block_" . $vals['id'] . "_" . $input. ".jpg";
+                if ($val->error == 0 && $val->size != NULL) {
 
                     if (file_exists($fileName)) {
                         unlink($fileName);
