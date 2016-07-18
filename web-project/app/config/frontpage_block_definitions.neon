@@ -121,3 +121,14 @@ frontpage_blocks:
                 name: 'image'
                 type: 'image'
                 mutations: 'cs|en'
+    image_with_link:
+            name: 'image_with_link'
+            info: 'Obrázek s odkazem'
+            inputs:
+                image:
+                    name: 'image'
+                    type: 'image'
+                    mutations: 'cs|en'
+                text:
+                    name: 'link'
+                    type: 'text'
