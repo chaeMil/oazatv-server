@@ -121,6 +121,18 @@ frontpage_blocks:
                 name: 'image'
                 type: 'image'
                 mutations: 'cs|en'
+    centered_image_with_dimensions:
+            name: 'centered_image_with_dimensions'
+            info: 'Vycentrovaný obrázek s nastavitelnou šířkou'
+            inputs:
+                image:
+                    name: 'image'
+                    type: 'image'
+                    mutations: 'cs|en'
+                select:
+                    name: 'width'
+                    type: 'select'
+                    options: '1/1|1/2|1/3'
     image_with_link:
             name: 'image_with_link'
             info: 'Obrázek s odkazem'
