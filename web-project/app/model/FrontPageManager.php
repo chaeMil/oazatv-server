@@ -186,8 +186,20 @@ class FrontPageManager extends BaseModel {
     }
     
     public function deleteBlock($id) {
-        $row = $this->getBlockFromDB($id);
-        $row->delete();
+        $block = $this->getBlockFromDB($id);
+
+        $definitions = $this->getBlocksDefinitions();
+
+        foreach($definitions[$block['type']]['inputs'] as $input) {
+            if($input['type'] == "image") {
+                $fileName = glob(FRONTPAGE_IMAGES_FOLDER . "block_" . $block['id'] . "_" . $input['name'] ."*");
+                foreach ($fileName as $file) {
+                    unlink($file);
+                }
+            }
+        }
+
+        $block->delete();
     }
     
     public function getBlocksFromRow($rowId) {
