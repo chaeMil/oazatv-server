@@ -754,16 +754,16 @@
         },
         {
             "name": "nette/di",
-            "version": "v2.3.11",
+            "version": "v2.3.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/di.git",
-                "reference": "3f8347bbcac706e1ced651c7beb9affd66298473"
+                "reference": "aed06c37a722a1450854176f1d0b11de473092f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/di/zipball/3f8347bbcac706e1ced651c7beb9affd66298473",
-                "reference": "3f8347bbcac706e1ced651c7beb9affd66298473",
+                "url": "https://api.github.com/repos/nette/di/zipball/aed06c37a722a1450854176f1d0b11de473092f1",
+                "reference": "aed06c37a722a1450854176f1d0b11de473092f1",
                 "shasum": ""
             },
             "require": {
@@ -802,7 +802,7 @@
             ],
             "description": "Nette Dependency Injection Component",
             "homepage": "https://nette.org",
-            "time": "2016-06-17 16:43:21"
+            "time": "2016-07-06 13:10:47"
         },
         {
             "name": "nette/finder",
@@ -856,22 +856,22 @@
         },
         {
             "name": "nette/forms",
-            "version": "v2.3.9",
+            "version": "v2.3.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/forms.git",
-                "reference": "e32577062a2544fedac8a95fbc393ab98a3291c7"
+                "reference": "22ab1e9794fabe225b980ee4c31f57ee5b7f74e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/forms/zipball/e32577062a2544fedac8a95fbc393ab98a3291c7",
-                "reference": "e32577062a2544fedac8a95fbc393ab98a3291c7",
+                "url": "https://api.github.com/repos/nette/forms/zipball/22ab1e9794fabe225b980ee4c31f57ee5b7f74e2",
+                "reference": "22ab1e9794fabe225b980ee4c31f57ee5b7f74e2",
                 "shasum": ""
             },
             "require": {
                 "nette/component-model": "~2.2.0",
                 "nette/http": "~2.2",
-                "nette/utils": "~2.2",
+                "nette/utils": "~2.3.10",
                 "php": ">=5.3.1"
             },
             "conflict": {
@@ -907,7 +907,7 @@
             ],
             "description": "Nette Forms: greatly facilitates web forms",
             "homepage": "https://nette.org",
-            "time": "2016-05-17 15:35:20"
+            "time": "2016-06-30 18:22:11"
         },
         {
             "name": "nette/http",
@@ -1529,16 +1529,16 @@
         },
         {
             "name": "symfony/config",
-            "version": "v2.8.7",
+            "version": "v2.8.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "a2edd59c2163c65747fc3f35d132b5a39266bd05"
+                "reference": "4275ef5b59f18959df0eee3991e9ca0cc208ffd4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/a2edd59c2163c65747fc3f35d132b5a39266bd05",
-                "reference": "a2edd59c2163c65747fc3f35d132b5a39266bd05",
+                "url": "https://api.github.com/repos/symfony/config/zipball/4275ef5b59f18959df0eee3991e9ca0cc208ffd4",
+                "reference": "4275ef5b59f18959df0eee3991e9ca0cc208ffd4",
                 "shasum": ""
             },
             "require": {
@@ -1578,20 +1578,20 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2016-06-06 11:11:27"
+            "time": "2016-07-26 08:02:44"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v3.0.7",
+            "version": "v3.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "74fec3511b62cb934b64bce1d96f06fffa4beafd"
+                "reference": "b2da5009d9bacbd91d83486aa1f44c793a8c380d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/74fec3511b62cb934b64bce1d96f06fffa4beafd",
-                "reference": "74fec3511b62cb934b64bce1d96f06fffa4beafd",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/b2da5009d9bacbd91d83486aa1f44c793a8c380d",
+                "reference": "b2da5009d9bacbd91d83486aa1f44c793a8c380d",
                 "shasum": ""
             },
             "require": {
@@ -1627,7 +1627,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2016-04-12 18:09:53"
+            "time": "2016-07-20 05:43:46"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -1690,16 +1690,16 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v2.8.7",
+            "version": "v2.8.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "8a1648d2e165ba87c759ba57d7f4c13d95fdf4a1"
+                "reference": "32b0c824da6df065f43b0c458dc505940e98a7f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/8a1648d2e165ba87c759ba57d7f4c13d95fdf4a1",
-                "reference": "8a1648d2e165ba87c759ba57d7f4c13d95fdf4a1",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/32b0c824da6df065f43b0c458dc505940e98a7f1",
+                "reference": "32b0c824da6df065f43b0c458dc505940e98a7f1",
                 "shasum": ""
             },
             "require": {
@@ -1750,7 +1750,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2016-06-06 11:11:27"
+            "time": "2016-07-30 07:20:35"
         },
         {
             "name": "tedivm/jshrink",
