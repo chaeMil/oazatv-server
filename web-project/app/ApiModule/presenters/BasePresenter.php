@@ -98,6 +98,7 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
             $mp4 = $videoUrlPrefix . $item[VideoManager::COLUMN_MP4_FILE];
             $webm = $videoUrlPrefix . $item[VideoManager::COLUMN_WEBM_FILE];
             $thumb = $videoUrlPrefix . $item[VideoManager::COLUMN_THUMB_FILE];
+            $thumbLowRes = $videoUrlPrefix . "thumbs/" . str_replace(".jpg", "_128.jpg", $item[VideoManager::COLUMN_THUMB_FILE]);
             $mp4LowRes = $videoUrlPrefix . $item[VideoManager::COLUMN_MP4_FILE_LOWRES];
             $subtitles = $videoUrlPrefix . $item[VideoManager::COLUMN_SUBTITLES_FILE];
 
@@ -105,6 +106,7 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
             $item[VideoManager::COLUMN_MP4_FILE] = NULL;
             $item[VideoManager::COLUMN_WEBM_FILE] = NULL;
             $item[VideoManager::COLUMN_THUMB_FILE] = NULL;
+            $item[VideoManager::COLUMN_THUMB_FILE_LOWRES] = NULL;
             $item[VideoManager::COLUMN_MP4_FILE_LOWRES] = NULL;
             $item[VideoManager::COLUMN_SUBTITLES_FILE] = NULL;
 
@@ -122,6 +124,10 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
 
             if (file_exists($thumb) && is_file($thumb)) {
                 $item[VideoManager::COLUMN_THUMB_FILE] = SERVER . $thumb;;
+            }
+
+            if (file_exists($thumbLowRes) && is_file($thumbLowRes)) {
+                $item[VideoManager::COLUMN_THUMB_FILE_LOWRES] = SERVER . $thumbLowRes;;
             }
 
             if (file_exists($mp4LowRes) && is_file($mp4LowRes)) {

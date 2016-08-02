@@ -32,6 +32,7 @@ class VideoManager extends BaseModel {
             COLUMN_WEBM_FILE = 'webm_file',
             COLUMN_MP3_FILE = 'mp3_file',
             COLUMN_THUMB_FILE = 'thumb_file',
+            COLUMN_THUMB_FILE_LOWRES = 'thumb_file_lowres',
             COLUMN_SUBTITLES_FILE = 'subtitles_file',
             COLUMN_THUMB_COLOR = 'thumb_color',
             COLUMN_DATE = 'date',
