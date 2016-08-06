@@ -44,6 +44,11 @@
                      {if (isset($item['thumb_file']))}
                          style="background-image: url({$item['thumb_file']|noescape});"
                      {/if}>
+                    {if isset($item['metadata']) && isset($item['metadata']['duration_string'])}
+                        <div class="time">
+                            {$item['metadata']['duration_string']}
+                        </div>
+                    {/if}
                 </div>
                 <i class="open fa {if $item['type'] == "video"} fa-play-circle {else} fa-picture-o{/if}" 
                    aria-hidden="true"></i>

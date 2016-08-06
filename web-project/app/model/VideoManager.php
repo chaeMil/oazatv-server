@@ -113,7 +113,7 @@ class VideoManager extends BaseModel {
         }
     }
 
-    public function getVideoFromDB($id, $published = 1, $metadata = false) {
+    public function getVideoFromDB($id, $published = 1) {
         if ($published != 2) {
             $video = self::$database->table(self::TABLE_NAME)
                     ->select("*")
@@ -128,12 +128,6 @@ class VideoManager extends BaseModel {
         }
 		
 		$result = $video;
-      
-        if ($metadata) {
-
-        	$result['metadata'] = $this->getVideoFileMetadata($video[self::COLUMN_MP4_FILE]);
-        }
-
         return $result;
     }
   
@@ -498,6 +492,10 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         $video['views'] = $input[self::COLUMN_VIEWS];
         $video['thumbs'] = $this->getThumbnails($videoId);
         $video['thumb_color'] = $input[self::COLUMN_THUMB_COLOR];
+        if ($input[self::COLUMN_METADATA_DURATION_IN_SECONDS] != '') {
+            $video[self::COLUMN_METADATA_DURATION_IN_SECONDS] = $input[self::COLUMN_METADATA_DURATION_IN_SECONDS];
+            $video['metadata'] = $this->getVideoFileMetadata("", $video[self::COLUMN_METADATA_DURATION_IN_SECONDS]);
+        }
         $video['type'] = "video";
 
         return $video;
