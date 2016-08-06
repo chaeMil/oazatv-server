@@ -127,19 +127,13 @@ class VideoManager extends BaseModel {
                     ->fetch();
         }
 
-        $videoUrlPrefix = VIDEOS_FOLDER . $video[VideoManager::COLUMN_ID] . "/";
-
         $metadataDurationInSeconds = $video[VideoManager::COLUMN_METADATA_DURATION_IN_SECONDS];
 
         if ($metadataDurationInSeconds == 0) {
-            $metadata = $this->getVideoFileMetadata($videoUrlPrefix .
-                $video[VideoManager::COLUMN_MP4_FILE]);
-
+            $videoUrlPrefix = VIDEOS_FOLDER . $video[VideoManager::COLUMN_ID] . "/";
+            $metadata = $this->getVideoFileMetadata($videoUrlPrefix . $video[VideoManager::COLUMN_MP4_FILE]);
             $videoToUpdate = $video;
-            unset($videoToUpdate['type']);
-            $videoToUpdate[VideoManager::COLUMN_METADATA_DURATION_IN_SECONDS]
-                = $metadata['duration_in_seconds'];
-            $this->saveVideoToDB($videoToUpdate);
+            $videoToUpdate->update(array(VideoManager::COLUMN_METADATA_DURATION_IN_SECONDS => $metadata['duration_in_seconds']));
         }
 
 		$result = $video;
