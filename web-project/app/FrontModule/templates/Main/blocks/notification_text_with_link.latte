@@ -1,7 +1,7 @@
 {block content}
 
 <div class="col-xs-12">
-    <a href="{$data['inputs']['link']}">
+    <a href="{$data['inputs']['link']|noescape}">
         <div class="alert alert-{$data['inputs']['notification_type']}">
             <u><strong>{$data['inputs']['name'][$lang]}</strong> {$data['inputs']['text'][$lang]}</u>
         </div>
