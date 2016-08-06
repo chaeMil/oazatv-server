@@ -103,19 +103,6 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
             $mp4LowRes = $videoUrlPrefix . $item[VideoManager::COLUMN_MP4_FILE_LOWRES];
             $subtitles = $videoUrlPrefix . $item[VideoManager::COLUMN_SUBTITLES_FILE];
 
-            $metadataDurationInSeconds = $item[VideoManager::COLUMN_METADATA_DURATION_IN_SECONDS];
-
-            if ($metadataDurationInSeconds == 0) {
-                $metadata = $this->videoManager->getVideoFileMetadata($videoUrlPrefix .
-                    $item[VideoManager::COLUMN_MP4_FILE]);
-
-                $videoToUpdate = $item;
-                unset($videoToUpdate['type']);
-                $videoToUpdate[VideoManager::COLUMN_METADATA_DURATION_IN_SECONDS]
-                    = $metadata['duration_in_seconds'];
-                $this->videoManager->saveVideoToDB($videoToUpdate);
-            }
-
             $metadata = $this->videoManager->getVideoFileMetadata("",
                 $item[VideoManager::COLUMN_METADATA_DURATION_IN_SECONDS]);
 
