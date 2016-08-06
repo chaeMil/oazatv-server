@@ -70,9 +70,9 @@ frontpage_blocks:
                     type: 'text'
                     mutations: 'cs|en'
                 link:
-                   name: 'link'
-                   type: 'text'
-                   mutations: 'cs|en'
+                    name: 'link'
+                    type: 'text'
+                    mutations: 'cs|en'
                 select:
                     name: 'notification_type'
                     type: 'select'
