@@ -35,6 +35,7 @@ class VideoManager extends BaseModel {
             COLUMN_THUMB_FILE_LOWRES = 'thumb_file_lowres',
             COLUMN_SUBTITLES_FILE = 'subtitles_file',
             COLUMN_THUMB_COLOR = 'thumb_color',
+            COLUMN_METADATA_DURATION_IN_SECONDS = "metadata_duration_in_seconds",
             COLUMN_DATE = 'date',
             COLUMN_NAME_CS = 'name_cs',
             COLUMN_NAME_EN = 'name_en',
@@ -136,21 +137,23 @@ class VideoManager extends BaseModel {
         return $result;
     }
   
-    public function getVideoFileMetadata($file) {
-		$metadata = array();
+    public function getVideoFileMetadata($file = "", $duration_in_seconds = 0) {
+        if ($file != "") {
+            $metadata = array();
 
-		$time =  exec(PATH_TO_FFMPEG." -i $file 2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//");
-		$duration = explode(":",$time);
-        if (isset($duration[0]) && isset($duration[1]) && isset($duration[2])) {
-            $duration_in_seconds = $duration[0] * 3600 + $duration[1] * 60 + round($duration[2]);
-
-            $metadata['duration_in_seconds'] = $duration_in_seconds;
-            $duration_string = gmdate("H:i:s", $duration_in_seconds);
-            if (StringUtils::startsWith($duration_string, "00:")) {
-                $duration_string = str_replace("00:", "", $duration_string);
+            $time = exec(PATH_TO_FFMPEG . " -i $file 2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//");
+            $duration = explode(":", $time);
+            if (isset($duration[0]) && isset($duration[1]) && isset($duration[2])) {
+                $duration_in_seconds = $duration[0] * 3600 + $duration[1] * 60 + round($duration[2]);
             }
-            $metadata['duration_string'] = $duration_string;
         }
+
+        $metadata['duration_in_seconds'] = $duration_in_seconds;
+        $duration_string = gmdate("H:i:s", $duration_in_seconds);
+        if (StringUtils::startsWith($duration_string, "00:")) {
+            $duration_string = str_replace("00:", "", $duration_string);
+        }
+        $metadata['duration_string'] = $duration_string;
 		
 		return $metadata;   
 	}
