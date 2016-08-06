@@ -47,7 +47,8 @@ class VideoManager extends BaseModel {
             THUMB_1024 = 1024,
             THUMB_512 = 512,
             THUMB_256 = 256,
-            THUMB_128 = 128;
+            THUMB_128 = 128,
+            API_METADATA = "metadata";
 
     /** @var Nette\Database\Context */
     public static $database;
@@ -135,15 +136,21 @@ class VideoManager extends BaseModel {
         return $result;
     }
   
-    private function getVideoFileMetadata($file) {
+    public function getVideoFileMetadata($file) {
 		$metadata = array();
-		
-		$time =  exec(PATH_TO_FFMPEG." -i $file 2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//");   
-		$duration = explode(":",$time);   
-		$duration_in_seconds = $duration[0]*3600 + $duration[1]*60+ round($duration[2]);   
 
-		
-		$metadata['duration'] = $duration_in_seconds;
+		$time =  exec(PATH_TO_FFMPEG." -i $file 2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//");
+		$duration = explode(":",$time);
+        if (isset($duration[0]) && isset($duration[1]) && isset($duration[2])) {
+            $duration_in_seconds = $duration[0] * 3600 + $duration[1] * 60 + round($duration[2]);
+
+            $metadata['duration_in_seconds'] = $duration_in_seconds;
+            $duration_string = gmdate("H:i:s", $duration_in_seconds);
+            if (StringUtils::startsWith($duration_string, "00:")) {
+                $duration_string = str_replace("00:", "", $duration_string);
+            }
+            $metadata['duration_string'] = $duration_string;
+        }
 		
 		return $metadata;   
 	}

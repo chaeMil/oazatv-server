@@ -94,11 +94,15 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
                 
             $videoUrlPrefix = VIDEOS_FOLDER . $item[VideoManager::COLUMN_ID] . "/";
 
+            $metadata = $this->videoManager->getVideoFileMetadata($videoUrlPrefix .
+                $item[VideoManager::COLUMN_MP4_FILE]);
+
             $mp3 = $videoUrlPrefix . $item[VideoManager::COLUMN_MP3_FILE];
             $mp4 = $videoUrlPrefix . $item[VideoManager::COLUMN_MP4_FILE];
             $webm = $videoUrlPrefix . $item[VideoManager::COLUMN_WEBM_FILE];
             $thumb = $videoUrlPrefix . $item[VideoManager::COLUMN_THUMB_FILE];
-            $thumbLowRes = $videoUrlPrefix . "thumbs/" . str_replace(".jpg", "_128.jpg", $item[VideoManager::COLUMN_THUMB_FILE]);
+            $thumbLowRes = $videoUrlPrefix . "thumbs/" . str_replace(".jpg", "_128.jpg",
+                    $item[VideoManager::COLUMN_THUMB_FILE]);
             $mp4LowRes = $videoUrlPrefix . $item[VideoManager::COLUMN_MP4_FILE_LOWRES];
             $subtitles = $videoUrlPrefix . $item[VideoManager::COLUMN_SUBTITLES_FILE];
 
@@ -109,6 +113,7 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
             $item[VideoManager::COLUMN_THUMB_FILE_LOWRES] = NULL;
             $item[VideoManager::COLUMN_MP4_FILE_LOWRES] = NULL;
             $item[VideoManager::COLUMN_SUBTITLES_FILE] = NULL;
+            $item[VideoManager::API_METADATA] = $metadata;
 
             if (file_exists($mp3) && is_file($mp3)) {
                 $item[VideoManager::COLUMN_MP3_FILE] = SERVER . $mp3;
