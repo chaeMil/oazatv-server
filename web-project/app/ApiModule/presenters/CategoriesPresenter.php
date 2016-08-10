@@ -18,7 +18,8 @@ use Nette,
  * @author chaemil
  */
 class CategoriesPresenter extends BasePresenter{
-    
+
+    const PER_PAGE = 10;
     public $database;
     public $categoriesManager;
     public $videoManager;
@@ -30,32 +31,54 @@ class CategoriesPresenter extends BasePresenter{
         $this->videoManager = $videoManager;
     }
     
-    public function actionDefault() {
-        
-        $categories = $this->categoriesManager->getCategoriesFromDB();
-        
-        $response = array();
-        $categoriesArray = array();
-        
-        foreach($categories as $category) {
-            
+    public function actionDefault($videos = true, $categoryId, $page = 0, $perPage = self::PER_PAGE) {
+
+        if (!isset($categoryId)) {
+            $categories = $this->categoriesManager->getCategoriesFromDB();
+
+            $response = array();
+            $categoriesArray = array();
+
+            foreach ($categories as $category) {
+
+                $categoryJson = $category->toArray();
+
+                if ($videos) {
+                    $videosFromCategory = $this->videoManager->getVideosFromDBbyCategory($category['id'], 0, 120);
+                    $videosArray = array();
+                    foreach ($videosFromCategory as $video) {
+                        $videoNew = $video->toArray();
+                        $videoNew['type'] = 'video';
+                        $videosArray[] = $this->createArchiveItem($videoNew);
+                    }
+
+                    $categoryJson['videos'] = $videosArray;
+                }
+                $categoriesArray[] = $categoryJson;
+            }
+
+            $response['categories'] = $categoriesArray;
+
+            $this->sendJson($response);
+
+        } else {
+
+            $category = $this->categoriesManager->getCategoryFromDB($categoryId);
             $categoryJson = $category->toArray();
-            
-            $videosFromCategory = $this->videoManager->getVideosFromDBbyCategory($category['id'], 0, 120);
-            $videosArray = array();
-            foreach($videosFromCategory as $video) {
+
+            $videosFromCategory = $this->videoManager->getVideosFromDBbyCategory($category['id'], $page * $perPage, $perPage);
+            foreach ($videosFromCategory as $video) {
                 $videoNew = $video->toArray();
                 $videoNew['type'] = 'video';
                 $videosArray[] = $this->createArchiveItem($videoNew);
             }
-            
+
             $categoryJson['videos'] = $videosArray;
-            $categoriesArray[] = $categoryJson;
+            $response['categories'] = $categoryJson;
+
+            $this->sendJson($response);
+
         }
-        
-        $response['categories'] = $categoriesArray;
-        
-        $this->sendJson($response);
         
     }
     
