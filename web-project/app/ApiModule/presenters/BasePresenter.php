@@ -61,6 +61,10 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
         $routerLang = $this->getParameter('locale');
         $this->setupLanguage($this->container, $routerLang);
     }
+
+    public function enableCORS() {
+        header("Access-Control-Allow-Origin: *");
+    }
     
     public function setupLanguage($container, $lang = null) {
         if ($lang != null) {

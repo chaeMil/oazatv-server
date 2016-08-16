@@ -60,7 +60,8 @@ class MainPresenter extends BasePresenter {
                 $response['featured'][] = $this->createArchiveItem($item);
             }
         } 
-        
+
+        $this->enableCORS();
         $this->sendResponse(new JsonResponse($response));
     }
     
