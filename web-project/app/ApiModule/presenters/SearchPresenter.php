@@ -35,7 +35,8 @@ class SearchPresenter extends BasePresenter {
         usort($mergedSearch, array($this, 'sortItemsByDate'));
 
         $jsonArray['search'] = $mergedSearch;
-        
+
+        $this->enableCORS();
         $this->sendJson($jsonArray);
         
     }

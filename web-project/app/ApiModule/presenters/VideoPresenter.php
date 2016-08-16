@@ -30,11 +30,13 @@ class VideoPresenter extends BasePresenter {
             $videoItem = $this->createArchiveItem($videoItem);
 
             $jsonArray['video'] = $videoItem;
-            
+
+            $this->enableCORS();
             $this->sendJson($jsonArray);
         } else {
-            
-        $this->createJsonError('videoFileNotFound', 
+
+            $this->enableCORS();
+            $this->createJsonError('videoFileNotFound',
                 Nette\Http\Response::S404_NOT_FOUND, 
                 "Video neexistuje", 
                 "This video does not exist");

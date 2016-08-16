@@ -70,10 +70,12 @@ class AlbumPresenter extends BasePresenter {
             }
             
             $jsonArray['album'] = $albumArray;
-            
+
+            $this->enableCORS();
             $this->sendJson($jsonArray);
         } else {
-            
+
+            $this->enableCORS();
             $this->createJsonError('albumFileNotFound', 
                     Nette\Http\Response::S404_NOT_FOUND, 
                     "Album neexistuje", 

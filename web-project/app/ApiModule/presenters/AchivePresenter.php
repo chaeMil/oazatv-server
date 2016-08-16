@@ -39,7 +39,8 @@ class ArchivePresenter extends BasePresenter {
         }
         
         $jsonArray['archive'] = $archiveArray;
-        
+
+        $this->enableCORS();
         $this->sendJson($jsonArray);
     }
 }
