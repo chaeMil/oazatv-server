@@ -44,7 +44,7 @@ class CategoriesPresenter extends BasePresenter{
                 $categoryJson = $category->toArray();
 
                 if ($videos) {
-                    $videosFromCategory = $this->videoManager->getVideosFromDBbyCategory($category['id'], 0, 120);
+                    $videosFromCategory = $this->videoManager->getVideosFromDBbyCategory($category['id'], 0, $perPage);
                     $videosArray = array();
                     foreach ($videosFromCategory as $video) {
                         $videoNew = $video->toArray();
