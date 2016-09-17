@@ -197,3 +197,23 @@ frontpage_blocks:
                 name: 'image_mobile'
                 type: 'image'
                 mutations: 'cs|en'
+    centered_fullsize_responsive_image_with_link:
+        name: 'centered_fullsize_responsive_image_with_link'
+        info: 'Vycentrovaný responzivní obrázek na celou šířku s odkazem'
+        inputs:
+            image_desktop:
+                name: 'image_desktop'
+                type: 'image'
+                mutations: 'cs|en'
+            image_medium:
+                name: 'image_medium'
+                type: 'image'
+                mutations: 'cs|en'
+            image_mobile:
+                name: 'image_mobile'
+                type: 'image'
+                mutations: 'cs|en'
+            link:
+                name: 'link'
+                type: 'text'
+                mutations: 'cs|en'

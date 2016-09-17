@@ -1,0 +1,12 @@
+{block content}
+
+<div class="col-xs-12">
+    <div class="row" style="margin-left: auto; margin-right: auto; float: inherit; text-align: center">
+		<a href="{$data['inputs']['link'][$lang]}" target="_blank">
+			<img class="img-responsive hidden-xs hidden-sm hidden-md" src="{$basePath}/db/front_page/images/{$data['inputs']['image_desktop'][$lang]}" />
+			<img class="img-responsive visible-md visible-sm" src="{$basePath}/db/front_page/images/{$data['inputs']['image_medium'][$lang]}" />
+			<img class="img-responsive visible-xs" src="{$basePath}/db/front_page/images/{$data['inputs']['image_mobile'][$lang]}" />
+		</a>
+		<br>
+    </div>
+</div>
