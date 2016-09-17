@@ -142,42 +142,58 @@ frontpage_blocks:
                 type: 'image'
                 mutations: 'cs|en'
     centered_image_with_dimensions:
-            name: 'centered_image_with_dimensions'
-            info: 'Vycentrovaný obrázek s nastavitelnou šířkou'
-            inputs:
-                image:
-                    name: 'image'
-                    type: 'image'
-                    mutations: 'cs|en'
-                select:
-                    name: 'width'
-                    type: 'select'
-                    options: '1/1|1/2|1/3'
+        name: 'centered_image_with_dimensions'
+        info: 'Vycentrovaný obrázek s nastavitelnou šířkou'
+        inputs:
+            image:
+                name: 'image'
+                type: 'image'
+                mutations: 'cs|en'
+            select:
+                name: 'width'
+                type: 'select'
+                options: '1/1|1/2|1/3'
     image_with_link:
-            name: 'image_with_link'
-            info: 'Obrázek s odkazem'
-            inputs:
-                image:
-                    name: 'image'
-                    type: 'image'
-                    mutations: 'cs|en'
-                text:
-                    name: 'link'
-                    type: 'text'
-                    mutations: 'cs|en'
+        name: 'image_with_link'
+        info: 'Obrázek s odkazem'
+        inputs:
+            image:
+                name: 'image'
+                type: 'image'
+                mutations: 'cs|en'
+            text:
+                name: 'link'
+                type: 'text'
+                mutations: 'cs|en'
     centered_image_with_dimensions_and_link:
-                name: 'centered_image_with_dimensions_and_link'
-                info: 'Vycentrovaný obrázek s nastavitelnou šířkou a odkazem'
-                inputs:
-                    image:
-                        name: 'image'
-                        type: 'image'
-                        mutations: 'cs|en'
-                    select:
-                        name: 'width'
-                        type: 'select'
-                        options: '1/1|1/2|1/3'
-                    text:
-                        name: 'link'
-                        type: 'text'
-                        mutations: 'cs|en'
+        name: 'centered_image_with_dimensions_and_link'
+        info: 'Vycentrovaný obrázek s nastavitelnou šířkou a odkazem'
+        inputs:
+            image:
+                name: 'image'
+                type: 'image'
+                mutations: 'cs|en'
+            select:
+                name: 'width'
+                type: 'select'
+                options: '1/1|1/2|1/3'
+            text:
+                name: 'link'
+                type: 'text'
+                mutations: 'cs|en'
+    centered_fullsize_responsive_image:
+        name: 'centered_fullsize_responsive_image'
+        info: 'Vycentrovaný responzivní obrázek na celou šířku'
+        inputs:
+            image_desktop:
+                name: 'image_desktop'
+                type: 'image'
+                mutations: 'cs|en'
+            image_medium:
+                name: 'image_medium'
+                type: 'image'
+                mutations: 'cs|en'
+            image_mobile:
+                name: 'image_mobile'
+                type: 'image'
+                mutations: 'cs|en'
