@@ -133,7 +133,9 @@ class VideoManager extends BaseModel {
             $videoUrlPrefix = VIDEOS_FOLDER . $video[VideoManager::COLUMN_ID] . "/";
             $metadata = $this->getVideoFileMetadata($videoUrlPrefix . $video[VideoManager::COLUMN_MP4_FILE]);
             $videoToUpdate = $video;
-            $videoToUpdate->update(array(VideoManager::COLUMN_METADATA_DURATION_IN_SECONDS => $metadata['duration_in_seconds']));
+			if ($videoToUpdate != false) {
+            	$videoToUpdate->update(array(VideoManager::COLUMN_METADATA_DURATION_IN_SECONDS => $metadata['duration_in_seconds']));
+			}
         }
 
 		$result = $video;
