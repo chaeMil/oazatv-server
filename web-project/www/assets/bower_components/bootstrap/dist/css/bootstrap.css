@@ -7899,9 +7899,6 @@ and open the template in the editor.
     font-size: 120%;
   }
 }
-.video-fluid.categories .categories {
-  margin-top: -15px;
-}
 @media (max-width: 992px) {
   .video-fluid.categories .categories {
     margin-top: 30px;
