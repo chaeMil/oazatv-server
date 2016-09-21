@@ -163,16 +163,16 @@ class VideoManager extends BaseModel {
 		return $metadata;   
 	}
     
-    public function getVideoFromDBtoAPI($id) {
-        
-        $video = self::$database->table(self::TABLE_NAME)
-                ->select('id')
-                ->where(array(self::COLUMN_PUBLISHED => 1, self::COLUMN_ID => $id))
-                ->fetch();
-        
-        $arrayItemFromDB = $this->getVideoFromDB($video['id'])->toArray();
-        $arrayItemFromDB['type'] = 'video';
-        return $arrayItemFromDB;
+    public function getVideoFromDBtoAPI($id) {	
+        $videoDB = $this->getVideoFromDB($id, 1);
+		
+		if ($videoDB != false) {
+			$arrayItemFromDB = $videoDB->toArray();
+			$arrayItemFromDB['type'] = 'video';
+			return $arrayItemFromDB;
+		} else { 
+			return null;
+		}
     }
 
     public function getVideoFromDBbyHash($hash, $published = 1) {

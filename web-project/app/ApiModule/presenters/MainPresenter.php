@@ -36,28 +36,36 @@ class MainPresenter extends BasePresenter {
         $response['newestVideos'] = array();
         if (isset($newestVideos)) {
             foreach($newestVideos as $video) {
-                $response['newestVideos'][] = $this->createArchiveItem($video);
+                if ($video != null) {
+                    $response['newestVideos'][] = $this->createArchiveItem($video);
+                }
             }
         }
         
         $response['newestAlbums'] = array();
         if (isset($newestAlbums)) {
             foreach($newestAlbums as $album) {
-                $response['newestAlbums'][] = $this->createArchiveItem($album);
+                if ($album != null) {
+                    $response['newestAlbums'][] = $this->createArchiveItem($album);
+                }
             }
         }
         
         $response['popularVideos'] = array();
         if (isset($popularVideos)) {
             foreach($popularVideos as $video) {
-                $response['popularVideos'][] = $this->createArchiveItem($video);
+                if ($video != null) {
+                    $response['popularVideos'][] = $this->createArchiveItem($video);
+                }
             }
         }     
         
-        $response['featured'] = array(); //TODO!!! implement featured items
+        $response['featured'] = array();
         if (isset($featuredItems)) {
             foreach($featuredItems as $item) {
-                $response['featured'][] = $this->createArchiveItem($item);
+                if ($item != null) {
+                    $response['featured'][] = $this->createArchiveItem($item);
+                }
             }
         } 
 
