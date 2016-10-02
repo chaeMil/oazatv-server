@@ -112,7 +112,7 @@ class PhotosManager {
                     ->fetch();
         } else {
             return $this->database->table(self::TABLE_NAME_ALBUMS)
-                    ->select("*")->where(array(self::COLUMN_HASH => $hashd))
+                    ->select("*")->where(array(self::COLUMN_HASH => $hash))
                     ->fetch();
         }
 

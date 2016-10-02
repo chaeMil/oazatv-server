@@ -19,7 +19,8 @@ class MainPresenter extends BasePresenter {
    
     public function renderDefault() {
         $response = array('apiVersion' => 2.0,
-                          'serverVersion' => VERSION);
+                          'serverVersion' => VERSION,
+                          'latestAndroidAppVersion' => LATEST_ANDROID_APP_VERSION);
         
         $newestVideos = $this->videoManager->getVideosFromDBtoAPI(0, 16);
         $newestAlbums = $this->photosManager->getAlbumsFromDBtoAPI(0, 16);
