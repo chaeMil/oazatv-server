@@ -455,10 +455,11 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         $video->update(array(self::COLUMN_VIEWS => $views + 1));
     }
 
-    public function createLocalizedVideoObject($lang, $input) {
+    public function createLocalizedVideoObject($lang, $input)
+    {
         $video = Array();
 
-        switch($lang) {
+        switch ($lang) {
             case 'cs':
                 $day = date('d', strtotime($input[self::COLUMN_DATE]));
                 $month = date('n', strtotime($input[self::COLUMN_DATE]));
@@ -485,19 +486,19 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         $video['hash'] = $input['hash'];
         $video['tags'] = $input[self::COLUMN_TAGS];
         if ($input[self::COLUMN_MP3_FILE] != '') {
-            $video['mp3'] = VIDEOS_FOLDER.$videoId.'/'.$input[self::COLUMN_MP3_FILE];
+            $video['mp3'] = VIDEOS_FOLDER . $videoId . '/' . $input[self::COLUMN_MP3_FILE];
         }
         if ($input[self::COLUMN_MP4_FILE] != '') {
-            $video['mp4'] = VIDEOS_FOLDER.$videoId.'/'.$input[self::COLUMN_MP4_FILE];
+            $video['mp4'] = VIDEOS_FOLDER . $videoId . '/' . $input[self::COLUMN_MP4_FILE];
         }
         if ($input[self::COLUMN_MP4_FILE_LOWRES] != '') {
-            $video['mp4_lowres'] = VIDEOS_FOLDER.$videoId.'/'.$input[self::COLUMN_MP4_FILE_LOWRES];
+            $video['mp4_lowres'] = VIDEOS_FOLDER . $videoId . '/' . $input[self::COLUMN_MP4_FILE_LOWRES];
         }
         if ($input[self::COLUMN_WEBM_FILE] != '') {
-            $video['webm'] = VIDEOS_FOLDER.$videoId.'/'.$input[self::COLUMN_WEBM_FILE];
+            $video['webm'] = VIDEOS_FOLDER . $videoId . '/' . $input[self::COLUMN_WEBM_FILE];
         }
         if ($input[self::COLUMN_SUBTITLES_FILE] != '') {
-            $video['ass'] = VIDEOS_FOLDER.$videoId.'/'.$input[self::COLUMN_SUBTITLES_FILE];
+            $video['ass'] = VIDEOS_FOLDER . $videoId . '/' . $input[self::COLUMN_SUBTITLES_FILE];
         }
         $video['categories'] = $input[self::COLUMN_CATEGORIES];
         $video['views'] = $input[self::COLUMN_VIEWS];
@@ -506,6 +507,9 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         if ($input[self::COLUMN_METADATA_DURATION_IN_SECONDS] != '') {
             $video[self::COLUMN_METADATA_DURATION_IN_SECONDS] = $input[self::COLUMN_METADATA_DURATION_IN_SECONDS];
             $video['metadata'] = $this->getVideoFileMetadata("", $video[self::COLUMN_METADATA_DURATION_IN_SECONDS]);
+        }
+        if ($input['subtitles_file'] != null) {
+            $video['subtitles'] = $input['subtitles_file'];
         }
         $video['type'] = "video";
 
