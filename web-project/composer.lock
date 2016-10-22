@@ -700,16 +700,16 @@
         },
         {
             "name": "nette/database",
-            "version": "v2.3.9",
+            "version": "v2.3.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/database.git",
-                "reference": "a4c7ea17470a7d888df5738f5e63b2605899f289"
+                "reference": "ed0dc48c58ddf9042f736f3c1ac431dfdd825019"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/database/zipball/a4c7ea17470a7d888df5738f5e63b2605899f289",
-                "reference": "a4c7ea17470a7d888df5738f5e63b2605899f289",
+                "url": "https://api.github.com/repos/nette/database/zipball/ed0dc48c58ddf9042f736f3c1ac431dfdd825019",
+                "reference": "ed0dc48c58ddf9042f736f3c1ac431dfdd825019",
                 "shasum": ""
             },
             "require": {
@@ -750,7 +750,7 @@
             ],
             "description": "Nette Database Component",
             "homepage": "https://nette.org",
-            "time": "2016-05-30 14:52:29"
+            "time": "2016-10-18 13:30:07"
         },
         {
             "name": "nette/di",
