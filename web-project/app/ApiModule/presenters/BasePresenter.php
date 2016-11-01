@@ -17,7 +17,8 @@ use Nette,
  Model\AnalyticsManager,
  Model\SearchManager,
  Model\LiveStreamManager,
- Model\FrontPageManager;
+ Model\FrontPageManager,
+ Model\SongsManager;
 
 /**
  * Description of MainPresenter
@@ -37,13 +38,14 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
     public $searchManager;
     public $liveStreamManager;
     public $frontPageManager;
-    
+    public $songsManager;
+
     public function __construct(Nette\DI\Container $container,
             Nette\Database\Context $database, ArchiveManager $archiveManager, 
             VideoManager $videoManager, PhotosManager $photosManager,
             AnalyticsManager $analyticsManager, CategoriesManager $categoriesManager,
             SearchManager $searchManager, LiveStreamManager $liveStreamManager,
-            FrontPageManager $frontPageManager) {
+            FrontPageManager $frontPageManager, SongsManager $songsManager) {
         
         parent::__construct();
         
@@ -57,6 +59,7 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
         $this->searchManager = $searchManager;
         $this->liveStreamManager = $liveStreamManager;
         $this->frontPageManager = $frontPageManager;
+        $this->songsManager = $songsManager;
         
         $routerLang = $this->getParameter('locale');
         $this->setupLanguage($this->container, $routerLang);
