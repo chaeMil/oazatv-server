@@ -28,17 +28,31 @@ class SongsPresenter extends BasePresenter {
         });
 
         $groupedSongs = array();
+        $group = array();
+        $lastSong = NULL;
+        $lastSongTag = NULL;
+
         foreach($songs as $song) {
             $tag = preg_replace('/\d/', '', $song['tag']);;
-
-            if(!isset($groupedSongs[$tag])) {
-                $groupedSongs[$tag] = array();
-            }
 
             $song = $song->toArray();
             unset($song['body']);
 
-            $groupedSongs[$tag][] = $song;
+            if ($lastSong = NULL || $lastSongTag == $tag) {
+                $group[] = $song;
+            } else {
+
+                if (!empty($group)) {
+                    $groupedSongs[] = $group;
+                }
+
+                $group = array();
+                $group[] = $song;
+            }
+
+
+            $lastSong = $song;
+            $lastSongTag = preg_replace('/\d/', '', $lastSong['tag']);;
         }
 
         $jsonResponse = array();
