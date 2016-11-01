@@ -44,4 +44,12 @@ class SongsPresenter extends BasePresenter {
         $this->enableCORS();
         $this->sendJson($groupedSongs);
     }
+
+    public function renderView($id) {
+        $song = $this->songsManager->getSongFromDB($id);
+        $song = $song->toArray();
+
+        $this->enableCORS();
+        $this->sendJson($song);
+    }
 }
