@@ -41,8 +41,11 @@ class SongsPresenter extends BasePresenter {
             $groupedSongs[$tag][] = $song;
         }
 
+        $jsonResponse = array();
+        $jsonResponse['songs'] = $groupedSongs;
+
         $this->enableCORS();
-        $this->sendJson($groupedSongs);
+        $this->sendJson($jsonResponse);
     }
 
     public function renderView($id) {
