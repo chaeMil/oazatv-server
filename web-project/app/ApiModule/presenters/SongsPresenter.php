@@ -39,7 +39,8 @@ class SongsPresenter extends BasePresenter {
             unset($song['body']);
 
             if ($lastSong = NULL || $lastSongTag == $tag) {
-                $group[] = $song;
+                $group['tag'] = $tag;
+                $group['songs'][] = $song;
             } else {
 
                 if (!empty($group)) {
@@ -47,7 +48,8 @@ class SongsPresenter extends BasePresenter {
                 }
 
                 $group = array();
-                $group[] = $song;
+                $group['tag'] = $tag;
+                $group['songs'][] = $song;
             }
 
 
