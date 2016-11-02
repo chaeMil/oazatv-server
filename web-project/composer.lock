@@ -1538,7 +1538,7 @@
         },
         {
             "name": "symfony/config",
-            "version": "v2.8.12",
+            "version": "v2.8.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
@@ -1699,16 +1699,16 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v2.8.12",
+            "version": "v2.8.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "bf0ff95faa9b6c0708efc1986255e3608d0ed3c7"
+                "reference": "cca6ff892355876534b01a927f789bac9601c935"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/bf0ff95faa9b6c0708efc1986255e3608d0ed3c7",
-                "reference": "bf0ff95faa9b6c0708efc1986255e3608d0ed3c7",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/cca6ff892355876534b01a927f789bac9601c935",
+                "reference": "cca6ff892355876534b01a927f789bac9601c935",
                 "shasum": ""
             },
             "require": {
@@ -1759,7 +1759,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2016-09-06 10:55:00"
+            "time": "2016-10-18 04:28:30"
         },
         {
             "name": "tedivm/jshrink",
