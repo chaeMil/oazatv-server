@@ -48,12 +48,16 @@ class MainPresenter extends BasePresenter {
                 }
             }
         }
-        
+
         $response['newestAlbums'] = array();
-        if (isset($newestAlbums)) {
-            foreach($newestAlbums as $album) {
-                if ($album != null) {
-                    $response['newestAlbums'][] = $this->createArchiveItem($album);
+        if ($appVersionCode == null) {
+            $response['newestAlbums'][] = $this->upgradeAppThumbnail();
+        } else {
+            if (isset($newestAlbums)) {
+                foreach ($newestAlbums as $album) {
+                    if ($album != null) {
+                        $response['newestAlbums'][] = $this->createArchiveItem($album);
+                    }
                 }
             }
         }
