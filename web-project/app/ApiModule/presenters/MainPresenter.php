@@ -39,11 +39,12 @@ class MainPresenter extends BasePresenter {
         $response['newestVideos'] = array();
         if ($appVersionCode == null) {
             $response['newestVideos'][] = $this->upgradeAppThumbnail();
-        }
-        if (isset($newestVideos)) {
-            foreach($newestVideos as $video) {
-                if ($video != null) {
-                    $response['newestVideos'][] = $this->createArchiveItem($video);
+        } else {
+            if (isset($newestVideos)) {
+                foreach ($newestVideos as $video) {
+                    if ($video != null) {
+                        $response['newestVideos'][] = $this->createArchiveItem($video);
+                    }
                 }
             }
         }
@@ -60,23 +61,25 @@ class MainPresenter extends BasePresenter {
         $response['popularVideos'] = array();
         if ($appVersionCode == null) {
             $response['popularVideos'][] = $this->upgradeAppThumbnail();
-        }
-        if (isset($popularVideos)) {
-            foreach($popularVideos as $video) {
-                if ($video != null) {
-                    $response['popularVideos'][] = $this->createArchiveItem($video);
+        } else {
+            if (isset($popularVideos)) {
+                foreach ($popularVideos as $video) {
+                    if ($video != null) {
+                        $response['popularVideos'][] = $this->createArchiveItem($video);
+                    }
                 }
             }
-        }     
+        }
         
         $response['featured'] = array();
         if ($appVersionCode == null) {
             $response['featured'][] = $this->upgradeAppThumbnail();
-        }
-        if (isset($featuredItems)) {
-            foreach($featuredItems as $item) {
-                if ($item != null) {
-                    $response['featured'][] = $this->createArchiveItem($item);
+        } else {
+            if (isset($featuredItems)) {
+                foreach ($featuredItems as $item) {
+                    if ($item != null) {
+                        $response['featured'][] = $this->createArchiveItem($item);
+                    }
                 }
             }
         }
