@@ -37,6 +37,9 @@ class MainPresenter extends BasePresenter {
         }
         
         $response['newestVideos'] = array();
+        if ($appVersionCode == null) {
+            $response['newestVideos'][] = $this->upgradeAppThumbnail();
+        }
         if (isset($newestVideos)) {
             foreach($newestVideos as $video) {
                 if ($video != null) {
@@ -55,6 +58,9 @@ class MainPresenter extends BasePresenter {
         }
         
         $response['popularVideos'] = array();
+        if ($appVersionCode == null) {
+            $response['popularVideos'][] = $this->upgradeAppThumbnail();
+        }
         if (isset($popularVideos)) {
             foreach($popularVideos as $video) {
                 if ($video != null) {
@@ -64,34 +70,9 @@ class MainPresenter extends BasePresenter {
         }     
         
         $response['featured'] = array();
-
         if ($appVersionCode == null) {
-            $upgradeApp = array(
-                'id' => 0,
-                'hash' => null,
-                'mp4_file' => null,
-                'mp4_file_lowres' => null,
-                'webm_file' => null,
-                'mp3_file' => null,
-                'thumb_file' => null,
-                'subtitles_file' => null,
-                'thumb_color' => null,
-                'metadata_duration_in_seconds' => 0,
-                'date' => '1970-01-01',
-                'name_cs' => 'Prosím aktualizujte si vaší aplikaci',
-                'name_en' => 'Please update your app',
-                'tags' => '',
-                'views' => 0,
-                'categories' => '',
-                'description_cs' => '',
-                'description_en' => '',
-                'type' => 'video',
-                'thumb_file_lowres' => null
-            );
-
-            $response['featured'][] = $upgradeApp;
+            $response['featured'][] = $this->upgradeAppThumbnail();
         }
-
         if (isset($featuredItems)) {
             foreach($featuredItems as $item) {
                 if ($item != null) {
@@ -103,5 +84,29 @@ class MainPresenter extends BasePresenter {
         $this->enableCORS();
         $this->sendResponse(new JsonResponse($response));
     }
-    
+
+    private function upgradeAppThumbnail() {
+        return array(
+            'id' => 0,
+            'hash' => null,
+            'mp4_file' => null,
+            'mp4_file_lowres' => null,
+            'webm_file' => null,
+            'mp3_file' => null,
+            'thumb_file' => null,
+            'subtitles_file' => null,
+            'thumb_color' => null,
+            'metadata_duration_in_seconds' => 0,
+            'date' => '1970-01-01',
+            'name_cs' => 'Prosím aktualizujte si vaší aplikaci',
+            'name_en' => 'Please update your app',
+            'tags' => '',
+            'views' => 0,
+            'categories' => '',
+            'description_cs' => '',
+            'description_en' => '',
+            'type' => 'video',
+            'thumb_file_lowres' => null
+        );
+    }
 }
