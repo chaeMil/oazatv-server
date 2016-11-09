@@ -86,7 +86,7 @@ class MainPresenter extends BasePresenter {
                 'description_cs' => '',
                 'description_en' => '',
                 'type' => 'video',
-                'thumb_file_low_res' => null
+                'thumb_file_lowres' => null
             );
 
             $response['featured'][] = $upgradeApp;
