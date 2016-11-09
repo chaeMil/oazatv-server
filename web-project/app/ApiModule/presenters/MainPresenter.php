@@ -102,7 +102,7 @@ class MainPresenter extends BasePresenter {
             'mp3_file' => null,
             'thumb_file' => null,
             'subtitles_file' => null,
-            'thumb_color' => null,
+            'thumb_color' => '#FF0000',
             'metadata_duration_in_seconds' => 0,
             'date' => '1970-01-01',
             'name_cs' => 'Prosím aktualizujte si vaší aplikaci',
