@@ -21,7 +21,9 @@ class MainPresenter extends BasePresenter {
         $response = array('apiVersion' => 2.0,
                           'serverVersion' => VERSION,
                           'latestAndroidAppVersion' => LATEST_ANDROID_APP_VERSION);
-        
+
+        $appVersionCode = $this->request->getQuery('appVersionCode');
+
         $newestVideos = $this->videoManager->getVideosFromDBtoAPI(0, 16);
         $newestAlbums = $this->photosManager->getAlbumsFromDBtoAPI(0, 16);
         $popularVideosIds = $this->analyticsManager->getPopularVideosIds(7, 16);
@@ -62,13 +64,41 @@ class MainPresenter extends BasePresenter {
         }     
         
         $response['featured'] = array();
+
+        if ($appVersionCode == null) {
+            $upgradeApp = array(
+                'id' => 0,
+                'hash' => null,
+                'mp4_file' => null,
+                'mp4_file_lowres' => null,
+                'webm_file' => null,
+                'mp3_file' => null,
+                'thumb_file' => null,
+                'subtitles_file' => null,
+                'thumb_color' => null,
+                'metadata_duration_in_seconds' => 0,
+                'date' => '1970-01-01',
+                'name_cs' => 'Prosím aktualizujte si vaší aplikaci',
+                'name_en' => 'Please update your app',
+                'tags' => '',
+                'views' => 0,
+                'categories' => '',
+                'description_cs' => '',
+                'description_en' => '',
+                'type' => 'video',
+                'thumb_file_low_res' => null
+            );
+
+            $response['featured'][] = $upgradeApp;
+        }
+
         if (isset($featuredItems)) {
             foreach($featuredItems as $item) {
                 if ($item != null) {
                     $response['featured'][] = $this->createArchiveItem($item);
                 }
             }
-        } 
+        }
 
         $this->enableCORS();
         $this->sendResponse(new JsonResponse($response));

@@ -39,6 +39,7 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
     public $liveStreamManager;
     public $frontPageManager;
     public $songsManager;
+    public $request;
 
     public function __construct(Nette\DI\Container $container,
             Nette\Database\Context $database, ArchiveManager $archiveManager, 
@@ -63,6 +64,8 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
         
         $routerLang = $this->getParameter('locale');
         $this->setupLanguage($this->container, $routerLang);
+
+        $this->request = $container->getByType('Nette\Http\Request');
     }
 
     public function enableCORS() {
