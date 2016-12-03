@@ -48,7 +48,7 @@
                                     {if (!$video->mp4_file && strpos($originalFileInfo,'mp4') !== false)}
                                         <li><a n:href="Video:useOriginalFileAs, $video->id, $mp4File">MP4 soubor</a></li>
                                     {/if}
-                                    {if (!$video->mp3_file && strpos($originalFileInfo,'mp3') !== false)}
+                                    {if (!$video->mp3_file && strpos($originalFileInfo,'audio') !== false)}
                                         <li><a n:href="Video:useOriginalFileAs, $video->id, $mp3File">MP3 soubor</a></li>
                                     {/if}
                                     {if (!$video->webm_file && strpos($originalFileInfo,'webm') !== false)}
