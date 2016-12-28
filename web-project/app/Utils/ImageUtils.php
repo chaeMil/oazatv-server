@@ -55,8 +55,13 @@ class ImageUtils {
 
     public static function getImageDimensions($imagefile) {
         $dimensions = array();
-        $dimensions['width'] = getimagesize($imagefile)[0];
-        $dimensions['height'] = getimagesize($imagefile)[1];
+        $dimensions['width'] = 800;
+        $dimensions['height'] = 600;
+
+        if (isset($imagefile)) {
+            $dimensions['width'] = getimagesize($imagefile)[0];
+            $dimensions['height'] = getimagesize($imagefile)[1];
+        }
         return $dimensions;
     }
 }
