@@ -33,6 +33,7 @@
                     <th>název česky</th>
                     <th>název anglicky</th>
                     <th>tagy</th>
+                    <th></th>
                 </thead>
                 <tbody class="searchable">
                     <tr n:foreach="$menus as $menu" 
@@ -42,6 +43,18 @@
                         <td>{$menu->name_cs}</td>
                         <td>{$menu->name_en}</td>
                         <td>{$menu->tags}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a n:href="moveMenuUp, $menu->id"
+                                   class="btn btn-default">
+                                    <span class="glyphicon glyphicon-chevron-up"></span>
+                                </a>
+                                <a n:href="moveMenuDown, $menu->id"
+                                   class="btn btn-default">
+                                    <span class="glyphicon glyphicon-chevron-down"></span>
+                                </a>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>                
             </table>

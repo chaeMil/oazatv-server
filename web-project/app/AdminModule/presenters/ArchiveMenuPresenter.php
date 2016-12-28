@@ -31,8 +31,7 @@ class ArchiveMenuPresenter extends BaseSecuredPresenter {
     public function renderList() {       
         $this->getTemplateVariables($this->getUser()->getId());
         
-        $this->template->menus = $this->archiveMenuManager
-                ->getMenusFromDB(2);
+        $this->template->menus = $this->archiveMenuManager->getMenusFromDB(2);
     }
     
     public function renderCreateMenu() {
@@ -114,6 +113,16 @@ class ArchiveMenuPresenter extends BaseSecuredPresenter {
         EventLogger::log('user '.$this->getUser()->getIdentity()->login.' deleted menu '.$id, 
                 EventLogger::ACTIONS_LOG);
         $this->flashMessage("Menu bylo smazáno!", "danger");
+        $this->redirect("ArchiveMenu:List");
+    }
+
+    public function actionMoveMenuUp($id) {
+        $this->archiveMenuManager->moveMenuUp($id);
+        $this->redirect("ArchiveMenu:List");
+    }
+
+    public function actionMoveMenuDown($id) {
+        $this->archiveMenuManager->moveMenuDown($id);
         $this->redirect("ArchiveMenu:List");
     }
 }

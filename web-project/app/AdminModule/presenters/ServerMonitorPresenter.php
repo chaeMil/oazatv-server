@@ -20,11 +20,11 @@ use Nette,
 class ServerMonitorPresenter  extends BaseSecuredPresenter {
     
     public $database;
-    private $container;
+    public $container;
     private $serverMonitorManager;
     
-    function __construct(Nette\Database\Context $database,
-            Nette\DI\Container $container,
+    function __construct(Nette\DI\Container $container,
+                         Nette\Database\Context $database,
             ServerMonitorManager $serverMonitorManager) {
         $this->database = $database;
         $this->container = $container;

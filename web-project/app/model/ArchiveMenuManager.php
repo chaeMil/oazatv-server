@@ -95,10 +95,12 @@ class ArchiveMenuManager extends BaseModel {
         if ($visible != 2) {
             return self::$database->table(self::TABLE_NAME)
                 ->where(array(self::COLUMN_VISIBLE => $visible))
+                ->order(self::COLUMN_SORT)
                 ->select('*')
                 ->fetchAll();
         } else {
             return self::$database->table(self::TABLE_NAME)
+                ->order(self::COLUMN_SORT)
                 ->select('*')
                 ->fetchAll();
         }
@@ -106,8 +108,46 @@ class ArchiveMenuManager extends BaseModel {
     }
     
     public function deleteMenu($id) {
-        $video = $this->getMenuFromDB($id, 2);
-        $video->delete();
+        $menu = $this->getMenuFromDB($id, 2);
+
+        $nextMenus = $this::$database->table(self::TABLE_NAME)
+            ->select('*')
+            ->where(self::COLUMN_ID."=? AND ". self::COLUMN_SORT.">?",
+                array($menu[self::COLUMN_ID],
+                    $menu[self::COLUMN_SORT]))
+            ->fetchAll();
+
+        foreach($nextMenus as $nextMenu) {
+            $nextMenu->update(array(self::COLUMN_SORT => $nextMenu[self::COLUMN_SORT] - 1));
+        }
+
+        $menu->delete();
+    }
+
+    public function moveMenuUp($id) {
+        $menu = $this->getMenuFromDB($id);
+        $otherMenu = $this::$database->table(self::TABLE_NAME)
+            ->select('*')
+            ->where(array(self::COLUMN_SORT => $menu[self::COLUMN_SORT] - 1))
+            ->fetch();
+
+        if ($otherMenu) {
+            $menu->update(array(self::COLUMN_SORT => $menu[self::COLUMN_SORT] - 1));
+            $otherMenu->update(array(self::COLUMN_SORT => $otherMenu[self::COLUMN_SORT] + 1));
+        }
+    }
+
+    public function moveMenuDown($id) {
+        $menu = $this->getMenuFromDB($id);
+        $otherMenu = $this::$database->table(self::TABLE_NAME)
+            ->select('*')
+            ->where(array(self::COLUMN_SORT => $menu[self::COLUMN_SORT] + 1))
+            ->fetch();
+
+        if ($otherMenu) {
+            $menu->update(array(self::COLUMN_SORT => $menu[self::COLUMN_SORT] + 1));
+            $otherMenu->update(array(self::COLUMN_SORT => $otherMenu[self::COLUMN_SORT] - 1));
+        }
     }
     
     public function countItemsInMenuByTag($tags) {
@@ -120,18 +160,18 @@ class ArchiveMenuManager extends BaseModel {
     public function getLocalizedMenu($id, $lang) {
         $menu = $this->getMenuFromDB($id);
         
-        $newMenu['id'] = $$menu['id'];
+        $newMenu['id'] = $menu['id'];
         $newMenu['tags'] = $menu['tags'];
         
         switch($lang) {
             case 'cs':
-                $newMenu['name'] = $$menu['name_cs'];
+                $newMenu['name'] = $menu['name_cs'];
                 break;
             case 'en':
-                $newMenu['name'] = $$menu['name_en'];
+                $newMenu['name'] = $menu['name_en'];
                 break;
             default:
-                $newMenu['name'] = $$menu['name_en'];
+                $newMenu['name'] = $menu['name_en'];
                 break;
         }
         return $newMenu;

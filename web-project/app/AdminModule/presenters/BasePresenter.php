@@ -12,8 +12,10 @@ use Nette,
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter {    
     public $database;
-    
-    public function __construct(Nette\Database\Context $database) {
+    public $container;
+
+    public function __construct(Nette\DI\Container $container, Nette\Database\Context $database) {
+        $this->container = $container;
         $this->database = $database;
     }
     
