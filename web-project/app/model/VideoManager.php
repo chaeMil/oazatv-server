@@ -485,6 +485,18 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         $video['id'] = $videoId;
         $video['hash'] = $input['hash'];
         $video['tags'] = $input[self::COLUMN_TAGS];
+
+        if (strpos($video['tags'], 'cesky') !== false
+            && strpos($video['tags'], 'english') !== false) {
+            $video['multilang'] = true;
+        } else {
+            if (strpos($video['tags'], 'cesky') !== false) {
+                $video['multilang'] = 'cs';
+            } else {
+                $video['multilang'] = 'en';
+            }
+        }
+
         if ($input[self::COLUMN_MP3_FILE] != '') {
             $video['mp3'] = VIDEOS_FOLDER . $videoId . '/' . $input[self::COLUMN_MP3_FILE];
         }

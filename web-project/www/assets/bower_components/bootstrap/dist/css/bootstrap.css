@@ -6974,11 +6974,11 @@ body {
 .share-options .share-time #video-time:active {
   border: 1px solid #4285f4;
 }
-.video-box {
-  transition-duration: 500ms;
-  -webkit-ransition-duration: 500ms;
-  transition-delay: 350ms;
-  -webkit-transition-delay: 350ms;
+.video-box .video-content-wrapper {
+  background-color: white;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 20px;
 }
 @media (min-width: 992px) {
   .video-box .video-content-wrapper {
@@ -6995,31 +6995,26 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 10px 16px rgba(0, 0, 0, 0.3);
 }
 @media (min-width: 768px) {
-  .video-box a:hover .thumb .time {
-    transition-duration: 250ms;
-    opacity: 1.0;
+  .video-box a:hover {
+    /*i.open {
+                    opacity: 1;
+                    -moz-transform: scale(1.3);
+                    -webkit-transform: scale(1.3);
+                    -o-transform: scale(1.3);
+                    -ms-transform: scale(1.3);
+                    transform: scale(1.3);
+                }
+
+                .thumb {
+                    -webkit-filter: ~"grayscale(70%)";
+                    filter: ~"grayscale(70%)";
+                    transition-duration: 150ms;
+                }*/
   }
+  .video-box a:hover .thumb .time,
   .video-box a:hover .thumb .cc {
     transition-duration: 250ms;
     opacity: 1.0;
-  }
-  .video-box a:hover i.open {
-    opacity: 1;
-    -moz-transform: scale(1.3);
-    -webkit-transform: scale(1.3);
-    -o-transform: scale(1.3);
-    -ms-transform: scale(1.3);
-    transform: scale(1.3);
-  }
-  .video-box a:hover .thumb {
-    -webkit-filter: grayscale(70%);
-    filter: grayscale(70%);
-    transition-duration: 150ms;
-  }
-}
-@media (max-width: 768px) {
-  .video-box {
-    margin-bottom: 20px;
   }
 }
 @media (max-width: 768px) {
@@ -7045,8 +7040,6 @@ body {
 }
 .video-box .thumb {
   width: 100%;
-  background-color: black;
-  margin-bottom: 8px;
   position: relative;
   background-size: cover;
   background-color: #222222;
@@ -7065,6 +7058,7 @@ body {
   content: '';
 }
 .video-box .thumb .time {
+  border-radius: 2px;
   transition-duration: 250ms;
   opacity: 0.4;
   position: absolute;
@@ -7075,7 +7069,9 @@ body {
   background-color: rgba(0, 0, 0, 0.7);
   color: #FFFFFF;
 }
-.video-box .thumb .cc {
+.video-box .thumb .cc,
+.video-box .thumb .lang {
+  border-radius: 2px;
   font-weight: bold;
   transition-duration: 250ms;
   position: absolute;
@@ -7086,8 +7082,15 @@ body {
   background-color: rgba(0, 0, 0, 0.7);
   color: #FFFFFF;
 }
+.video-box .thumb .cc.offset,
+.video-box .thumb .lang.offset {
+  left: 31px;
+}
 .video-box .info {
   overflow: hidden;
+  padding-top: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 @media (max-width: 768px) {
   .video-box .info {
@@ -7098,24 +7101,21 @@ body {
   }
 }
 .video-box .info .name {
-  margin-top: -10px;
+  /*@media (max-width: @screen-sm) {
+                line-height: 18px;
+                font-size: 18px;
+                margin-top: 3px;
+                white-space: normal;   
+                font-weight: 400;
+                max-height: 55px;
+                overflow: hidden;
+            }*/
   font-family: "Roboto Slab", serif;
   font-size: 115%;
   color: #212121;
   width: 100%;
   display: inline-block;
-  white-space: nowrap;
-}
-@media (max-width: 768px) {
-  .video-box .info .name {
-    line-height: 18px;
-    font-size: 18px;
-    margin-top: 3px;
-    white-space: normal;
-    font-weight: 400;
-    max-height: 55px;
-    overflow: hidden;
-  }
+  line-height: 1.3;
 }
 .video-box .info .name.invert {
   color: #eeeeee;
@@ -7443,9 +7443,6 @@ body {
   color: white !important;
   opacity: 1.0;
 }
-.archive .videos-box {
-  margin-top: 24px;
-}
 .archive-sidemenu {
   max-height: calc(100vh - 140px);
   overflow-y: scroll;
@@ -7564,6 +7561,34 @@ body {
 .nopadding {
   padding: 0 !important;
   margin: 0 !important;
+}
+.card {
+  background: #fff;
+  border-radius: 2px;
+  display: inline-block;
+  height: 300px;
+  margin: 1rem;
+  position: relative;
+  width: 300px;
+}
+.card-1 {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.card-1:hover {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+.card-2 {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+.card-3 {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+.card-4 {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+.card-5 {
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
 }
 /*
 To change this license header, choose License Headers in Project Properties.

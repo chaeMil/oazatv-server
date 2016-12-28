@@ -2,13 +2,13 @@
 
 <div class="container archive">
     
-    <div class="row videos-box">
+    <div class="row">
         <div class="col-xl-2 col-md-3 col-sm-12 col-xs-12 pull-right">
             {include ../Shared/archiveSideMenu.latte, archiveMenu => $archiveMenu}
         </div>
         <div class="col-xl-10 col-md-9 col-sm-12 col-xs-12">
             {if isset($archiveItems)}
-                <div class="row">
+                <div class="row videos-box">
                     {foreach $archiveItems as $item}
                         {include '../Shared/videoBox.latte', item => $item, 
                             customClasses => "col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-3"}

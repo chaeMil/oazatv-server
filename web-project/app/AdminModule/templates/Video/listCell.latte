@@ -42,6 +42,12 @@
     </td>
 {/define}
 
+{define col-note}
+    <td class="hidden-xs hidden-sm" style="max-width: 200px; max-height: 80px; overflow-y: scroll">
+        <span>{$cell}</span>
+    </td>
+{/define}
+
 {define col-thumb_file}
     <td>
         <a href="{plink Video:detail $row['id']}">

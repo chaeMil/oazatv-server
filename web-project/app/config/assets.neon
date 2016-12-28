@@ -23,6 +23,7 @@ assets:
         - '/assets/bower_components/vjs-resolution-switcher/lib/videojs-resolution-switcher.js'
         - '/assets/bower_components/masonry/dist/masonry.pkgd.min.js'
         - '/assets/bower_components/bootbox.js/bootbox.js'
+        - '/assets/bower_components/masonry/dist/masonry.pkgd.min.js'
         - '/assets/js/x-tag-components.js'
         - '/assets/js/jquery.tagcloud.js/jquery.tagcloud.js'
         - '/assets/js/fb.js'

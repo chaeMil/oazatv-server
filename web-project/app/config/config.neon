@@ -22,7 +22,7 @@ latte:
         - Nextras\Latte\Macros\RedefineMacro::install
 
 session:
-    expiration: 3 day
+    expiration: 1 day
 
 extensions:
     translation: Kdyby\Translation\DI\TranslationExtension
@@ -67,7 +67,7 @@ translation:
     debuger: on
 
 constants:
-    VERSION: "0.9.17 (2016-10-10)"
+    VERSION: "0.9.18 (2016-12-28)"
     LATEST_ANDROID_APP_VERSION: 2016120901
     DB_PREFIX: ""
     DB_ADMIN_PREFIX: "admin_"

@@ -87,6 +87,7 @@ class VideoPresenter extends BaseSecuredPresenter {
 
     public function createComponentVideosGrid() {
         $grid = new Datagrid;
+        $grid->setRowPrimaryKey('id');
         $grid->addColumn('hash', '#');
         $grid->addColumn('id', 'DB ID')
             ->enableSort(Datagrid::ORDER_ASC)

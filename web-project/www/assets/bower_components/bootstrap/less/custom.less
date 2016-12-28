@@ -127,6 +127,11 @@ html,body{
         @media (max-width: @screen-sm) {
             margin-top: -3px;
         }
+
+        background-color: white;
+        border-radius: 2px;
+        overflow: hidden;
+        margin-bottom: 20px;
     }
     
     a {
@@ -137,18 +142,13 @@ html,body{
 
             @media (min-width: @screen-sm) {
                 .thumb {
-                    .time {
-                        transition-duration: 250ms;
-                        opacity: 1.0;
-                    }
-
-                    .cc {
+                    .time, .cc {
                         transition-duration: 250ms;
                         opacity: 1.0;
                     }
                 }
 
-                i.open {
+                /*i.open {
                     opacity: 1;
                     -moz-transform: scale(1.3);
                     -webkit-transform: scale(1.3);
@@ -161,20 +161,11 @@ html,body{
                     -webkit-filter: ~"grayscale(70%)";
                     filter: ~"grayscale(70%)";
                     transition-duration: 150ms;
-                }
+                }*/
             }
         }
     }
 
-    
-    transition-duration: 500ms;
-    -webkit-ransition-duration: 500ms;
-    transition-delay: 350ms;
-    -webkit-transition-delay: 350ms;
-    @media (max-width: @screen-sm) {
-        margin-bottom: 20px;
-        //height: 102px;
-    }
     @media (max-width: @screen-sm) {
         width: 100% !important;
     }
@@ -199,8 +190,6 @@ html,body{
     
     .thumb {
         width: 100%;
-        background-color: black;
-        margin-bottom: 8px;
         position: relative;
         background-size: cover;
         background-color: @gray-darker;
@@ -217,6 +206,7 @@ html,body{
         }
 
         .time {
+            border-radius: 2px;
             transition-duration: 250ms;
             opacity: 0.4;
             position: absolute;
@@ -228,7 +218,8 @@ html,body{
             color: #FFFFFF;
         }
 
-        .cc {
+        .cc, .lang {
+            border-radius: 2px;
             font-weight: bold;
             transition-duration: 250ms;
             position: absolute;
@@ -238,11 +229,19 @@ html,body{
             background-color: #000000;
             background-color: rgba(0, 0, 0, 0.7);
             color: #FFFFFF;
+
+            &.offset {
+                left: 31px;
+            }
         }
     }
     
     .info {
         overflow: hidden;
+
+        padding-top: 8px;
+        padding-left: 12px;
+        padding-right: 12px;
         
         @media (max-width: @screen-sm) {
             margin-top: -3px;
@@ -252,7 +251,7 @@ html,body{
         }
         
         .name {
-            @media (max-width: @screen-sm) {
+            /*@media (max-width: @screen-sm) {
                 line-height: 18px;
                 font-size: 18px;
                 margin-top: 3px;
@@ -260,14 +259,14 @@ html,body{
                 font-weight: 400;
                 max-height: 55px;
                 overflow: hidden;
-            }
-            margin-top: -10px;
+            }*/
             font-family: @font-family-serif;
             font-size: 115%;
             color: @gray-dark;
             width: 100%;
             display: inline-block;
-            white-space: nowrap;
+            line-height: 1.3;
+            //white-space: nowrap;
             
             &.invert {
                 color: @gray-lighter;
@@ -681,12 +680,6 @@ html,body{
     }
 }
 
-.archive {
-    .videos-box {
-        margin-top: 24px;
-    }
-}
-
 .archive-sidemenu {
     max-height: calc(100vh - 140px);
     overflow-y: scroll;
@@ -830,4 +823,39 @@ html,body{
 .nopadding {
    padding: 0 !important;
    margin: 0 !important;
+}
+
+.card {
+    background: #fff;
+    border-radius: 2px;
+    display: inline-block;
+    height: 300px;
+    margin: 1rem;
+    position: relative;
+    width: 300px;
+}
+
+.card-1 {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.card-1:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.card-2 {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.card-3 {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.card-4 {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.card-5 {
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }
