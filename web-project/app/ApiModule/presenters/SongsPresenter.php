@@ -42,16 +42,14 @@ class SongsPresenter extends BasePresenter {
                 $group['tag'] = $tag;
                 $group['songs'][] = $song;
             } else {
-
-                if (!empty($group)) {
-                    $groupedSongs[] = $group;
-                }
-
                 $group = array();
                 $group['tag'] = $tag;
                 $group['songs'][] = $song;
             }
 
+            if (!empty($group)) {
+                $groupedSongs[] = $group;
+            }
 
             $lastSong = $song;
             $lastSongTag = preg_replace('/\d/', '', $lastSong['tag']);;
