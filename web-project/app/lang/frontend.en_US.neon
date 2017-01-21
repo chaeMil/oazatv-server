@@ -23,6 +23,7 @@ basic:
     onair: "On Air"
     livestream: "Live stream"
     videos_with_subtitles: "Videos with subtitles"
+    photo_albums: "Photo albums"
 search:
     more: "more results"
 homepage:

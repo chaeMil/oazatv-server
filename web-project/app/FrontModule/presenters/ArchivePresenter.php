@@ -53,11 +53,9 @@ class ArchivePresenter extends BasePresenter {
                 ->getVideosAndPhotoAlbumsFromDB($paginator->getOffset(), 
                         $paginator->getItemsPerPage(), 
                         $this->lang);
-        
-        $this->template->categories = $this->categoriesManager
-                ->getLocalizedCategories($this->lang);
 
         $this->getBasicVariables($archive, $paginator);
+        $this->template->paginationBaselink = $this->link('Page');
     }
     
     public function renderCategory($id, $attr = 1) {
@@ -86,12 +84,10 @@ class ArchivePresenter extends BasePresenter {
             $localizedVideos[] = $this->videoManager
                     ->createLocalizedVideoObject($this->lang, $video);
         }
-        
-        $this->template->categories = $this->categoriesManager
-                ->getLocalizedCategories($this->lang);
 
         $this->getBasicVariables($localizedVideos, $paginator);
         $this->template->category = $category;
+        $this->template->paginationBaselink = $this->link('Category').$category['id'].'/';
     }
 
     public function renderVideosWithSubtitles($id) {
@@ -107,7 +103,7 @@ class ArchivePresenter extends BasePresenter {
         $videos = $this->videoManager->getVideosWithSubtitles($paginator->getOffset(),
             $paginator->getItemsPerPage());
 
-        $itemsForCount = sizeof($this->videoManager->getVideosWithSubtitles(0, 9999));
+        $itemsForCount = $this->videoManager->getVideosWithSubtitles(0, 9999);
 
         $paginator->setItemCount(sizeof($itemsForCount));
 
@@ -117,11 +113,9 @@ class ArchivePresenter extends BasePresenter {
                 ->createLocalizedVideoObject($this->lang, $video);
         }
 
-        $this->template->categories = $this->categoriesManager
-            ->getLocalizedCategories($this->lang);
-
         $this->getBasicVariables($localizedVideos, $paginator);
         $this->template->activeMenu = array('id' => 'videosWithSubtitles');
+        $this->template->paginationBaselink = $this->link('VideosWithSubtitles');
     }
 
     public function renderAlbums($id) {
@@ -137,21 +131,19 @@ class ArchivePresenter extends BasePresenter {
         $items = $this->photosManager->getAlbumsFromDB($paginator->getOffset(),
             $paginator->getItemsPerPage());
 
-        $localizedVideos = array();
-        foreach($items as $album) {
-            $localizedVideos[] = $this->photosManager
-                ->createLocalizedAlbumThumbObject($this->lang, $album);
-        }
-
-        $itemsForCount = sizeof($items);
+        $itemsForCount = $this->photosManager->getAlbumsFromDB(0, 9999);
 
         $paginator->setItemCount(sizeof($itemsForCount));
 
-        $this->template->categories = $this->categoriesManager
-            ->getLocalizedCategories($this->lang);
+        $localizedAlbums = array();
+        foreach($items as $album) {
+            $localizedAlbums[] = $this->photosManager
+                ->createLocalizedAlbumThumbObject($this->lang, $album);
+        }
 
-        $this->getBasicVariables($localizedVideos, $paginator);
-        $this->template->activeMenu = array('id' => 'videosWithSubtitles');
+        $this->getBasicVariables($localizedAlbums, $paginator);
+        $this->template->activeMenu = array('id' => 'albums');
+        $this->template->paginationBaselink = $this->link('Albums');
     }
     
     public function renderMenu($id, $attr = 1) {
@@ -179,9 +171,6 @@ class ArchivePresenter extends BasePresenter {
 
         $paginator->setItemCount(sizeof($itemsForCount));
 
-        $this->template->categories = $this->categoriesManager
-                ->getLocalizedCategories($this->lang);
-
         $this->getBasicVariables($items, $paginator);
         $this->template->activeMenu = $menu;
     }
@@ -196,8 +185,10 @@ class ArchivePresenter extends BasePresenter {
         $this->template->page = $paginator->getPage();
         $this->template->pages = $paginator->getPageCount();
         $this->template->archiveMenu = $this->archiveMenuManager->getLocalizedMenus($this->lang);
+        $this->template->categories = $this->categoriesManager->getLocalizedCategories($this->lang);
         $this->template->archiveMenuManager = $this->archiveMenuManager;
-        $this->template->videosWithSubtitles = $this->videoManager->getVideosWithSubtitles(0, 9999);
+        $this->template->videosWithSubtitlesCount = sizeof($this->videoManager->getVideosWithSubtitles(0, 9999));
+        $this->template->albumsCount = sizeof($this->photosManager->getAlbumsFromDB(0, 9999));
     }
 
 }

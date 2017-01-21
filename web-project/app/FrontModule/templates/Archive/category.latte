@@ -27,8 +27,7 @@
         </div>
     </div>
 
-    {include ../Shared/pagination.latte, pages => $pages, page => $page, 
-        baseLink => '/archive/category/'.$category['id'].'/'}
+    {include ../Shared/pagination.latte, pages => $pages, page => $page,  baseLink => $paginationBaselink}
         
 </div>
 {/block}

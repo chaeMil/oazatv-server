@@ -19,8 +19,8 @@
     </div>
     
 
-    {include ../Shared/pagination.latte, pages => $pages, page => $page, 
-        baseLink => '/archive/menu/'.$activeMenu['tags'].'/'}
+    {include ../Shared/pagination.latte, pages => $pages, page => $page,
+        baseLink => $basePath.'/archive/menu/'.$activeMenu['tags'].'/'}
 </div>
 {/block}
     

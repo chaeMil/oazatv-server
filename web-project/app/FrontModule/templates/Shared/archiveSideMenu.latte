@@ -5,7 +5,15 @@
                 {_frontend.basic.videos_with_subtitles}
             </a>
             <span class="badge">
-                {sizeof($videosWithSubtitles)}
+                {$videosWithSubtitlesCount}
+            </span>
+        </li>
+        <li class="list-group-item {if isset($activeMenu) && $activeMenu['id'] == 'albums'}active{/if}">
+            <a n:href="Archive:albums">
+                {_frontend.basic.photo_albums}
+            </a>
+            <span class="badge">
+                {$albumsCount}
             </span>
         </li>
         {foreach $archiveMenu as $menu}
