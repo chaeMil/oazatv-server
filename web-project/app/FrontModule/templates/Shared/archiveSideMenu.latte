@@ -1,19 +1,19 @@
 <div class="archive-sidemenu" id="archive-menu-affix">
     <ul id="archive-menu" class="list-group">
-        <li class="list-group-item {if isset($activeMenu) && $activeMenu['id'] == 'videosWithSubtitles'}active{/if}">
-            <a n:href="Archive:videosWithSubtitles">
-                {_frontend.basic.videos_with_subtitles}
-            </a>
-            <span class="badge">
-                {$videosWithSubtitlesCount}
-            </span>
-        </li>
         <li class="list-group-item {if isset($activeMenu) && $activeMenu['id'] == 'albums'}active{/if}">
             <a n:href="Archive:albums">
                 {_frontend.basic.photo_albums}
             </a>
             <span class="badge">
                 {$albumsCount}
+            </span>
+        </li>
+        <li class="list-group-item {if isset($activeMenu) && $activeMenu['id'] == 'videosWithSubtitles'}active{/if}">
+            <a n:href="Archive:videosWithSubtitles">
+                {_frontend.basic.videos_with_subtitles}
+            </a>
+            <span class="badge">
+                {$videosWithSubtitlesCount}
             </span>
         </li>
         {foreach $archiveMenu as $menu}
