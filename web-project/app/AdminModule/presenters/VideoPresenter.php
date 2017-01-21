@@ -8,6 +8,7 @@
 
 namespace App\AdminModule;
 
+use App\StringUtils;
 use Nette,
  Model\VideoManager,
  Model\VideoConvertQueueManager,
@@ -246,10 +247,10 @@ class VideoPresenter extends BaseSecuredPresenter {
                 ->setAttribute("class", "form-control");
 
         $form->addTextArea('description_cs', 'popis česky')
-                ->setAttribute("class", "form-control");
+                ->setAttribute("class", "form-control ckeditor");
 
         $form->addTextArea('description_en', 'popis anglicky')
-                ->setAttribute("class", "form-control");
+                ->setAttribute("class", "form-control ckeditor");
 
         $form->addTextArea("note", "interní poznámka")
                 ->setAttribute("class", "form-control");
@@ -269,6 +270,9 @@ class VideoPresenter extends BaseSecuredPresenter {
 
     public function videoBasicInfoSucceeded($form) {
         $vals = $form->getValues();
+
+        $vals[VideoManager::COLUMN_DESCRIPTION_CS] = StringUtils::removeStyleTag($vals[VideoManager::COLUMN_DESCRIPTION_CS]);
+        $vals[VideoManager::COLUMN_DESCRIPTION_EN] = StringUtils::removeStyleTag($vals[VideoManager::COLUMN_DESCRIPTION_EN]);
 
         $status = $this->videoManager->saveVideoToDB($vals);
 

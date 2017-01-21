@@ -8,7 +8,6 @@
                             <div class="panel-heading">
                                 <h2>
                                     {$video['name']}
-                                    
                                 </h2>
                             </div>
                             <div class="panel-body">
@@ -23,8 +22,8 @@
                                     </div>
                                 </div>
                                
-                                {if ($video['desc'] != "")}
-                                    <p>{$video['desc']}</p>
+                                {if ($video['desc'] != "" && strlen($video['desc']) <= 200)}
+                                    {$video['desc']|noescape}
                                 {/if}
                                 
                                 <hr>
@@ -109,7 +108,17 @@
                     </div>
 
                 </div>
-                
+
+                {if ($video['desc'] != "" && strlen($video['desc']) > 200)}
+                    <div class="col-xl-8 col-md-12">
+                        <div class="panel panel-default card-2">
+                            <div class="panel-body">
+                                {$video['desc']|noescape}
+                            </div>
+                        </div>
+                    </div>
+                {/if}
+
                 <hr class="visible-sm visible-xs">
             </div>
             <br>
