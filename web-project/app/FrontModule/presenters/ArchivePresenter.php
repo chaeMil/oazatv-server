@@ -52,13 +52,8 @@ class ArchivePresenter extends BasePresenter {
         
         $this->template->categories = $this->categoriesManager
                 ->getLocalizedCategories($this->lang);
-        
-        $this->template->archiveItems = $archive;
-        $this->template->paginator = $paginator;
-        $this->template->page = $paginator->getPage();
-        $this->template->pages = $paginator->getPageCount();
-        $this->template->archiveMenu = $this->archiveMenuManager->getLocalizedMenus($this->lang);
-        $this->template->archiveMenuManager = $this->archiveMenuManager;
+
+        $this->getBasicVariables($archive, $paginator);
     }
     
     public function renderCategory($id, $attr = 1) {
@@ -90,53 +85,83 @@ class ArchivePresenter extends BasePresenter {
         
         $this->template->categories = $this->categoriesManager
                 ->getLocalizedCategories($this->lang);
-        
-        $this->template->archiveItems = $localizedVideos;
-        $this->template->paginator = $paginator;
-        $this->template->page = $paginator->getPage();
-        $this->template->pages = $paginator->getPageCount();
+
+        $this->getBasicVariables($localizedVideos, $paginator);
         $this->template->category = $category;
-        $this->template->archiveMenu = $this->archiveMenuManager->getLocalizedMenus($this->lang);
-        $this->template->archiveMenuManager = $this->archiveMenuManager;
-        
+    }
+
+    public function renderVideosWithSubtitles($id) {
+        $this->setView('page');
+
+        $page = $id;
+        $itemsPerPage = 32;
+
+        $paginator = new Nette\Utils\Paginator;
+        $paginator->setItemsPerPage($itemsPerPage);
+        $paginator->setPage($page);
+
+        $videos = $this->videoManager->getVideosWithSubtitles();
+        $localizedVideos = array();
+        foreach($videos as $video) {
+            $localizedVideos[] = $this->videoManager
+                ->createLocalizedVideoObject($this->lang, $video);
+        }
+
+        $itemsForCount = sizeof($videos);
+
+        $paginator->setItemCount(sizeof($itemsForCount));
+
+        $this->template->categories = $this->categoriesManager
+            ->getLocalizedCategories($this->lang);
+
+        $this->getBasicVariables($localizedVideos, $paginator);
+        $this->template->activeMenu = array('id' => 'videosWithSubtitles');
     }
     
     public function renderMenu($id, $attr = 1) {
 
         $tags = $id;
         $itemsPerPage = 32;
-        
+
         $paginator = new Nette\Utils\Paginator;
         $paginator->setItemsPerPage($itemsPerPage);
         $paginator->setPage($attr);
-        
+
         $menu = $this->archiveMenuManager->getMenuFromDBByTags($tags);
-        
+
         $items = $this->archiveManager
-                ->getVideosAndPhotoAlbumsFromDBByTags($paginator->getOffset(), 
-                        $paginator->getItemsPerPage(), 
-                        $this->lang, 
+                ->getVideosAndPhotoAlbumsFromDBByTags($paginator->getOffset(),
+                        $paginator->getItemsPerPage(),
+                        $this->lang,
                         $tags);
-        
+
         $itemsForCount = $this->archiveManager
-                ->getVideosAndPhotoAlbumsFromDBByTags(0, 
-                        $this->archiveManager->countArchive(), 
-                        $this->lang, 
+                ->getVideosAndPhotoAlbumsFromDBByTags(0,
+                        $this->archiveManager->countArchive(),
+                        $this->lang,
                         $tags);
-        
+
         $paginator->setItemCount(sizeof($itemsForCount));
-        
+
         $this->template->categories = $this->categoriesManager
                 ->getLocalizedCategories($this->lang);
-        
-        $this->template->archiveItems = $items;
+
+        $this->getBasicVariables($items, $paginator);
+        $this->template->activeMenu = $menu;
+    }
+
+    /**
+     * @param $archive
+     * @param $paginator
+     */
+    private function getBasicVariables($archive, $paginator) {
+        $this->template->archiveItems = $archive;
         $this->template->paginator = $paginator;
         $this->template->page = $paginator->getPage();
         $this->template->pages = $paginator->getPageCount();
         $this->template->archiveMenu = $this->archiveMenuManager->getLocalizedMenus($this->lang);
         $this->template->archiveMenuManager = $this->archiveMenuManager;
-        $this->template->activeMenu = $menu;
-        
+        $this->template->videosWithSubtitles = $this->videoManager->getVideosWithSubtitles();
     }
-    
+
 }

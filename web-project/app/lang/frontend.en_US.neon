@@ -22,6 +22,7 @@ basic:
     show: "Show"
     onair: "On Air"
     livestream: "Live stream"
+    videos_with_subtitles: "Videos with subtitles"
 search:
     more: "more results"
 homepage:

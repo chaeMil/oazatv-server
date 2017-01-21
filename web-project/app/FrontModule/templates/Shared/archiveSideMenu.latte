@@ -1,5 +1,13 @@
 <div class="archive-sidemenu" id="archive-menu-affix">
     <ul id="archive-menu" class="list-group">
+        <li class="list-group-item {if isset($activeMenu) && $activeMenu['id'] == 'videosWithSubtitles'}active{/if}">
+            <a n:href="Archive:videosWithSubtitles">
+                {_frontend.basic.videos_with_subtitles}
+            </a>
+            <span class="badge">
+                {sizeof($videosWithSubtitles)}
+            </span>
+        </li>
         {foreach $archiveMenu as $menu}
             <li class="list-group-item {if isset($activeMenu) && $activeMenu['id'] == $menu['id']}active{/if}">
                 <a n:href="Archive:Menu $menu['tags']">

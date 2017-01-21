@@ -22,6 +22,7 @@ basic:
     show: "Zobrazit"
     onair: "vysíláme živě"
     livestream: "Živé vysílání"
+    videos_with_subtitles: "Videa s titulky"
 search:
     more: "další výsledky"
 homepage:
