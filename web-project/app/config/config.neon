@@ -67,7 +67,7 @@ translation:
     debuger: on
 
 constants:
-    VERSION: "0.9.25 (2017-01-11)"
+    VERSION: "0.9.3 (2017-01-21)"
     LATEST_ANDROID_APP_VERSION: 2017011101
     DB_PREFIX: ""
     DB_ADMIN_PREFIX: "admin_"
