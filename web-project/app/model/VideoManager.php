@@ -636,18 +636,18 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         }
     }
 
-    public function getVideosWithSubtitles($published = 1) {
+    public function getVideosWithSubtitles($from, $count, $published = 1) {
         if ($published != 2) {
             return self::$database->table(self::TABLE_NAME)
                 ->select("*")
-                ->limit(1, 0)
+                ->limit($count, $from)
                 ->order(self::COLUMN_DATE." DESC". ", ".self::COLUMN_ID." DESC")
                 ->where(self::COLUMN_PUBLISHED." = ? AND ".self::COLUMN_SUBTITLES_FILE." != ''", $published)
                 ->fetchAll();
         } else {
             return self::$database->table(self::TABLE_NAME)
                 ->select("*")
-                ->limit(1, 0)
+                ->limit($count, $from)
                 ->order(self::COLUMN_DATE." DESC")
                 ->where(self::COLUMN_SUBTITLES_FILE." != ''")
                 ->fetchAll();

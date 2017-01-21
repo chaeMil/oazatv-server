@@ -2,6 +2,7 @@
 
 namespace App\FrontModule;
 
+use Model\PhotosManager;
 use Nette,
 Nette\Database\Context,
 Model\ArchiveManager,
@@ -15,20 +16,23 @@ class ArchivePresenter extends BasePresenter {
     private $archiveManager;
     private $categoriesManager;
     private $videoManager;
+    private $photosManager;
     private $archiveMenuManager;
     public $lang;
     public $container;
-    
+
     public function __construct(Nette\DI\Container $container,
             Context $database, ArchiveManager $archiveManager,
             CategoriesManager $categoriesManager,
             VideoManager $videoManager,
+            PhotosManager $photosManager,
             ArchiveMenuManager $archiveMenuManager) {
         
         parent::__construct($container, $database);
         $this->archiveManager = $archiveManager;
         $this->categoriesManager = $categoriesManager;
         $this->videoManager = $videoManager;
+        $this->photosManager = $photosManager;
         $this->archiveMenuManager = $archiveMenuManager;
     }
     
@@ -100,14 +104,46 @@ class ArchivePresenter extends BasePresenter {
         $paginator->setItemsPerPage($itemsPerPage);
         $paginator->setPage($page);
 
-        $videos = $this->videoManager->getVideosWithSubtitles();
+        $videos = $this->videoManager->getVideosWithSubtitles($paginator->getOffset(),
+            $paginator->getItemsPerPage());
+
+        $itemsForCount = sizeof($this->videoManager->getVideosWithSubtitles(0, 9999));
+
+        $paginator->setItemCount(sizeof($itemsForCount));
+
         $localizedVideos = array();
         foreach($videos as $video) {
             $localizedVideos[] = $this->videoManager
                 ->createLocalizedVideoObject($this->lang, $video);
         }
 
-        $itemsForCount = sizeof($videos);
+        $this->template->categories = $this->categoriesManager
+            ->getLocalizedCategories($this->lang);
+
+        $this->getBasicVariables($localizedVideos, $paginator);
+        $this->template->activeMenu = array('id' => 'videosWithSubtitles');
+    }
+
+    public function renderAlbums($id) {
+        $this->setView('page');
+
+        $page = $id;
+        $itemsPerPage = 32;
+
+        $paginator = new Nette\Utils\Paginator;
+        $paginator->setItemsPerPage($itemsPerPage);
+        $paginator->setPage($page);
+
+        $items = $this->photosManager->getAlbumsFromDB($paginator->getOffset(),
+            $paginator->getItemsPerPage());
+
+        $localizedVideos = array();
+        foreach($items as $album) {
+            $localizedVideos[] = $this->photosManager
+                ->createLocalizedAlbumThumbObject($this->lang, $album);
+        }
+
+        $itemsForCount = sizeof($items);
 
         $paginator->setItemCount(sizeof($itemsForCount));
 
@@ -161,7 +197,7 @@ class ArchivePresenter extends BasePresenter {
         $this->template->pages = $paginator->getPageCount();
         $this->template->archiveMenu = $this->archiveMenuManager->getLocalizedMenus($this->lang);
         $this->template->archiveMenuManager = $this->archiveMenuManager;
-        $this->template->videosWithSubtitles = $this->videoManager->getVideosWithSubtitles();
+        $this->template->videosWithSubtitles = $this->videoManager->getVideosWithSubtitles(0, 9999);
     }
 
 }
