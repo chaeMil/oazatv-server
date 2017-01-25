@@ -112,4 +112,13 @@ class PrivateLinksManager extends BaseModel {
         return false;
     }
 
+    public function validate($hash, $pass) {
+        $privateLink = self::$database->table(self::TABLE_NAME)
+            ->select("*")
+            ->where(array(self::COLUMN_ITEM_HASH => $hash, self::COLUMN_PASS => $pass))
+            ->fetch();
+
+        return $privateLink != false && $this->isValid($privateLink[self::COLUMN_ID]);
+    }
+
 }
