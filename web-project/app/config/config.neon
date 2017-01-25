@@ -13,6 +13,7 @@ php:
 
 nette:
     application:
+        catchExceptions: true
         errorPresenter: Front:Error
         mapping:
             *: App\*Module\*Presenter
