@@ -25,6 +25,7 @@
                             <th>heslo</th>
                             <th>validní</th>
                             <th></th>
+                            <th></th>
                         </thead>
                         <tbody>
                             <tr n:foreach="$privateLinks as $link">
@@ -42,6 +43,14 @@
                                 <td>{$link['valid']}</td>
                                 <td>{$link['pass']}</td>
                                 <td>{if $privateLinksManager->isValid($link['id'])}Ano{else}Ne{/if}</td>
+                                <td>{if $item['type'] == 'video'}
+                                        <a class="btn btn-xs btn-info" target="_blank"
+                                            n:href=":Front:Video:private $item['hash']">
+                                    {elseif $item['type'] == 'album'}
+                                        <a class="btn btn-xs btn-info" target="_blank"
+                                            n:href=":Front:Album:private $item['hash']">
+                                    {/if}otevřít</a>
+                                </td>
                                 <td><a n:href="delete null, $link['id']"
                                             data-confirm="Smazat?"
                                             class="btn btn-xs btn-danger confirm">x</a></td>

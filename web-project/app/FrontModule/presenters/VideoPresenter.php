@@ -99,7 +99,7 @@ class VideoPresenter extends BasePresenter {
     }
 
     public function renderPrivate($id) {
-        $hash = $id; //id only in router, actualy its hash
+        $hash = $id; //id only in router, actually its hash
 
         $this['privateLinkForm']->setDefaults(array(PrivateLinksManager::COLUMN_ITEM_HASH => $hash));
 
@@ -122,7 +122,7 @@ class VideoPresenter extends BasePresenter {
     }
 
     public function renderWatch($id, $searched) {
-        $hash = $id; //id only in router, actualy its hash
+        $hash = $id; //id only in router, actually its hash
         $this->createVideoVariables($searched, $hash);
     }
 

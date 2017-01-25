@@ -58,9 +58,11 @@
                                 <ul class="list-group">
                                     {ifset $video}
                                         {var $item = $video}
+                                        {var $type = 'video'}
                                     {/ifset}
                                     {ifset $album}
                                         {var $item = $album}
+                                        {var $type = 'album'}
                                     {/ifset}
                                     {foreach $privateLinks as $link}
                                         <li class="list-group-item">
@@ -68,6 +70,13 @@
                                             | heslo: {$link['pass']}
                                             | validní: {if $privateLinksManager->isValid($link->id)}Ano{else}Ne{/if}
                                             <span class="btn-group pull-right">
+                                                {if $type == 'video'}
+                                                    <a class="btn btn-xs btn-info" target="_blank"
+                                                        n:href=":Front:Video:private $item['hash']">
+                                                {elseif $type == 'album'}
+                                                    <a class="btn btn-xs btn-info" target="_blank"
+                                                        n:href=":Front:Album:private $item['hash']">
+                                                {/if}otevřít</a>
                                                 <a n:href="delete $item->hash, $link->id"
                                                         data-confirm="Smazat?"
                                                         class="btn btn-xs btn-danger confirm">x</a>
