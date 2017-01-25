@@ -17,18 +17,26 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">
-                                {ifset $video}
-                                    {$video->name_cs} / {$video->name_en}
-                                {/ifset}
-                                {ifset $album}
-                                    {$album->name_cs} / {$album->name_en}
-                                {/ifset}
-                                {ifset $video}
-                                    <a class="pull-right" n:href="Video:Detail $video->id">přejít k videu</a>
-                                {/ifset}
-                                {ifset $album}
-                                    <a class="pull-right" n:href="Albums:Detail $album->id">přejít k albu</a>
-                                {/ifset}
+                                <div class="row">
+                                    <div class="col-xs-10">
+                                        {ifset $video}
+                                            {$video->name_cs} / {$video->name_en}
+                                        {/ifset}
+                                        {ifset $album}
+                                            {$album->name_cs} / {$album->name_en}
+                                        {/ifset}
+                                    </div>
+                                    <div class="col-xs-2">
+                                        {ifset $video}
+                                            <a class="pull-right btn btn-info"
+                                                    n:href="Video:Detail $video->id">přejít k videu</a>
+                                        {/ifset}
+                                        {ifset $album}
+                                            <a class="pull-right btn btn-info"
+                                                    n:href="Albums:AlbumDetail $album->id">přejít k albu</a>
+                                        {/ifset}
+                                    </div>
+                                </div>
                             </h3>
                         </div>
                         <div class="panel-body">
@@ -56,7 +64,9 @@
                                     {/ifset}
                                     {foreach $privateLinks as $link}
                                         <li class="list-group-item">
-                                            {$link['valid']} | {$link['pass']}
+                                            {$link['valid']}
+                                            | heslo: {$link['pass']}
+                                            | validní: {if $privateLinksManager->isValid($link->id)}Ano{else}Ne{/if}
                                             <span class="btn-group pull-right">
                                                 <a n:href="delete $item->hash, $link->id"
                                                         data-confirm="Smazat?"

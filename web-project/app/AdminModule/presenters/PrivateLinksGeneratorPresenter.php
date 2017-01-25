@@ -76,6 +76,12 @@ class PrivateLinksGeneratorPresenter extends BaseSecuredPresenter {
         }
     }
 
+    public function renderDefault() {
+        $this->getTemplateVariables($this->getUser()->getId());
+        $this->template->privateLinks = $this->privateLinksManager->getAll();
+        $this->template->privateLinksManager = $this->privateLinksManager;
+    }
+
     function renderCreate($hash) {
         $this->getTemplateVariables($this->getUser()->getId());
 
@@ -94,6 +100,8 @@ class PrivateLinksGeneratorPresenter extends BaseSecuredPresenter {
                 ->getFromDBbyHash($album[PhotosManager::COLUMN_HASH]);
         }
 
+        $this->template->privateLinksManager = $this->privateLinksManager;
+
         if (isset($hash)) {
             $this['privateLinkForm']->setDefaults(array(PrivateLinksManager::COLUMN_ITEM_HASH => $hash));
         }
@@ -101,7 +109,11 @@ class PrivateLinksGeneratorPresenter extends BaseSecuredPresenter {
 
     function actionDelete($hash, $id) {
         $this->privateLinksManager->delete($id);
-        $this->redirect("create", $hash);
+        if ($hash != null) {
+            $this->redirect("create", $hash);
+        } else {
+            $this->redirect("default");
+        }
         $this->flashMessage("Smazáno", "danger");
     }
 

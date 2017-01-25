@@ -22,11 +22,17 @@ class PrivateLinksManager extends BaseModel {
     /** @var Nette\Database\Context */
     public static $database;
     public static $queueManager;
+    private $videoManager;
+    private $photosManager;
 
     public function __construct(Nette\Database\Context $database,
-                                VideoConvertQueueManager $queueManager) {
+                                VideoConvertQueueManager $queueManager,
+                                VideoManager $videoManager,
+                                PhotosManager $photosManager) {
         self::$database = $database;
         self::$queueManager = $queueManager;
+        $this->videoManager = $videoManager;
+        $this->photosManager = $photosManager;
     }
 
     private function checkIfLinkExists($id) {
@@ -51,7 +57,6 @@ class PrivateLinksManager extends BaseModel {
         }
 
         return $sql->id;
-
     }
 
     public function getFromDBById($id) {
@@ -71,6 +76,40 @@ class PrivateLinksManager extends BaseModel {
     public function delete($id) {
         $video = $this->getFromDBbyId($id);
         $video->delete();
+    }
+
+    public function getAll() {
+        return self::$database->table(self::TABLE_NAME)
+            ->select("*")
+            ->fetchAll();
+    }
+
+    public function getItem($hash) {
+        $video = $this->videoManager->getVideoFromDBbyHash($hash, 2);
+        $album = $this->photosManager->getAlbumFromDBbyHash($hash, 2);
+
+        if ($video != false) {
+            $video = $video->toArray();
+            $video['type'] = 'video';
+            return $video;
+        }
+
+        if ($album != false) {
+            $album = $album->toArray();
+            $album['type'] = 'album';
+            return $album;
+        }
+    }
+
+    public function isValid($id) {
+        $link = $this->getFromDBById($id);
+        if ($link != false) {
+            $now = time();
+            $target = strtotime($link[self::COLUMN_VALID]);
+            $diff = $now - $target;
+            return $diff <= 0;
+        }
+        return false;
     }
 
 }

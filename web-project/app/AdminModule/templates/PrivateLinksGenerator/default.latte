@@ -1,0 +1,56 @@
+{block content}
+
+<div id="wrapper">
+    
+    {include ../navbar.latte}
+    
+    <div class="container">
+        <div class="row">
+            <h2>Vytvářeč soukromých odkazů</h2>
+           
+            <hr>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Soukromé odkazy</h3>
+                </div>
+                <div class="panel-body">
+                    <br>
+                    
+                    <table class="table table-hover">
+                        <thead>
+                            <th>hash</th>
+                            <th>název</th>
+                            <th>datum</th>
+                            <th>heslo</th>
+                            <th>validní</th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            <tr n:foreach="$privateLinks as $link">
+                                {var $item = $privateLinksManager->getItem($link->item_hash)}
+                                <td>
+                                    {if $item['type'] == 'video'}
+                                        <a n:href="Video:detail $item['id']">Video:
+                                    {elseif $item['type'] == 'album'}
+                                        <a n:href="Albums:albumDetail $item['id']">Album:
+                                    {/if}
+                                        {$link->item_hash}
+                                    </a>
+                                </td>
+                                <td>{$item['name_cs']} | {$item['name_en']}</td>
+                                <td>{$link['valid']}</td>
+                                <td>{$link['pass']}</td>
+                                <td>{if $privateLinksManager->isValid($link['id'])}Ano{else}Ne{/if}</td>
+                                <td><a n:href="delete null, $link['id']"
+                                            data-confirm="Smazat?"
+                                            class="btn btn-xs btn-danger confirm">x</a></td>
+                            </tr>
+                        </tbody>                
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
