@@ -26,9 +26,9 @@ class SettingsPresenter extends BaseSecuredPresenter {
     private $userManager;
     private $settings;
 
-    function __construct(Nette\Database\Context $database, 
+    function __construct(Nette\DI\Container $container, Nette\Database\Context $database,
             UserManager $userManager, ServerSettings $settings) {
-        parent::__construct($database);
+        parent::__construct($container, $database);
         $this->database = $database;
         $this->userManager = $userManager;
         $this->settings = $settings;

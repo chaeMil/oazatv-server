@@ -1,0 +1,88 @@
+{block content}
+
+<div id="wrapper">
+
+    {include ../navbar.latte}
+
+    <div class="container-fluid">
+        <div class="row">
+            <a href="javascript:history.go(-1);">
+                <h2><span class="glyphicon glyphicon-chevron-left pull-left"></span>Vytvářeč soukromých odkazů</h2>
+            </a>
+
+            <br>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                {ifset $video}
+                                    {$video->name_cs} / {$video->name_en}
+                                {/ifset}
+                                {ifset $album}
+                                    {$album->name_cs} / {$album->name_en}
+                                {/ifset}
+                                {ifset $video}
+                                    <a class="pull-right" n:href="Video:Detail $video->id">přejít k videu</a>
+                                {/ifset}
+                                {ifset $album}
+                                    <a class="pull-right" n:href="Albums:Detail $album->id">přejít k albu</a>
+                                {/ifset}
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <br>
+
+                            {control privateLinkForm}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                Soukromé odkazy
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            {ifset $privateLinks}
+                                <ul class="list-group">
+                                    {ifset $video}
+                                        {var $item = $video}
+                                    {/ifset}
+                                    {ifset $album}
+                                        {var $item = $album}
+                                    {/ifset}
+                                    {foreach $privateLinks as $link}
+                                        <li class="list-group-item">
+                                            {$link['valid']} | {$link['pass']}
+                                            <span class="btn-group pull-right">
+                                                <a n:href="delete $item->hash, $link->id"
+                                                        data-confirm="Smazat?"
+                                                        class="btn btn-xs btn-danger confirm">x</a>
+                                            </span>
+                                        </li>
+                                    {/foreach}
+                                </ul>
+                            {/ifset}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{/block}
+
+{block pageScripts}
+<script>
+    $(function () {
+        $('#datepicker').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale: 'cs'
+        });
+    });
+</script>
+{/block}

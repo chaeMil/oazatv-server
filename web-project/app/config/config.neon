@@ -48,6 +48,7 @@ services:
     - Model\LiveStreamManager
     - Model\ArchiveMenuManager
     - Model\ServerMonitorManager
+    - Model\PrivateLinksManager
     - App\RouterFactory
     webDir: App\Services\WebDir(%wwwDir%)
     router: @App\RouterFactory::createRouter

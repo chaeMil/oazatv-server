@@ -9,6 +9,7 @@
 namespace App\AdminModule;
 
 use App\StringUtils;
+use Model\PrivateLinksManager;
 use Nette,
  Model\VideoManager,
  Model\VideoConvertQueueManager,
@@ -32,17 +33,20 @@ class VideoPresenter extends BaseSecuredPresenter {
     private $tagsManager;
     private $categoriesManager;
     private $conversionProfilesManager;
+    private $privateLinksManager;
 
     function __construct(Nette\Database\Context $database, VideoManager $videoManager,
      VideoConvertQueueManager $convertQueueManager, TagsManager $tagsManager,
             CategoriesManager $categoriesManager,
-            ConversionProfilesManager $conversionProfilesManager) {
+            ConversionProfilesManager $conversionProfilesManager,
+            PrivateLinksManager $privateLinksManager) {
         $this->database = $database;
         $this->videoManager = $videoManager;
         $this->convertQueueManager = $convertQueueManager;
         $this->tagsManager = $tagsManager;
         $this->categoriesManager = $categoriesManager;
         $this->conversionProfilesManager = $conversionProfilesManager;
+        $this->privateLinksManager = $privateLinksManager;
     }
 
     public function renderList() {
@@ -203,6 +207,7 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->template->subtitlesFile = VideoManager::COLUMN_SUBTITLES_FILE;
         $this->template->thumbs = $this->videoManager->getThumbnails($id);
         $this->template->convertQueueManager = $this->convertQueueManager;
+        $this->template->privateLinks = $this->privateLinksManager->getFromDBbyHash($video[VideoManager::COLUMN_HASH]);
         $this['videoBasicInfoForm']->setDefaults($video->toArray());
 
     }

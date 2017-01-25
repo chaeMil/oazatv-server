@@ -3,8 +3,7 @@
 namespace App\AdminModule;
 
 use Nette,
-    App\StringUtils,
-    App\Presenters\ErrorPresenter;
+    App\StringUtils;
 
 
 /**
