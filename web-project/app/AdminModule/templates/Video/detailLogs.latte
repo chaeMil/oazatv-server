@@ -1,0 +1,22 @@
+<br>
+<div class="row">
+    <div class="col-md-3">
+        <div class="list-group" id="logFilesList">
+            {foreach $logFiles as $file}
+                <a n:href="showLogFile! $video['id'], $file" class="list-group-item logFileLink">
+                    {$file}
+                </a>
+            {/foreach}
+        </div>
+
+    </div>
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-heading" id="logFileName"></div>
+            <div id="logFile" class="panel-body"
+                 style="height: calc(100vh - 300px); overflow-y: scroll; font-family: monospace;">
+
+            </div>
+        </div>
+    </div>
+</div>

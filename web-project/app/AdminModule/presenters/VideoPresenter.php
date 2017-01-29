@@ -19,6 +19,7 @@ use Nette,
  Model\ConversionProfilesManager,
  App\FileUtils,
  Nextras\Datagrid\Datagrid;
+use Nette\Application\Responses\JsonResponse;
 
 /**
  * Description of VideoPresenter
@@ -197,6 +198,13 @@ class VideoPresenter extends BaseSecuredPresenter {
             $this->template->$subtitlesFileSize = $subtitlesFileSize;
         }
 
+        if (!FileUtils::isDirEmpty(VIDEOS_FOLDER.$id.'/logs/')) {
+            $logFiles = scandir(VIDEOS_FOLDER.$id.'/logs/');
+            unset($logFiles[0]);
+            unset($logFiles[1]);
+            $this->template->logFiles = $logFiles;
+        }
+
         $this->template->originalFileInfo = $this->videoManager->getOriginalFileInfo($video->id);;
         $this->template->originalFile = VideoManager::COLUMN_ORIGINAL_FILE;
         $this->template->mp4File = VideoManager::COLUMN_MP4_FILE;
@@ -210,6 +218,12 @@ class VideoPresenter extends BaseSecuredPresenter {
         $this->template->privateLinks = $this->privateLinksManager->getFromDBbyHash($video[VideoManager::COLUMN_HASH]);
         $this['videoBasicInfoForm']->setDefaults($video->toArray());
 
+    }
+
+    public function handleShowLogFile($videoId, $file) {
+        $logFile = file_get_contents(VIDEOS_FOLDER . $videoId . '/logs/' . $file);
+        $this->sendResponse(new JsonResponse(['file' => $logFile]));
+        $this->redrawControl("logFile");
     }
 
     public function createComponentVideoBasicInfoForm() {

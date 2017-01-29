@@ -38,4 +38,9 @@ class FileUtils {
         $factor = floor((strlen($bytes) - 1) / 3);
         return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
     }
+
+    public static function isDirEmpty($dir) {
+        if (!is_readable($dir)) return NULL;
+        return (count(scandir($dir)) == 2);
+    }
 }

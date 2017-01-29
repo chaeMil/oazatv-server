@@ -115,6 +115,9 @@
     
     <!-- flot -->
     <script src="{$basePath}/admin_components/bower_components/flot/jquery.flot.js"></script>
+
+    <!-- nette ajax -->
+    <script src="{$basePath}/admin_components/js/nette.ajax.js"></script>
     
     <!-- frontend utils -->
     <script src="{$basePath}/assets/js/utils.js"></script>
@@ -131,6 +134,12 @@
                             }
                         }); 
             return dialog;
+        });
+    </script>
+
+    <script>
+        $(function () {
+            $.nette.init();
         });
     </script>
     
