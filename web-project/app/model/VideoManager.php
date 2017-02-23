@@ -169,6 +169,7 @@ class VideoManager extends BaseModel {
 		if ($videoDB != false) {
 			$arrayItemFromDB = $videoDB->toArray();
 			$arrayItemFromDB['type'] = 'video';
+			unset($arrayItemFromDB['note']);
 			return $arrayItemFromDB;
 		} else { 
 			return null;
@@ -572,7 +573,7 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         }
     }
     
-    public function findSimilarVideos($originalVideo, $lang, $numOfVideos = 8) {
+    public function findSimilarVideos($originalVideo, $lang = null, $numOfVideos = 8) {
         $originalTags = explode(',', str_replace(' ', '', $originalVideo['tags']));
         $tagsManager = new TagsManager(self::$database); 
         $hiddenTags = $tagsManager->getHiddenTagsFromDB();
@@ -607,15 +608,25 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
                 $try++;
             }
         }
-        
-        $localizedSimilarVideos = array();
-        
-        foreach($similarVideos as $id) {
-            $localizedSimilarVideos[] = $this
+
+        if ($lang != null) {
+            $localizedSimilarVideos = array();
+
+            foreach($similarVideos as $id) {
+                $localizedSimilarVideos[] = $this
                     ->createLocalizedVideoObject($lang, $this->getVideoFromDB($id));
+            }
+
+            return $localizedSimilarVideos;
+        } else {
+            $similarVideosArray = array();
+
+            foreach($similarVideos as $id) {
+                $similarVideosArray[] = $this->getVideoFromDBtoAPI($id);
+            }
+
+            return $similarVideosArray;
         }
-        
-        return $localizedSimilarVideos;
     }
 
     public function getVideoThumbDominantColor($thumbFile, $quality = 30) {

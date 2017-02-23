@@ -53,4 +53,22 @@ class VideoPresenter extends BasePresenter {
         
         $this->sendHTTPResponse(\Nette\Http\Response::S200_OK);
     }
+
+    public function actionSimilar($id) {
+        $hash = $id;
+
+        $video = $this->videoManager->getVideoFromDBbyHash($hash);
+
+        if ($video != false) {
+            $similarVideos = $this->videoManager->findSimilarVideos($video);
+            $this->sendJson($similarVideos);
+        } else {
+
+            $this->enableCORS();
+            $this->createJsonError('videoFileNotFound',
+                Nette\Http\Response::S404_NOT_FOUND,
+                "Video neexistuje",
+                "This video does not exist");
+        }
+    }
 }
