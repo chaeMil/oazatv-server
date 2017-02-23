@@ -9,22 +9,22 @@
     "packages": [
         {
             "name": "dg/adminer-custom",
-            "version": "v1.7.2",
+            "version": "v1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/adminer-custom.git",
-                "reference": "8a62f9e5d378df564bf5c8a542885ea9aa0a9ee4"
+                "reference": "ed80cf19bb435ba5b68d328d1bf433bb7f59ef5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/adminer-custom/zipball/8a62f9e5d378df564bf5c8a542885ea9aa0a9ee4",
-                "reference": "8a62f9e5d378df564bf5c8a542885ea9aa0a9ee4",
+                "url": "https://api.github.com/repos/dg/adminer-custom/zipball/ed80cf19bb435ba5b68d328d1bf433bb7f59ef5e",
+                "reference": "ed80cf19bb435ba5b68d328d1bf433bb7f59ef5e",
                 "shasum": ""
             },
             "type": "project",
             "notification-url": "https://packagist.org/downloads/",
             "description": "Customization for the best database management tool written in PHP, Adminer",
-            "time": "2016-06-01 21:20:39"
+            "time": "2017-01-18 02:32:38"
         },
         {
             "name": "janmarek/webloader",
@@ -700,16 +700,16 @@
         },
         {
             "name": "nette/database",
-            "version": "v2.3.10",
+            "version": "v2.3.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/database.git",
-                "reference": "ed0dc48c58ddf9042f736f3c1ac431dfdd825019"
+                "reference": "28737ccbe10d2ada233e823075971a05b9cb11cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/database/zipball/ed0dc48c58ddf9042f736f3c1ac431dfdd825019",
-                "reference": "ed0dc48c58ddf9042f736f3c1ac431dfdd825019",
+                "url": "https://api.github.com/repos/nette/database/zipball/28737ccbe10d2ada233e823075971a05b9cb11cf",
+                "reference": "28737ccbe10d2ada233e823075971a05b9cb11cf",
                 "shasum": ""
             },
             "require": {
@@ -750,7 +750,7 @@
             ],
             "description": "Nette Database Component",
             "homepage": "https://nette.org",
-            "time": "2016-10-18 13:30:07"
+            "time": "2016-12-12 12:46:29"
         },
         {
             "name": "nette/di",
@@ -1541,16 +1541,16 @@
         },
         {
             "name": "symfony/config",
-            "version": "v2.8.16",
+            "version": "v2.8.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "4537f2413348fe271c2c4b09da219ed615d79f9c"
+                "reference": "747fa191136cf798409183c501435aa4c16184df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/4537f2413348fe271c2c4b09da219ed615d79f9c",
-                "reference": "4537f2413348fe271c2c4b09da219ed615d79f9c",
+                "url": "https://api.github.com/repos/symfony/config/zipball/747fa191136cf798409183c501435aa4c16184df",
+                "reference": "747fa191136cf798409183c501435aa4c16184df",
                 "shasum": ""
             },
             "require": {
@@ -1593,7 +1593,7 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2017-01-02 20:30:24"
+            "time": "2017-02-05 10:11:19"
         },
         {
             "name": "symfony/filesystem",
@@ -1705,16 +1705,16 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v2.8.16",
+            "version": "v2.8.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "b4ac4a393f6970cc157fba17be537380de396a86"
+                "reference": "c281ac2b484210bb95106bdb8ae8356e63277725"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/b4ac4a393f6970cc157fba17be537380de396a86",
-                "reference": "b4ac4a393f6970cc157fba17be537380de396a86",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/c281ac2b484210bb95106bdb8ae8356e63277725",
+                "reference": "c281ac2b484210bb95106bdb8ae8356e63277725",
                 "shasum": ""
             },
             "require": {
@@ -1765,7 +1765,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2017-01-02 20:30:24"
+            "time": "2017-01-21 16:59:38"
         },
         {
             "name": "tedivm/jshrink",
