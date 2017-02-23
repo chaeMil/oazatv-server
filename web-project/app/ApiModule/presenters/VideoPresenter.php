@@ -61,7 +61,11 @@ class VideoPresenter extends BasePresenter {
 
         if ($video != false) {
             $similarVideos = $this->videoManager->findSimilarVideos($video);
-            $this->sendJson(array('videos' => $similarVideos));
+            $similarVideosResponse = array();
+            foreach ($similarVideos as $similarVideo) {
+                $similarVideosResponse[] = $this->createArchiveItem($similarVideo);
+            }
+            $this->sendJson(array('videos' => $similarVideosResponse));
         } else {
 
             $this->enableCORS();
