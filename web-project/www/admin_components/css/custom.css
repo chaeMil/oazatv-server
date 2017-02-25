@@ -29,3 +29,9 @@ and open the template in the editor.
 .front-page-manager-rows .unpublished {
     opacity: 0.3;
 }
+
+.form-control {
+    color: #ffffff;
+    background-color: #3a3f44;
+    border: 1px solid #565b61;
+}

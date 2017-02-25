@@ -198,11 +198,13 @@ class VideoPresenter extends BaseSecuredPresenter {
             $this->template->$subtitlesFileSize = $subtitlesFileSize;
         }
 
-        if (!FileUtils::isDirEmpty(VIDEOS_FOLDER.$id.'/logs/')) {
-            $logFiles = scandir(VIDEOS_FOLDER.$id.'/logs/');
-            unset($logFiles[0]);
-            unset($logFiles[1]);
-            $this->template->logFiles = $logFiles;
+        if (file_exists(VIDEOS_FOLDER.$id.'/logs/')) {
+            if (!FileUtils::isDirEmpty(VIDEOS_FOLDER . $id . '/logs/')) {
+                $logFiles = scandir(VIDEOS_FOLDER . $id . '/logs/');
+                unset($logFiles[0]);
+                unset($logFiles[1]);
+                $this->template->logFiles = $logFiles;
+            }
         }
 
         $this->template->originalFileInfo = $this->videoManager->getOriginalFileInfo($video->id);;
