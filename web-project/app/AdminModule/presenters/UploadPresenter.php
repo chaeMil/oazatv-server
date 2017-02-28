@@ -17,6 +17,7 @@ use Nette,
  App\EventLogger,
  Model\TagsManager,
  Model\CategoriesManager;
+use Nette\DI\Container;
 
 /**
  * Description of UploadPresenter
@@ -29,16 +30,18 @@ class UploadPresenter extends BaseSecuredPresenter {
     private $videoManager;
     private $tagsManager;
     private $categoriesManager;
+    private $container;
     
     const
             RESUMABLE_TEMP = 'uploaded/resumable-temp/';
 
     function __construct(Nette\Database\Context $database, VideoManager $videoManager,
-        TagsManager $tagsManager, CategoriesManager $categoriesManager) {
+        TagsManager $tagsManager, CategoriesManager $categoriesManager, Container $container) {
         $this->database = $database;
         $this->videoManager = $videoManager;
         $this->tagsManager = $tagsManager;
         $this->categoriesManager = $categoriesManager;
+        $this->container = $container;
     }
     
     function renderPrepareVideo() {
@@ -107,11 +110,14 @@ class UploadPresenter extends BaseSecuredPresenter {
         $this->redirect("Video:detail#files", array("id" => $insertedId));
     }
     
-    public function actionUploadOriginalFileSucceeded($id) {
+    public function actionUploadOriginalFileSucceeded() {
+
+        $httpRequest = $this->container->getByType('Nette\Http\Request');
+
         $this->getTemplateVariables($this->getUser()->getId());
 
         $videoname = Strings::random(6,'0-9a-zA-Z');
-        $videoId = Strings::webalize($id);
+        $videoId = Strings::webalize($httpRequest->getQuery('id'));
         
         $files = glob(self::RESUMABLE_TEMP.'/*.*');
         
@@ -127,6 +133,6 @@ class UploadPresenter extends BaseSecuredPresenter {
                 EventLogger::ACTIONS_LOG);
         
         $this->flashMessage("Soubor byl úspěšně nahrán.", 'success');
-        $this->redirect('Video:detail#files', $id);
+        $this->redirect('Video:detail#files', $videoId);
     }
 }
