@@ -30,7 +30,7 @@ class UploadPresenter extends BaseSecuredPresenter {
     private $videoManager;
     private $tagsManager;
     private $categoriesManager;
-    private $container;
+    public $container;
     
     const
             RESUMABLE_TEMP = 'uploaded/resumable-temp/';
