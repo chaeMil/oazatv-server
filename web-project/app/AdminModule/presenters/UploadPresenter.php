@@ -107,10 +107,10 @@ class UploadPresenter extends BaseSecuredPresenter {
         $this->redirect("Video:detail#files", array("id" => $insertedId));
     }
     
-    public function actionUploadOriginalFileSucceeded() {
+    public function actionUploadOriginalFileSucceeded($id) {
    
         $videoname = Strings::random(6,'0-9a-zA-Z');
-        $videoId = Strings::webalize($_GET['id']);
+        $videoId = Strings::webalize($id);
         
         $files = glob(self::RESUMABLE_TEMP.'/*.*');
         
@@ -126,6 +126,6 @@ class UploadPresenter extends BaseSecuredPresenter {
                 EventLogger::ACTIONS_LOG);
         
         $this->flashMessage("Soubor byl úspěšně nahrán.", 'success');
-        $this->redirect('Video:detail#files', $_GET['id']);
+        $this->redirect('Video:detail#files', $id);
     }
 }
