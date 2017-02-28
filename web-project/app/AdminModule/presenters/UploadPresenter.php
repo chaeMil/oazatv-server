@@ -108,7 +108,8 @@ class UploadPresenter extends BaseSecuredPresenter {
     }
     
     public function actionUploadOriginalFileSucceeded($id) {
-   
+        $this->getTemplateVariables($this->getUser()->getId());
+
         $videoname = Strings::random(6,'0-9a-zA-Z');
         $videoId = Strings::webalize($id);
         
