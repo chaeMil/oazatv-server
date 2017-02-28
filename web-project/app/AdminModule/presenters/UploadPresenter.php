@@ -118,7 +118,6 @@ class UploadPresenter extends BaseSecuredPresenter {
 
         $videoname = Strings::random(6,'0-9a-zA-Z');
         $videoId = Strings::webalize($httpRequest->getQuery('id'));
-        dump($videoId); exit;
         
         $files = glob(self::RESUMABLE_TEMP.'/*.*');
         
