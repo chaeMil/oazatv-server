@@ -120,8 +120,6 @@ class UploadPresenter extends BaseSecuredPresenter {
         $videoId = Strings::webalize($httpRequest->getQuery('id'));
         
         $files = glob(self::RESUMABLE_TEMP.'/*.*');
-
-        dump($files); exit;
         
         foreach($files as $file) {
                 $extension = StringUtils::getExtensionFromFileName($file);
