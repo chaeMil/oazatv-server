@@ -4,28 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "503de4f0e92318d9dd27894204665f70",
-    "content-hash": "5907b4e71ad327ffb8211bf456ea12de",
+    "content-hash": "3593f23fb4c20af18c6da0924dc1e72f",
     "packages": [
-        {
-            "name": "dg/adminer-custom",
-            "version": "v1.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dg/adminer-custom.git",
-                "reference": "ed80cf19bb435ba5b68d328d1bf433bb7f59ef5e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dg/adminer-custom/zipball/ed80cf19bb435ba5b68d328d1bf433bb7f59ef5e",
-                "reference": "ed80cf19bb435ba5b68d328d1bf433bb7f59ef5e",
-                "shasum": ""
-            },
-            "type": "project",
-            "notification-url": "https://packagist.org/downloads/",
-            "description": "Customization for the best database management tool written in PHP, Adminer",
-            "time": "2017-01-18 02:32:38"
-        },
         {
             "name": "janmarek/webloader",
             "version": "v2.5.0",
@@ -110,7 +90,7 @@
                 "nette",
                 "webloader"
             ],
-            "time": "2015-09-06 18:15:08"
+            "time": "2015-09-06T18:15:08+00:00"
         },
         {
             "name": "joseki/webloader-filters",
@@ -159,7 +139,7 @@
                 }
             ],
             "description": "This is an extension of janmarek/webloader. This extension contains filters to minify js and css.",
-            "time": "2015-10-11 23:02:22"
+            "time": "2015-10-11T23:02:22+00:00"
         },
         {
             "name": "kdyby/translation",
@@ -257,7 +237,7 @@
                 "nette",
                 "translation"
             ],
-            "time": "2016-04-19 21:27:14"
+            "time": "2016-04-19T21:27:14+00:00"
         },
         {
             "name": "ksubileau/color-thief-php",
@@ -310,7 +290,7 @@
                 "php",
                 "thief"
             ],
-            "time": "2016-12-18 03:12:25"
+            "time": "2016-12-18T03:12:25+00:00"
         },
         {
             "name": "latte/latte",
@@ -365,7 +345,7 @@
                 "templating",
                 "twig"
             ],
-            "time": "2016-12-21 02:04:59"
+            "time": "2016-12-21T02:04:59+00:00"
         },
         {
             "name": "mexitek/phpcolors",
@@ -460,7 +440,7 @@
                 "css",
                 "minify"
             ],
-            "time": "2015-09-25 11:13:11"
+            "time": "2015-09-25T11:13:11+00:00"
         },
         {
             "name": "nette/application",
@@ -522,7 +502,7 @@
             ],
             "description": "Nette Application MVC Component",
             "homepage": "https://nette.org",
-            "time": "2016-06-17 17:40:16"
+            "time": "2016-06-17T17:40:16+00:00"
         },
         {
             "name": "nette/bootstrap",
@@ -588,7 +568,7 @@
             ],
             "description": "Nette Bootstrap",
             "homepage": "https://nette.org",
-            "time": "2016-05-17 19:52:51"
+            "time": "2016-05-17T19:52:51+00:00"
         },
         {
             "name": "nette/caching",
@@ -646,7 +626,7 @@
             ],
             "description": "Nette Caching Component",
             "homepage": "https://nette.org",
-            "time": "2016-02-22 02:08:08"
+            "time": "2016-02-22T02:08:08+00:00"
         },
         {
             "name": "nette/component-model",
@@ -696,7 +676,7 @@
             ],
             "description": "Nette Component Model",
             "homepage": "https://nette.org",
-            "time": "2016-12-12 12:12:37"
+            "time": "2016-12-12T12:12:37+00:00"
         },
         {
             "name": "nette/database",
@@ -750,20 +730,20 @@
             ],
             "description": "Nette Database Component",
             "homepage": "https://nette.org",
-            "time": "2016-12-12 12:46:29"
+            "time": "2016-12-12T12:46:29+00:00"
         },
         {
             "name": "nette/di",
-            "version": "v2.3.13",
+            "version": "v2.3.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/di.git",
-                "reference": "fe4d3264d1b1907a934e8a6627a5b87f35046089"
+                "reference": "06c96ce2d646156d8acae935861d4e96e092b903"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/di/zipball/fe4d3264d1b1907a934e8a6627a5b87f35046089",
-                "reference": "fe4d3264d1b1907a934e8a6627a5b87f35046089",
+                "url": "https://api.github.com/repos/nette/di/zipball/06c96ce2d646156d8acae935861d4e96e092b903",
+                "reference": "06c96ce2d646156d8acae935861d4e96e092b903",
                 "shasum": ""
             },
             "require": {
@@ -802,7 +782,7 @@
             ],
             "description": "Nette Dependency Injection Component",
             "homepage": "https://nette.org",
-            "time": "2016-12-12 12:13:48"
+            "time": "2017-03-17T15:13:49+00:00"
         },
         {
             "name": "nette/finder",
@@ -852,7 +832,7 @@
             ],
             "description": "Nette Finder: Files Searching",
             "homepage": "https://nette.org",
-            "time": "2015-10-20 17:15:41"
+            "time": "2015-10-20T17:15:41+00:00"
         },
         {
             "name": "nette/forms",
@@ -907,20 +887,20 @@
             ],
             "description": "Nette Forms: greatly facilitates web forms",
             "homepage": "https://nette.org",
-            "time": "2016-12-21 00:59:07"
+            "time": "2016-12-21T00:59:07+00:00"
         },
         {
             "name": "nette/http",
-            "version": "v2.3.8",
+            "version": "v2.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/http.git",
-                "reference": "dccceb20f346744927472b88732804cef6a73669"
+                "reference": "374f6327a08c5e8a3d60bc1035aa12267bc1b5a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/http/zipball/dccceb20f346744927472b88732804cef6a73669",
-                "reference": "dccceb20f346744927472b88732804cef6a73669",
+                "url": "https://api.github.com/repos/nette/http/zipball/374f6327a08c5e8a3d60bc1035aa12267bc1b5a7",
+                "reference": "374f6327a08c5e8a3d60bc1035aa12267bc1b5a7",
                 "shasum": ""
             },
             "require": {
@@ -961,7 +941,7 @@
             ],
             "description": "Nette HTTP Component",
             "homepage": "https://nette.org",
-            "time": "2016-12-19 15:15:21"
+            "time": "2017-03-16T15:47:05+00:00"
         },
         {
             "name": "nette/mail",
@@ -1016,7 +996,7 @@
             ],
             "description": "Nette Mail: Sending E-mails",
             "homepage": "https://nette.org",
-            "time": "2016-04-10 12:50:29"
+            "time": "2016-04-10T12:50:29+00:00"
         },
         {
             "name": "nette/neon",
@@ -1070,7 +1050,7 @@
             ],
             "description": "Nette NEON: parser & generator for Nette Object Notation",
             "homepage": "http://ne-on.org",
-            "time": "2017-01-13 08:00:19"
+            "time": "2017-01-13T08:00:19+00:00"
         },
         {
             "name": "nette/php-generator",
@@ -1120,7 +1100,7 @@
             ],
             "description": "Nette PHP Generator",
             "homepage": "https://nette.org",
-            "time": "2016-06-17 16:33:17"
+            "time": "2016-06-17T16:33:17+00:00"
         },
         {
             "name": "nette/reflection",
@@ -1173,7 +1153,7 @@
             ],
             "description": "Nette PHP Reflection Component",
             "homepage": "https://nette.org",
-            "time": "2016-03-12 14:57:07"
+            "time": "2016-03-12T14:57:07+00:00"
         },
         {
             "name": "nette/robot-loader",
@@ -1225,7 +1205,7 @@
             ],
             "description": "Nette RobotLoader: comfortable autoloading",
             "homepage": "https://nette.org",
-            "time": "2016-05-17 15:36:50"
+            "time": "2016-05-17T15:36:50+00:00"
         },
         {
             "name": "nette/safe-stream",
@@ -1280,7 +1260,7 @@
             ],
             "description": "Nette SafeStream: Atomic Operations",
             "homepage": "https://nette.org",
-            "time": "2016-03-19 13:06:04"
+            "time": "2016-03-19T13:06:04+00:00"
         },
         {
             "name": "nette/security",
@@ -1332,7 +1312,7 @@
             ],
             "description": "Nette Security: Access Control Component",
             "homepage": "https://nette.org",
-            "time": "2016-05-17 15:37:18"
+            "time": "2016-05-17T15:37:18+00:00"
         },
         {
             "name": "nette/utils",
@@ -1389,7 +1369,7 @@
             ],
             "description": "Nette Utility Classes",
             "homepage": "https://nette.org",
-            "time": "2016-12-12 12:20:10"
+            "time": "2016-12-12T12:20:10+00:00"
         },
         {
             "name": "nextras/datagrid",
@@ -1440,7 +1420,7 @@
                 "nette",
                 "nextras"
             ],
-            "time": "2015-07-23 12:44:36"
+            "time": "2015-07-23T12:44:36+00:00"
         },
         {
             "name": "nextras/latte-macros",
@@ -1490,7 +1470,7 @@
                 "nette",
                 "nextras"
             ],
-            "time": "2015-06-21 16:22:22"
+            "time": "2015-06-21T16:22:22+00:00"
         },
         {
             "name": "psr/log",
@@ -1537,20 +1517,20 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10 12:19:37"
+            "time": "2016-10-10T12:19:37+00:00"
         },
         {
             "name": "symfony/config",
-            "version": "v2.8.17",
+            "version": "v2.8.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "747fa191136cf798409183c501435aa4c16184df"
+                "reference": "06ce6bb46c24963ec09323da45d0f4f85d3cecd2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/747fa191136cf798409183c501435aa4c16184df",
-                "reference": "747fa191136cf798409183c501435aa4c16184df",
+                "url": "https://api.github.com/repos/symfony/config/zipball/06ce6bb46c24963ec09323da45d0f4f85d3cecd2",
+                "reference": "06ce6bb46c24963ec09323da45d0f4f85d3cecd2",
                 "shasum": ""
             },
             "require": {
@@ -1593,7 +1573,7 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2017-02-05 10:11:19"
+            "time": "2017-03-01T18:13:50+00:00"
         },
         {
             "name": "symfony/filesystem",
@@ -1642,7 +1622,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2016-07-20 05:43:46"
+            "time": "2016-07-20T05:43:46+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -1701,20 +1681,20 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         },
         {
             "name": "symfony/translation",
-            "version": "v2.8.17",
+            "version": "v2.8.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "c281ac2b484210bb95106bdb8ae8356e63277725"
+                "reference": "b538355bc99db2ec7cc35284ec76d92ae7d1d256"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/c281ac2b484210bb95106bdb8ae8356e63277725",
-                "reference": "c281ac2b484210bb95106bdb8ae8356e63277725",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/b538355bc99db2ec7cc35284ec76d92ae7d1d256",
+                "reference": "b538355bc99db2ec7cc35284ec76d92ae7d1d256",
                 "shasum": ""
             },
             "require": {
@@ -1727,7 +1707,7 @@
             "require-dev": {
                 "psr/log": "~1.0",
                 "symfony/config": "~2.8",
-                "symfony/intl": "~2.4|~3.0.0",
+                "symfony/intl": "~2.7.25|^2.8.18|~3.2.5",
                 "symfony/yaml": "~2.2|~3.0.0"
             },
             "suggest": {
@@ -1765,7 +1745,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2017-01-21 16:59:38"
+            "time": "2017-03-04T12:20:59+00:00"
         },
         {
             "name": "tedivm/jshrink",
@@ -1811,7 +1791,7 @@
                 "javascript",
                 "minifier"
             ],
-            "time": "2015-07-04 07:35:09"
+            "time": "2015-07-04T07:35:09+00:00"
         },
         {
             "name": "tracy/tracy",
@@ -1866,7 +1846,7 @@
                 "debugger",
                 "nette"
             ],
-            "time": "2017-01-18 14:14:42"
+            "time": "2017-01-18T14:14:42+00:00"
         }
     ],
     "packages-dev": [
@@ -1924,7 +1904,7 @@
                 "testing",
                 "unit"
             ],
-            "time": "2016-03-19 14:34:02"
+            "time": "2016-03-19T14:34:02+00:00"
         }
     ],
     "aliases": [],

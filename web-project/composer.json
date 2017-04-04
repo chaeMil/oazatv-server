@@ -20,7 +20,6 @@
 		"nette/utils": "~2.3.0",
 		"latte/latte": "~2.3.0",
 		"tracy/tracy": "~2.3.0",
-		"dg/adminer-custom": "^1.6",
 		"kdyby/translation": "^2.2",
 		"janmarek/webloader": "^2.5",
 		"joseki/webloader-filters": "^1.1",
