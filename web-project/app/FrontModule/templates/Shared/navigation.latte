@@ -16,7 +16,7 @@
                 <span class="text hidden-xs hidden-sm">Oáza.tv</span>
                 <div class="onair offline"> 
                     <div class="dot"></div>
-                    {_frontend.basic.onair}
+                    {_frontend.basic.onair|translate}
                 </div>
             </a>
 
@@ -27,17 +27,17 @@
 
             <a class="btn btn-primary btn-archive"
                     n:href="LiveStream:Default">
-                {_frontend.basic.livestream}
+                {_frontend.basic.livestream|translate}
             </a>
 
             <a class="btn btn-primary btn-archive"
                    n:href="Archive:Default">
-                    {_frontend.basic.archive}
+                    {_frontend.basic.archive|translate}
             </a>
 
             <a class="btn btn-primary btn-archive"
                n:href="Songbook:all">
-                {_frontend.basic.songbook}
+                {_frontend.basic.songbook|translate}
             </a>
 
             {*if $user->isLoggedIn()}
@@ -63,7 +63,7 @@
                 <div class="input-group">
                     <input type="text" class="form-control"
                            autocomplete="off"
-                           placeholder="{_frontend.basic.search}" name="q"
+                           placeholder="{_frontend.basic.search|translate}" name="q"
                            id="search">
 
                     <i id="search-animation" class="fa fa-spinner search-animation glyphicon-refresh-animate hidden"></i>

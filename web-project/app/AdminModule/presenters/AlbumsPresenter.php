@@ -129,8 +129,8 @@ class AlbumsPresenter extends BaseSecuredPresenter {
         
         $this->bootstrapFormRendering($form);
         
-        $form->onSuccess[] = $this->photosUploadSuceeded;
-        $form->onError[] = $this->photosUploadError;
+        $form->onSuccess[] = [$this, 'photosUploadSuceeded'];
+        $form->onError[] = [$this, 'photosUploadError'];
         
         return $form;
     }
@@ -217,7 +217,7 @@ class AlbumsPresenter extends BaseSecuredPresenter {
         
 
         // call method signInFormSucceeded() on success
-        $form->onSuccess[] = $this->albumInfoSucceeded;
+        $form->onSuccess[] = [$this, 'albumInfoSucceeded'];
 
         // setup Bootstrap form rendering
         $this->bootstrapFormRendering($form);

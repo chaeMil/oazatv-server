@@ -83,7 +83,7 @@ class LiveStreamPresenter extends BaseSecuredPresenter {
                 ->setAttribute("class", "btn-lg btn-success btn-block");
         
         // call method signInFormSucceeded() on success
-        $form->onSuccess[] = $this->valuesSucceeded;
+        $form->onSuccess[] = [$this, 'valuesSucceeded'];
 
         // setup Bootstrap form rendering
         $this->bootstrapFormRendering($form);

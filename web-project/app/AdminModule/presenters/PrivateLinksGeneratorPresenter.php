@@ -52,7 +52,7 @@ class PrivateLinksGeneratorPresenter extends BaseSecuredPresenter {
             ->setAttribute("class", "btn-lg btn-success btn-block");
 
         // call method signInFormSucceeded() on success
-        $form->onSuccess[] = $this->privateLinkSucceeded;
+        $form->onSuccess[] = [$this, 'privateLinkSucceeded'];
 
         // setup Bootstrap form rendering
         $this->bootstrapFormRendering($form);

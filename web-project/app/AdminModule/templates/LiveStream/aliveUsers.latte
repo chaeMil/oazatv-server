@@ -11,12 +11,12 @@
     </thead>
 
     <tbody>
-        {foreach $aliveUsers as $user}
+        {foreach $aliveUsers as $aliveUser}
             <tr>
-                <td>{$user['alive']}</td>
-                <td>{$user['ip']}</td>
-                <td>{$user['os']}</td>
-                <td>{$user['browser']}</td>
+                <td>{$aliveUser['alive']}</td>
+                <td>{$aliveUser['ip']}</td>
+                <td>{$aliveUser['os']}</td>
+                <td>{$aliveUser['browser']}</td>
             </tr>
         {/foreach}
     </tbody>

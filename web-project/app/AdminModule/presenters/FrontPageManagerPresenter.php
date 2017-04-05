@@ -45,7 +45,7 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
 
 
         // call method signInFormSucceeded() on success
-        $form->onSuccess[] = $this->featuredSucceeded;
+        $form->onSuccess[] = [$this, 'featuredSucceeded'];
 
         // setup Bootstrap form rendering
         $this->bootstrapFormRendering($form);
@@ -101,7 +101,7 @@ class FrontPageManagerPresenter extends BaseSecuredPresenter {
 
 
         // call method signInFormSucceeded() on success
-        $form->onSuccess[] = $this->rowSucceeded;
+        $form->onSuccess[] = [$this, 'rowSucceeded'];
 
         // setup Bootstrap form rendering
         $this->bootstrapFormRendering($form);

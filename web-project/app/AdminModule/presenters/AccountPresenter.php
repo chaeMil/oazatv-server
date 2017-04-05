@@ -58,7 +58,7 @@ class AccountPresenter extends BaseSecuredPresenter {
         $form->addSubmit('save', null)
                 ->setAttribute("class", "btn btn-primary btn-xl");
 
-        $form->onSuccess[] = $this->myAccountFormSucceeded;
+        $form->onSuccess[] = [$this, 'myAccountFormSucceeded'];
         
         $this->bootstrapFormRendering($form);
         
@@ -78,7 +78,7 @@ class AccountPresenter extends BaseSecuredPresenter {
         $form->addSubmit("save", null)
                 ->setAttribute("class", "btn btn-primary");
         
-        $form->onSuccess[] = $this->avatarUploadSucceeded;
+        $form->onSuccess[] = [$this, 'avatarUploadSucceeded'];
         
         $this->bootstrapFormRendering($form);
         

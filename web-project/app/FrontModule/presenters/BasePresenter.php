@@ -48,19 +48,19 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
     
     private function registerCustomHelpers($template) {
         //make HEX color from string
-        $template->registerHelper('makeColor', function ($s) {
+        $template->getLatte()->addFilter('makeColor', function ($s) {
             return '#'.substr(md5($s), 0, 6);
         });
         
         //lighten HEX color
-        $template->registerHelper('lighten', function ($s, 
+        $template->getLatte()->addFilter('lighten', function ($s,
                 $amount = Color::DEFAULT_ADJUST) {
             $color = new Color($s);
             return '#'.$color->lighten($amount);
         });
         
         //darken HEX color
-        $template->registerHelper('darken', function ($s, 
+        $template->getLatte()->addFilter('darken', function ($s,
                 $amount = Color::DEFAULT_ADJUST) {
             $color = new Color($s);
             return '#'.$color->darken($amount);

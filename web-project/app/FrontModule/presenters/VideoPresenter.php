@@ -9,6 +9,7 @@
 namespace App\FrontModule;
 
 use Model\PrivateLinksManager;
+use Model\TagsManager;
 use Nette,
 Nette\Database\Context,
 Model\VideoManager,
@@ -30,13 +31,15 @@ class VideoPresenter extends BasePresenter {
     private $preachersManager;
     private $categoriesManager;
     private $privateLinksManager;
+    private $tagsManager;
 
     public function __construct(Nette\DI\Container $container,
             Context $database, VideoManager $videoManager,
             AnalyticsManager $analyticsManager, SongsManager $songsManager,
             PreachersManager $preachersManager,
             CategoriesManager $categoriesManager,
-            PrivateLinksManager $privateLinksManager) {
+            PrivateLinksManager $privateLinksManager,
+            TagsManager $tagsManager) {
 
         parent::__construct($container, $database);
 
@@ -46,6 +49,7 @@ class VideoPresenter extends BasePresenter {
         $this->preachersManager = $preachersManager;
         $this->categoriesManager = $categoriesManager;
         $this->privateLinksManager = $privateLinksManager;
+        $this->tagsManager = $tagsManager;
     }
     
     private function countView($id, $hash) {
@@ -74,7 +78,7 @@ class VideoPresenter extends BasePresenter {
             ->setAttribute("class", "btn btn-success btn-block");
 
         // call method signInFormSucceeded() on success
-        $form->onSubmit[] = $this->privateLinkSend;
+        $form->onSubmit[] = [$this, 'privateLinkSend'];
 
         // setup Bootstrap form rendering
         $this->bootstrapFormRendering($form);
@@ -132,7 +136,13 @@ class VideoPresenter extends BasePresenter {
             $this->analyticsManager->countVideoSearchClick($video['id'], AnalyticsManager::WEB);
         }
 
-        $tags = explode(",", $video['tags']);
+        $tags = explode(",", str_replace(" ", "", $video['tags']));
+        $tagsToHide = $this->tagsManager->getHiddenTagsFromDB();
+        foreach($tagsToHide as $tagToHide) {
+            if(($key = array_search($tagToHide['tag'], $tags)) !== false) {
+                unset($tags[$key]);
+            }
+        }
         $tagsWithSongs = $this->songsManager->parseTagsAndReplaceKnownSongs($tags);
         $this->template->tags = $tagsWithSongs;
 
