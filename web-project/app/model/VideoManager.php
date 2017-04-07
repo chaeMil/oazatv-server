@@ -399,17 +399,17 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
     }
 
     public function returnMissingThumbs() {
-        return array(self::THUMB_1024 => "assets/img/missing-thumb.png",
-                self::THUMB_512 => "assets/img/missing-thumb.png",
-                self::THUMB_256 => "assets/img/missing-thumb.png",
-                self::THUMB_128 => "assets/img/missing-thumb.png");
+        return array(self::THUMB_1024 => SERVER . "assets/img/missing-thumb.png",
+                self::THUMB_512 => SERVER . "assets/img/missing-thumb.png",
+                self::THUMB_256 => SERVER . "assets/img/missing-thumb.png",
+                self::THUMB_128 => SERVER . "assets/img/missing-thumb.png");
     }
 
     public function getThumbnails($id) {
         $video = $this->getVideoFromDB($id, 2);
         if ($video['thumb_file'] != null) {
-            $thumb = VIDEOS_FOLDER.$video->id."/thumbs/".str_replace(".jpg", "_".self::THUMB_1024.".jpg", $video['thumb_file']);
-            $thumbfile = VIDEOS_FOLDER.$video->id."/thumbs/".str_replace(".jpg", "", $video['thumb_file']);
+            $thumb = SERVER . VIDEOS_FOLDER.$video->id."/thumbs/".str_replace(".jpg", "_".self::THUMB_1024.".jpg", $video['thumb_file']);
+            $thumbfile = SERVER . VIDEOS_FOLDER.$video->id."/thumbs/".str_replace(".jpg", "", $video['thumb_file']);
             if (!file_exists($thumb)) {
                 $this->generateThumbnails($id);
             }
@@ -456,8 +456,7 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         $video->update(array(self::COLUMN_VIEWS => $views + 1));
     }
 
-    public function createLocalizedVideoObject($lang, $input)
-    {
+    public function createLocalizedVideoObject($lang, $input) {
         $video = Array();
 
         switch ($lang) {
@@ -481,45 +480,43 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
                 break;
         }
 
-
         $videoId = $input[self::COLUMN_ID];
-        $video['id'] = $videoId;
         $video['hash'] = $input['hash'];
-        $video['tags'] = $input[self::COLUMN_TAGS];
 
-        if (strpos($video['tags'], 'cesky') !== false
-            && strpos($video['tags'], 'english') !== false) {
+        if (strpos($input['tags'], 'cesky') !== false
+            && strpos($input['tags'], 'english') !== false) {
             $video['multilang'] = true;
         } else {
-            if (strpos($video['tags'], 'cesky') !== false) {
+            if (strpos($input['tags'], 'cesky') !== false) {
                 $video['multilang'] = 'cs';
             } else {
                 $video['multilang'] = 'en';
             }
         }
 
+        $video['tags'] = explode(",", str_replace(" ", "", $input[self::COLUMN_TAGS]));
+
         if ($input[self::COLUMN_MP3_FILE] != '') {
-            $video['mp3'] = VIDEOS_FOLDER . $videoId . '/' . $input[self::COLUMN_MP3_FILE];
+            $video['mp3'] = SERVER . VIDEOS_FOLDER . $videoId . '/' . $input[self::COLUMN_MP3_FILE];
         }
         if ($input[self::COLUMN_MP4_FILE] != '') {
-            $video['mp4'] = VIDEOS_FOLDER . $videoId . '/' . $input[self::COLUMN_MP4_FILE];
+            $video['mp4'] = SERVER . VIDEOS_FOLDER . $videoId . '/' . $input[self::COLUMN_MP4_FILE];
         }
         if ($input[self::COLUMN_MP4_FILE_LOWRES] != '') {
-            $video['mp4_lowres'] = VIDEOS_FOLDER . $videoId . '/' . $input[self::COLUMN_MP4_FILE_LOWRES];
+            $video['mp4_lowres'] = SERVER . VIDEOS_FOLDER . $videoId . '/' . $input[self::COLUMN_MP4_FILE_LOWRES];
         }
         if ($input[self::COLUMN_WEBM_FILE] != '') {
-            $video['webm'] = VIDEOS_FOLDER . $videoId . '/' . $input[self::COLUMN_WEBM_FILE];
+            $video['webm'] = SERVER . VIDEOS_FOLDER . $videoId . '/' . $input[self::COLUMN_WEBM_FILE];
         }
         if ($input[self::COLUMN_SUBTITLES_FILE] != '') {
-            $video['ass'] = VIDEOS_FOLDER . $videoId . '/' . $input[self::COLUMN_SUBTITLES_FILE];
+            $video['ass'] = SERVER . VIDEOS_FOLDER . $videoId . '/' . $input[self::COLUMN_SUBTITLES_FILE];
         }
         $video['categories'] = $input[self::COLUMN_CATEGORIES];
         $video['views'] = $input[self::COLUMN_VIEWS];
         $video['thumbs'] = $this->getThumbnails($videoId);
         $video['thumb_color'] = $input[self::COLUMN_THUMB_COLOR];
         if ($input[self::COLUMN_METADATA_DURATION_IN_SECONDS] != '') {
-            $video[self::COLUMN_METADATA_DURATION_IN_SECONDS] = $input[self::COLUMN_METADATA_DURATION_IN_SECONDS];
-            $video['metadata'] = $this->getVideoFileMetadata("", $video[self::COLUMN_METADATA_DURATION_IN_SECONDS]);
+            $video['metadata'] = $this->getVideoFileMetadata("", $input[self::COLUMN_METADATA_DURATION_IN_SECONDS]);
         }
         if ($input['subtitles_file'] != null) {
             $video['subtitles'] = $input['subtitles_file'];

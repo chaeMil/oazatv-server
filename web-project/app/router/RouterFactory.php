@@ -24,6 +24,14 @@ class RouterFactory {
                 IResourceRouter::GET => 'page',
             )
         ), IResourceRouter::GET);
+
+        $router[] = new Route('files/video/<hash>/<format>/', array(
+            'module' => 'Files',
+            'presenter' => 'Video',
+            'action' => 'getVideoFile',
+            'hash' => NULL,
+            'format' => NULL
+        ));
 		
         //json api links
         $router[] = new Route('[<locale=cs cs|en>/]api/v2/<presenter>/<id>/<action>', array(
