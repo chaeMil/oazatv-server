@@ -1,34 +1,17 @@
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top noselect" role="navigation">
     <div class="container" class="position: relative;">
-        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            {*<button type="button" class="navbar-toggle pull-left" data-toggle="collapse"
-                    data-target="#navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>*}
 
             <a class="navbar-brand pull-left">
                 <img class="logo" src="{$basePath}/assets/img/logo.png"/>
                 <span class="text hidden-xs hidden-sm">Oáza.tv</span>
-                <div class="onair offline"> 
-                    <div class="dot"></div>
-                    {_frontend.basic.onair|translate}
-                </div>
             </a>
 
 
         </div>
 
         <div class="pull-right navbar-user-menu">
-
-            <a class="btn btn-primary btn-archive"
-                    n:href="LiveStream:Default">
-                {_frontend.basic.livestream|translate}
-            </a>
 
             <a class="btn btn-primary btn-archive"
                    n:href="Archive:Default">
@@ -40,7 +23,12 @@
                 {_frontend.basic.songbook|translate}
             </a>
 
-            {*if $user->isLoggedIn()}
+            <a class="btn btn-primary btn-archive"
+                    n:href="LiveStream:Default">
+                {_frontend.basic.livestream|translate}
+            </a>
+
+            {if $user->isLoggedIn()}
                 <a class="dropdown-toggle"
                    type="button" data-toggle="dropdown">
                     <i class="fa fa-user"></i>
@@ -54,7 +42,7 @@
                 <a type="button" class="btn btn-primary btn-archive" href="#">
                     <i class="fa fa-user"></i>
                 </a>
-            {/if*}
+            {/if}
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->

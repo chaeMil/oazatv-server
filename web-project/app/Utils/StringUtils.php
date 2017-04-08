@@ -103,4 +103,8 @@ class StringUtils {
         // search forward starting from end minus needle length characters
         return $needle === "" || (($temp = strlen($haystack) - strlen($needle)) >= 0 && strpos($haystack, $needle, $temp) !== false);
     }
+
+    public static function contains($needle, $haystack){
+        return strpos($haystack, $needle) !== false;
+    }
 }

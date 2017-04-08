@@ -2,6 +2,9 @@
 
 namespace App\FrontModule;
 
+use App\StringUtils;
+use Exception;
+use Less_Parser;
 use Nette,
 App\Services\WebDir,
 CssMin,
@@ -92,18 +95,47 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
     }
     
     protected function createComponentCss() {
-        $dir = $this->webDir->getPath('');
-        $cssFiles = $this->getCssFilesToCompile();
-        $files = new WebLoader\FileCollection($dir);
-        $files->addFiles($cssFiles);
+        $basePath = $this->template->basePath;
+        $filesToCompile = $this->getCssFilesToCompile();
+        $recompile = false;
 
-        $compiler = WebLoader\Compiler::createCssCompiler($files, $dir . '/webtemp');
+        $sourcesPath = 'webtemp/sources/';
+        $sources = $this->webDir->getPath($basePath . '/' . $sourcesPath);
+        if (!file_exists($sourcesPath)) {
+            mkdir($sourcesPath);
+            $recompile = true;
+        }
+        $files = new WebLoader\FileCollection($sources);
+
+        foreach ($filesToCompile as $file) {
+            if (StringUtils::endsWith($file, '.less')) {
+                try {
+                    $parser = new Less_Parser();
+                    $inputFile = $this->webDir->getPath('') . $file;
+                    $outputFile = $sourcesPath . basename($file, '.less') . '.css';
+                    if ($recompile || DEV_MODE) {
+                        $parser->parseFile($inputFile, $basePath);
+                        $fileContent = $parser->getCss();
+                        file_put_contents($outputFile, $fileContent);
+                    }
+                    $files->addFile($outputFile);
+                } catch (Exception $e) {
+                    $error_message = $e->getMessage();
+                    dump($error_message);
+                }
+            }
+            if (StringUtils::endsWith($file, '.css')) {
+                $files->addFile($this->webDir->getPath('') . $file);
+            }
+        }
+
+        $compiler = WebLoader\Compiler::createCssCompiler($files, $this->webDir->getPath('') . '/webtemp');
 
         $compiler->addFilter(function ($code) {
             return cssmin::minify($code);
         });
 
-        $control = new WebLoader\Nette\CssLoader($compiler, $this->template->basePath. '/webtemp');
+        $control = new WebLoader\Nette\CssLoader($compiler, $basePath . '/webtemp');
         $control->setMedia('screen');
 
         return $control;
