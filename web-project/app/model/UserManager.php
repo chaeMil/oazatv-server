@@ -12,10 +12,17 @@ use Nette,
 class UserManager extends Nette\Object implements Nette\Security\IAuthenticator {
 
     const
-            TABLE_NAME = 'admin_users',
-            COLUMN_ID = 'id',
-            COLUMN_NAME = 'login',
-            COLUMN_PASSWORD_HASH = 'password';
+        TABLE_NAME = 'admin_users',
+        COLUMN_ID = 'id',
+        COLUMN_NAME = 'login',
+        COLUMN_PASSWORD_HASH = 'password';
+
+    const
+        TABLE_NAME_USERS = 'db_users',
+        COLUMN_EMAIL = 'email',
+        COLUMN_FB_ID = 'fb_id',
+        COLUMN_FB_TOKEN = 'fb_token',
+        COLUMN_GPLUS_ID = 'gplus_id';
 
     /** @var Nette\Database\Context */
     public $database;
@@ -121,6 +128,27 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
     
     public function emptyUserTempFolder($userId) {
         \App\FileUtils::recursiveDelete("temp/users/".$userId."/");
+    }
+
+    public function findByFacebookId($fbId) {
+        $user = $this->database->table(self::TABLE_NAME_USERS)
+            ->select('*')
+            ->where(self::COLUMN_FB_ID, $fbId)
+            ->fetch();
+
+        return $user;
+    }
+
+    public function registerFromFacebook($fbId, $me) {
+        return $this->database->table(self::TABLE_NAME_USERS)
+            ->insert(array(self::COLUMN_FB_ID => $fbId,
+                    self::COLUMN_EMAIL => $me['email']));
+    }
+
+    public function updateFacebookAccessToken($fbId, $accessToken) {
+        return $this->database->table(self::TABLE_NAME_USERS)
+            ->where(array(self::COLUMN_FB_ID => $fbId))
+            ->update(array(self::COLUMN_FB_TOKEN => $accessToken));
     }
 
 }

@@ -24,8 +24,8 @@ class ThumbnailGenerator {
     private $videoManager;
     private static $userManager;
 
-    public function __construct(Nette\Database\Context $database, 
-            \Model\VideoManager $videoManager, UserManager $userManager) {
+    public function __construct(Nette\Database\Context $database,
+                                \Model\VideoManager $videoManager, UserManager $userManager) {
         $this::$database = $database;
         $this->videoManager = $videoManager;
         $this::$userManager = $userManager;

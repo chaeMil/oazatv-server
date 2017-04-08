@@ -23,8 +23,8 @@ class BugReportPresenter extends BaseSecuredPresenter {
     private $bugReport;
     private $userManager;
     
-    function __construct(Nette\Database\Context $database, 
-            BugReport $bugReport, UserManager $userManager) {
+    function __construct(Nette\Database\Context $database,
+                         BugReport $bugReport, UserManager $userManager) {
         parent::__construct($database);
         $this->database = $database;
         $this->bugReport = $bugReport;

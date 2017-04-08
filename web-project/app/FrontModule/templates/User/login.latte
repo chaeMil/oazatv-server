@@ -1,0 +1,16 @@
+{block content}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                {if !$user->isLoggedIn()}
+                    <a n:href="fbLogin-open!">Login using facebook</a>
+                {else}
+                    <a n:href=":logout">Logout</a>
+                {/if}
+            </div>
+        </div>
+    </div>
+
+
+{/block}
