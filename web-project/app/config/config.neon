@@ -29,6 +29,7 @@ extensions:
     translation: Kdyby\Translation\DI\TranslationExtension
     webloader: WebLoader\Nette\Extension
     facebook: Kdyby\Facebook\DI\FacebookExtension
+    google: Kdyby\Google\DI\GoogleExtension
 
 facebook:
 	permissions: [public_profile, email] # theese are the default read permissions, you might need to

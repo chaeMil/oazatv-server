@@ -22,7 +22,8 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
         COLUMN_EMAIL = 'email',
         COLUMN_FB_ID = 'fb_id',
         COLUMN_FB_TOKEN = 'fb_token',
-        COLUMN_GPLUS_ID = 'gplus_id';
+        COLUMN_GPLUS_ID = 'gplus_id',
+        COLUMN_GPLUS_TOKEN = 'gplus_token';
 
     /** @var Nette\Database\Context */
     public $database;
@@ -149,6 +150,19 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
         return $this->database->table(self::TABLE_NAME_USERS)
             ->where(array(self::COLUMN_FB_ID => $fbId))
             ->update(array(self::COLUMN_FB_TOKEN => $accessToken));
+    }
+
+    public function findByGoogleId($googleId) {
+        $user = $this->database->table(self::TABLE_NAME_USERS)
+            ->select('*')
+            ->where(self::COLUMN_GPLUS_ID, $googleId)
+            ->fetch();
+
+        return $user;
+    }
+
+    public function registerFromGoogle($googleId, $me) {
+        dump($googleId, $me); exit;
     }
 
 }
