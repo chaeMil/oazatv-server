@@ -9,15 +9,8 @@
 namespace App\FrontModule;
 
 use Kdyby;
-use Model\UserManager;
-use Nette;
-use Nette\DI\Container;
 
 class UserPresenter extends BasePresenter {
-
-    private $google;
-    private $facebook;
-    private $userManager;
 
     /**
      * You can use whatever way to inject the instance from DI Container,
@@ -26,15 +19,6 @@ class UserPresenter extends BasePresenter {
      * Class userManager is here only to show you how the process should work,
      * you have to implement it yourself.
      */
-    public function __construct(Container $container, Nette\Database\Context $database,
-                \Kdyby\Facebook\Facebook $facebook,
-                \Kdyby\Google\Google $google,
-                UserManager $userManager) {
-        parent::__construct($container, $database);
-        $this->facebook = $facebook;
-        $this->google = $google;
-        $this->userManager = $userManager;
-    }
 
     public function renderDefault() {
         if (!$this->getUser()->isLoggedIn()) {

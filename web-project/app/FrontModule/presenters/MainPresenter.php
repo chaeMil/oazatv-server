@@ -2,55 +2,10 @@
 
 namespace App\FrontModule;
 
-use Nette,
-Nette\Database\Context,
-Model\VideoManager,
-Model\PhotosManager,
-Model\AnalyticsManager,
-Model\CategoriesManager,
-Model\FrontPageManager,
-WebLoader\Nette\LoaderFactory;
-
-
 class MainPresenter extends BasePresenter {
     
-    private $videoManager;
-    private $photosManager;
-    private $analyticsManager;
-    private $categoriesManager;
-    private $frontPageManager;
-    private $anyVariable;
-    
-    public function __construct(Nette\DI\Container $container,
-            Context $database, LoaderFactory $webLoader,
-            VideoManager $videoManager,
-            PhotosManager $photosManager,
-            AnalyticsManager $analyticsManager,
-            CategoriesManager $categoriesManager,
-            FrontPageManager $frontPageManager) {
-        
-        parent::__construct($container, $database,$webLoader);
-        $this->videoManager = $videoManager;
-        $this->photosManager = $photosManager;
-        $this->analyticsManager = $analyticsManager;
-        $this->categoriesManager = $categoriesManager;
-        $this->frontPageManager = $frontPageManager;
-    }
-  
-    public function handleChangeVariable() {
-        $this->anyVariable = 'changed value via ajax';
-        if ($this->isAjax()) {
-            $this->redrawControl('ajaxChange');
-        }
-    }
-    
     public function renderDefault() {
-      
-        if ($this->anyVariable === NULL) {
-            $this->anyVariable = 'default value';
-        }
-        $this->template->anyVariable = $this->anyVariable;
-      
+
         //support legacy links
         $params = $this->getHttpRequest()->getQuery();
         if (isset($params['page'])) {

@@ -600,6 +600,47 @@ html,body{
 
 .navbar {
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+
+    .navbar-user-menu {
+        .round {
+            margin-top: 20px;
+            margin-bottom: -8px;
+            display: inline-block;
+            height: 28px;
+            width: 28px;
+            line-height: 30px;
+            -moz-border-radius: 15px;
+            border-radius: 15px;
+            background-color: #FFF;
+            color: @brand-primary;
+            text-align: center;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+
+            &.round-sm {
+                height: 20px;
+                width: 20px;
+                line-height: 20px;
+                -moz-border-radius: 10px;
+                border-radius: 10px;
+                font-size: 0.7em;
+            }
+
+            &.round-lg {
+                height: 28px;
+                width: 28px;
+                line-height: 38px;
+                -moz-border-radius: 20px;
+                border-radius: 20px;
+                font-size: 1.37em;
+            }
+
+        }
+    }
 }
 
 .navbar-brand {
@@ -872,4 +913,53 @@ html,body{
 .card-5 {
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
     border: 0;
+}
+
+.login-box {
+    max-width: 380px;
+    margin: 0 auto;
+    background: #FFF;
+    padding: 25px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    border-radius: 3px;
+
+    .form-control {
+        background-color: lighten(@brand-primary, 20);
+        color: #FFF;
+    }
+
+    .login-or {
+        position: relative;
+        font-size: 18px;
+        color: #aaa;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .span-or {
+        display: block;
+        position: absolute;
+        left: 50%;
+        top: -2px;
+        margin-left: -25px;
+        background-color: #fff;
+        width: 50px;
+        text-align: center;
+    }
+
+    .hr-or {
+        background-color: #cdcdcd;
+        height: 1px;
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+    }
+
+    h3 {
+        margin-top: -15px;
+        text-align: center;
+        line-height: 300%;
+    }
 }

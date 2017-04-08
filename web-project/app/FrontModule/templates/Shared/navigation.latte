@@ -8,40 +8,29 @@
                 <span class="text hidden-xs hidden-sm">Oáza.tv</span>
             </a>
 
-
         </div>
 
         <div class="pull-right navbar-user-menu">
-
-            <a class="btn btn-primary btn-archive"
-                   n:href="Archive:Default">
-                    {_frontend.basic.archive|translate}
-            </a>
-
-            <a class="btn btn-primary btn-archive"
-               n:href="Songbook:all">
-                {_frontend.basic.songbook|translate}
-            </a>
-
-            <a class="btn btn-primary btn-archive"
-                    n:href="LiveStream:Default">
-                {_frontend.basic.livestream|translate}
-            </a>
-
-            {if $user->isLoggedIn()}
-                <a class="dropdown-toggle"
-                   type="button" data-toggle="dropdown">
-                    <i class="fa fa-user"></i>
-                    <span class="caret"></span></a>
-                <ul class="dropdown-menu pull-right">
-                    <li><a href="#">Profile</a></li>
-                    <li><a href="#">Settings</a></li>
-                    <li><a href="#">Logout</a></li>
-                </ul>
-            {else}
-                <a type="button" class="btn btn-primary btn-archive" href="#">
-                    <i class="fa fa-user"></i>
+            {if !$user->isLoggedIn()}
+                <a n:href="User:">
+                    <div class="round round-lg">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </div>
                 </a>
+            {else}
+                <a n:href="User:">
+                    <div class="round round-lg">
+                        {ifset $frontUser['fromFB']}
+                            <img src="http://graph.facebook.com/{$frontUser['fromFB']['id']}/picture?type=square&width=150&height=150" alt="">
+                        {/ifset}
+                    </div>
+                </a>
+                <div class="my-oaza">
+                    {ifset $frontUser['fromFB']}
+                        <span class="name">{$frontUser['fromFB']['first_name']}</span>
+                    {/ifset}
+                    <span>{_frontend.basic.myoaza}</span>
+                </div>
             {/if}
         </div>
 
@@ -61,10 +50,27 @@
                     </ul>
 
                     <div class="input-group-btn">
-                        <button class="btn btn-default" type="submit">
+                        <a class="btn btn-default" type="submit">
                             <i class="fa fa-search"></i>
-                        </button>
+                        </a>
                     </div>
+                </div>
+
+                <div class="btn-group">
+                    <a class="btn btn-primary btn-archive"
+                            n:href="Archive:Default">
+                        {_frontend.basic.archive|translate}
+                    </a>
+
+                    <a class="btn btn-primary btn-archive"
+                            n:href="Songbook:all">
+                        {_frontend.basic.songbook|translate}
+                    </a>
+
+                    <a class="btn btn-primary btn-archive"
+                            n:href="LiveStream:Default">
+                        {_frontend.basic.livestream|translate}
+                    </a>
                 </div>
             </form>
         </div>

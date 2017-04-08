@@ -8,6 +8,7 @@
 
 namespace App\FrontModule;
 
+use Model\UserManager;
 use Nette,
 Nette\Database\Context,
 Model\SongsManager,
@@ -20,20 +21,6 @@ Model\CategoriesManager;
  * @author Michal Mlejnek <chaemil72 at gmail.com>
  */
 class SongbookPresenter extends BasePresenter {
-
-    private $songsManager;
-    private $videoManager;
-    private $categoriesManager;
-
-    public function __construct(Nette\DI\Container $container,
-            Context $database, SongsManager $songsManager, 
-            VideoManager $videoManager, 
-            CategoriesManager $categoriesManager) {
-        parent::__construct($container, $database);
-        $this->songsManager = $songsManager;
-        $this->videoManager = $videoManager;
-        $this->categoriesManager = $categoriesManager;
-    }
 
     public function renderView($id) {
         $tag = $id; //id only in router, actualy its tag

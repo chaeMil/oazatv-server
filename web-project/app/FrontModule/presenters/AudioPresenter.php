@@ -8,6 +8,7 @@
 
 namespace App\FrontModule;
 
+use Model\UserManager;
 use Nette,
 Nette\Database\Context,
 Model\VideoManager,
@@ -22,27 +23,6 @@ Model\CategoriesManager;
  * @author Michal Mlejnek <chaemil72 at gmail.com>
  */
 class AudioPresenter extends BasePresenter {
-
-    private $videoManager;
-    private $analyticsManager;
-    private $songsManager;
-    private $preachersManager;
-    private $categoriesManager;
-
-    public function __construct(Nette\DI\Container $container,
-            Context $database, VideoManager $videoManager,
-            AnalyticsManager $analyticsManager, SongsManager $songsManager,
-            PreachersManager $preachersManager,
-            CategoriesManager $categoriesManager) {
-
-        parent::__construct($container, $database);
-
-        $this->videoManager = $videoManager;
-        $this->analyticsManager = $analyticsManager;
-        $this->songsManager = $songsManager;
-        $this->preachersManager = $preachersManager;
-        $this->categoriesManager = $categoriesManager;
-    }
     
     public function renderListen($id, $searched) {
         

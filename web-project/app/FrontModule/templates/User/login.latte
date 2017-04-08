@@ -3,12 +3,41 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                {if !$user->isLoggedIn()}
-                    <a n:href="fbLogin-open!">Login using facebook</a>
-                    {*<a n:href="googleLogin-open!">Login using google</a>*}
-                {else}
-                    <a n:href=":logout">Logout</a>
-                {/if}
+
+                <div class="login-box card-3">
+
+                    <h3>Please Log In, or <a href="#">Sign Up</a></h3>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <a n:href="fbLogin-open!"
+                                class="btn btn-lg btn-primary btn-block">Facebook</a>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <a href="#"
+                               class="btn btn-lg btn-info btn-block">Google</a>
+                        </div>
+                    </div>
+                    <div class="login-or">
+                        <hr class="hr-or">
+                        <span class="span-or">or</span>
+                    </div>
+
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="inputUsernameEmail">Username or email</label>
+                            <input type="text" class="form-control" id="inputUsernameEmail">
+                        </div>
+                        <div class="form-group">
+                            <a class="pull-right" href="#">Forgot password?</a>
+                            <label for="inputPassword">Password</label>
+                            <input type="password" class="form-control" id="inputPassword">
+                        </div>
+                        <button type="submit" class="btn btn btn-primary">
+                            Log In
+                        </button>
+                    </form>
+
+                </div>
             </div>
         </div>
     </div>

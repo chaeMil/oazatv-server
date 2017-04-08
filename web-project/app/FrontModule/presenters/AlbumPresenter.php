@@ -9,6 +9,7 @@
 namespace App\FrontModule;
 
 use Model\PrivateLinksManager;
+use Model\UserManager;
 use Nette,
 Nette\Database\Context,
 Model\PhotosManager,
@@ -21,22 +22,6 @@ Model\CategoriesManager;
  * @author Michal Mlejnek <chaemil72 at gmail.com>
  */
 class AlbumPresenter extends BasePresenter {
-
-    private $photosManager;
-    private $tagsManager;
-    private $categoriesManager;
-    private $privateLinksManager;
-
-    public function __construct(Nette\DI\Container $container,
-            Context $database, PhotosManager $photosManager, TagsManager $tagsManager,
-            CategoriesManager $categoriesManager,
-            PrivateLinksManager $privateLinksManager) {
-        parent::__construct($container, $database);
-        $this->photosManager = $photosManager;
-        $this->tagsManager = $tagsManager;
-        $this->categoriesManager = $categoriesManager;
-        $this->privateLinksManager = $privateLinksManager;
-    }
 
     public function createComponentPrivateLinkForm() {
         $form = new Nette\Application\UI\Form;

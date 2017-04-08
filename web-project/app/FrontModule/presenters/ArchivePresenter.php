@@ -3,6 +3,7 @@
 namespace App\FrontModule;
 
 use Model\PhotosManager;
+use Model\UserManager;
 use Nette,
 Nette\Database\Context,
 Model\ArchiveManager,
@@ -12,29 +13,6 @@ Model\ArchiveMenuManager;
 
 
 class ArchivePresenter extends BasePresenter {
-    
-    private $archiveManager;
-    private $categoriesManager;
-    private $videoManager;
-    private $photosManager;
-    private $archiveMenuManager;
-    public $lang;
-    public $container;
-
-    public function __construct(Nette\DI\Container $container,
-            Context $database, ArchiveManager $archiveManager,
-            CategoriesManager $categoriesManager,
-            VideoManager $videoManager,
-            PhotosManager $photosManager,
-            ArchiveMenuManager $archiveMenuManager) {
-        
-        parent::__construct($container, $database);
-        $this->archiveManager = $archiveManager;
-        $this->categoriesManager = $categoriesManager;
-        $this->videoManager = $videoManager;
-        $this->photosManager = $photosManager;
-        $this->archiveMenuManager = $archiveMenuManager;
-    }
     
     public function renderDefault() {
         $this->redirect('Archive:Page');

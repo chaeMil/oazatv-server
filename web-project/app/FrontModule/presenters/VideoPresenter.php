@@ -10,6 +10,7 @@ namespace App\FrontModule;
 
 use Model\PrivateLinksManager;
 use Model\TagsManager;
+use Model\UserManager;
 use Nette,
 Nette\Database\Context,
 Model\VideoManager,
@@ -24,33 +25,6 @@ Model\CategoriesManager;
  * @author Michal Mlejnek <chaemil72 at gmail.com>
  */
 class VideoPresenter extends BasePresenter {
-
-    private $videoManager;
-    private $analyticsManager;
-    private $songsManager;
-    private $preachersManager;
-    private $categoriesManager;
-    private $privateLinksManager;
-    private $tagsManager;
-
-    public function __construct(Nette\DI\Container $container,
-            Context $database, VideoManager $videoManager,
-            AnalyticsManager $analyticsManager, SongsManager $songsManager,
-            PreachersManager $preachersManager,
-            CategoriesManager $categoriesManager,
-            PrivateLinksManager $privateLinksManager,
-            TagsManager $tagsManager) {
-
-        parent::__construct($container, $database);
-
-        $this->videoManager = $videoManager;
-        $this->analyticsManager = $analyticsManager;
-        $this->songsManager = $songsManager;
-        $this->preachersManager = $preachersManager;
-        $this->categoriesManager = $categoriesManager;
-        $this->privateLinksManager = $privateLinksManager;
-        $this->tagsManager = $tagsManager;
-    }
     
     private function countView($id, $hash) {
         $httpResponse = $this->container->getByType('Nette\Http\Response');

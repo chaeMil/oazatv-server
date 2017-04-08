@@ -2,14 +2,27 @@
 
 namespace App\FrontModule;
 
+use App\AdminModule\ArchiveMenuPresenter;
 use App\StringUtils;
 use Exception;
 use Less_Parser;
+use Model\AnalyticsManager;
+use Model\ArchiveManager;
+use Model\ArchiveMenuManager;
+use Model\CategoriesManager;
+use Model\FrontPageManager;
+use Model\LiveStreamManager;
+use Model\PhotosManager;
+use Model\PreachersManager;
+use Model\SongsManager;
+use Model\UserManager;
+use Model\VideoManager;
 use Nette,
 App\Services\WebDir,
 CssMin,
 WebLoader,
 Mexitek\PHPColors\Color;
+use WebLoader\Nette\LoaderFactory;
 
 
 /**
@@ -20,8 +33,21 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
     public $database;
     public $lang;
     public $container;
-    private $webDir;
-    private $neonAdapter;
+    public $userManager;
+    public $videoManager;
+    public $photosManager;
+    public $analyticsManager;
+    public $categoriesManager;
+    public $frontPageManager;
+    public $liveStreamManager;
+    public $songsManager;
+    public $preachersManager;
+    public $archiveManager;
+    public $archiveMenuManager;
+    public $webDir;
+    public $neonAdapter;
+    public $facebook;
+    public $google;
     
     /** @persistent */
     public $locale;
@@ -30,10 +56,37 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
     public $translator;
     
     public function __construct(Nette\DI\Container $container, 
-            Nette\Database\Context $database) {
+            Nette\Database\Context $database, UserManager $userManager,
+            \Kdyby\Facebook\Facebook $facebook,
+            \Kdyby\Google\Google $google,
+            LoaderFactory $webLoader,
+            LiveStreamManager $liveStreamManager,
+            VideoManager $videoManager,
+            SongsManager $songsManager,
+            PhotosManager $photosManager,
+            AnalyticsManager $analyticsManager,
+            CategoriesManager $categoriesManager,
+            FrontPageManager $frontPageManager,
+            PreachersManager $preachersManager,
+            ArchiveManager $archiveManager,
+            ArchiveMenuManager $archiveMenuManager) {
+
         parent::__construct();
         $this->database = $database;
         $this->container = $container;
+        $this->userManager = $userManager;
+        $this->facebook = $facebook;
+        $this->google = $google;
+        $this->videoManager = $videoManager;
+        $this->photosManager = $photosManager;
+        $this->analyticsManager = $analyticsManager;
+        $this->categoriesManager = $categoriesManager;
+        $this->frontPageManager = $frontPageManager;
+        $this->liveStreamManager = $liveStreamManager;
+        $this->songsManager = $songsManager;
+        $this->archiveManager = $archiveManager;
+        $this->preachersManager = $preachersManager;
+        $this->archiveMenuManager = $archiveMenuManager;
         $this->neonAdapter = new Nette\DI\Config\Adapters\NeonAdapter();
         
     }
@@ -46,6 +99,23 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         $this->registerCustomHelpers($this->template);
       
         $this->template->isCrOS = $this->detectChromeOS();
+
+        if ($this->getUser()->isLoggedIn()) {
+            $user = $this->getUser();
+            $userFromDB = $this->userManager->getFrontUserFromDB($user->id);
+            $userFromFbAPI = $this->facebook->api('/me/',
+                null,
+                array("access_token" => $userFromDB[UserManager::COLUMN_FB_TOKEN],
+                    'fields' => ['id',
+                        'first_name',
+                        'last_name',
+                        'picture',
+                        'email']));
+            $fronUser = [];
+            $frontUser['fromFB'] = $userFromFbAPI;
+            $frontUser['fromDB'] = $userFromDB;
+            $this->template->frontUser = $frontUser;
+        }
         
     }
     

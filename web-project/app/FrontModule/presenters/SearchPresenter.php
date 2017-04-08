@@ -2,26 +2,13 @@
 
 namespace App\FrontModule;
 
+use Model\UserManager;
 use Nette,
 Nette\Database\Context,
 Model\SearchManager,
 Model\CategoriesManager;
 
 class SearchPresenter extends BasePresenter {
-    
-    public $lang;
-    public $container;
-    public $searchManager;
-    private $categoriesManager;
-    
-    public function __construct(Nette\DI\Container $container,
-            Context $database, SearchManager $searchManager,
-            CategoriesManager $categoriesManager) {
-        
-        parent::__construct($container, $database);
-        $this->searchManager = $searchManager;
-        $this->categoriesManager = $categoriesManager;
-    }
     
     public function renderDefault($page = 0, $q = '') {
         

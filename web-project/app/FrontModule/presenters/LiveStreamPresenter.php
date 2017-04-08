@@ -2,6 +2,7 @@
 
 namespace App\FrontModule;
 
+use Model\UserManager;
 use Nette,
  Nette\Application\Responses\JsonResponse,
  Model\LiveStreamManager;
@@ -11,19 +12,6 @@ use Nette,
  * @author Michal Mlejnek <chaemil72@gmail.com>
  */
 class LiveStreamPresenter extends BasePresenter {
-    
-    public $database;
-    public $container;
-    public $liveStreamManager;
-
-    function __construct(Nette\DI\Container $container,
-            Nette\Database\Context $database, 
-            LiveStreamManager $liveStreamManager) {
-        
-        parent::__construct($container, $database);
-        
-        $this->liveStreamManager = $liveStreamManager;
-    }
 
     public function renderDefault() {
         $values = $this->liveStreamManager->loadValues();

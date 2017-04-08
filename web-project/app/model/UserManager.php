@@ -112,6 +112,13 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
                 ->fetch();
     }
 
+    public function getFrontUserFromDB($userId) {
+        return $this->database->table(self::TABLE_NAME_USERS)
+            ->select('*')
+            ->where(self::COLUMN_ID, $userId)
+            ->fetch();
+    }
+
     /**
      * Fixes caps lock accidentally turned on.
      * @return string
