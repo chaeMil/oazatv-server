@@ -1,0 +1,48 @@
+{block content}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-3 col-md-10 col-md-offset-1">
+
+                <div class="card-3 user-settings">
+                    {ifset $frontUser['fromFB']}
+                        <img src="http://graph.facebook.com/{$frontUser['fromFB']['id']}/picture?type=square&width=500&height=500"
+                         alt="" class="user-avatar center-block img-responsive img-circle">
+                    {/ifset}
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <p class="lead text-center">
+                                {ifset $frontUser['fromFB']}
+                                    {$frontUser['fromFB']['first_name']} {$frontUser['fromFB']['last_name']}
+                                    <br>
+                                {/ifset}
+                                {ifset $frontUser['fromDB']['email']}
+                                    <small>
+                                        <b>
+                                            {$frontUser['fromDB']['email']}
+                                        </b>
+                                    </small>
+                                    <br>
+                                {/ifset}
+                                <small>
+                                    {_frontend.basic.registered_since}: {$frontUser['fromDB']['registered_since']|date}
+                                </small>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 text-center">
+                            <a n:href="logout" class="btn btn-primary">
+                                {_frontend.basic.logout}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{/block}

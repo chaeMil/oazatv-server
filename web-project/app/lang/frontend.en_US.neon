@@ -25,6 +25,8 @@ basic:
     videos_with_subtitles: "Videos with subtitles"
     photo_albums: "Photo albums"
     myoaza: "myOáza"
+    registered_since: "registered since"
+    logout: "Logout"
 search:
     more: "more results"
 homepage:

@@ -24,13 +24,13 @@
                             <img src="http://graph.facebook.com/{$frontUser['fromFB']['id']}/picture?type=square&width=150&height=150" alt="">
                         {/ifset}
                     </div>
+                    <div class="my-oaza">
+                        {ifset $frontUser['fromFB']}
+                            <span class="name">{$frontUser['fromFB']['first_name']}</span>
+                        {/ifset}
+                        <span>{_frontend.basic.myoaza}</span>
+                    </div>
                 </a>
-                <div class="my-oaza">
-                    {ifset $frontUser['fromFB']}
-                        <span class="name">{$frontUser['fromFB']['first_name']}</span>
-                    {/ifset}
-                    <span>{_frontend.basic.myoaza}</span>
-                </div>
             {/if}
         </div>
 

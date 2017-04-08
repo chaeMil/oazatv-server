@@ -25,6 +25,8 @@ basic:
     videos_with_subtitles: "Videa s titulky"
     photo_albums: "Fotoalba"
     myoaza: "mojeOáza"
+    registered_since: "registrován(a)"
+    logout: "Odhlásit se"
 search:
     more: "další výsledky"
 homepage:

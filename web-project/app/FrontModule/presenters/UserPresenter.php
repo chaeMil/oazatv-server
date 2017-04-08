@@ -106,7 +106,7 @@ class UserPresenter extends BasePresenter {
                 $this->flashMessage("Sorry bro, facebook authentication failed hard.");
             }
 
-            $this->redirect('this');
+            $this->redirect('User:default');
         };
 
         return $dialog;
@@ -170,7 +170,7 @@ class UserPresenter extends BasePresenter {
                 $this->flashMessage("Sorry bro, google authentication failed hard.");
             }
 
-            $this->redirect('this');
+            $this->redirect('User:default');
         };
 
         return $dialog;
