@@ -42,7 +42,7 @@ class SignPresenter extends BasePresenter {
                 ->setAttribute("class", "btn-lg btn-success btn-block");
 
         // call method signInFormSucceeded() on success
-        $form->onSuccess[] = $this->signInFormSucceeded;
+        $form->onSuccess[] = [$this, 'signInFormSucceeded'];
 
         // setup Bootstrap form rendering
         $this->bootstrapFormRendering($form);
