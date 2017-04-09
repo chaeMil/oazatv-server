@@ -186,7 +186,7 @@ class UserPresenter extends BasePresenter {
     protected function createComponentSignInForm() {
         $form = new Nette\Application\UI\Form;
         $form->addText('email')
-            ->setRequired('Please enter your username.')
+            ->setRequired('Please enter your email.')
             ->setAttribute("placeholder", $this->translator->translate("frontend.basic.email"))
             ->setAttribute("class", "form-control");
 
@@ -224,5 +224,28 @@ class UserPresenter extends BasePresenter {
         }
     }
 
+    public function createComponentRegister() {
+        $form = new Nette\Application\UI\Form;
+        $form->addText('email')
+            ->setRequired('Please enter your username.')
+            ->setAttribute("placeholder", $this->translator->translate("frontend.basic.email"))
+            ->setAttribute("class", "form-control");
 
+        $form->addPassword('password')
+            ->setRequired('Please enter your password.')
+            ->setAttribute("placeholder", $this->translator->translate("frontend.basic.password"))
+            ->setAttribute("class", "form-control");
+
+        $form->addSubmit('send',
+            $this->translator->translate('frontend.basic.register'))
+            ->setAttribute("class", "btn-lg btn-success btn-block");
+
+        // call method signInFormSucceeded() on success
+        $form->onSuccess[] = [$this, 'registerSucceeded'];
+
+        // setup Bootstrap form rendering
+        //$this->bootstrapFormRendering($form);
+
+        return $form;
+    }
 }
