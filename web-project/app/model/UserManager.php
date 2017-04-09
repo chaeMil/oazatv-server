@@ -37,27 +37,37 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
      * @return Nette\Security\Identity
      * @throws Nette\Security\AuthenticationException
      */
-    public function authenticate(array $credentials) {
+    public function authenticate(array $credentials, $frontend = false) {
         list($username, $password) = $credentials;
         $password = self::removeCapsLock($password);
-        $row = $this->database->table(self::TABLE_NAME)->where(self::COLUMN_NAME, $username)->fetch();
+
+        if ($frontend) {
+            $tableName = self::TABLE_NAME_USERS;
+            $role = "user";
+        } else {
+            $tableName = self::TABLE_NAME;
+            $role = "administrator";
+        }
+
+        $row = $this->database
+            ->table($tableName)
+            ->where(self::COLUMN_NAME, $username)
+            ->fetch();
 
         if (!$row) {
-            throw new Nette\Security\AuthenticationException('Nesprávný login nebo heslo.', self::IDENTITY_NOT_FOUND);
+            throw new Nette\Security\AuthenticationException($this->translator->translate('frontend.message.login_error'), self::IDENTITY_NOT_FOUND);
         } elseif (!Passwords::verify($password, $row[self::COLUMN_PASSWORD_HASH])) {
-            throw new Nette\Security\AuthenticationException('Nesprávný login nebo heslo.', self::INVALID_CREDENTIAL);
+            throw new Nette\Security\AuthenticationException($this->translator->translate('frontend.message.login_error'), self::INVALID_CREDENTIAL);
         } elseif (Passwords::needsRehash($row[self::COLUMN_PASSWORD_HASH])) {
             $row->update(array(
                 self::COLUMN_PASSWORD_HASH => Passwords::hash($password),
             ));
         }
 
-        //$roles = $this->database->table('role')->where('user_id', $row['id'])->fetch()->toArray();
-
         $arr = $row->toArray();
         unset($arr[self::COLUMN_PASSWORD_HASH]);
 
-        return new Nette\Security\Identity($row[self::COLUMN_ID], 'administrator', $arr);
+        return new Nette\Security\Identity($row[self::COLUMN_ID], $role, $arr);
     }
 
     /**
@@ -66,11 +76,19 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
      * @param  string
      * @return void
      */
-    public function add($username, $password) {
+    public function add($username, $password, $frontend = false) {
+
+        if ($frontend) {
+            $tableName = self::TABLE_NAME_USERS;
+        } else {
+            $tableName = self::TABLE_NAME;
+        }
+
         if ($this->checkIfUserExists($username) == 0) {
-            $this->database->table(self::TABLE_NAME)->insert(array(
-                self::COLUMN_NAME => $username,
-                self::COLUMN_PASSWORD_HASH => Passwords::hash(self::removeCapsLock($password)),
+            $this->database->table($tableName)
+                ->insert(array(
+                    self::COLUMN_NAME => $username,
+                    self::COLUMN_PASSWORD_HASH => Passwords::hash(self::removeCapsLock($password)),
             ));
             return true;
         } else {
@@ -79,17 +97,31 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
         
     }
     
-    private function checkIfUserExists($username) {
-        return $this->database->table(self::TABLE_NAME)
-                ->where(self::COLUMN_NAME, $username)->count();
+    private function checkIfUserExists($username, $frontend = false) {
+        return $this->database
+            ->table(self::TABLE_NAME)
+            ->where(self::COLUMN_NAME, $username)
+            ->count();
     }
     
-    public function delete($user_id) {
-        $user = $this->database->table(self::TABLE_NAME)->where(self::COLUMN_ID, $user_id);
-        $user_avatar = ADMIN_UPLOADED_DIR."/avatars/".$user_id.".jpg";
-        if(file_exists($user_avatar)) {
-            unlink($user_avatar);
+    public function delete($userId, $frontend = false) {
+        if ($frontend) {
+            $tableName = self::TABLE_NAME_USERS;
+        } else {
+            $tableName = self::TABLE_NAME;
         }
+
+        $user = $this->database
+            ->table($tableName)
+            ->where(self::COLUMN_ID, $userId);
+
+        if (!$frontend) {
+            $user_avatar = ADMIN_UPLOADED_DIR . "/avatars/" . $userId . ".jpg";
+            if (file_exists($user_avatar)) {
+                unlink($user_avatar);
+            }
+        }
+
         $user->delete();
     }
 
@@ -99,16 +131,25 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
      * @param  string
      * @return void
      */
-    public function update($user_id, $password) {
-        $this->database->table(self::TABLE_NAME)->where(self::COLUMN_ID, $user_id)->update(array(
-            self::COLUMN_PASSWORD_HASH => Passwords::hash(self::removeCapsLock($password)),
+    public function update($userId, $password, $frontend = false) {
+        if ($frontend) {
+            $tableName = self::TABLE_NAME_USERS;
+        } else {
+            $tableName = self::TABLE_NAME;
+        }
+
+        $this->database
+            ->table($tableName)
+            ->where(self::COLUMN_ID, $userId)
+            ->update(array(
+                self::COLUMN_PASSWORD_HASH => Passwords::hash(self::removeCapsLock($password)),
         ));
     }
 
-    public function getUserFromDB($user_id) {
+    public function getUserFromDB($userId) {
         return $this->database->table(self::TABLE_NAME)
                 ->select('*')
-                ->where(self::COLUMN_ID, $user_id)
+                ->where(self::COLUMN_ID, $userId)
                 ->fetch();
     }
 

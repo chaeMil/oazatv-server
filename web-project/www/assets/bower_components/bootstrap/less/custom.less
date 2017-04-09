@@ -946,17 +946,28 @@ html,body{
     margin-bottom: 40px;
     border-radius: 3px;
 
-    .form-control {
-        background-color: lighten(@brand-primary, 20);
-        color: #FFF;
+    table {
+        width: 100%;
+
+        .form-control {
+            background-color: lighten(@brand-primary, 20);
+            color: #FFF;
+            width: 100%;
+            margin-bottom: 18px;
+
+            &::placeholder {
+                color: lighten(@brand-primary, 30);
+            }
+        }
     }
+
 
     .login-or {
         position: relative;
         font-size: 18px;
         color: #aaa;
-        margin-top: 10px;
-        margin-bottom: 10px;
+        margin-top: 20px;
+        margin-bottom: 20px;
         padding-top: 10px;
         padding-bottom: 10px;
     }
@@ -965,7 +976,7 @@ html,body{
         display: block;
         position: absolute;
         left: 50%;
-        top: -2px;
+        top: -7px;
         margin-left: -25px;
         background-color: #fff;
         width: 50px;
@@ -980,9 +991,10 @@ html,body{
     }
 
     h3 {
-        margin-top: -15px;
+        margin-top: 15px;
         text-align: center;
-        line-height: 300%;
+        line-height: 1.3;
+        margin-bottom: 50px;
     }
 }
 

@@ -1,5 +1,8 @@
 basic:
     login: "Log in"
+    register: "Sign up"
+    email: "Email"
+    password: "Password"
     search: "Search"
     archive: "Archive"
     views: "views"
@@ -27,6 +30,11 @@ basic:
     myoaza: "myOáza"
     registered_since: "registered since"
     logout: "Logout"
+    or: "or"
+message:
+    login_error: "Wrong combination of login and password"
+label:
+    login: "Please sign in or sign up"
 search:
     more: "more results"
 homepage:

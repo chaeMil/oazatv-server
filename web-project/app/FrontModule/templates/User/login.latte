@@ -6,7 +6,7 @@
 
                 <div class="login-box card-3">
 
-                    <h3>Please Log In, or <a href="#">Sign Up</a></h3>
+                    <h3>{_frontend.label.login}</h3>
                     <div class="row">
                         <div class="col-xs-6 col-sm-6 col-md-6">
                             <a n:href="fbLogin-open!"
@@ -19,23 +19,14 @@
                     </div>
                     <div class="login-or">
                         <hr class="hr-or">
-                        <span class="span-or">or</span>
+                        <span class="span-or">
+                           {_frontend.basic.or}
+                        </span>
                     </div>
 
-                    <form role="form">
-                        <div class="form-group">
-                            <label for="inputUsernameEmail">Username or email</label>
-                            <input type="text" class="form-control" id="inputUsernameEmail">
-                        </div>
-                        <div class="form-group">
-                            <a class="pull-right" href="#">Forgot password?</a>
-                            <label for="inputPassword">Password</label>
-                            <input type="password" class="form-control" id="inputPassword">
-                        </div>
-                        <button type="submit" class="btn btn btn-primary">
-                            Log In
-                        </button>
-                    </form>
+                    {control signInForm}
+
+                    <a n:href="register">{_frontend.basic.register}</a>
 
                 </div>
             </div>

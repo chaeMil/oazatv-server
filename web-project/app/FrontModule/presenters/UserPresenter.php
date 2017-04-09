@@ -8,6 +8,9 @@
 
 namespace App\FrontModule;
 
+use Model\UserManager;
+use Nette;
+use App\EventLogger;
 use Kdyby;
 
 class UserPresenter extends BasePresenter {
@@ -28,6 +31,10 @@ class UserPresenter extends BasePresenter {
 
     public function renderLogin() {
         $this->template->user = $this->getUser();
+    }
+
+    public function renderRegister() {
+
     }
 
     public function actionLogout() {
@@ -175,5 +182,47 @@ class UserPresenter extends BasePresenter {
 
         return $dialog;
     }
+
+    protected function createComponentSignInForm() {
+        $form = new Nette\Application\UI\Form;
+        $form->addText('email')
+            ->setRequired('Please enter your username.')
+            ->setAttribute("placeholder", $this->translator->translate("frontend.basic.email"))
+            ->setAttribute("class", "form-control");
+
+        $form->addPassword('password')
+            ->setRequired('Please enter your password.')
+            ->setAttribute("placeholder", $this->translator->translate("frontend.basic.password"))
+            ->setAttribute("class", "form-control");
+
+        $form->addSubmit('send',
+                $this->translator->translate('frontend.basic.login'))
+            ->setAttribute("class", "btn-lg btn-success btn-block");
+
+        // call method signInFormSucceeded() on success
+        $form->onSuccess[] = [$this, 'signInFormSucceeded'];
+
+        // setup Bootstrap form rendering
+        //$this->bootstrapFormRendering($form);
+
+        return $form;
+    }
+
+    public function signInFormSucceeded($form) {
+        $values = $form->getValues();
+
+        $this->getUser()->setExpiration('20 minutes', TRUE);
+
+        try {
+
+            $this->getUser()->getStorage()->setNamespace('front');
+            $this->getUser()->login($values->email, $values->password);
+
+            $this->redirect('User:default:');
+        } catch (Nette\Security\AuthenticationException $e) {
+            $form->addError($e->getMessage());
+        }
+    }
+
 
 }

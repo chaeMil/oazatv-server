@@ -1,5 +1,8 @@
 basic:
     login: "Přihlásit se"
+    register: "Zaregistrovat se"
+    email: "Email"
+    password: "Heslo"
     search: "Vyhledávání"
     archive: "Archiv"
     views: "zhlédnutí"
@@ -27,6 +30,11 @@ basic:
     myoaza: "mojeOáza"
     registered_since: "registrován(a)"
     logout: "Odhlásit se"
+    or: "nebo"
+message:
+    login_error: "Nesprávná kombinace loginu a hesla"
+label:
+    login: "Prosím přihlaste se nebo zaregistrujte"
 search:
     more: "další výsledky"
 homepage:
