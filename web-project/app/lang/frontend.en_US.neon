@@ -33,6 +33,7 @@ basic:
     or: "or"
 message:
     login_error: "Wrong combination of login and password"
+    email_already_taken: "Email already taken"
 label:
     login: "Please sign in or sign up"
 search:

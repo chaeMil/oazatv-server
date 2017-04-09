@@ -70,27 +70,22 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
         return new Nette\Security\Identity($row[self::COLUMN_ID], $role, $arr);
     }
 
-    /**
-     * Adds new user.
-     * @param  string
-     * @param  string
-     * @return void
-     */
     public function add($username, $password, $frontend = false) {
 
         if ($frontend) {
             $tableName = self::TABLE_NAME_USERS;
+            $login = self::COLUMN_EMAIL;
         } else {
             $tableName = self::TABLE_NAME;
+            $login = self::COLUMN_NAME;
         }
 
-        if ($this->checkIfUserExists($username) == 0) {
-            $this->database->table($tableName)
+        if ($this->checkIfUserExists($username, $frontend) == 0) {
+            return $this->database->table($tableName)
                 ->insert(array(
-                    self::COLUMN_NAME => $username,
+                    $login => $username,
                     self::COLUMN_PASSWORD_HASH => Passwords::hash(self::removeCapsLock($password)),
             ));
-            return true;
         } else {
             return false;
         }
@@ -98,9 +93,18 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
     }
     
     private function checkIfUserExists($username, $frontend = false) {
+
+        if ($frontend) {
+            $tableName = self::TABLE_NAME_USERS;
+            $login = self::COLUMN_EMAIL;
+        } else {
+            $tableName = self::TABLE_NAME;
+            $login = self::COLUMN_NAME;
+        }
+
         return $this->database
-            ->table(self::TABLE_NAME)
-            ->where(self::COLUMN_NAME, $username)
+            ->table($tableName)
+            ->where($login, $username)
             ->count();
     }
     

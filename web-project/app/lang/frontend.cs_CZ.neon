@@ -33,6 +33,7 @@ basic:
     or: "nebo"
 message:
     login_error: "Nesprávná kombinace loginu a hesla"
+    email_already_taken: "Email je již zaregistrovaný"
 label:
     login: "Prosím přihlaste se nebo zaregistrujte"
 search:

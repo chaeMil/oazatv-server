@@ -214,10 +214,8 @@ class UserPresenter extends BasePresenter {
         $this->getUser()->setExpiration('20 minutes', TRUE);
 
         try {
-
             $this->getUser()->getStorage()->setNamespace('front');
             $this->getUser()->login($values->email, $values->password);
-
             $this->redirect('User:default:');
         } catch (Nette\Security\AuthenticationException $e) {
             $form->addError($e->getMessage());
@@ -226,8 +224,8 @@ class UserPresenter extends BasePresenter {
 
     public function createComponentRegister() {
         $form = new Nette\Application\UI\Form;
-        $form->addText('email')
-            ->setRequired('Please enter your username.')
+        $form->addEmail('email')
+            ->setRequired('Please enter your email.')
             ->setAttribute("placeholder", $this->translator->translate("frontend.basic.email"))
             ->setAttribute("class", "form-control");
 
@@ -247,5 +245,27 @@ class UserPresenter extends BasePresenter {
         //$this->bootstrapFormRendering($form);
 
         return $form;
+    }
+
+    public function registerSucceeded($form) {
+        $values = $form->getValues();
+
+        $status = $this->userManager->add($values->email, $values->password, true);
+
+        if ($status) {
+
+            $this->getUser()->setExpiration('3 days', TRUE);
+
+            try {
+                $this->getUser()->getStorage()->setNamespace('front');
+                $this->getUser()->login($values->email, $values->password);
+                $this->redirect('User:default:');
+            } catch (Nette\Security\AuthenticationException $e) {
+                $form->addError($e->getMessage());
+            }
+        } else {
+            $this->flashMessage($this->translator->translate("frontend.message.email_already_taken"), "danger");
+        }
+
     }
 }
