@@ -8,6 +8,7 @@
 
 namespace App\ApiModule;
 
+use Model\VideoManager;
 use Nette,
  Model\AnalyticsManager;
 
@@ -73,6 +74,32 @@ class VideoPresenter extends BasePresenter {
                 Nette\Http\Response::S404_NOT_FOUND,
                 "Video neexistuje",
                 "This video does not exist");
+        }
+    }
+
+    public function actionSaveTime($id, $userId, $time) {
+        $hash = $id;
+
+        $video = $this->videoManager->getVideoFromDBbyHash($hash);
+
+        if ($video && $userId) {
+            $this->myOazaManager->saveVideoTime($userId, $video[VideoManager::COLUMN_ID], $time);
+            $this->sendJson(array("status" => "ok"));
+        } else {
+            $this->sendJson(array("status" => "error"));
+        }
+    }
+
+    public function actionGetTime($id, $userId) {
+        $hash = $id;
+
+        $video = $this->videoManager->getVideoFromDBbyHash($hash);
+
+        if ($video && $userId) {
+            $time = $this->myOazaManager->getVideoTime($userId, $video[VideoManager::COLUMN_ID]);
+            $this->sendJson(array("status" => "ok", "time" => $time));
+        } else {
+            $this->sendJson(array("status" => "error"));
         }
     }
 }
