@@ -8,6 +8,7 @@
 
 namespace App\FrontModule;
 
+use Model\MyOazaManager;
 use Model\UserManager;
 use Nette;
 use App\EventLogger;
@@ -28,6 +29,20 @@ class UserPresenter extends BasePresenter {
     public function renderDefault() {
         if (!$this->getUser()->isLoggedIn()) {
             $this->redirect(":login");
+        } else {
+            $history = $this->myOazaManager->getVideoHistory($this->getUser()->getId(), 0, 8);
+            $historyVideos = [];
+
+            foreach ($history as $item) {
+                $video = $this->videoManager->getVideoFromDB($item[MyOazaManager::VIDEO_ID], 1);
+                if ($video) {
+                    $localizedVideo = $this->videoManager->createLocalizedVideoObject($this->lang, $video);
+                    $localizedVideo['watched'] = $item[MyOazaManager::WATCHED];
+                    $historyVideos[] = $localizedVideo;
+                }
+            }
+
+            $this->template->historyVideos = $historyVideos;
         }
     }
 
