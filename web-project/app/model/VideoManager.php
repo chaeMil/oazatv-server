@@ -408,7 +408,7 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
     public function getThumbnails($id) {
         $video = $this->getVideoFromDB($id, 2);
         if ($video['thumb_file'] != null) {
-            $thumb = SERVER . VIDEOS_FOLDER.$video->id."/thumbs/".str_replace(".jpg", "_".self::THUMB_1024.".jpg", $video['thumb_file']);
+            $thumb = VIDEOS_FOLDER.$video->id."/thumbs/".str_replace(".jpg", "_".self::THUMB_1024.".jpg", $video['thumb_file']);
             $thumbfile = SERVER . VIDEOS_FOLDER.$video->id."/thumbs/".str_replace(".jpg", "", $video['thumb_file']);
             if (!file_exists($thumb)) {
                 $this->generateThumbnails($id);

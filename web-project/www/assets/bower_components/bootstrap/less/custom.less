@@ -1044,4 +1044,35 @@ html,body{
     border-radius: 3px;
     background: #FFF;
     padding: 25px;
+
+    .video-block {
+        color: black;
+
+        .name {
+            font-weight: 200;
+            font-size: 120%;
+        }
+
+        .watched {
+            font-weight: 200;
+        }
+
+        .thumb {
+            float: left;
+            background-size: cover;
+            width: 130px;
+            margin-right: 12px;
+
+            &:after {
+                padding-top: 56.25%;
+                /* 16:9 ratio */
+                display: block;
+                content: '';
+            }
+        }
+
+        &:hover {
+            color: @brand-primary;
+        }
+    }
 }

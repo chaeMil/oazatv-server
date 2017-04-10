@@ -34,6 +34,7 @@ basic:
     firstname: "Jméno"
     lastname: "Příjmení"
     history: "Historie"
+    watched: "sledováno"
 message:
     login_error: "Nesprávná kombinace loginu a hesla"
     email_already_taken: "Email je již zaregistrovaný"

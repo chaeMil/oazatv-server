@@ -3,13 +3,28 @@
     <div class="row">
         <div class="col-xs-12">
             <p class="lead">
-                {_frontend.basic.history}
-
-                {foreach $historyVideos as $video}
-                    {include '../Shared/videoBox.latte', item => $video,
-                            customClasses => "col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-3"}
-                {/foreach}
+                <b>{_frontend.basic.history}</b>
             </p>
+            <div class="row">
+                {foreach $historyVideos as $video}
+                    <a n:href="Video:watch $video['hash']">
+                        <div class="col-md-6 video-block">
+                            <div class="thumb"
+                                    {ifset $video['thumbs']}
+                                style="background-color: {$video['thumb_color']};
+                                        background-image: url('{$video['thumbs']['256']}')"
+                                    {/ifset}>
+                            </div>
+                            <div class="name">
+                                {$video['name']}
+                            </div>
+                            <div class="watched">
+                                {_frontend.basic.watched}: {$video['watched']|date}
+                            </div>
+                        </div>
+                    </a>
+                {/foreach}
+            </div>
         </div>
     </div>
 </div>

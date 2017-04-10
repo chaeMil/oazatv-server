@@ -33,9 +33,9 @@
                 <div class="thumb"
                      {if isset($item['thumbs']) && (isset($item['thumbs']['512']) || isset($item['thumbs']['1024']))}
                         {if $bigThumb}
-                            style="background-image: url({$basePath|noescape}/{$item['thumbs']['1024']|noescape});"
+                            style="background-image: url({$item['thumbs']['1024']|noescape});"
                         {else}
-                            style="background-image: url({$basePath|noescape}/{$item['thumbs']['512']|noescape});"
+                            style="background-image: url({$item['thumbs']['512']|noescape});"
                         {/if}
                      {/if}
                      {if isset($item['thumbs']) && isset($item['thumbs']['thumb_512'])}
