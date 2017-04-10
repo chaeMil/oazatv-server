@@ -32,7 +32,7 @@ class RouterFactory
                     'presenter' => 'Main',
                     'action' => 'default',
                     'id' => NULL
-                ));
+                ), Route::SECURED);
 
                 //frontend links
                 $router[] = new Route('<presenter>/<action>/<id>/<attr>/', array(
@@ -41,7 +41,7 @@ class RouterFactory
                     'action' => 'default',
                     'id' => NULL,
                     'attr' => NULL
-                ));
+                ), Route::SECURED);
                                
                 
 		return $router;
