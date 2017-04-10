@@ -216,11 +216,23 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
     }
 
     public function registerFromFacebook($fbId, $me) {
-        return $this->database->table(self::TABLE_NAME_USERS)
-            ->insert(array(self::COLUMN_FB_ID => $fbId,
+
+        if ($this->checkIfUserExists($me['email'], true)) {
+            $this->database->table(self::TABLE_NAME_USERS)
+                ->where(array(self::COLUMN_EMAIL => $me['email']))
+                ->update(array(self::COLUMN_FB_ID => $fbId));
+
+            return $this->database->table(self::TABLE_NAME_USERS)
+                ->select('*')
+                ->where(array(self::COLUMN_EMAIL => $me['email']))
+                ->fetch();
+        } else {
+            return $this->database->table(self::TABLE_NAME_USERS)
+                ->insert(array(self::COLUMN_FB_ID => $fbId,
                     self::COLUMN_FIRSTNAME => $me['first_name'],
                     self::COLUMN_LASTNAME => $me['last_name'],
                     self::COLUMN_EMAIL => $me['email']));
+        }
     }
 
     public function updateFacebookAccessToken($fbId, $accessToken) {
