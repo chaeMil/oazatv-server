@@ -49,13 +49,12 @@
             player = this;
 
             var hash = window.location.hash.replace('#&', '').replace('#t=', '').replace('#', '');
-            console.log(hash);
             if (hash !== 0 && hash !== '' && hash !== undefined && hash !== null && hash != 'autoplay') {
                 player.currentTime(hash);
             } else {
-                if (getSavedVideoTime() !== undefined) {
-                    player.currentTime(getSavedVideoTime());
-                }
+                getSavedVideoTime(function(time) {
+                    player.currentTime(time);
+                });
             }
 
             player.on('pause', function() {
@@ -145,10 +144,22 @@
         {/if}
     }
 
-    function getSavedVideoTime() {
-        var time = getCookie({$video['hash']} + '_time');
-        console.log('loading video time: ' + time);
-        return time;
+    function getSavedVideoTime(callback) {
+        {if $user->isLoggedIn()}
+            $.ajax({
+                type: "POST",
+                data: {
+                    token: {$frontUser['fromDB']['token']}
+                },
+                url: "/api/v2/video/" + {$videoRaw['hash']} + "/get-time/"
+            }).success(function(response) {
+                if (response.status == "ok") {
+                    callback(response.status.time);
+                } else {
+                    console.log("error getting video time: " + response.status);
+                }
+            });
+        {/if}
     }
 
     function savePlayerVolume(volume) {

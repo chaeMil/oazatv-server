@@ -113,6 +113,8 @@ class VideoPresenter extends BasePresenter {
                 $time = $this->myOazaManager->getVideoTime($user[UserManager::COLUMN_ID],
                     $video[VideoManager::COLUMN_ID]);
                 $this->sendJson(array("status" => "ok", "time" => $time));
+            } else {
+                $this->sendJson(array("status" => "error"));
             }
         }
 
