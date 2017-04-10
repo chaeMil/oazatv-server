@@ -489,7 +489,7 @@ html,body{
     .libjass-font-measure {
         opacity: 0;
     }
-    
+
     .libjass-subs {
         position: absolute;
         text-align: center;
@@ -499,8 +499,14 @@ html,body{
         top: auto !important;
 
         span {
+            filter: none !important;
             padding: 8px 20px;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.75);
+
+            span {
+                padding: 0;
+                background-color: transparent;
+            }
         }
     }
     
