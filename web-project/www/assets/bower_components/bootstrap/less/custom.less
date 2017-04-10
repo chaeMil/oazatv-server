@@ -249,7 +249,7 @@ html,body{
 
         @media (max-width: @screen-sm) {
               margin-top: -3px;
-              width: calc(100% - 170px);
+              width: ~"calc(100% - 170px)";
               padding-left: @padding-small-horizontal;
               font-size: 90%;
           }
@@ -323,12 +323,12 @@ html,body{
         
         .info {
             margin-top: -3px;
-            width: calc(100% - 150px);
+            width: ~"calc(100% - 150px)";
             padding-left: @padding-small-horizontal;
             font-size: 90%;
             
             @media (max-width: @screen-sm) {
-                width: calc(100% - 120px);
+                width: ~"calc(100% - 120px)";
             }
         }
         
@@ -757,7 +757,7 @@ html,body{
 }
 
 .archive-sidemenu {
-    max-height: calc(100vh - 140px);
+    max-height: ~"calc(100vh - 140px)";
     overflow-y: scroll;
     
     .show-menu {
