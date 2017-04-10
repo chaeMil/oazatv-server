@@ -6,20 +6,20 @@
                 <video oncontextmenu="return false" id="video" class="video-js vjs-default-skin"
                        controls preload="auto"
                     {if isset($video['thumbs']['1024'])}
-                        poster="{$basePath}/{$video['thumbs']['1024']}"
+                        poster="{$video['thumbs']['1024']}"
                     {/if}>
 
-                    {if isset($video['mp4']) && !$isCrOS} {*hack to work on chromebooks*}
-                        <source src="{$basePath}/{$video['mp4']}" type='video/mp4' label='original'>
+                    {if isset($video['mp4'])}
+                        <source src="{$video['mp4']}" type='video/mp4' label='original'>
                     {/if}
                     {if isset($video['webm'])}
-                        <source src="{$basePath}/{$video['webm']}" type='video/webm' label='original'>
+                        <source src="{$video['webm']}" type='video/webm' label='original'>
                     {/if}
                     {if isset($video['mp4_lowres'])}
-                        <source src="{$basePath}/{$video['mp4_lowres']}" type='video/mp4' label='LQ' />
+                        <source src="{$video['mp4_lowres']}" type='video/mp4' label='LQ' />
                     {/if}
                     {if isset($video['mp3'])}
-                        <source src="{$basePath}/{$video['mp3']}" type='audio/mp3' label='audio'>
+                        <source src="{$video['mp3']}" type='audio/mp3' label='audio'>
                     {/if}
 
                     <p class="vjs-no-js">
