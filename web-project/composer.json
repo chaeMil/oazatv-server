@@ -25,7 +25,8 @@
 		"joseki/webloader-filters": "^1.1",
 		"mexitek/phpcolors": "dev-master",
 		"nextras/datagrid": "^2.1",
-		"ksubileau/color-thief-php": "^1.3"
+		"ksubileau/color-thief-php": "^1.3",
+		"oyejorge/less.php": "v1.7.0.10",
 	},
 	"require-dev": {
 		"nette/tester": "~1.4"
