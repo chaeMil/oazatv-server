@@ -5,16 +5,21 @@
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
                 <div class="card-3 user-settings">
-                    {ifset $frontUser['fromFB']}
+
+                    {if isset($frontUser['fromFB'])}
                         <img src="http://graph.facebook.com/{$frontUser['fromFB']['id']}/picture?type=square&width=500&height=500"
-                         alt="" class="user-avatar center-block img-responsive img-circle">
-                    {/ifset}
+                            alt="" class="user-avatar center-block img-responsive img-circle">
+                    {else}
+                        <div class="user-avatar center-block img-responsive round round-lg">
+                            <span class="glyphicon glyphicon-user"></span>
+                        </div>
+                    {/if}
 
                     <div class="row">
                         <div class="col-xs-12">
                             <p class="lead text-center">
-                                {ifset $frontUser['fromFB']}
-                                    {$frontUser['fromFB']['first_name']} {$frontUser['fromFB']['last_name']}
+                                {ifset $frontUser['fromDB']}
+                                    {$frontUser['fromDB']['firstname']} {$frontUser['fromDB']['lastname']}
                                     <br>
                                 {/ifset}
                                 {ifset $frontUser['fromDB']['email']}

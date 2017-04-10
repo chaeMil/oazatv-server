@@ -16,17 +16,23 @@
                     <div class="round round-lg">
                         <span class="glyphicon glyphicon-user"></span>
                     </div>
+                    <div class="my-oaza">
+                        <span class="name">{_frontend.basic.login}</span>
+                        <span>{_frontend.basic.myoaza}</span>
+                    </div>
                 </a>
             {else}
                 <a n:href="User:">
                     <div class="round round-lg">
-                        {ifset $frontUser['fromFB']}
+                        {if isset($frontUser['fromFB'])}
                             <img src="http://graph.facebook.com/{$frontUser['fromFB']['id']}/picture?type=square&width=150&height=150" alt="">
-                        {/ifset}
+                        {else}
+                            <span class="glyphicon glyphicon-user"></span>
+                        {/if}
                     </div>
                     <div class="my-oaza">
-                        {ifset $frontUser['fromFB']}
-                            <span class="name">{$frontUser['fromFB']['first_name']}</span>
+                        {ifset $frontUser['fromDB']}
+                            <span class="name">{$frontUser['fromDB']['firstname']}</span>
                         {/ifset}
                         <span>{_frontend.basic.myoaza}</span>
                     </div>

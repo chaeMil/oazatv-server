@@ -218,7 +218,7 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
     public function registerFromFacebook($fbId, $me) {
         return $this->database->table(self::TABLE_NAME_USERS)
             ->insert(array(self::COLUMN_FB_ID => $fbId,
-                    self::COLUMN_FIRSTNAME => $me['firt_name'],
+                    self::COLUMN_FIRSTNAME => $me['first_name'],
                     self::COLUMN_LASTNAME => $me['last_name'],
                     self::COLUMN_EMAIL => $me['email']));
     }
