@@ -102,6 +102,11 @@ class VideoPresenter extends BasePresenter {
     public function renderWatch($id, $searched) {
         $hash = $id; //id only in router, actually its hash
         $this->createVideoVariables($searched, $hash);
+
+        if ($this->getUser()->isLoggedIn()) {
+            $video = $this->videoManager->getVideoFromDBbyHash($hash);
+            $this->myOazaManager->addVideoToHistory($this->user->getId(), $video[VideoManager::COLUMN_ID]);
+        }
     }
 
     private function createVideoVariables($searched, $hash, $published = 1) {
