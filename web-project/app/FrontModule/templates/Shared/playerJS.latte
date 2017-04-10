@@ -135,9 +135,7 @@
                 },
                 url: "/api/v2/video/" + {$videoRaw['hash']} + "/save-time/"
             }).success(function(response) {
-                if (response.status == "ok") {
-                    console.log("saved video time: " + time);
-                } else {
+                if (response.status != "ok") {
                     console.log("saving video time: " + response.status);
                 }
             });
@@ -163,7 +161,6 @@
     }
 
     function savePlayerVolume(volume) {
-        console.log('saving player volume: ' + volume);
         setCookie('player_volume', volume);
     }
 
