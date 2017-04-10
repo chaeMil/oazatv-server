@@ -147,6 +147,10 @@ class VideoPresenter extends BasePresenter {
         $this->template->video = $this->videoManager
             ->createLocalizedVideoObject($this->lang, $video);
 
+        if ($this->getUser()->isLoggedIn()) {
+            $this->template->videoTime = $this->myOazaManager->getVideoTime($this->user->getId(), $video[VideoManager::COLUMN_ID]);
+        }
+
         $this->template->similarVideos = $this->videoManager->findSimilarVideos($video, $this->lang, 12);
     }
 

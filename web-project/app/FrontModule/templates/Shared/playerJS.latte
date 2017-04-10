@@ -127,8 +127,22 @@
     }
 
     function saveVideoTime(time) {
-        console.log('saving video time: ' + time);
-        setCookie({$video['hash']} + '_time', time);
+        {if $user->isLoggedIn()}
+            $.ajax({
+                type: "POST",
+                data: {
+                    userId: {$user->getId()},
+                    time: time
+                },
+                url: {$basePath} + "api/v2/video/" + {$videoRaw['id']} + "/save-time/"
+            }).success(function(response) {
+                if (response.status == "ok") {
+                    console.log("saved video time: " + time);
+                } else {
+                    console.log("saving video time: " + response.status);
+                }
+            });
+        {/if}
     }
 
     function getSavedVideoTime() {

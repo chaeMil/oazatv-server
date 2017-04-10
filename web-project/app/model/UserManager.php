@@ -2,6 +2,7 @@
 
 namespace Model;
 
+use App\StringUtils;
 use Kdyby\Translation\Translator;
 use Nette,
     Nette\Utils\Strings,
@@ -20,6 +21,7 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
 
     const
         TABLE_NAME_USERS = 'db_users',
+        COLUMN_TOKEN = 'token',
         COLUMN_EMAIL = 'email',
         COLUMN_FIRSTNAME = 'firstname',
         COLUMN_LASTNAME = 'lastname',
@@ -93,6 +95,7 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
             $data = array(
                 self::COLUMN_FIRSTNAME => $firstname,
                 self::COLUMN_LASTNAME => $lastname,
+                self::COLUMN_TOKEN => StringUtils::rand(256),
                 $login => $username,
                 self::COLUMN_PASSWORD_HASH => Passwords::hash(self::removeCapsLock($password)));
 
@@ -229,6 +232,7 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
         } else {
             return $this->database->table(self::TABLE_NAME_USERS)
                 ->insert(array(self::COLUMN_FB_ID => $fbId,
+                    self::COLUMN_TOKEN => StringUtils::rand(256),
                     self::COLUMN_FIRSTNAME => $me['first_name'],
                     self::COLUMN_LASTNAME => $me['last_name'],
                     self::COLUMN_EMAIL => $me['email']));
