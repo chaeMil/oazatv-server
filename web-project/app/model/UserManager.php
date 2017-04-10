@@ -2,6 +2,7 @@
 
 namespace Model;
 
+use Kdyby\Translation\Translator;
 use Nette,
     Nette\Utils\Strings,
     Nette\Security\Passwords;
@@ -20,6 +21,8 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
     const
         TABLE_NAME_USERS = 'db_users',
         COLUMN_EMAIL = 'email',
+        COLUMN_FIRSTNAME = 'firstname',
+        COLUMN_LASTNAME = 'lastname',
         COLUMN_FB_ID = 'fb_id',
         COLUMN_FB_TOKEN = 'fb_token',
         COLUMN_GPLUS_ID = 'gplus_id',
@@ -28,7 +31,12 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
     /** @var Nette\Database\Context */
     public $database;
 
-    public function __construct(Nette\Database\Context $database) {
+    /** @var \Kdyby\Translation\Translator @inject */
+    public $translator;
+
+    public function __construct(Nette\Database\Context $database,
+            Translator $translator) {
+        $this->translator = $translator;
         $this->database = $database;
     }
 
@@ -44,20 +52,26 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
         if ($frontend) {
             $tableName = self::TABLE_NAME_USERS;
             $role = "user";
+            $login = self::COLUMN_EMAIL;
         } else {
             $tableName = self::TABLE_NAME;
             $role = "administrator";
+            $login = self::COLUMN_NAME;
         }
 
         $row = $this->database
             ->table($tableName)
-            ->where(self::COLUMN_NAME, $username)
+            ->where($login, $username)
             ->fetch();
 
         if (!$row) {
-            throw new Nette\Security\AuthenticationException($this->translator->translate('frontend.message.login_error'), self::IDENTITY_NOT_FOUND);
+            throw new Nette\Security\AuthenticationException(
+                $this->translator->translate('frontend.message.login_error'),
+                    self::IDENTITY_NOT_FOUND);
         } elseif (!Passwords::verify($password, $row[self::COLUMN_PASSWORD_HASH])) {
-            throw new Nette\Security\AuthenticationException($this->translator->translate('frontend.message.login_error'), self::INVALID_CREDENTIAL);
+            throw new Nette\Security\AuthenticationException(
+                $this->translator->translate('frontend.message.login_error'),
+                    self::INVALID_CREDENTIAL);
         } elseif (Passwords::needsRehash($row[self::COLUMN_PASSWORD_HASH])) {
             $row->update(array(
                 self::COLUMN_PASSWORD_HASH => Passwords::hash($password),
@@ -70,22 +84,31 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
         return new Nette\Security\Identity($row[self::COLUMN_ID], $role, $arr);
     }
 
-    public function add($username, $password, $frontend = false) {
+    public function add($username, $password, $frontend = false, $firstname = null, $lastname = null) {
 
         if ($frontend) {
             $tableName = self::TABLE_NAME_USERS;
             $login = self::COLUMN_EMAIL;
+
+            $data = array(
+                self::COLUMN_FIRSTNAME => $firstname,
+                self::COLUMN_LASTNAME => $lastname,
+                $login => $username,
+                self::COLUMN_PASSWORD_HASH => Passwords::hash(self::removeCapsLock($password)));
+
         } else {
             $tableName = self::TABLE_NAME;
             $login = self::COLUMN_NAME;
+
+            $data = array(
+                $login => $username,
+                self::COLUMN_PASSWORD_HASH => Passwords::hash(self::removeCapsLock($password)));
         }
 
         if ($this->checkIfUserExists($username, $frontend) == 0) {
-            return $this->database->table($tableName)
-                ->insert(array(
-                    $login => $username,
-                    self::COLUMN_PASSWORD_HASH => Passwords::hash(self::removeCapsLock($password)),
-            ));
+            return $this->database
+                ->table($tableName)
+                ->insert($data);
         } else {
             return false;
         }
@@ -195,6 +218,8 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
     public function registerFromFacebook($fbId, $me) {
         return $this->database->table(self::TABLE_NAME_USERS)
             ->insert(array(self::COLUMN_FB_ID => $fbId,
+                    self::COLUMN_FIRSTNAME => $me['firt_name'],
+                    self::COLUMN_LASTNAME => $me['last_name'],
                     self::COLUMN_EMAIL => $me['email']));
     }
 
@@ -215,6 +240,15 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
 
     public function registerFromGoogle($googleId, $me) {
         dump($googleId, $me); exit;
+    }
+
+    public function findByEmail($email) {
+        $user = $this->database->table(self::TABLE_NAME_USERS)
+            ->select('*')
+            ->where(self::COLUMN_EMAIL, $email)
+            ->fetch();
+
+        return $user;
     }
 
 }

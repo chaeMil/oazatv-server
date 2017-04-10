@@ -102,18 +102,23 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
 
         if ($this->getUser()->isLoggedIn()) {
             $user = $this->getUser();
-            $userFromDB = $this->userManager->getFrontUserFromDB($user->id);
-            $userFromFbAPI = $this->facebook->api('/me/',
-                null,
-                array("access_token" => $userFromDB[UserManager::COLUMN_FB_TOKEN],
-                    'fields' => ['id',
-                        'first_name',
-                        'last_name',
-                        'picture',
-                        'email']));
             $fronUser = [];
-            $frontUser['fromFB'] = $userFromFbAPI;
+
+            $userFromDB = $this->userManager->getFrontUserFromDB($user->id);
             $frontUser['fromDB'] = $userFromDB;
+
+            if ($userFromDB[UserManager::COLUMN_FB_TOKEN]) {
+                $userFromFbAPI = $this->facebook->api('/me/',
+                    null,
+                    array("access_token" => $userFromDB[UserManager::COLUMN_FB_TOKEN],
+                        'fields' => ['id',
+                            'first_name',
+                            'last_name',
+                            'picture',
+                            'email']));
+                $frontUser['fromFB'] = $userFromFbAPI;
+            }
+
             $this->template->frontUser = $frontUser;
         }
         

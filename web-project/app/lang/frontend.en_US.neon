@@ -31,6 +31,8 @@ basic:
     registered_since: "registered since"
     logout: "Logout"
     or: "or"
+    firstname: "Firstname"
+    lastname: "Lastname"
 message:
     login_error: "Wrong combination of login and password"
     email_already_taken: "Email already taken"
