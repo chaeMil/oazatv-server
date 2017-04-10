@@ -8,7 +8,7 @@
             <div class="row">
                 {foreach $historyVideos as $video}
                     <a n:href="Video:watch $video['hash']">
-                        <div class="col-md-6 video-block">
+                        <div class="col-xs-12 video-block">
                             <div class="thumb"
                                     {ifset $video['thumbs']}
                                 style="background-color: {$video['thumb_color']};
