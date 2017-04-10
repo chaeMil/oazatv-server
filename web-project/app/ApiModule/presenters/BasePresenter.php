@@ -9,6 +9,7 @@
 namespace App\ApiModule;
 
 use Model\MyOazaManager;
+use Model\UserManager;
 use Nette,
  Nette\Application\Responses\JsonResponse,
  Model\ArchiveManager,
@@ -40,6 +41,7 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
     public $liveStreamManager;
     public $frontPageManager;
     public $songsManager;
+    public $userManager;
     public $myOazaManager;
     public $request;
 
@@ -49,6 +51,7 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
             AnalyticsManager $analyticsManager, CategoriesManager $categoriesManager,
             SearchManager $searchManager, LiveStreamManager $liveStreamManager,
             FrontPageManager $frontPageManager, SongsManager $songsManager,
+            UserManager $userManager,
             MyOazaManager $myOazaManager) {
         
         parent::__construct();
@@ -64,6 +67,7 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
         $this->liveStreamManager = $liveStreamManager;
         $this->frontPageManager = $frontPageManager;
         $this->songsManager = $songsManager;
+        $this->userManager = $userManager;
         $this->myOazaManager = $myOazaManager;
         
         $routerLang = $this->getParameter('locale');

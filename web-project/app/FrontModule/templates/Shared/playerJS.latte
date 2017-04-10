@@ -131,10 +131,10 @@
             $.ajax({
                 type: "POST",
                 data: {
-                    userId: {$user->getId()},
-                    time: time
+                    time: time,
+                    token: {$frontUser['fromDB']['token']}
                 },
-                url: {$basePath} + "api/v2/video/" + {$videoRaw['id']} + "/save-time/"
+                url: "/api/v2/video/" + {$videoRaw['hash']} + "/save-time/"
             }).success(function(response) {
                 if (response.status == "ok") {
                     console.log("saved video time: " + time);

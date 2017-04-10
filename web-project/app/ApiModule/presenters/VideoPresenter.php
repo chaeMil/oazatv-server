@@ -8,6 +8,7 @@
 
 namespace App\ApiModule;
 
+use Model\UserManager;
 use Model\VideoManager;
 use Nette,
  Model\AnalyticsManager;
@@ -77,29 +78,44 @@ class VideoPresenter extends BasePresenter {
         }
     }
 
-    public function actionSaveTime($id, $userId, $time) {
+    public function actionSaveTime($id, $token, $time) {
         $hash = $id;
 
-        $video = $this->videoManager->getVideoFromDBbyHash($hash);
+        $tokenValid = $this->userManager->validateUserToken($token);
 
-        if ($video && $userId) {
-            $this->myOazaManager->saveVideoTime($userId, $video[VideoManager::COLUMN_ID], $time);
-            $this->sendJson(array("status" => "ok"));
-        } else {
-            $this->sendJson(array("status" => "error"));
+        if ($tokenValid) {
+            $video = $this->videoManager->getVideoFromDBbyHash($hash);
+            $user = $this->userManager->findByToken($token);
+
+            if ($video) {
+                $this->myOazaManager->saveVideoTime($user[UserManager::COLUMN_ID],
+                    $video[VideoManager::COLUMN_ID],
+                    $time);
+                $this->sendJson(array("status" => "ok"));
+            } else {
+                $this->sendJson(array("status" => "error"));
+            }
         }
+
+        $this->sendJson(array("status" => "error", "token_valid" => $tokenValid));
     }
 
-    public function actionGetTime($id, $userId) {
+    public function actionGetTime($id, $token) {
         $hash = $id;
 
-        $video = $this->videoManager->getVideoFromDBbyHash($hash);
+        $tokenValid = $this->userManager->validateUserToken($token);
 
-        if ($video && $userId) {
-            $time = $this->myOazaManager->getVideoTime($userId, $video[VideoManager::COLUMN_ID]);
-            $this->sendJson(array("status" => "ok", "time" => $time));
-        } else {
-            $this->sendJson(array("status" => "error"));
+        if ($tokenValid) {
+            $video = $this->videoManager->getVideoFromDBbyHash($hash);
+            $user = $this->userManager->findByToken($token);
+
+            if ($video) {
+                $time = $this->myOazaManager->getVideoTime($user[UserManager::COLUMN_ID],
+                    $video[VideoManager::COLUMN_ID]);
+                $this->sendJson(array("status" => "ok", "time" => $time));
+            }
         }
+
+        $this->sendJson(array("status" => "error", "token_valid" => $tokenValid));
     }
 }
