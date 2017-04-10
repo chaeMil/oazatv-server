@@ -64,6 +64,9 @@
                             {/switch}
                         </div>
                     {/if}
+                {if isset($item['percent_viewed']) && $item['percent_viewed'] >= 5z}
+                    <div class="percent-viewed" style="width: {$item['percent_viewed']|noescape}%"></div>
+                {/if}
                 </div>
                 <i class="open fa {if $item['type'] == "video"} fa-play-circle {else} fa-picture-o{/if}" 
                    aria-hidden="true"></i>

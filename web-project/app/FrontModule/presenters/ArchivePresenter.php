@@ -30,7 +30,7 @@ class ArchivePresenter extends BasePresenter {
         $archive = $this->archiveManager
                 ->getVideosAndPhotoAlbumsFromDB($paginator->getOffset(), 
                         $paginator->getItemsPerPage(), 
-                        $this->lang);
+                        $this->lang, 1, "date DESC", $this->getUser()->getId());
 
         $this->getBasicVariables($archive, $paginator);
         $this->template->paginationBaselink = $this->link('Page');
@@ -58,9 +58,10 @@ class ArchivePresenter extends BasePresenter {
         $paginator->setItemCount(sizeof($videosForCount));
         
         $localizedVideos = array();
+
         foreach($videos as $video) {
             $localizedVideos[] = $this->videoManager
-                    ->createLocalizedVideoObject($this->lang, $video);
+                    ->createLocalizedVideoObject($this->lang, $video, $this->getUser()->getId());
         }
 
         $this->getBasicVariables($localizedVideos, $paginator);
@@ -88,7 +89,7 @@ class ArchivePresenter extends BasePresenter {
         $localizedVideos = array();
         foreach($videos as $video) {
             $localizedVideos[] = $this->videoManager
-                ->createLocalizedVideoObject($this->lang, $video);
+                ->createLocalizedVideoObject($this->lang, $video, $this->getUser()->getId());
         }
 
         $this->getBasicVariables($localizedVideos, $paginator);

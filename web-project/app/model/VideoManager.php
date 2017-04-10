@@ -456,7 +456,13 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         $video->update(array(self::COLUMN_VIEWS => $views + 1));
     }
 
-    public function createLocalizedVideoObject($lang, $input) {
+    /**
+     * @param $lang
+     * @param $input
+     * @param null $userId
+     * @return array
+     */
+    public function createLocalizedVideoObject($lang, $input, $userId = null) {
         $video = Array();
 
         switch ($lang) {
@@ -521,7 +527,20 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         if ($input['subtitles_file'] != null) {
             $video['subtitles'] = $input['subtitles_file'];
         }
+
         $video['type'] = "video";
+
+        if ($userId) {
+            $videoTime = self::$database
+                ->table(MyOazaManager::VIDEOTIMES_TABLE)
+                ->where(array(MyOazaManager::USER_ID => $userId))
+                ->select(MyOazaManager::TIME)
+                ->fetch()[MyOazaManager::TIME];
+            $video['saved_time'] = $videoTime;
+            if(isset($video['metadata'])) {
+                $video['percent_viewed'] = $videoTime * 100 / $video['metadata']['duration_in_seconds'];
+            }
+        }
 
         return $video;
     }

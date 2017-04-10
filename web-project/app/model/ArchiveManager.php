@@ -82,7 +82,7 @@ class ArchiveManager extends BaseModel {
     }
     
     public function getVideosAndPhotoAlbumsFromDB($from, $count, $lang, 
-            $published = 1, $order = "date DESC") {
+            $published = 1, $order = "date DESC", $userId = null) {
         
         if($published != 2) {
             $query = '(SELECT '.VideoManager::COLUMN_ID.
@@ -134,7 +134,7 @@ class ArchiveManager extends BaseModel {
 
                     $video = $this->videoManager
                             ->createLocalizedVideoObject($lang,
-                                    $rawItemFromDB);
+                                    $rawItemFromDB, $userId);
                     
                     $video['type'] = 'video';
 
