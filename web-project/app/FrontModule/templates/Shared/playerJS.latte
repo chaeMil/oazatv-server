@@ -183,7 +183,7 @@
 
         function addNote(note, time) {
             video.markers.add([{ time: time, text: note}]);
-            $('#notes-list').append('<div class="note" data-time=' + time + '">' +
+            $('#notes-list').append('<div class="note" data-time="' + time + '">' +
                 convertSecondsToDigitalClock(time).clock + " " + note +
                 '</div>');
 
