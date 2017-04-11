@@ -9,6 +9,7 @@ assets:
         - '/assets/bower_components/photoswipe/dist/default-skin/default-skin.css'
         - '/assets/bower_components/justifiedGallery/dist/css/justifiedGallery.css'
         - '/assets/bower_components/vjs-resolution-switcher/lib/videojs-resolution-switcher.css'
+        - '/assets/js/videojs-markers-master/dist/videojs.markers.css'
     js:
         - '/assets/bower_components/jquery/dist/jquery.min.js'
         - '/assets/bower_components/bootstrap/dist/js/bootstrap.min.js'
@@ -21,6 +22,7 @@ assets:
         - '/assets/bower_components/photoswipe/dist/photoswipe-ui-default.min.js'
         - '/assets/bower_components/justifiedGallery/dist/js/jquery.justifiedGallery.min.js'
         - '/assets/bower_components/vjs-resolution-switcher/lib/videojs-resolution-switcher.js'
+        - '/assets/js/videojs-markers-master/dist/videojs-markers.min.js'
         - '/assets/bower_components/masonry/dist/masonry.pkgd.min.js'
         - '/assets/bower_components/bootbox.js/bootbox.js'
         - '/assets/bower_components/masonry/dist/masonry.pkgd.min.js'

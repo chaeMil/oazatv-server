@@ -24,6 +24,7 @@
     "photoswipe": "~4.1.1",
     "video.js": "videojs#~5.8.6",
     "masonry": "^4.0.0",
-    "videojs-ass": "^0.6.0"
+    "videojs-ass": "^0.6.0",
+    "videojs-marker": "https://github.com/spchuang/videojs-markers.git#^0.7.0"
   }
 }

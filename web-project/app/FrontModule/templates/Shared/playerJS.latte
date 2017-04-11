@@ -46,39 +46,82 @@
                     {/if}
                 }
             }).ready(function(){
-            player = this;
+                player = this;
 
-            var hash = window.location.hash.replace('#&', '').replace('#t=', '').replace('#', '');
-            if (hash !== 0 && hash !== '' && hash !== undefined && hash !== null && hash != 'autoplay') {
-                player.currentTime(hash);
-            } else {
-                getSavedVideoTime(function(time) {
-                    player.currentTime(time);
+                var hash = window.location.hash.replace('#&', '').replace('#t=', '').replace('#', '');
+                if (hash !== 0 && hash !== '' && hash !== undefined && hash !== null && hash != 'autoplay') {
+                    player.currentTime(hash);
+                } else {
+                    getSavedVideoTime(function(time) {
+                        player.currentTime(time);
+                    });
+                }
+
+                player.on('pause', function() {
+                    saveVideoTime(player.currentTime());
+                    savePlayerVolume(player.volume().toString().substr(0,5));
                 });
-            }
 
-            player.on('pause', function() {
-                saveVideoTime(player.currentTime());
-                savePlayerVolume(player.volume().toString().substr(0,5));
+                player.on('play', function() {
+                    saveVideoTime(player.currentTime());
+                    savePlayerVolume(player.volume().toString().substr(0,5));
+                });
+
+                if (getSavedPlayerVolume() !== undefined) {
+                    player.volume(getSavedPlayerVolume());
+                }
+
+                if (window.location.hash === "#autoplay") {
+                    player.play();
+                    window.location.hash = "&";
+                }
+
+                player.currentResolution('original');
+
+                video.markers({
+                    markerStyle: {
+                        'width':'4px',
+                        'background-color': 'orange'
+                    },
+                    breakOverlay:{
+                        display: true,
+                        displayTime: 5,
+                        style:{
+                            'width': 'auto',
+                            'max-width': '45%',
+                            'max-height': 'calc(100% - 50px)',
+                            'position': 'absolute',
+                            'top': '12px',
+                            'right': '12px',
+                            'background-color': 'rgba(0,0,0,0.5)',
+                            'color': 'white',
+                            'font-size': '17px'
+                        },
+                        text: function(marker) {
+                            return '<div class="note-overlay">' +
+                                {if isset($frontUser['fromFB'])}
+                                    '<img class="note-avatar" src="http://graph.facebook.com/{$frontUser['fromFB']['id']|noescape}/picture?type=square&width=150&height=150" />' +
+                                {/if}
+                                '<span class="note-user">{$frontUser['fromDB']['firstname']|noescape}:</span>' +
+                                '<span class="note">' + marker.text + '</span>' +
+                                '</div>';
+                        }
+                    },
+                    markerTip:{
+                        display: true,
+                        text: function(marker) {
+                            return marker.text;
+                        },
+                        time: function(marker) {
+                            return marker.time;
+                        }
+                    },
+                    markers: [
+                        { time: 9.5, text: "this" }
+                    ]
+                });
+            
             });
-            
-            player.on('play', function() {
-                saveVideoTime(player.currentTime());
-                savePlayerVolume(player.volume().toString().substr(0,5));
-            });
-                
-            if (getSavedPlayerVolume() !== undefined) {
-                player.volume(getSavedPlayerVolume());
-            }
-            
-            if (window.location.hash === "#autoplay") {
-                player.play();
-                window.location.hash = "&";
-            }
-            
-            player.currentResolution('original');
-            
-        });
 
         setInterval(function() {
             saveVideoTime(player.currentTime());
@@ -93,17 +136,44 @@
             saveVideoTime(player.currentTime());
             savePlayerVolume(player.volume().toString().substr(0,5));
         });
-        
-        
+
+        function addNote(note, time) {
+            video.markers.add([{ time: time, text: note}]);
+            $('#notes-list').append('<div class="note">' +
+                    convertSecondsToDigitalClock(time).clock + " " + note +
+                '</div>');
+        }
+
+        $('.add-note').click(function() {
+            bootbox.prompt({_frontend.basic.add_note}, function(result){
+                if (result != null && result.trim().length != 0) {
+                    addNote(result, player.currentTime());
+                }
+            });
+        });
+
+        $('.remove-note').click(function(e) {
+            console.log(e);
+        });
+
+        adjustSidePanel();
     });
 
-    $(document).ready(function() {
-       adjustSimilarVideosPane();
-
-       $(window).resize(function() {
-           adjustSimilarVideosPane();
-       });
+    $(window).resize(function() {
+        adjustSidePanel();
     });
+
+    function convertSecondsToDigitalClock(ms) {
+        hours = Math.floor(ms / 3600), // 1 Hour = 36000 Milliseconds
+            minutes = Math.floor((ms % 3600) / 60), // 1 Minutes = 60000 Milliseconds
+            seconds = Math.floor((ms % 360) % 60) // 1 Second = 1000 Milliseconds
+        return {
+            hours : hours,
+            minutes : minutes,
+            seconds : seconds,
+            clock : hours + ":" + minutes + ":" + seconds
+        };
+    }
     
     function videoJSAddCustomButton(player, videojs, name, callback) {
         var videoJsButtonClass = videojs.getComponent('Button');
@@ -168,8 +238,10 @@
         return getCookie('player_volume');
     }
 
-    function adjustSimilarVideosPane() {
-        $('.similar-videos').height($('#video').height() - $('#similarVideosHeader').outerHeight());
+    function adjustSidePanel() {
+        var height = $('#video').height() - $('.sidepanel .nav-tabs').outerHeight();
+        $('.notes').height(height);
+        $('.similar-videos').height(height);
     }
     
     function updateShareInTime() {

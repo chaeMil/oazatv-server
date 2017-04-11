@@ -57,7 +57,7 @@ html,body{
 
 .video-player-bg {
     margin-top: -20px;
-    background-color: #000000;
+    background-color: #1c1c1c;
     padding-bottom: 1px;
     padding-left: 0px !important;
     padding-right: 0px !important;
@@ -537,9 +537,74 @@ html,body{
     }
     
     .column {
-        padding-left: 0;
-        padding-right: 0;
         margin-top: 24px;
+        margin-bottom: 24px;
+
+        @media (max-width: @screen-sm) {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    .vjs-break-overlay {
+        height: auto !important;
+
+        .vjs-break-overlay-text {
+            text-align: left !important;
+
+            .note-overlay {
+                .note-avatar {
+                    position: relative;
+                    border-radius: 100%;
+                    width: 24px;
+                    height: 24px;
+                }
+
+                .note-user {
+                    position: relative;
+                    top: 2px;
+                    margin-left: 8px;
+                    max-width: 140px;
+                    overflow: hidden;
+                }
+
+                .note {
+                    margin-left: 4px;
+                    top: 2px;
+                    text-align: left;
+                    position: relative;
+                }
+            }
+        }
+    }
+
+
+    .sidepanel {
+        margin-top: 24px;
+        margin-bottom: 24px;
+
+        #notes {
+            display: none;
+
+            &.active {
+                display: block;
+            }
+
+            .add-note {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+            }
+
+        }
+
+        #similar-videos {
+            display: none;
+
+            &.active {
+                display: block;
+            }
+        }
     }
     
     #similarVideosHeader {

@@ -35,6 +35,8 @@ basic:
     lastname: "Lastname"
     history: "History"
     watched: "watched"
+    notes: "Notes"
+    add_note: "Add note"
 message:
     login_error: "Wrong combination of login and password"
     email_already_taken: "Email already taken"

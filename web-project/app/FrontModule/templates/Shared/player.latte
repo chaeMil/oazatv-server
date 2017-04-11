@@ -1,7 +1,7 @@
 <div class="container-fluid video-player-bg">
     <div class="container">
         <div class="video-player">
-            <div class="column {if count($similarVideos) <= 0} col-md-8 col-md-offset-2 col-xl-10 col-xl-offset-1 {else} col-md-8 col-xl-9 {/if}">
+            <div class="column col-md-8 col-xl-9">
 
                 <video oncontextmenu="return false" id="video" class="video-js vjs-default-skin"
                        controls preload="auto"
@@ -30,18 +30,43 @@
 
             </div>
                     
-            <div class="col-md-4 col-xl-3">
-                {if count($similarVideos) > 0}
-                    <h3 id="similarVideosHeader">{_frontend.basic.similar_videos}</h3>
-                    <div class="row similar-videos">
-                        {foreach $similarVideos as $item}
-                            {include '../Shared/videoBox.latte', 
-                                item => $item, 
-                                responsive => false,
-                                horizontal => true}
-                        {/foreach}
+            <div class="sidepanel col-md-4 col-xl-3">
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="active">
+                        <a href="#notes" data-toggle="tab">
+                            {_frontend.basic.notes}
+                        </a>
+                    </li>
+                    {if count($similarVideos) > 0}
+                        <li role="presentation">
+                            <a href="#similar-videos" data-toggle="tab">
+                                {_frontend.basic.similar_videos}
+                            </a>
+                        </li>
+                    {/if}
+                </ul>
+                <div class="tab-content">
+                    <div id="notes" class="tab-pane active">
+                        <div class="notes" id="notes-list">
+
+                            <a class="btn btn-primary btn-sm add-note">
+                                {_frontend.basic.add_note}
+                            </a>
+                        </div>
                     </div>
-                {/if}
+                    {if count($similarVideos) > 0}
+                        <div id="similar-videos" class="tab-pane">
+                            <div class="row similar-videos">
+                                {foreach $similarVideos as $item}
+                                    {include '../Shared/videoBox.latte',
+                                        item => $item,
+                                        responsive => false,
+                                        horizontal => true}
+                                {/foreach}
+                            </div>
+                        </div>
+                    {/if}
+                </div>
             </div>
         </div>
     </div>
