@@ -40,8 +40,10 @@
                     },
                     {if isset($video['ass'])}
                         ass: {
-                            src: '{$basePath|noescape}/{$video['ass']|noescape}',
-                            rate: 1
+                            src: '{$video['ass']|noescape}',
+                            rate: 1,
+                            videoWidth: 1280,
+                            videoHeight: 720
                         }
                     {/if}
                 }
@@ -88,21 +90,23 @@
                         displayTime: 5,
                         style:{
                             'width': 'auto',
-                            'max-width': '45%',
+                            'max-width': '40%',
                             'max-height': 'calc(100% - 50px)',
                             'position': 'absolute',
                             'top': '12px',
                             'right': '12px',
-                            'background-color': 'rgba(0,0,0,0.5)',
+                            'background-color': 'rgba(43, 51, 63, 0.7)',
                             'color': 'white',
                             'font-size': '17px'
                         },
                         text: function(marker) {
                             return '<div class="note-overlay">' +
-                                {if isset($frontUser['fromFB'])}
+                                {if isset($frontUser) && isset($frontUser['fromFB'])}
                                     '<img class="note-avatar" src="http://graph.facebook.com/{$frontUser['fromFB']['id']|noescape}/picture?type=square&width=150&height=150" />' +
                                 {/if}
-                                '<span class="note-user">{$frontUser['fromDB']['firstname']|noescape}:</span>' +
+                                {if isset($frontUser)}
+                                    '<span class="note-user">{$frontUser['fromDB']['firstname']|noescape}:</span>' +
+                                {/if}
                                 '<span class="note">' + marker.text + '</span>' +
                                 '</div>';
                         }

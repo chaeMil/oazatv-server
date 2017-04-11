@@ -546,8 +546,17 @@ html,body{
         }
     }
 
+    .vjs-control-bar {
+        bottom: -1px !important;
+        -webkit-backdrop-filter: blur(20px);
+    }
+
     .vjs-break-overlay {
         height: auto !important;
+        border-radius: 3px;
+        z-index: 1000 !important;
+        overflow-y: scroll;
+        -webkit-backdrop-filter: blur(20px);
 
         .vjs-break-overlay-text {
             text-align: left !important;
@@ -661,6 +670,29 @@ html,body{
             /* 16:9 ratio */
             display: block;
             content: '';
+        }
+
+        .vjs-ass {
+            .layer {
+                div {
+                    div {
+                        margin: 1.5% !important;
+                        min-width: 100% !important;
+                    }
+                }
+                span {
+                    background-color: rgba(43, 51, 63, 0.7);
+                    -webkit-backdrop-filter: blur(20px);
+                    border-radius: 3px;
+
+                    span {
+                        background-color: transparent !important;
+                        font-size: 2.5vw !important;
+                        line-height: 1.1 !important;
+                        text-shadow: rgba(0, 0, 0, 0.7) 0 2px 4px !important;
+                    }
+                }
+            }
         }
     }
 }
