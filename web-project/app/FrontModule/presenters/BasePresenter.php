@@ -16,6 +16,7 @@ use Model\LiveStreamManager;
 use Model\MyOazaManager;
 use Model\PhotosManager;
 use Model\PreachersManager;
+use Model\SearchManager;
 use Model\SongsManager;
 use Model\TagsManager;
 use Model\UserManager;
@@ -52,6 +53,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
     public $facebook;
     public $google;
     public $tagsManager;
+    public $searchManager;
     public $myOazaManager;
     
     /** @persistent */
@@ -76,6 +78,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
             ArchiveManager $archiveManager,
             ArchiveMenuManager $archiveMenuManager,
             TagsManager $tagsManager,
+            SearchManager $searchManager,
             MyOazaManager $myOazaManager) {
 
         parent::__construct();
@@ -95,6 +98,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         $this->preachersManager = $preachersManager;
         $this->archiveMenuManager = $archiveMenuManager;
         $this->tagsManager =$tagsManager;
+        $this->searchManager = $searchManager;
         $this->myOazaManager = $myOazaManager;
         $this->neonAdapter = new Nette\DI\Config\Adapters\NeonAdapter();
         

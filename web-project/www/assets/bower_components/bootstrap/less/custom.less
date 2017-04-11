@@ -489,7 +489,25 @@ html,body{
 }
 
 #playerTags {
-    
+    line-height: 1;
+
+    .tag {
+        display: inline-block;
+        margin-bottom: 8px;
+        background: @brand-primary;
+        border-radius: 4px;
+        padding: 5px 12px;
+        margin-right: 8px;
+
+        &:hover {
+            text-decoration: none;
+            background-color: darken(@brand-primary, 10);
+        }
+
+        &.song-tag {
+            color: white;
+        }
+    }
 }
 
 .video-player {
