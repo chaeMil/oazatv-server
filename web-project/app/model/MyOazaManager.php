@@ -16,11 +16,14 @@ class MyOazaManager {
     const HISTORY_TABLE = "mo_history",
         VIDEOTIMES_TABLE = "mo_videotimes",
         FAVORITES_TABLE = "mo_favorites",
+        NOTES_TABLE = "mo_notes",
         ID = "id",
         USER_ID = "user_id",
         VIDEO_ID = "video_id",
         WATCHED = "watched",
-        TIME = "time";
+        TIME = "time",
+        NOTE = "note",
+        EDITED = "edited";
 
 
     /** @var Nette\Database\Context */
@@ -106,6 +109,39 @@ class MyOazaManager {
             ->select(self::TIME)
             ->where(array(self::USER_ID => $userId, self::VIDEO_ID => $videoId))
             ->fetch()[self::TIME];
+    }
+
+    public function addNote($userId, $videoId, $note, $time) {
+        return $this->database
+            ->table(self::NOTES_TABLE)
+            ->insert(array(self::USER_ID => $userId,
+                self::VIDEO_ID => $videoId,
+                self::NOTE => $note,
+                self::TIME => $time));
+    }
+
+    public function deleteNote($noteId) {
+        return $this->database
+            ->table(self::NOTES_TABLE)
+            ->where(array(self::ID => $noteId))
+            ->delete();
+    }
+
+    public function updateNote($noteId, $note) {
+        return $this->database
+            ->table(self::NOTES_TABLE)
+            ->where(array(self::ID => $noteId))
+            ->insert(array(self::NOTE => $note));
+    }
+
+    public function getNotesFromVideo($userId, $videoId) {
+        return $this->database
+            ->table(self::NOTES_TABLE)
+            ->where(array(self::USER_ID => $userId,
+                self::VIDEO_ID => $videoId))
+            ->select('*')
+            ->order(self::TIME." ASC")
+            ->fetchAll();
     }
 
 }
