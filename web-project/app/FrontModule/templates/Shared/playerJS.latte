@@ -124,13 +124,14 @@
                     markers: [
                         {ifset $notes}
                             {foreach $notes as $note}
-                                { time: {$note['time']}, text: {$note['note']}}{if !$iterator->isLast()},{/if}
+                                { time: {$note['time']}, text: {$note['note']} }{if !$iterator->isLast()},{/if}
                             {/foreach}
                         {/ifset}
                     ]
                 });
 
                 adjustSubtitlesSize();
+                addExistingNotes();
             
             });
 
@@ -148,7 +149,7 @@
             savePlayerVolume(player.volume().toString().substr(0,5));
         });
 
-        function addNote(note, time) {
+        function saveNote(note, time) {
             var token = "{$frontUser['fromDB']['token']|noescape}";
 
             $.ajax({
@@ -166,19 +167,31 @@
                 console.log(response);
 
                 if (response.status == "ok") {
-                    video.markers.add([{ time: time, text: note}]);
-                    $('#notes-list').append('<div class="note">' +
-                        convertSecondsToDigitalClock(time).clock + " " + note +
-                        '</div>');
+                    addNote(note, time);
                 }
             });
 
         }
 
+        function addExistingNotes() {
+            {ifset $notes}
+                {foreach $notes as $note}
+                    addNote({$note['note']}, {$note['time']});
+                {/foreach}
+            {/ifset}
+        }
+
+        function addNote(note, time) {
+            video.markers.add([{ time: time, text: note}]);
+            $('#notes-list').append('<div class="note">' +
+                convertSecondsToDigitalClock(time).clock + " " + note +
+                '</div>');
+        }
+
         $('.add-note').click(function() {
             bootbox.prompt({_frontend.basic.add_note}, function(result){
                 if (result != null && result.trim().length != 0) {
-                    addNote(result, player.currentTime());
+                    saveNote(result, player.currentTime());
                 }
             });
         });
@@ -206,12 +219,12 @@
             clock : hours + ":" + minutes + ":" + seconds
         };
     }
-    
+
     function videoJSAddCustomButton(player, videojs, name, callback) {
         var videoJsButtonClass = videojs.getComponent('Button');
         var concreteButtonClass = videojs.extend(videoJsButtonClass, {
 
-          // The `init()` method will also work for constructor logic here, but it is 
+          // The `init()` method will also work for constructor logic here, but it is
           // deprecated. If you provide an `init()` method, it will override the
           // `constructor()` method!
           constructor: function() {
@@ -280,11 +293,11 @@
         $('.notes').height(height);
         $('.similar-videos').height(height);
     }
-    
+
     function updateShareInTime() {
         var input = $('#video-time');
         var url = location.href.replace(location.hash,"") + "#t=" + parseInt(player.currentTime());
-        
+
         if (input.val() === '' || !player.paused()) {
             input.val(url);
         }
