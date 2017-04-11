@@ -129,6 +129,8 @@
                         {/ifset}
                     ]
                 });
+
+                adjustSubtitlesSize();
             
             });
 
@@ -190,6 +192,7 @@
 
     $(window).resize(function() {
         adjustSidePanel();
+        adjustSubtitlesSize();
     });
 
     function convertSecondsToDigitalClock(ms) {
@@ -284,6 +287,23 @@
         
         if (input.val() === '' || !player.paused()) {
             input.val(url);
+        }
+    }
+
+    function adjustSubtitlesSize() {
+        var size = $('#video').height() / 19;
+        if (size < 20) {
+            size = 20;
+        }
+        console.log(size);
+
+        var stylesheet = document.styleSheets[0],
+            selector = ".vjs-ass .layer span span", rule = "{ font-size: " + size + "px !important}";
+
+        if (stylesheet.insertRule) {
+            stylesheet.insertRule(selector + rule, stylesheet.cssRules.length);
+        } else if (stylesheet.addRule) {
+            stylesheet.addRule(selector, rule, -1);
         }
     }
  
