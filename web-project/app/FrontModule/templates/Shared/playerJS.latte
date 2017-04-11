@@ -183,9 +183,19 @@
 
         function addNote(note, time) {
             video.markers.add([{ time: time, text: note}]);
-            $('#notes-list').append('<div class="note">' +
+            $('#notes-list').append('<div class="note" data-time=' + time + '">' +
                 convertSecondsToDigitalClock(time).clock + " " + note +
                 '</div>');
+
+            reorderNotes();
+        }
+
+        function reorderNotes() {
+            var divList = $(".note");
+            divList.sort(function(a, b){
+                return $(a).data("time")-$(b).data("time")
+            });
+            $("#notes-list").html(divList);
         }
 
         $('.add-note').click(function() {
@@ -208,6 +218,14 @@
         adjustSubtitlesSize();
     });
 
+    function addLeadingZero(input) {
+        if (input.toString().length == 1) {
+            return "0" + input;
+        } else {
+            return input;
+        }
+    }
+
     function convertSecondsToDigitalClock(ms) {
         hours = Math.floor(ms / 3600), // 1 Hour = 36000 Milliseconds
             minutes = Math.floor((ms % 3600) / 60), // 1 Minutes = 60000 Milliseconds
@@ -216,7 +234,7 @@
             hours : hours,
             minutes : minutes,
             seconds : seconds,
-            clock : hours + ":" + minutes + ":" + seconds
+            clock : addLeadingZero(hours) + ":" + addLeadingZero(minutes) + ":" + addLeadingZero(seconds)
         };
     }
 
