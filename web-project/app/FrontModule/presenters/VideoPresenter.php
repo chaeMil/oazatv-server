@@ -115,6 +115,8 @@ class VideoPresenter extends BasePresenter {
             $this->analyticsManager->countVideoSearchClick($video['id'], AnalyticsManager::WEB);
         }
 
+        $this->countView($video->id, $hash);
+
         $tags = explode(",", str_replace(" ", "", $video['tags']));
         $tagsToHide = $this->tagsManager->getHiddenTagsFromDB();
         foreach($tagsToHide as $tagToHide) {
@@ -135,23 +137,17 @@ class VideoPresenter extends BasePresenter {
         }
 
         $this->template->preachers = array_map("unserialize", array_unique(array_map("serialize", $preachers)));
-
-        $this->countView($video->id, $hash);
-
         $this->template->categoriesManager = $this->categoriesManager;
-        $this->template->categories = $this->categoriesManager
-            ->getLocalizedCategories($this->lang);
-
+        $this->template->categories = $this->categoriesManager->getLocalizedCategories($this->lang);
         $this->template->serverUrl = "http://$_SERVER[HTTP_HOST]";
         $this->template->videoRaw = $video;
-        $this->template->video = $this->videoManager
-            ->createLocalizedVideoObject($this->lang, $video);
+        $this->template->video = $this->videoManager->createLocalizedVideoObject($this->lang, $video);
+        $this->template->similarVideos = $this->videoManager->findSimilarVideos($video, $this->lang, 12);
 
         if ($this->getUser()->isLoggedIn()) {
             $this->template->videoTime = $this->myOazaManager->getVideoTime($this->user->getId(), $video[VideoManager::COLUMN_ID]);
+            $this->template->notes = $this->myOazaManager->getNotesFromVideo($this->user->getId(), $video[VideoManager::COLUMN_ID]);
         }
-
-        $this->template->similarVideos = $this->videoManager->findSimilarVideos($video, $this->lang, 12);
     }
 
 }

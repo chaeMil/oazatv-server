@@ -122,7 +122,11 @@
                         }
                     },
                     markers: [
-                        { time: 9.5, text: "this" }
+                        {ifset $notes}
+                            {foreach $notes as $note}
+                                { time: {$note['time']}, text: {$note['note']}}{if !$iterator->isLast()},{/if}
+                            {/foreach}
+                        {/ifset}
                     ]
                 });
             
