@@ -120,10 +120,10 @@ class MyOazaManager {
                 self::TIME => $time));
     }
 
-    public function deleteNote($noteId) {
+    public function deleteNote($noteId, $userId) {
         return $this->database
             ->table(self::NOTES_TABLE)
-            ->where(array(self::ID => $noteId))
+            ->where(array(self::ID => $noteId, self::USER_ID => $userId))
             ->delete();
     }
 

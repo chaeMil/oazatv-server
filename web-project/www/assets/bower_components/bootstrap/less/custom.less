@@ -608,6 +608,40 @@ html,body{
                 right: 0;
             }
 
+            .note {
+                position: relative;
+
+
+                .time {
+                    display: inline-block;
+                    top: 0;
+                    left: 0;
+                    width: 80px;
+                    position: relative;
+                }
+
+                .text {
+                    display: inline-block;
+                    top: 0;
+                    left: 0;
+                    position: relative;
+                }
+
+                .remove-note {
+                    top: 0;
+                    right: 0;
+                    float: right;
+                    position: relative;
+                    display: none;
+                }
+
+                &:hover {
+                    .remove-note {
+                        display: inline-block;
+                    }
+                }
+            }
+
         }
 
         #similar-videos {

@@ -167,7 +167,7 @@
                 console.log(response);
 
                 if (response.status == "ok") {
-                    addNote(note, time);
+                    addNote(note, time, response.note_id);
                 }
             });
 
@@ -176,18 +176,39 @@
         function addExistingNotes() {
             {ifset $notes}
                 {foreach $notes as $note}
-                    addNote({$note['note']}, {$note['time']});
+                    addNote({$note['note']}, {$note['time']}, {$note['id']});
                 {/foreach}
             {/ifset}
+
+            reorderNotes();
         }
 
-        function addNote(note, time) {
+        function addNote(note, time, id) {
             video.markers.add([{ time: time, text: note}]);
-            $('#notes-list').append('<div class="note" data-time="' + time + '">' +
-                convertSecondsToDigitalClock(time).clock + " " + note +
+            $('#notes-list').append('<div class="note" data-time="' + time + '" data-id="' + id + '">' +
+                '<div class="time">' + convertSecondsToDigitalClock(time).clock + '</div>' +
+                '<div class="text">' + note + '</div>' +
+                '<div class="remove-note">x</div>' +
                 '</div>');
 
             reorderNotes();
+        }
+
+        function removeNote(id, index, element) {
+            var token = "{$frontUser['fromDB']['token']|noescape}";
+
+            $.ajax({
+                url: '/api/v2/notes/' + id + '/delete',
+                type: "POST",
+                headers: {
+                    token: token
+                }
+            }).success(function(response) {
+                if (response.status == "ok") {
+                    video.markers.remove([index]);
+                    $(element).remove();
+                }
+            });
         }
 
         function reorderNotes() {
@@ -196,6 +217,9 @@
                 return $(a).data("time")-$(b).data("time")
             });
             $("#notes-list").html(divList);
+            $("#notes-list").children().each(function(index, element) {
+                $(element).attr("data-index", index);
+            });
         }
 
         $('.add-note').click(function() {
@@ -206,8 +230,11 @@
             });
         });
 
-        $('.remove-note').click(function(e) {
-            console.log(e);
+        $(document).on('click', '.remove-note', function() {
+            var element = $(this).parent();
+            var index = $(this).parent().data('index');
+            var id = $(this).parent().data('id');
+            removeNote(id, index, element);
         });
 
         adjustSidePanel();

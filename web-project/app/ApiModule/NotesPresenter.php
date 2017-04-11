@@ -33,19 +33,19 @@ class NotesPresenter extends BasePresenter {
                     $existingNote = $this->myOazaManager->getNote($id);
                     if ($existingNote) {
                         $this->myOazaManager->updateNote($id, $note);
-                        $this->sendJson(array("status" => "ok"));
+                        $this->sendJson(array("status" => "ok", "note_id" => intval($id)));
                     } else {
                         $this->myOazaManager->addNote($user[UserManager::COLUMN_ID],
                             $video[VideoManager::COLUMN_ID],
                             $note, $time);
-                        $this->sendJson(array("status" => "ok"));
+                        $this->sendJson(array("status" => "ok", "note_id" => intval($id)));
                     }
                     $this->sendJson(array("status" => "error"));
                 } else {
-                    $this->myOazaManager->addNote($user[UserManager::COLUMN_ID],
+                    $note = $this->myOazaManager->addNote($user[UserManager::COLUMN_ID],
                         $video[VideoManager::COLUMN_ID],
                         $note, $time);
-                    $this->sendJson(array("status" => "ok"));
+                    $this->sendJson(array("status" => "ok", "note_id" => intval($note[MyOazaManager::ID])));
                 }
 
             } else {
@@ -78,6 +78,7 @@ class NotesPresenter extends BasePresenter {
                 foreach($notes as $note) {
                     $notesJson[] = array("time" => $note[MyOazaManager::TIME],
                         "note" => $note[MyOazaManager::NOTE],
+                        "id" => $notesJson[MyOazaManager::ID],
                         "edited" => $note[MyOazaManager::EDITED]);
                 }
 
@@ -85,6 +86,26 @@ class NotesPresenter extends BasePresenter {
             } else {
                 $this->sendJson(array("status" => "error"));
             }
+        }
+
+        $this->sendJson(array("status" => "error",
+            "token" => $token,
+            "token_valid" => $tokenValid));
+    }
+
+    public function actionDelete($id) {
+        $token = $this->request->getHeader('token');
+        $tokenValid = $this->userManager->validateUserToken($token);
+
+        if ($tokenValid) {
+            $user = $this->userManager->findByToken($token);
+
+            if ($this->myOazaManager->deleteNote($id, $user[UserManager::COLUMN_ID])) {
+                $this->sendJson(array("status" => "ok"));
+            } else {
+                $this->sendJson(array("status" => "error"));
+            }
+
         }
 
         $this->sendJson(array("status" => "error",
