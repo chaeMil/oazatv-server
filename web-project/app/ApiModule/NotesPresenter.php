@@ -18,7 +18,7 @@ class NotesPresenter extends BasePresenter {
     public function actionSave($id) {
 
         $videoHash = $this->request->getPost('videoHash');
-        $token = $this->request->getHeaders('token');
+        $token = $this->request->getHeader('token');
         $note = $this->request->getPost('note');
         $time = $this->request->getPost('time');
 
@@ -53,7 +53,9 @@ class NotesPresenter extends BasePresenter {
             }
         }
 
-        $this->sendJson(array("status" => "error", "token_valid" => $tokenValid));
+        $this->sendJson(array("status" => "error",
+            "token" => $token,
+            "token_valid" => $tokenValid));
     }
 
     public function actionGet() {
@@ -85,7 +87,9 @@ class NotesPresenter extends BasePresenter {
             }
         }
 
-        $this->sendJson(array("status" => "error", "token_valid" => $tokenValid));
+        $this->sendJson(array("status" => "error",
+            "token" => $token,
+            "token_valid" => $tokenValid));
     }
 
 }

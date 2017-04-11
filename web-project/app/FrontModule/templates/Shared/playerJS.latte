@@ -143,10 +143,30 @@
         });
 
         function addNote(note, time) {
-            video.markers.add([{ time: time, text: note}]);
-            $('#notes-list').append('<div class="note">' +
-                    convertSecondsToDigitalClock(time).clock + " " + note +
-                '</div>');
+            var token = "{$frontUser['fromDB']['token']|noescape}";
+
+            $.ajax({
+                type: "POST",
+                url: "/api/v2/notes/save",
+                headers: {
+                    token: token
+                },
+                data: {
+                    note: note,
+                    time: time,
+                    videoHash: {$video['hash']}
+                }
+            }).success(function(response) {
+                console.log(response);
+
+                if (response.status == "ok") {
+                    video.markers.add([{ time: time, text: note}]);
+                    $('#notes-list').append('<div class="note">' +
+                        convertSecondsToDigitalClock(time).clock + " " + note +
+                        '</div>');
+                }
+            });
+
         }
 
         $('.add-note').click(function() {
