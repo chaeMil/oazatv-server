@@ -131,7 +131,7 @@ class MyOazaManager {
         return $this->database
             ->table(self::NOTES_TABLE)
             ->where(array(self::ID => $noteId))
-            ->insert(array(self::NOTE => $note));
+            ->update(array(self::NOTE => $note));
     }
 
     public function getNotesFromVideo($userId, $videoId) {
@@ -142,6 +142,14 @@ class MyOazaManager {
             ->select('*')
             ->order(self::TIME." ASC")
             ->fetchAll();
+    }
+
+    public function getNote($id) {
+        return $this->database
+            ->table(self::NOTES_TABLE)
+            ->select('*')
+            ->where(array(self::ID => $id))
+            ->fetch();
     }
 
 }

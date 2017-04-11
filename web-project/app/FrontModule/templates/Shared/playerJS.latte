@@ -1,6 +1,7 @@
 <script>
     
     var player;
+    var lastSavedTime;
 
     $('document').ready(function() {
         
@@ -201,18 +202,23 @@
 
     function saveVideoTime(time) {
         {if $user->isLoggedIn()}
-            $.ajax({
-                type: "POST",
-                data: {
-                    time: time,
-                    token: {$frontUser['fromDB']['token']}
-                },
-                url: "/api/v2/video/" + {$videoRaw['hash']} + "/save-time/"
-            }).success(function(response) {
-                if (response.status != "ok") {
-                    console.log("saving video time: " + response.status);
-                }
-            });
+
+            if (lastSavedTime != time) {
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        time: time,
+                        token: {$frontUser['fromDB']['token']}
+                    },
+                    url: "/api/v2/video/" + {$videoRaw['hash']} +"/save-time/"
+                }).success(function (response) {
+                    lastSavedTime = time;
+                    if (response.status != "ok") {
+                        console.log("saving video time: " + response.status);
+                    }
+                });
+            }
+
         {/if}
     }
 
