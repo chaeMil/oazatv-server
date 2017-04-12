@@ -279,6 +279,7 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
     public function validateUserToken($token) {
         $validToken = $this->database
             ->table(self::TABLE_NAME_USERS)
+            ->where(array(self::COLUMN_TOKEN => $token))
             ->select(self::COLUMN_TOKEN)
             ->fetch()[self::COLUMN_TOKEN];
 
