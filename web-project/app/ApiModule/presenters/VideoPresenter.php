@@ -100,8 +100,10 @@ class VideoPresenter extends BasePresenter {
         $this->sendJson(array("status" => "error", "token_valid" => $tokenValid));
     }
 
-    public function actionGetTime($id, $token) {
+    public function actionGetTime($id) {
         $hash = $id;
+
+        $token = $this->request->getHeader('token');
 
         $tokenValid = $this->userManager->validateUserToken($token);
 

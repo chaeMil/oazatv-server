@@ -164,8 +164,6 @@
                     videoHash: {$video['hash']}
                 }
             }).success(function(response) {
-                console.log(response);
-
                 if (response.status == "ok") {
                     addNote(note, time, response.note_id);
                 }
@@ -311,13 +309,13 @@
         {if $user->isLoggedIn()}
             $.ajax({
                 type: "POST",
-                data: {
+                headers: {
                     token: {$frontUser['fromDB']['token']}
                 },
                 url: "/api/v2/video/" + {$videoRaw['hash']} + "/get-time/"
             }).success(function(response) {
                 if (response.status == "ok") {
-                    callback(response.status.time);
+                    callback(response.time);
                 } else {
                     console.log("error getting video time: " + response.status);
                 }
@@ -353,7 +351,6 @@
         if (size < 20) {
             size = 20;
         }
-        console.log(size);
 
         var stylesheet = document.styleSheets[0],
             selector = ".vjs-ass .layer span span", rule = "{ font-size: " + size + "px !important}";
