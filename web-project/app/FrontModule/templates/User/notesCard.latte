@@ -1,0 +1,27 @@
+<div class="card-3 notes-card">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="lead">
+                <b>{_frontend.basic.notes}</b>
+            </p>
+            <div class="row">
+                {foreach $notes as $note}
+                    <div class="col-md-6">
+                        <div class="note">
+                            <div class="edited">
+                                {_frontend.basic.edited}: {$note['edited']|date:'%d.%m.%Y %H:%M'}
+                            </div>
+                            <div class="text">
+                                {$note['note']}
+                            </div>
+                            <div class="video-name">
+
+                            </div>
+                        </div>
+                    </div>
+                {/foreach}
+            </div>
+        </div>
+    </div>
+</div>

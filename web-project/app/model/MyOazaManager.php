@@ -152,4 +152,14 @@ class MyOazaManager {
             ->fetch();
     }
 
+    public function getAllNotes($userId, $from, $count) {
+        return $this->database
+            ->table(self::NOTES_TABLE)
+            ->limit($count, $from)
+            ->where(array(self::USER_ID => $userId))
+            ->select('*')
+            ->order(self::EDITED." DESC")
+            ->fetchAll();
+    }
+
 }

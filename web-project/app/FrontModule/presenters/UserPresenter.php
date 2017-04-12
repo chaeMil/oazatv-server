@@ -30,7 +30,10 @@ class UserPresenter extends BasePresenter {
         if (!$this->getUser()->isLoggedIn()) {
             $this->redirect(":login");
         } else {
-            $history = $this->myOazaManager->getVideoHistory($this->getUser()->getId(), 0, 6);
+
+            $user = $this->getUser();
+
+            $history = $this->myOazaManager->getVideoHistory($user->getId(), 0, 6);
             $historyVideos = [];
 
             foreach ($history as $item) {
@@ -42,7 +45,10 @@ class UserPresenter extends BasePresenter {
                 }
             }
 
+            $notes = $this->myOazaManager->getAllNotes($user->getId(), 0, 6);
+
             $this->template->historyVideos = $historyVideos;
+            $this->template->notes = $notes;
         }
     }
 

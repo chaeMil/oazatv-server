@@ -37,6 +37,7 @@ basic:
     watched: "sledováno"
     notes: "Poznámky"
     add_note: "Přidat poznámku"
+    edited: "Upraveno"
 message:
     login_error: "Nesprávná kombinace loginu a hesla"
     email_already_taken: "Email je již zaregistrovaný"
