@@ -153,13 +153,29 @@ class MyOazaManager {
     }
 
     public function getAllNotes($userId, $from, $count) {
-        return $this->database
+        $notes =  $this->database
             ->table(self::NOTES_TABLE)
             ->limit($count, $from)
             ->where(array(self::USER_ID => $userId))
             ->select('*')
             ->order(self::EDITED." DESC")
             ->fetchAll();
+
+        $notesArray = [];
+
+        foreach($notes as $note) {
+            $noteWithVideo = [];
+            $noteWithVideo['note'] = $note;
+            $noteWithVideo['video'] = $this->database
+                ->table(VideoManager::TABLE_NAME)
+                ->select('*')
+                ->where(array(VideoManager::COLUMN_ID => $note[self::VIDEO_ID]))
+                ->fetch();
+
+            $notesArray[] = $noteWithVideo;
+        }
+
+        return $notesArray;
     }
 
 }

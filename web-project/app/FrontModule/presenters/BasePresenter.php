@@ -166,6 +166,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
             $httpRequest = $container->getByType('Nette\Http\Request');
             $this->lang = $httpRequest->detectLanguage($langs);
         }
+
+        $this->template->lang = $this->lang;
     }
     
     public function injectWebDir(WebDir $webDir) {

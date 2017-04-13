@@ -38,6 +38,7 @@ basic:
     notes: "Notes"
     add_note: "Add note"
     edited: "Edited"
+    video: "Video"
 message:
     login_error: "Wrong combination of login and password"
     email_already_taken: "Email already taken"
