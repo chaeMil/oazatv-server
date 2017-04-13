@@ -71,6 +71,8 @@ class SongsPresenter extends BasePresenter {
         $song = $this->songsManager->getSongFromDB($id);
         $song = $song->toArray();
 
+        $song['body_decoded'] = html_entity_decode(html_entity_decode($song['body']));
+
         $this->enableCORS();
         $this->sendJson($song);
     }
