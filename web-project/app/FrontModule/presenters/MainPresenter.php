@@ -35,7 +35,7 @@ class MainPresenter extends BasePresenter {
         
         foreach($newestVideos as $video) {
             $templateNewestVideos[] = $this->videoManager
-                    ->createLocalizedVideoObject($this->lang, $video);
+                    ->createLocalizedVideoObject($this->lang, $video, $this->getUserId());
         }
         
         $newestAlbums = $this->photosManager->getAlbumsFromDB(0, 16);
@@ -54,7 +54,7 @@ class MainPresenter extends BasePresenter {
             foreach($popularVideos as $video) {
                 $dbVideo = $this->videoManager->getVideoFromDB($video);
                 $templatePopularVideos[] = $this->videoManager
-                        ->createLocalizedVideoObject($this->lang, $dbVideo);
+                        ->createLocalizedVideoObject($this->lang, $dbVideo, $this->getUserId());
             }
         }
         
@@ -64,7 +64,7 @@ class MainPresenter extends BasePresenter {
         $this->template->newestVideos = $templateNewestVideos;
         $this->template->newestAlbums = $templateNewestAlbums;
         $this->template->latestVideo = $this->videoManager
-                ->createLocalizedVideoObject($this->lang, $latestVideo);
+                ->createLocalizedVideoObject($this->lang, $latestVideo, $this->getUserId());
         $this->template->lang = $this->lang;
         $this->template->user = $this->getUser();
         $this->template->videoManager = $this->videoManager;

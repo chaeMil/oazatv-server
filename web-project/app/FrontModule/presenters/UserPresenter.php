@@ -62,7 +62,7 @@ class UserPresenter extends BasePresenter {
 
     public function actionLogout() {
         if ($this->getUser()->isLoggedIn()) {
-            $this->user->logout();
+            $this->getUser()->logout();
         }
         $this->redirect(":login");
     }

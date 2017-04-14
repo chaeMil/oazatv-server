@@ -271,4 +271,11 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
     return strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome') !== false;
   }
 
+  public function getUserId() {
+        if ($this->getUser()->isLoggedIn()) {
+            return $this->getUser()->getId();
+        } else {
+            return null;
+        }
+  }
 }
