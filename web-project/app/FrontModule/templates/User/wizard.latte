@@ -2,80 +2,181 @@
 
     <div class="container">
         <div class="row">
-            <section>
-                <div class="wizard card-3">
-                    <div class="wizard-inner">
-                        <div class="connecting-line"></div>
-                        <ul class="nav nav-tabs" role="tablist">
+            <div class="wizard card-3">
+                <div class="wizard-inner">
+                    <div class="connecting-line"></div>
+                    <ul class="nav nav-tabs" role="tablist">
 
-                            <li role="presentation" class="active">
-                                <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Step 1">
-                            <span class="round-tab">
-                                <i class="glyphicon glyphicon-folder-open"></i>
-                            </span>
-                                </a>
-                            </li>
+                        <li role="presentation" class="active">
+                            <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab"
+                               title="{_frontend.basic.welcome}">
+                        <span class="round-tab">
+                            <i class="glyphicon glyphicon-leaf"></i>
+                        </span>
+                            </a>
+                        </li>
 
-                            <li role="presentation" class="disabled">
-                                <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Step 2">
-                            <span class="round-tab">
-                                <i class="glyphicon glyphicon-pencil"></i>
-                            </span>
-                                </a>
-                            </li>
-                            <li role="presentation" class="disabled">
-                                <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Step 3">
-                            <span class="round-tab">
-                                <i class="glyphicon glyphicon-picture"></i>
-                            </span>
-                                </a>
-                            </li>
+                        <li role="presentation" class="disabled">
+                            <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab"
+                               title="{_frontend.basic.user}">
+                        <span class="round-tab">
+                            <i class="glyphicon glyphicon-user"></i>
+                        </span>
+                            </a>
+                        </li>
+                        <li role="presentation" class="disabled">
+                            <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab"
+                               title="{_frontend.basic.notifications}">
+                        <span class="round-tab">
+                            <i class="glyphicon glyphicon-info-sign"></i>
+                        </span>
+                            </a>
+                        </li>
 
-                            <li role="presentation" class="disabled">
-                                <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
-                            <span class="round-tab">
-                                <i class="glyphicon glyphicon-ok"></i>
-                            </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                        <li role="presentation" class="disabled">
+                            <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab"
+                               title="{_frontend.basic.complete}">
+                        <span class="round-tab">
+                            <i class="glyphicon glyphicon-ok"></i>
+                        </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
 
-                    <form role="form">
-                        <div class="tab-content">
-                            <div class="tab-pane active" role="tabpanel" id="step1">
-                                <h3>Step 1</h3>
-                                <p>This is step 1</p>
+                <form role="form">
+                    <div class="tab-content">
+                        <div class="tab-pane active" role="tabpanel" id="step1">
+
+                            <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+                                <div class="text-center">
+                                    <h3>{_frontend.basic.welcome}</h3>
+                                    <p>{_frontend.basic.welcome_text}</p>
+                                </div>
+
                                 <ul class="list-inline pull-right">
-                                    <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
+                                    <li>
+                                        <button n:href="User:logout" type="button" class="btn btn-default prev-step">
+                                            {_frontend.basic.logout}
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button type="button" class="btn btn-primary next-step">
+                                            {_frontend.button.continue}
+                                        </button>
+                                    </li>
                                 </ul>
                             </div>
-                            <div class="tab-pane" role="tabpanel" id="step2">
-                                <h3>Step 2</h3>
-                                <p>This is step 2</p>
-                                <ul class="list-inline pull-right">
-                                    <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
-                                    <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
-                                </ul>
+
+                        </div>
+                        <div class="tab-pane" role="tabpanel" id="step2">
+
+                            <div class="row">
+                                <div class="user-settings col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+
+                                    <div class="text-center">
+                                        <h3>{_frontend.basic.user_settings}</h3>
+                                        <p>{_frontend.basic.user_settings_text}</p>
+                                    </div>
+
+                                    <hr>
+
+                                    <form class="form" id="user-settings">
+
+                                        <!-- Multiple Radios -->
+                                        <div class="form-group row">
+                                            <label class="col-md-6 control-label" for="member">{_frontend.wizard.member}</label>
+                                            <div class="col-md-6">
+                                                <div class="radio">
+                                                    <label for="member-0">
+                                                        <input type="radio" name="member" id="member-0" value="yes" checked="checked">
+                                                        {_frontend.wizard.member_yes}
+                                                    </label>
+                                                </div>
+                                                <div class="radio">
+                                                    <label for="member-1">
+                                                        <input type="radio" name="member" id="member-1" value="other_church">
+                                                        {_frontend.wizard.member_other_church}
+                                                    </label>
+                                                </div>
+                                                <div class="radio">
+                                                    <label for="member-2">
+                                                        <input type="radio" name="member" id="member-2" value="no">
+                                                        {_frontend.wizard.member_no}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Select Basic -->
+                                        <div class="form-group row" id="church">
+                                            <label class="col-md-6 control-label" for="church">{_frontend.wizard.church}</label>
+                                            <div class="col-md-6">
+                                                <select id="church" name="church" class="form-control">
+                                                    <option value="prague">Praha</option>
+                                                    <option value="louny">Louny</option>
+                                                    <option value="teplice">Teplice</option>
+                                                    <option value="most">Most</option>
+                                                    <option value="zdar_nad_sazavou">Žďár nad Sázavou</option>
+                                                    <option value="trebic">Třebíč</option>
+                                                    <option value="prachatice">Prachatice</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- Text input-->
+                                        <div class="form-group row" id="other-church">
+                                            <label class="col-md-6 control-label" for="other_church">{_frontend.wizard.other_church}</label>
+                                            <div class="col-md-6">
+                                                <input id="other_church" name="other_church" type="text" placeholder="" class="form-control input-md">
+
+                                            </div>
+                                        </div>
+                                    </form>
+
+
+                                    <ul class="list-inline pull-right">
+                                        <li>
+                                            <button type="button" class="btn btn-default prev-step">
+                                                {_frontend.button.previous}
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="btn btn-primary next-step">
+                                                {_frontend.button.save_and_continue}
+                                            </button
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="tab-pane" role="tabpanel" id="step3">
+
+                        </div>
+                        <div class="tab-pane" role="tabpanel" id="step3">
+                            <div class="card-2 user-settings col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
                                 <h3>Step 3</h3>
                                 <p>This is step 3</p>
                                 <ul class="list-inline pull-right">
-                                    <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
-                                    <li><button type="button" class="btn btn-default next-step">Skip</button></li>
-                                    <li><button type="button" class="btn btn-primary btn-info-full next-step">Save and continue</button></li>
+                                    <li>
+                                        <button type="button" class="btn btn-default prev-step">
+                                            {_frontend.button.previous}
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button type="button" class="btn btn-primary btn-info-full next-step">
+                                            {_frontend.button.save_and_continue}
+                                        </button>
+                                    </li>
                                 </ul>
                             </div>
-                            <div class="tab-pane" role="tabpanel" id="complete">
-                                <h3>Complete</h3>
-                                <p>You have successfully completed all steps.</p>
-                            </div>
-                            <div class="clearfix"></div>
                         </div>
-                    </form>
-                </div>
-            </section>
+                        <div class="tab-pane" role="tabpanel" id="complete">
+                            <h3>Complete</h3>
+                            <p>You have successfully completed all steps.</p>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -110,7 +211,36 @@
                 prevTab($active);
 
             });
+
+            validateUserSettingsForm();
         });
+
+        function validateMember(val) {
+            switch(val) {
+                case 'yes':
+                    $('#church').removeClass('disabled');
+                    $('#other-church').addClass('disabled');
+                    break;
+                case 'other_church':
+                    $('#church').addClass('disabled');
+                    $('#other-church').removeClass('disabled');
+                    break;
+                case 'no':
+                    $('#church').addClass('disabled');
+                    $('#other-church').addClass('disabled');
+                    break;
+            }
+        }
+
+        function validateUserSettingsForm() {
+            var memberRadio = $('input[type=radio][name=member]');
+
+            validateMember(memberRadio.val());
+
+            $(memberRadio).on('change', function() {
+                validateMember($(this).val());
+            });
+        }
 
         function nextTab(elem) {
             $(elem).next().find('a[data-toggle="tab"]').click();
