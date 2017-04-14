@@ -31,7 +31,8 @@
 		"nextras/latte-macros": "^2.0",
 		"kdyby/facebook": "^2.1",
 		"kdyby/google": "dev-master",
-		"oyejorge/less.php": "v1.7.0.10"
+		"oyejorge/less.php": "v1.7.0.10",
+		"nittro/nette-bridges": "^2.0"
 
 	},
 	"require-dev": {

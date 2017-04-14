@@ -20,6 +20,7 @@ application:
 
 latte:
     macros:
+        - Nittro\Bridges\NittroLatte\NittroMacros
         - Nextras\Latte\Macros\RedefineMacro::install
 
 session:

@@ -3,42 +3,44 @@
     <div class="container" class="position: relative;">
         <div class="navbar-header">
 
-            <a class="navbar-brand pull-left">
+            <a class="navbar-brand pull-left" n:href="Main:default">
                 <img class="logo" src="{$basePath}/assets/img/logo.png"/>
                 <span class="text hidden-xs hidden-sm">Oáza.tv</span>
             </a>
 
         </div>
 
-        <div class="pull-right navbar-user-menu">
-            {if !$user->isLoggedIn()}
-                <a n:href="User:">
-                    <div class="round round-lg">
-                        <span class="glyphicon glyphicon-user"></span>
-                    </div>
-                    <div class="my-oaza">
-                        <span class="name">{_frontend.basic.login}</span>
-                        <span>{_frontend.basic.myoaza}</span>
-                    </div>
-                </a>
-            {else}
-                <a n:href="User:">
-                    <div class="round round-lg">
-                        {if isset($frontUser['fromFB'])}
-                            <img src="http://graph.facebook.com/{$frontUser['fromFB']['id']}/picture?type=square&width=150&height=150" alt="">
-                        {else}
+        {snippet userMenu}
+            <div class="pull-right navbar-user-menu">
+                {if !$user->isLoggedIn()}
+                    <a n:href="User:">
+                        <div class="round round-lg">
                             <span class="glyphicon glyphicon-user"></span>
-                        {/if}
-                    </div>
-                    <div class="my-oaza">
-                        {ifset $frontUser['fromDB']}
-                            <span class="name">{$frontUser['fromDB']['firstname']}</span>
-                        {/ifset}
-                        <span>{_frontend.basic.myoaza}</span>
-                    </div>
-                </a>
-            {/if}
-        </div>
+                        </div>
+                        <div class="my-oaza">
+                            <span class="name">{_frontend.basic.login}</span>
+                            <span>{_frontend.basic.myoaza}</span>
+                        </div>
+                    </a>
+                {else}
+                    <a n:href="User:">
+                        <div class="round round-lg">
+                            {if isset($frontUser['fromFB'])}
+                                <img src="http://graph.facebook.com/{$frontUser['fromFB']['id']}/picture?type=square&width=150&height=150" alt="">
+                            {else}
+                                <span class="glyphicon glyphicon-user"></span>
+                            {/if}
+                        </div>
+                        <div class="my-oaza">
+                            {ifset $frontUser['fromDB']}
+                                <span class="name">{$frontUser['fromDB']['firstname']}</span>
+                            {/ifset}
+                            <span>{_frontend.basic.myoaza}</span>
+                        </div>
+                    </a>
+                {/if}
+            </div>
+        {/snippet}
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbar-collapse">

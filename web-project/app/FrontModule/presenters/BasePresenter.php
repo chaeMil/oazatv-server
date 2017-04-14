@@ -21,8 +21,9 @@ use Model\SongsManager;
 use Model\TagsManager;
 use Model\UserManager;
 use Model\VideoManager;
-use Nette,
-App\Services\WebDir,
+use Nette;
+use Nittro;
+use App\Services\WebDir,
 CssMin,
 WebLoader,
 Mexitek\PHPColors\Color;
@@ -32,7 +33,7 @@ use WebLoader\Nette\LoaderFactory;
 /**
  * Base presenter for all application presenters.
  */
-abstract class BasePresenter extends Nette\Application\UI\Presenter {    
+abstract class BasePresenter extends Nittro\Bridges\NittroUI\Presenter {
     
     public $database;
     public $lang;
@@ -103,14 +104,19 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         $this->neonAdapter = new Nette\DI\Config\Adapters\NeonAdapter();
         
     }
-    
+
+    protected function startup() {
+        parent::startup();
+        $this->setDefaultSnippets(['content', 'pageScripts']);
+    }
+
+
     public function beforeRender() {
         parent::beforeRender();
         $routerLang = $this->getParameter('locale');
+
         $this->setupLanguage($this->container, $this->translator->getLocale());
-        
         $this->registerCustomHelpers($this->template);
-      
         $this->template->isCrOS = $this->detectChromeOS();
 
         if ($this->getUser()->isLoggedIn()) {

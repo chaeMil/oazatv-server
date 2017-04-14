@@ -44,15 +44,11 @@
 
     </div>
 
-    <!-- Page Content -->
-  
-    {*<a n:href="changeVariable!" class="ajax">ajax</a>
-  
-    {snippet ajaxChange}
-      <p>{$anyVariable}</p>
-    {/snippet*}
-  
-    {include content}
+    <div class="nittro-transition-auto nittro-transition-fade">
+        {snippet content}
+            {include content}
+        {/snippet}
+    </div>
     
     {if !isset($_GET['hideNav'])}
         {include 'Shared/defaultFooter.latte'}
@@ -61,12 +57,6 @@
     {block scripts}
     
         {control js}
-  
-        <script>
-            $(function () {
-                $.nette.init();
-            });
-        </script>
 
         <script>
 
@@ -86,6 +76,11 @@
                     columnWidth: '.video-box'
                 });
             }
+
+            $("body").on('DOMSubtreeModified', "#snippet--content", function() {
+                $(window).scrollTop(0);
+                masonry();
+            });
 
             $(document).ready(function() {
 
@@ -163,12 +158,12 @@
                     windowFocus = true;
                 });
 
-                pingAlive();
+                /*pingAlive();
                 onAir();
                 setInterval(function() {
                     onAir();
                     pingAlive(); 
-                }, 10 * 1000);
+                }, 10 * 1000);*/
 
                 function onAir() {
                     $.get( {plink "LiveStream:ajaxRefresh"}, function(response) {
@@ -179,14 +174,7 @@
                             .addClass(onair);
                     });
                 }
-                
-                function generateAndGetUserId() {
-                    if (!getCookie('oaza_user-id')) {
-                        setCookie('oaza_user-id', randomString(16), 999);
-                    }
-                    return getCookie('oaza_user-id');
-                }
-                
+
                 function pingAlive() {
                     if (windowFocus) {
                         var userId = generateAndGetUserId();
@@ -209,18 +197,6 @@
                         }
                     }
                 }
-                
-                $('.navbar .logo').click(function() {
-                    window.location.href = {plink "Main:default"};
-                });
-                
-                $('.navbar-brand .text, .navbar .onair').click(function() {
-                    if ($('.onair').hasClass('online')) {
-                        window.location.href = {plink "LiveStream:default"};
-                    } else {
-                        window.location.href = {plink "Main:default"};
-                    }
-                });
             });
             
         </script>
@@ -244,7 +220,9 @@
     
     {include Shared/googleAnalytics.latte}
 
-    {block pageScripts}
-    {/block}
+    {snippet pageScripts}
+        {block pageScripts}
+        {/block}
+    {/snippet}
 </body>
 </html>

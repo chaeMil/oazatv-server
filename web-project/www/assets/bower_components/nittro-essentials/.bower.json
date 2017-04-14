@@ -1,0 +1,29 @@
+{
+  "name": "nittro-essentials",
+  "description": "Nittro pre-built package containing the essential components",
+  "homepage": "https://www.nittro.org",
+  "license": "MIT",
+  "authors": [
+    "danik <me@subsonic.cz>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nittro/essentials.git"
+  },
+  "ignore": [
+    "**/.*",
+    "gulpfile.js",
+    "package.json"
+  ],
+  "version": "2.0.4",
+  "_release": "2.0.4",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.0.4",
+    "commit": "6c55ff55070e98b5d7eaa3517d57d25959885e78"
+  },
+  "_source": "https://github.com/nittro/essentials.git",
+  "_target": "^2.0.4",
+  "_originalSource": "nittro-essentials",
+  "_direct": true
+}

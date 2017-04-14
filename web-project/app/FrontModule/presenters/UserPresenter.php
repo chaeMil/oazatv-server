@@ -61,9 +61,12 @@ class UserPresenter extends BasePresenter {
     }
 
     public function actionLogout() {
+        $this->disallowAjax();
+
         if ($this->getUser()->isLoggedIn()) {
             $this->getUser()->logout();
         }
+
         $this->redirect(":login");
     }
 
@@ -291,6 +294,8 @@ class UserPresenter extends BasePresenter {
      * @param $values
      */
     public function login(Form $form, $values) {
+        $this->disallowAjax();
+
         try {
             $this->getUser()->logout();
             $this->userManager->authenticate(array($values['email'], $values['password']), true);

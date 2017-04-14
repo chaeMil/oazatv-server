@@ -1,10 +1,11 @@
 <script>
-    
+
+    var video
     var player;
     var lastSavedTime;
 
     $('document').ready(function() {
-        
+
         $('#share-fb').click(function() {
            shareToFB(); 
         });
@@ -33,11 +34,11 @@
                 end: "#ffffff"
             }
         });
-        
+
         var video = videojs('video', {
                 plugins: {
                     videoJsResolutionSwitcher: {
-                        
+
                     },
                     {if isset($video['ass'])}
                         ass: {
@@ -72,11 +73,6 @@
 
                 if (getSavedPlayerVolume() !== undefined) {
                     player.volume(getSavedPlayerVolume());
-                }
-
-                if (window.location.hash === "#autoplay") {
-                    player.play();
-                    window.location.hash = "&";
                 }
 
                 player.currentResolution('original');
@@ -132,7 +128,7 @@
 
                 adjustSubtitlesSize();
                 addExistingNotes();
-            
+
             });
 
         setInterval(function() {

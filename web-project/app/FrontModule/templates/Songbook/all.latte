@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <div class="songbook all" data-masonry='{ "itemSelector": ".songs-block", "columnWidth": 320, "isFitWidth": true }'>
+        <div class="songbook all masonry-simple">
             {foreach $songs as $song}
                 {if mb_substr($song['tag'], 0, 2) == 'CH'}
                     {var $initial = 'CH'}
@@ -51,7 +51,7 @@
                 {/if}
 
                 {if !isset($lastInitial) || $initial != $lastInitial}
-                    <div class="songs-block">
+                    <div class="songs-block masonry-item">
                     <h2 style="color: {$initial|makeColor|darken:25|noescape}">{$initial}</h2>
                 {/if}
 
