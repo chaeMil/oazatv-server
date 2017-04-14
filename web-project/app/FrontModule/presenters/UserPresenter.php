@@ -33,6 +33,10 @@ class UserPresenter extends BasePresenter {
 
             $user = $this->getUser();
 
+            if (!$this->userManager->loadUserJson($user->getId())) {
+                $this->redirect("wizard");
+            }
+
             $history = $this->myOazaManager->getVideoHistory($user->getId(), 0, 6);
             $historyVideos = [];
 
@@ -57,6 +61,10 @@ class UserPresenter extends BasePresenter {
     }
 
     public function renderRegister() {
+
+    }
+
+    public function renderWizard() {
 
     }
 

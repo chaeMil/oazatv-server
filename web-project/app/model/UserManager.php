@@ -28,7 +28,8 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
         COLUMN_FB_ID = 'fb_id',
         COLUMN_FB_TOKEN = 'fb_token',
         COLUMN_GPLUS_ID = 'gplus_id',
-        COLUMN_GPLUS_TOKEN = 'gplus_token';
+        COLUMN_GPLUS_TOKEN = 'gplus_token',
+        COLUMN_USER_JSON = 'user_json';
 
     /** @var Nette\Database\Context */
     public $database;
@@ -286,4 +287,18 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
         return $validToken == $token;
     }
 
+    public function loadUserJson($userId) {
+        return json_decode($this->database
+            ->table(self::TABLE_NAME_USERS)
+            ->select(self::COLUMN_USER_JSON)
+            ->where(array(self::COLUMN_ID => $userId))
+            ->fetch()[self::COLUMN_USER_JSON], true);
+    }
+
+    public function saveUserJson($userId, $json) {
+        return $this->database
+            ->table(self::TABLE_NAME_USERS)
+            ->where(array(self::COLUMN_ID => $userId))
+            ->update(array(self::COLUMN_USER_JSON => $json));
+    }
 }
