@@ -1277,7 +1277,7 @@ html,body{
         text-align: right;
     }
 
-    .user-settings {
+    .user-settings, .notifications-settings {
         border-radius: 2px;
         margin-top: 12px;
         margin-bottom: 30px;
@@ -1324,10 +1324,10 @@ html,body{
         position:relative;
     }
     li.active span.round-tab {
-        background:#ffffff;
-        border:2px solid #5bc0de;
+        background: #ffffff;
+        border:2px solid @brand-primary;
         i {
-            color:#5bc0de;
+            color: @brand-primary;
         }
     }
     li:after {
@@ -1338,7 +1338,7 @@ html,body{
         margin:0 auto;
         bottom:0px;
         border:5px solid transparent;
-        border-bottom-color:#5bc0de;
+        border-bottom-color: @brand-primary;
         transition:0.1s ease-in-out;
     }
     li.active:after {
@@ -1349,7 +1349,7 @@ html,body{
         margin:0 auto;
         bottom:0px;
         border:10px solid transparent;
-        border-bottom-color:#5bc0de;
+        border-bottom-color: @brand-primary;
     }
     .tab-pane {
         position:relative;

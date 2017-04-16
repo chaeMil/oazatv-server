@@ -57,6 +57,12 @@ wizard:
     member_no: "No"
     church: "City"
     other_church: "Other church"
+    notifications_settings: "Notifications settings"
+    notifications_settings_text: "TODO text"
+    notifications_type: "Notifications type"
+    notifications_email: "Email"
+    notifications_web: "Web"
+    notifications_push: "Notifications in mobile app"
 message:
     login_error: "Wrong combination of login and password"
     email_already_taken: "Email already taken"

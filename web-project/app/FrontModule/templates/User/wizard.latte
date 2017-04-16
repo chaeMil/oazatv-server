@@ -152,9 +152,45 @@
 
                         </div>
                         <div class="tab-pane" role="tabpanel" id="step3">
-                            <div class="card-2 user-settings col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
-                                <h3>Step 3</h3>
-                                <p>This is step 3</p>
+                            <div class="notifications-settings col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+
+                                <div class="text-center">
+                                    <h3>{_frontend.wizard.notifications_settings}</h3>
+                                    <p>{_frontend.wizard.notifications_settings_text}</p>
+                                </div>
+
+                                <hr>
+
+                                <form class="form" id="notifications-settings">
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <label class="col-md-6 control-label" for="checkboxes">{_frontend.wizard.notifications_type}</label>
+                                            <div class="col-md-6">
+                                                <div class="checkbox">
+                                                    <label for="checkboxes-0">
+                                                        <input type="checkbox" name="checkboxes" id="checkboxes-0" value="email">
+                                                        {_frontend.wizard.notifications_email}
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label for="checkboxes-1">
+                                                        <input type="checkbox" name="checkboxes" id="checkboxes-1" checked="checked" value="web">
+                                                        {_frontend.wizard.notifications_web}
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label for="checkboxes-2">
+                                                        <input type="checkbox" name="checkboxes" id="checkboxes-2" checked="checked"  value="push">
+                                                        {_frontend.wizard.notifications_push}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </fieldset>
+                                </form>
+
+
                                 <ul class="list-inline pull-right">
                                     <li>
                                         <button type="button" class="btn btn-default prev-step">

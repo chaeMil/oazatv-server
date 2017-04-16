@@ -57,6 +57,12 @@ wizard:
     member_no: "Ne"
     church: "Město"
     other_church: "Jiná církev"
+    notifications_settings: "Nastavení upozornění"
+    notifications_settings_text: "TODO text"
+    notifications_type: "Typ upozornění"
+    notifications_email: "Email"
+    notifications_web: "Web"
+    notifications_push: "Upozornění v mobilní aplikaci"
 message:
     login_error: "Nesprávná kombinace loginu a hesla"
     email_already_taken: "Email je již zaregistrovaný"
