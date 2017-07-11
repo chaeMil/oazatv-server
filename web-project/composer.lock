@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2836c1beaf03d64bd81af118a55fc11f",
+    "content-hash": "1d1ef673d291d533befdf37736389baf",
     "packages": [
         {
             "name": "janmarek/webloader",

@@ -29,6 +29,6 @@
 		"oyejorge/less.php": "v1.7.0.10"
 	},
 	"require-dev": {
-		"nette/tester": "~1.4"
+		"nette/tester": "^1.7"
 	}
 }
