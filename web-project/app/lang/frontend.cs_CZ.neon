@@ -24,6 +24,8 @@ basic:
     livestream: "Živé vysílání"
     videos_with_subtitles: "Videa s titulky"
     photo_albums: "Fotoalba"
+    fb_newsfeed: "Facebook novinky"
+    omovotv_stream: "Omovo TV testovací přenos"
 search:
     more: "další výsledky"
 homepage:
