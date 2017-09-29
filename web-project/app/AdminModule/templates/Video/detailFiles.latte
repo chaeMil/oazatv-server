@@ -30,9 +30,9 @@
                             {/if}
                         </div>
                         <div class="panel-body">
-                            <div>{$originalFileInfo}</div>
-                            <div>{$originalFileSize}</div>
-                            <div>{$originalFileDate|date}</div>
+                            <div>info: {$originalFileInfo}</div>
+                            <div>velikost: {$originalFileSize}</div>
+                            <div>datum uploadu: {$originalFileDate|datetime}</div>
                             <hr>
                             <a n:href="Video:deleteVideoFile, $video->id, $originalFile"
                                data-confirm="smazat originální soubor?"
