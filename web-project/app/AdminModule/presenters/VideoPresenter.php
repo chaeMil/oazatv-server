@@ -208,7 +208,7 @@ class VideoPresenter extends BaseSecuredPresenter {
         }
 
         $this->template->originalFileInfo = $this->videoManager->getOriginalFileInfo($video->id);
-        $this->template->originalFileSize = FileUtils::humanReadableFileSize(VIDEOS_FOLDER.VideoManager::COLUMN_ORIGINAL_FILE);
+        $this->template->originalFileSize = FileUtils::humanReadableFileSize(VIDEOS_FOLDER.$video[VideoManager::COLUMN_ORIGINAL_FILE]);
         $this->template->originalFileDate = $this->videoManager->getOriginalFileDate($video->id);
         $this->template->originalFile = VideoManager::COLUMN_ORIGINAL_FILE;
         $this->template->mp4File = VideoManager::COLUMN_MP4_FILE;
