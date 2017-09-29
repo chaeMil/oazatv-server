@@ -33,6 +33,10 @@ class FileUtils {
     }
     
     public static function humanReadableFileSize($file, $decimals = 2) {
+        if (!file_exists($file) || is_dir($file)) {
+            return null;
+        }
+
         $bytes = filesize($file);
         $size = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
         $factor = floor((strlen($bytes) - 1) / 3);

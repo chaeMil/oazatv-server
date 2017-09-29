@@ -314,13 +314,22 @@ class VideoManager extends BaseModel {
         $video = $this->getVideoFromDB($id, 2);
         $finfo = finfo_open();
         $file = VIDEOS_FOLDER . $id ."/". $video->original_file;
-        if (file_exists($file)) {
+        if (file_exists($file) && !is_dir($file)) {
             $fileinfo = finfo_file($finfo, $file, FILEINFO_MIME);
             finfo_close($finfo);
             return $fileinfo;
         } else {
             return false;
         }
+    }
+
+    public function getOriginalFileDate($id) {
+        $video = $this->getVideoFromDB($id, 2);
+        $file = VIDEOS_FOLDER . $id ."/". $video->original_file;
+        if (file_exists($file)) {
+            return filemtime($file);
+        }
+        return null;
     }
 
     public function deleteVideoFile($id, $file) {
