@@ -32,7 +32,7 @@
                         <div class="panel-body">
                             <div>info: {$originalFileInfo}</div>
                             <div>velikost: {$originalFileSize}</div>
-                            <div>datum uploadu: <span class="date">{$originalFileDate|date('Y-m-d H:i:s')}</span></div>
+                            <div>datum uploadu: {$originalFileDate|date:'Y-m-d H:i:s'}</div>
                             <hr>
                             <a n:href="Video:deleteVideoFile, $video->id, $originalFile"
                                data-confirm="smazat originální soubor?"
