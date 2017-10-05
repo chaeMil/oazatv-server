@@ -9,9 +9,9 @@
 namespace Model;
 
 use Nette,
- App\StringUtils,
- App\FileUtils,
- ColorThief\ColorThief;
+    App\StringUtils,
+    App\FileUtils,
+    ColorThief\ColorThief;
 use Utils\ColorUtils;
 
 /**
@@ -19,56 +19,60 @@ use Utils\ColorUtils;
  *
  * @author chaemil
  */
-class VideoManager extends BaseModel {
+class VideoManager extends BaseModel
+{
 
     const
-            TABLE_NAME = 'db_video_files',
-            COLUMN_ID = 'id',
-            COLUMN_HASH = 'hash',
-            COLUMN_PUBLISHED = 'published',
-            COLUMN_ORIGINAL_FILE = 'original_file',
-            COLUMN_MP4_FILE = 'mp4_file',
-            COLUMN_MP4_FILE_LOWRES = 'mp4_file_lowres',
-            COLUMN_WEBM_FILE = 'webm_file',
-            COLUMN_MP3_FILE = 'mp3_file',
-            COLUMN_THUMB_FILE = 'thumb_file',
-            COLUMN_THUMB_FILE_LOWRES = 'thumb_file_lowres',
-            COLUMN_SUBTITLES_FILE = 'subtitles_file',
-            COLUMN_THUMB_COLOR = 'thumb_color',
-            COLUMN_METADATA_DURATION_IN_SECONDS = "metadata_duration_in_seconds",
-            COLUMN_DATE = 'date',
-            COLUMN_NAME_CS = 'name_cs',
-            COLUMN_NAME_EN = 'name_en',
-            COLUMN_TAGS = 'tags',
-            COLUMN_VIEWS = 'views',
-            COLUMN_CATEGORIES = 'categories',
-            COLUMN_DESCRIPTION_CS = 'description_cs',
-            COLUMN_DESCRIPTION_EN = 'description_en',
-            COLUMN_NOTE = 'note',
-            THUMB_1024 = 1024,
-            THUMB_512 = 512,
-            THUMB_256 = 256,
-            THUMB_128 = 128,
-            API_METADATA = "metadata";
+        TABLE_NAME = 'db_video_files',
+        COLUMN_ID = 'id',
+        COLUMN_HASH = 'hash',
+        COLUMN_PUBLISHED = 'published',
+        COLUMN_ORIGINAL_FILE = 'original_file',
+        COLUMN_MP4_FILE = 'mp4_file',
+        COLUMN_MP4_FILE_LOWRES = 'mp4_file_lowres',
+        COLUMN_WEBM_FILE = 'webm_file',
+        COLUMN_MP3_FILE = 'mp3_file',
+        COLUMN_THUMB_FILE = 'thumb_file',
+        COLUMN_THUMB_FILE_LOWRES = 'thumb_file_lowres',
+        COLUMN_SUBTITLES_FILE = 'subtitles_file',
+        COLUMN_THUMB_COLOR = 'thumb_color',
+        COLUMN_METADATA_DURATION_IN_SECONDS = "metadata_duration_in_seconds",
+        COLUMN_DATE = 'date',
+        COLUMN_NAME_CS = 'name_cs',
+        COLUMN_NAME_EN = 'name_en',
+        COLUMN_TAGS = 'tags',
+        COLUMN_VIEWS = 'views',
+        COLUMN_CATEGORIES = 'categories',
+        COLUMN_DESCRIPTION_CS = 'description_cs',
+        COLUMN_DESCRIPTION_EN = 'description_en',
+        COLUMN_NOTE = 'note',
+        THUMB_1024 = 1024,
+        THUMB_512 = 512,
+        THUMB_256 = 256,
+        THUMB_128 = 128,
+        API_METADATA = "metadata";
 
     /** @var Nette\Database\Context */
     public static $database;
     public static $queueManager;
 
-    public function __construct(Nette\Database\Context $database, 
-            VideoConvertQueueManager $queueManager) {
+    public function __construct(Nette\Database\Context $database,
+                                VideoConvertQueueManager $queueManager)
+    {
         self::$database = $database;
         self::$queueManager = $queueManager;
     }
 
-    private function checkIfVideoExists($id) {
+    private function checkIfVideoExists($id)
+    {
         return self::$database->table(self::TABLE_NAME)
-                ->where(self::COLUMN_ID, $id)->count();
+            ->where(self::COLUMN_ID, $id)->count();
     }
 
-    public function saveVideoToDB($values) {
+    public function saveVideoToDB($values)
+    {
 
-        if(isset($values['id'])) {
+        if (isset($values['id'])) {
             $videoId = \Nette\Utils\Strings::webalize($values['id']);
         } else {
             $videoId = 0;
@@ -81,9 +85,9 @@ class VideoManager extends BaseModel {
         } else {
             $values['hash'] = StringUtils::rand(8);
             $sql = self::$database->table(self::TABLE_NAME)->insert($values);
-            $newVideoDir = VIDEOS_FOLDER.$sql->id."/";
-            $newVideoThumbsDir = $newVideoDir."thumbs/";
-            $vewVideoLogsDir = $newVideoDir."logs/";
+            $newVideoDir = VIDEOS_FOLDER . $sql->id . "/";
+            $newVideoThumbsDir = $newVideoDir . "thumbs/";
+            $vewVideoLogsDir = $newVideoDir . "logs/";
             mkdir($newVideoDir);
             mkdir($newVideoThumbsDir);
             mkdir($vewVideoLogsDir);
@@ -95,36 +99,38 @@ class VideoManager extends BaseModel {
         return $sql->id;
 
     }
-    
-    public function getLatestVideoFromDB($published = 1) {
+
+    public function getLatestVideoFromDB($published = 1)
+    {
         if ($published != 2) {
             return self::$database->table(self::TABLE_NAME)
-                    ->select("*")
-                    ->limit(1, 0)
-                    ->order(self::COLUMN_DATE." DESC". ", ".self::COLUMN_ID." DESC")
-                    ->where(array(self::COLUMN_PUBLISHED => $published))
-                    ->fetch();
+                ->select("*")
+                ->limit(1, 0)
+                ->order(self::COLUMN_DATE . " DESC" . ", " . self::COLUMN_ID . " DESC")
+                ->where(array(self::COLUMN_PUBLISHED => $published))
+                ->fetch();
         } else {
             return self::$database->table(self::TABLE_NAME)
-                    ->select("*")
-                    ->limit(1, 0)
-                    ->order(self::COLUMN_DATE." DESC")
-                    ->fetch();
+                ->select("*")
+                ->limit(1, 0)
+                ->order(self::COLUMN_DATE . " DESC")
+                ->fetch();
         }
     }
 
-    public function getVideoFromDB($id, $published = 1) {
+    public function getVideoFromDB($id, $published = 1)
+    {
         if ($published != 2) {
             $video = self::$database->table(self::TABLE_NAME)
-                    ->select("*")
-                    ->where(array(self::COLUMN_ID => $id,
-                        self::COLUMN_PUBLISHED => $published))
-                    ->fetch();
+                ->select("*")
+                ->where(array(self::COLUMN_ID => $id,
+                    self::COLUMN_PUBLISHED => $published))
+                ->fetch();
         } else {
             $video = self::$database->table(self::TABLE_NAME)
-                    ->select("*")
-                    ->where(array(self::COLUMN_ID => $id))
-                    ->fetch();
+                ->select("*")
+                ->where(array(self::COLUMN_ID => $id))
+                ->fetch();
         }
 
         $metadataDurationInSeconds = $video[VideoManager::COLUMN_METADATA_DURATION_IN_SECONDS];
@@ -133,16 +139,17 @@ class VideoManager extends BaseModel {
             $videoUrlPrefix = VIDEOS_FOLDER . $video[VideoManager::COLUMN_ID] . "/";
             $metadata = $this->getVideoFileMetadata($videoUrlPrefix . $video[VideoManager::COLUMN_MP4_FILE]);
             $videoToUpdate = $video;
-			if ($videoToUpdate != false) {
-            	$videoToUpdate->update(array(VideoManager::COLUMN_METADATA_DURATION_IN_SECONDS => $metadata['duration_in_seconds']));
-			}
+            if ($videoToUpdate != false) {
+                $videoToUpdate->update(array(VideoManager::COLUMN_METADATA_DURATION_IN_SECONDS => $metadata['duration_in_seconds']));
+            }
         }
 
-		$result = $video;
+        $result = $video;
         return $result;
     }
-  
-    public function getVideoFileMetadata($file = "", $duration_in_seconds = 0) {
+
+    public function getVideoFileMetadata($file = "", $duration_in_seconds = 0)
+    {
         if ($file != "") {
             $metadata = array();
 
@@ -159,79 +166,84 @@ class VideoManager extends BaseModel {
             $duration_string = str_replace("00:", "", $duration_string);
         }
         $metadata['duration_string'] = $duration_string;
-		
-		return $metadata;   
-	}
-    
-    public function getVideoFromDBtoAPI($id) {	
-        $videoDB = $this->getVideoFromDB($id, 1);
-		
-		if ($videoDB != false) {
-			$arrayItemFromDB = $videoDB->toArray();
-			$arrayItemFromDB['type'] = 'video';
-			unset($arrayItemFromDB['note']);
-			return $arrayItemFromDB;
-		} else { 
-			return null;
-		}
+
+        return $metadata;
     }
 
-    public function getVideoFromDBbyHash($hash, $published = 1) {
+    public function getVideoFromDBtoAPI($id)
+    {
+        $videoDB = $this->getVideoFromDB($id, 1);
+
+        if ($videoDB != false) {
+            $arrayItemFromDB = $videoDB->toArray();
+            $arrayItemFromDB['type'] = 'video';
+            unset($arrayItemFromDB['note']);
+            return $arrayItemFromDB;
+        } else {
+            return null;
+        }
+    }
+
+    public function getVideoFromDBbyHash($hash, $published = 1)
+    {
 
         if ($published != 2) {
             return self::$database->table(self::TABLE_NAME)
-                    ->select("*")
-                    ->where(array(self::COLUMN_HASH => $hash,
-                        self::COLUMN_PUBLISHED => $published))
-                    ->fetch();
+                ->select("*")
+                ->where(array(self::COLUMN_HASH => $hash,
+                    self::COLUMN_PUBLISHED => $published))
+                ->fetch();
         } else {
             return self::$database->table(self::TABLE_NAME)
-                    ->select("*")
-                    ->where(array(self::COLUMN_HASH => $hash))
-                    ->fetch();
+                ->select("*")
+                ->where(array(self::COLUMN_HASH => $hash))
+                ->fetch();
         }
     }
-    
-    public function getVideoFromDBbyTag($tag, $published = 1) {
+
+    public function getVideoFromDBbyTag($tag, $published = 1)
+    {
 
         if ($published != 2) {
             return self::$database
-                    ->query("select * from db_video_files where tags like'%"
-                            .str_replace(array(' ', '.'), '', $tag)
-                            ."%' and published = 1 order by rand() limit 1")
-                    ->fetch();
+                ->query("select * from db_video_files where tags like'%"
+                    . str_replace(array(' ', '.'), '', $tag)
+                    . "%' and published = 1 order by rand() limit 1")
+                ->fetch();
         } else {
             return self::$database->table(self::TABLE_NAME)
-                    ->query("select * from db_video_files where tags like'%"
-                            .str_replace(array(' ', '.'), '', $tag)
-                            ."%' order by rand() limit 1")
-                    ->fetch();
-        }
-    }
-    
-    public function getVideosFromDBbyCategory($category, $from, $count, 
-            $published = 1, $order = "date DESC") {
-
-        if($published != 2) {
-            return self::$database->table(self::TABLE_NAME)
-                ->select('*')
-                ->where(array(self::COLUMN_PUBLISHED => $published,
-                    self::COLUMN_CATEGORIES." LIKE '%".$category."%'"))
-                ->limit($count, $from)
-                ->order($order);
-        } else {
-            return self::$database->table(self::TABLE_NAME)
-                ->select('*')
-                ->limit($count, $from)
-                ->order($order);
+                ->query("select * from db_video_files where tags like'%"
+                    . str_replace(array(' ', '.'), '', $tag)
+                    . "%' order by rand() limit 1")
+                ->fetch();
         }
     }
 
-    public function countVideos($published = 1) {
+    public function getVideosFromDBbyCategory($category, $from, $count,
+                                              $published = 1, $order = "date DESC")
+    {
 
         if ($published != 2) {
             return self::$database->table(self::TABLE_NAME)
-                    ->where(self::COLUMN_PUBLISHED, $published)->count("*");
+                ->select('*')
+                ->where(array(self::COLUMN_PUBLISHED => $published,
+                    self::COLUMN_CATEGORIES . " LIKE '%" . $category . "%'"))
+                ->limit($count, $from)
+                ->order($order);
+        } else {
+            return self::$database->table(self::TABLE_NAME)
+                ->select('*')
+                ->limit($count, $from)
+                ->order($order);
+        }
+    }
+
+    public function countVideos($published = 1)
+    {
+
+        if ($published != 2) {
+            return self::$database->table(self::TABLE_NAME)
+                ->where(self::COLUMN_PUBLISHED, $published)->count("*");
         } else {
             return self::$database->table(self::TABLE_NAME)->count("*");
         }
@@ -239,9 +251,10 @@ class VideoManager extends BaseModel {
 
     }
 
-    public function getVideosFromDB($from, $count, $published = 1, $order = "date DESC, id DESC") {
+    public function getVideosFromDB($from, $count, $published = 1, $order = "date DESC, id DESC")
+    {
 
-        if($published != 2) {
+        if ($published != 2) {
             return self::$database->table(self::TABLE_NAME)
                 ->select('*')
                 ->where(array(self::COLUMN_PUBLISHED => $published))
@@ -255,65 +268,69 @@ class VideoManager extends BaseModel {
         }
 
     }
-    
-    public function getVideosFromDBtoAPI($from, $count, $order = "date DESC, id DESC") {
-        
+
+    public function getVideosFromDBtoAPI($from, $count, $order = "date DESC, id DESC")
+    {
+
         $videos = self::$database->table(self::TABLE_NAME)
-                ->select('*')
-                ->where(array(self::COLUMN_PUBLISHED => 1))
-                ->limit($count, $from)
-                ->order($order);
-        
+            ->select('*')
+            ->where(array(self::COLUMN_PUBLISHED => 1))
+            ->limit($count, $from)
+            ->order($order);
+
         $outputArray = array();
-        
-        foreach($videos as $video) {
+
+        foreach ($videos as $video) {
             $arrayItemFromDB = $this->getVideoFromDB($video['id'])->toArray();
             $arrayItemFromDB['type'] = 'video';
             $outputArray[] = $arrayItemFromDB;
         }
-        
+
         return $outputArray;
     }
 
 
-    public function getVideosFromDBbyTag($tag, $limit = 10, $published = 1) {
+    public function getVideosFromDBbyTag($tag, $limit = 10, $published = 1)
+    {
         return self::$database->table(self::TABLE_NAME)
-                ->select('*')
-                ->where(array(self::COLUMN_TAGS." LIKE '%".$tag."%'",
-                        self::COLUMN_PUBLISHED => $published))
-                ->limit($limit)
-                ->fetchAll();
+            ->select('*')
+            ->where(array(self::COLUMN_TAGS . " LIKE '%" . $tag . "%'",
+                self::COLUMN_PUBLISHED => $published))
+            ->limit($limit)
+            ->fetchAll();
     }
-    
-    public function getVideosFromDBbyTags($tags, $offset = 0, $limit = 10) {
+
+    public function getVideosFromDBbyTags($tags, $offset = 0, $limit = 10)
+    {
         $tagsArray = explode(",", str_replace(" ", "", $tags));
-        
+
         $tagsQuery = "";
-        
+
         $i = 0;
         $len = count($tagsArray);
-        foreach($tagsArray as $tag) {
-            $tagsQuery .= self::COLUMN_TAGS." LIKE '%".$tag."%' ";
-            
+        foreach ($tagsArray as $tag) {
+            $tagsQuery .= self::COLUMN_TAGS . " LIKE '%" . $tag . "%' ";
+
             if ($i != $len - 1) {
                 $tagsQuery .= "AND ";
             }
-            
+
             $i++;
         }
-        
-        $videos = self::$database->query("SELECT * FROM ".self::TABLE_NAME." WHERE ".$tagsQuery.
-                " ORDER BY ".VideoManager::COLUMN_DATE. " DESC".
-                " LIMIT ".$limit." OFFSET ".$offset)->fetchAll();
-        
+
+        $videos = self::$database->query("SELECT * FROM " . self::TABLE_NAME . " WHERE " . $tagsQuery .
+            " ORDER BY " . VideoManager::COLUMN_DATE . " DESC" .
+            " LIMIT " . $limit . " OFFSET " . $offset)->fetchAll();
+
         return $videos;
-        
+
     }
 
-    public function getOriginalFileInfo($id) {
+    public function getOriginalFileInfo($id)
+    {
         $video = $this->getVideoFromDB($id, 2);
         $finfo = finfo_open();
-        $file = VIDEOS_FOLDER . $id ."/". $video->original_file;
+        $file = VIDEOS_FOLDER . $id . "/" . $video->original_file;
         if (file_exists($file) && !is_dir($file)) {
             $fileinfo = finfo_file($finfo, $file, FILEINFO_MIME);
             finfo_close($finfo);
@@ -323,18 +340,20 @@ class VideoManager extends BaseModel {
         }
     }
 
-    public function getOriginalFileDate($id) {
+    public function getOriginalFileDate($id)
+    {
         $video = $this->getVideoFromDB($id, 2);
-        $file = VIDEOS_FOLDER . $id ."/". $video->original_file;
+        $file = VIDEOS_FOLDER . $id . "/" . $video->original_file;
         if (file_exists($file)) {
             return filemtime($file);
         }
         return null;
     }
 
-    public function deleteVideoFile($id, $file) {
+    public function deleteVideoFile($id, $file)
+    {
         $video = $this->getVideoFromDB($id, 2);
-        $fileToDelete = VIDEOS_FOLDER . $id ."/". $video->$file;
+        $fileToDelete = VIDEOS_FOLDER . $id . "/" . $video->$file;
         if (!empty($video->$file)) {
             if (file_exists($fileToDelete)) {
                 unlink($fileToDelete);
@@ -343,13 +362,15 @@ class VideoManager extends BaseModel {
         $video->update(array($file => ""));
     }
 
-    public function deleteVideo($id) {
+    public function deleteVideo($id)
+    {
         $video = $this->getVideoFromDB($id, 2);
-        FileUtils::recursiveDelete(VIDEOS_FOLDER . $id ."/");
+        FileUtils::recursiveDelete(VIDEOS_FOLDER . $id . "/");
         $video->delete();
     }
-    
-    public function useOriginalFileAs($id, $target) {
+
+    public function useOriginalFileAs($id, $target)
+    {
         $video = $this->getVideoFromDB($id, 2);
         $video->update(array(self::COLUMN_ORIGINAL_FILE => "", $target => $video->original_file));
 
@@ -365,7 +386,8 @@ class VideoManager extends BaseModel {
         }
     }
 
-    public function fixSubtitlesFile($subtitlesFile) {
+    public function fixSubtitlesFile($subtitlesFile)
+    {
 
         $header = "[Script Info]
 ScriptType: v4.00+
@@ -390,12 +412,13 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         fclose($file);
     }
 
-    public function useExternalFileAsThumb($id, $file) {
+    public function useExternalFileAsThumb($id, $file)
+    {
         $video = $this->getVideoFromDB($id, 2);
         $this->deleteVideoFile($id, self::COLUMN_THUMB_FILE);
         $this->deleteThumbnails($id);
-        $newThumbName = StringUtils::rand(6).".jpg";
-        copy($file, VIDEOS_FOLDER.$id."/".$newThumbName);
+        $newThumbName = StringUtils::rand(6) . ".jpg";
+        copy($file, VIDEOS_FOLDER . $id . "/" . $newThumbName);
 
         $newThumbColor = $this->getVideoThumbDominantColor($id);
         $video->update(array(self::COLUMN_THUMB_FILE => $newThumbName,
@@ -403,30 +426,33 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
 
     }
 
-    public function addVideoToConvertQueue($id, $input, $target, $profile) {
+    public function addVideoToConvertQueue($id, $input, $target, $profile)
+    {
         self::$queueManager->addVideoToQueue($id, $input, $target, $profile);
     }
 
-    public function returnMissingThumbs() {
+    public function returnMissingThumbs()
+    {
         return array(self::THUMB_1024 => "assets/img/missing-thumb.png",
-                self::THUMB_512 => "assets/img/missing-thumb.png",
-                self::THUMB_256 => "assets/img/missing-thumb.png",
-                self::THUMB_128 => "assets/img/missing-thumb.png");
+            self::THUMB_512 => "assets/img/missing-thumb.png",
+            self::THUMB_256 => "assets/img/missing-thumb.png",
+            self::THUMB_128 => "assets/img/missing-thumb.png");
     }
 
-    public function getThumbnails($id) {
+    public function getThumbnails($id)
+    {
         $video = $this->getVideoFromDB($id, 2);
         if ($video['thumb_file'] != null) {
-            $thumb = VIDEOS_FOLDER.$video->id."/thumbs/".str_replace(".jpg", "_".self::THUMB_1024.".jpg", $video['thumb_file']);
-            $thumbfile = VIDEOS_FOLDER.$video->id."/thumbs/".str_replace(".jpg", "", $video['thumb_file']);
+            $thumb = VIDEOS_FOLDER . $video->id . "/thumbs/" . str_replace(".jpg", "_" . self::THUMB_1024 . ".jpg", $video['thumb_file']);
+            $thumbfile = VIDEOS_FOLDER . $video->id . "/thumbs/" . str_replace(".jpg", "", $video['thumb_file']);
             if (!file_exists($thumb)) {
                 $this->generateThumbnails($id);
             }
             if (file_exists($thumb)) {
-                return array(self::THUMB_1024 => $thumbfile."_".self::THUMB_1024.".jpg",
-                    self::THUMB_512 => $thumbfile."_".self::THUMB_512.".jpg",
-                    self::THUMB_256 => $thumbfile."_".self::THUMB_256.".jpg",
-                    self::THUMB_128 => $thumbfile."_".self::THUMB_128.".jpg");
+                return array(self::THUMB_1024 => $thumbfile . "_" . self::THUMB_1024 . ".jpg",
+                    self::THUMB_512 => $thumbfile . "_" . self::THUMB_512 . ".jpg",
+                    self::THUMB_256 => $thumbfile . "_" . self::THUMB_256 . ".jpg",
+                    self::THUMB_128 => $thumbfile . "_" . self::THUMB_128 . ".jpg");
             } else {
                 return $this->returnMissingThumbs();
             }
@@ -436,29 +462,32 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
 
     }
 
-    public function deleteThumbnails($id) {
-        $files = glob(VIDEOS_FOLDER.$id.'/thumbs/*');
-        foreach($files as $file){
-            if(is_file($file)) {
-                 unlink($file);
+    public function deleteThumbnails($id)
+    {
+        $files = glob(VIDEOS_FOLDER . $id . '/thumbs/*');
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                unlink($file);
             }
         }
     }
 
-    private function generateThumbnails($videoId) {
+    private function generateThumbnails($videoId)
+    {
         $video = $this->getVideoFromDB($videoId, 2);
         if (isset($video->thumb_file)) {
-            $thumbFile = VIDEOS_FOLDER.$video->id."/".$video->thumb_file;
+            $thumbFile = VIDEOS_FOLDER . $video->id . "/" . $video->thumb_file;
             if (file_exists($thumbFile)) {
-                \App\ImageUtils::resizeImage(VIDEOS_FOLDER.$video->id, $video->thumb_file, self::THUMB_1024, self::THUMB_1024, VIDEOS_FOLDER.$video->id."/thumbs/");
-                \App\ImageUtils::resizeImage(VIDEOS_FOLDER.$video->id, $video->thumb_file, self::THUMB_512, self::THUMB_512, VIDEOS_FOLDER.$video->id."/thumbs/");
-                \App\ImageUtils::resizeImage(VIDEOS_FOLDER.$video->id, $video->thumb_file, self::THUMB_256, self::THUMB_256, VIDEOS_FOLDER.$video->id."/thumbs/");
-                \App\ImageUtils::resizeImage(VIDEOS_FOLDER.$video->id, $video->thumb_file, self::THUMB_128, self::THUMB_128, VIDEOS_FOLDER.$video->id."/thumbs/");
+                \App\ImageUtils::resizeImage(VIDEOS_FOLDER . $video->id, $video->thumb_file, self::THUMB_1024, self::THUMB_1024, VIDEOS_FOLDER . $video->id . "/thumbs/");
+                \App\ImageUtils::resizeImage(VIDEOS_FOLDER . $video->id, $video->thumb_file, self::THUMB_512, self::THUMB_512, VIDEOS_FOLDER . $video->id . "/thumbs/");
+                \App\ImageUtils::resizeImage(VIDEOS_FOLDER . $video->id, $video->thumb_file, self::THUMB_256, self::THUMB_256, VIDEOS_FOLDER . $video->id . "/thumbs/");
+                \App\ImageUtils::resizeImage(VIDEOS_FOLDER . $video->id, $video->thumb_file, self::THUMB_128, self::THUMB_128, VIDEOS_FOLDER . $video->id . "/thumbs/");
             }
         }
     }
 
-    public function countView($id) {
+    public function countView($id)
+    {
         $video = self::$database->table(self::TABLE_NAME)->get($id);
         $views = $video['views'];
 
@@ -496,16 +525,27 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         $video['hash'] = $input['hash'];
         $video['tags'] = $input[self::COLUMN_TAGS];
 
-        if (strpos($video['tags'], 'cesky') !== false
-            && strpos($video['tags'], 'english') !== false) {
-            $video['multilang'] = true;
-        } else {
-            if (strpos($video['tags'], 'cesky') !== false) {
-                $video['multilang'] = 'cs';
-            } else {
-                $video['multilang'] = 'en';
-            }
+        $langsCount = 0;
+        $multilang = false;
+
+        if (strpos($video['tags'], 'cesky') !== false) {
+            $langsCount += 1;
+            $multilang = 'cs';
         }
+        if (strpos($video['tags'], 'english') !== false) {
+            $langsCount += 1;
+            $multilang = 'en';
+        }
+        if (strpos($video['tags'], 'russian') !== false) {
+            $langsCount += 1;
+            $multilang = 'ru';
+        }
+
+        if ($langsCount == 1) {
+            $multilang = false;
+        }
+
+        $video['multilang'] = $multilang;
 
         if ($input[self::COLUMN_MP3_FILE] != '') {
             $video['mp3'] = VIDEOS_FOLDER . $videoId . '/' . $input[self::COLUMN_MP3_FILE];
@@ -538,12 +578,13 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         return $video;
     }
 
-    public function generateVideoTimeThumbs($id) {
+    public function generateVideoTimeThumbs($id)
+    {
         $this->deleteTimeThumbs($id);
 
         $video = $this->getVideoFromDB($id, 2);
 
-        if($video['mp4_file'] != '') {
+        if ($video['mp4_file'] != '') {
             $file = $video['mp4_file'];
         } else if ($video['webm_file'] != '') {
             $file = $video['webm_file'];
@@ -555,65 +596,68 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
 
         if ($file != null) {
 
-            $command = PATH_TO_FFMPEG." -i ".
-                CONVERSION_FOLDER_ROOT.$id."/".$file.
-                ' -threads 2 -an -sn -vsync 0 -vf fps=fps=1/30,scale=150:-1 '.CONVERSION_FOLDER_ROOT.$id."/time-thumbs/time-thumb-%04d.jpg".
+            $command = PATH_TO_FFMPEG . " -i " .
+                CONVERSION_FOLDER_ROOT . $id . "/" . $file .
+                ' -threads 2 -an -sn -vsync 0 -vf fps=fps=1/30,scale=150:-1 ' . CONVERSION_FOLDER_ROOT . $id . "/time-thumbs/time-thumb-%04d.jpg" .
                 ' -y > /dev/null 2>/dev/null &';
 
             shell_exec($command);
         }
     }
 
-    public function countTimeThumbs($id) {
-        if (file_exists(VIDEOS_FOLDER.$id.'/time-thumbs/')) {
-            $fi = new \FilesystemIterator(VIDEOS_FOLDER.$id.'/time-thumbs/', \FilesystemIterator::SKIP_DOTS);
+    public function countTimeThumbs($id)
+    {
+        if (file_exists(VIDEOS_FOLDER . $id . '/time-thumbs/')) {
+            $fi = new \FilesystemIterator(VIDEOS_FOLDER . $id . '/time-thumbs/', \FilesystemIterator::SKIP_DOTS);
             return iterator_count($fi);
         } else {
             return 0;
         }
     }
 
-    public function deleteTimeThumbs($id) {
-        $files = glob(VIDEOS_FOLDER.$id.'/time-thumbs/*');
-        foreach($files as $file){
-            if(is_file($file)) {
-                 unlink($file);
+    public function deleteTimeThumbs($id)
+    {
+        $files = glob(VIDEOS_FOLDER . $id . '/time-thumbs/*');
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                unlink($file);
             }
         }
     }
-    
-    public function findSimilarVideos($originalVideo, $lang = null, $numOfVideos = 8) {
+
+    public function findSimilarVideos($originalVideo, $lang = null, $numOfVideos = 8)
+    {
         $originalTags = explode(',', str_replace(' ', '', $originalVideo['tags']));
-        $tagsManager = new TagsManager(self::$database); 
+        $tagsManager = new TagsManager(self::$database);
         $hiddenTags = $tagsManager->getHiddenTagsFromDB();
-        
+
         $hiddenTagsArray = array();
-        foreach($hiddenTags as $hiddenTag) {
+        foreach ($hiddenTags as $hiddenTag) {
             $hiddenTagsArray[] = $hiddenTag['tag'];
         }
-        
+
         $usableTags = array_diff($originalTags, $hiddenTagsArray);
         sort($usableTags);
         $similarVideos = array();
-        
+
         if ($usableTags >= $numOfVideos) {
             $try = 0;
-            while(sizeof($similarVideos) != $numOfVideos) {
-                
+            while (sizeof($similarVideos) != $numOfVideos) {
+
                 if ($try > $numOfVideos) {
                     break;
                 }
-                $randomTag = $usableTags[rand(0, count($usableTags)-1)];
-                
+                $randomTag = $usableTags[rand(0, count($usableTags) - 1)];
+
                 $similarVideo = $this->getVideoFromDBbyTag($randomTag);
 
-                if($similarVideo != false) {
+                if ($similarVideo != false) {
                     if ($similarVideo['id'] != $originalVideo['id']
-                            || !in_array($similarVideo['id'], $similarVideos)) {
+                        || !in_array($similarVideo['id'], $similarVideos)) {
                         $similarVideos[] = $similarVideo['id'];
                     }
                 }
-                
+
                 $try++;
             }
         }
@@ -621,7 +665,7 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         if ($lang != null) {
             $localizedSimilarVideos = array();
 
-            foreach($similarVideos as $id) {
+            foreach ($similarVideos as $id) {
                 $localizedSimilarVideos[] = $this
                     ->createLocalizedVideoObject($lang, $this->getVideoFromDB($id));
             }
@@ -630,7 +674,7 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         } else {
             $similarVideosArray = array();
 
-            foreach($similarVideos as $id) {
+            foreach ($similarVideos as $id) {
                 $similarVideosArray[] = $this->getVideoFromDBtoAPI($id);
             }
 
@@ -638,7 +682,8 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         }
     }
 
-    public function getVideoThumbDominantColor($thumbFile, $quality = 30) {
+    public function getVideoThumbDominantColor($thumbFile, $quality = 30)
+    {
         if ($thumbFile != null) {
             if (file_exists($thumbFile)) {
                 return ColorUtils::rgb2hex(ColorThief::getColor($thumbFile, $quality));
@@ -647,7 +692,8 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         return null;
     }
 
-    public function saveVideoThumbDominantColor($videoId) {
+    public function saveVideoThumbDominantColor($videoId)
+    {
         $video = $this->getVideoFromDB($videoId, 2);
         if ($video[self::COLUMN_THUMB_COLOR] == NULL) {
             $thumbFile = VIDEOS_FOLDER . $videoId . "/thumbs/" . str_replace(".jpg", "_128.jpg", $video[self::COLUMN_THUMB_FILE]);
@@ -656,20 +702,21 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         }
     }
 
-    public function getVideosWithSubtitles($from, $count, $published = 1) {
+    public function getVideosWithSubtitles($from, $count, $published = 1)
+    {
         if ($published != 2) {
             return self::$database->table(self::TABLE_NAME)
                 ->select("*")
                 ->limit($count, $from)
-                ->order(self::COLUMN_DATE." DESC". ", ".self::COLUMN_ID." DESC")
-                ->where(self::COLUMN_PUBLISHED." = ? AND ".self::COLUMN_SUBTITLES_FILE." != ''", $published)
+                ->order(self::COLUMN_DATE . " DESC" . ", " . self::COLUMN_ID . " DESC")
+                ->where(self::COLUMN_PUBLISHED . " = ? AND " . self::COLUMN_SUBTITLES_FILE . " != ''", $published)
                 ->fetchAll();
         } else {
             return self::$database->table(self::TABLE_NAME)
                 ->select("*")
                 ->limit($count, $from)
-                ->order(self::COLUMN_DATE." DESC")
-                ->where(self::COLUMN_SUBTITLES_FILE." != ''")
+                ->order(self::COLUMN_DATE . " DESC")
+                ->where(self::COLUMN_SUBTITLES_FILE . " != ''")
                 ->fetchAll();
         }
     }
