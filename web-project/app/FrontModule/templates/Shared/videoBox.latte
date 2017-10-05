@@ -54,6 +54,7 @@
                             CC
                         </div>
                     {/if}
+                    {$item['multilang']}
                     {if $item['multilang'] != true}
                         <div class="lang {if isset($item['subtitles'])}offset{/if}">
                             {switch $item['multilang']}
