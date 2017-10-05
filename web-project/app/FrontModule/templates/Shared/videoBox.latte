@@ -54,8 +54,7 @@
                             CC
                         </div>
                     {/if}
-                    {$item['multilang']}
-                    {if isset($item['multilang']) && $item['multilang'] != true}
+                    {if isset($item['multilang']) && strlen($item['multilang']) > 1}
                         <div class="lang {if isset($item['subtitles'])}offset{/if}">
                             {switch $item['multilang']}
                             {case 'cs'}
