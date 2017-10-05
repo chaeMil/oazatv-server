@@ -528,15 +528,15 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         $langsCount = 0;
         $multilang = false;
 
-        if (strpos($video['tags'], 'cesky') !== false) {
+        if (strpos(strtolower($video['tags']), 'cesky') !== false) {
             $langsCount += 1;
             $multilang = 'cs';
         }
-        if (strpos($video['tags'], 'english') !== false) {
+        if (strpos(strtolower($video['tags']), 'english') !== false) {
             $langsCount += 1;
             $multilang = 'en';
         }
-        if (strpos($video['tags'], 'russian') !== false) {
+        if (strpos(strtolower($video['tags']), 'russian') !== false) {
             $langsCount += 1;
             $multilang = 'ru';
         }
