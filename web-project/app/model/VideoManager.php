@@ -526,7 +526,7 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
         $video['tags'] = $input[self::COLUMN_TAGS];
 
         $langsCount = 0;
-        $multilang = false;
+        $multilang = true;
 
         if (strpos(strtolower($video['tags']), 'cesky') !== false) {
             $langsCount += 1;
@@ -541,7 +541,7 @@ Style: Default,Roboto Slab,20,&H00FFFFFF,&H000000FF,&H00000000,&HFF000000,0,0,0,
             $multilang = 'ru';
         }
 
-        if ($langsCount == 1) {
+        if ($langsCount <= 1) {
             $multilang = false;
         }
 

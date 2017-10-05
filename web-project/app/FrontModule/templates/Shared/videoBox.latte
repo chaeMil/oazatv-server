@@ -54,7 +54,7 @@
                             CC
                         </div>
                     {/if}
-                    {if isset($item['multilang']) && $item['multilang'] != 1}
+                    {if $item['multilang'] == false}
                         <div class="lang {if isset($item['subtitles'])}offset{/if}">
                             {switch $item['multilang']}
                             {case 'cs'}
@@ -67,9 +67,9 @@
                         </div>
                     {/if}
                 </div>
-                <i class="open fa {if $item['type'] == "video"} fa-play-circle {else} fa-picture-o{/if}" 
+                <i class="open fa {if $item['type'] == "video"} fa-play-circle {else} fa-picture-o{/if}"
                    aria-hidden="true"></i>
-            </div> 
+            </div>
             <div class="info">
                <span class="name">{$item['name']}</span>
                <span class="date">{$item['date']}</span>
