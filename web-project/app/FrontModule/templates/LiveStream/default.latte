@@ -1,103 +1,117 @@
 {block content}
 
-<div class="container-fluid video-player-bg">
-    <div class="container">
-        <div class="video-player">
-            <div class="column col-md-10 col-md-offset-1">
-                <div class="embed-responsive embed-responsive-16by9 onair{if !$onAir} offline{/if}">
-                    <h1>{_frontend.basic.on_air_offline}</h1>
-                    <div id="player"></div>
+    <div class="container-fluid video-player-bg">
+        <div class="container">
+            <div class="video-player">
+                <div class="column col-md-10 col-md-offset-1">
+                    <div class="embed-responsive embed-responsive-16by9 onair{if !$onAir} offline{/if}">
+                        <h1>{_frontend.basic.on_air_offline}</h1>
+                        <div id="player"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <br>
-            <div id="player-bottom-text">
-                
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <br>
+                <div id="player-bottom-text">
+
+                </div>
             </div>
         </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h2>{_frontend.basic.fb_newsfeed}</h2>
+                <div class="fb-page" data-href="https://www.facebook.com/oazatv"
+                     data-tabs="timeline" data-width="500" data-small-header="false"
+                     data-adapt-container-width="true" data-hide-cover="false"
+                     data-show-facepile="true">
+                    <blockquote cite="https://www.facebook.com/oazatv" class="fb-xfbml-parse-ignore">
+                        <a href="https://www.facebook.com/oazatv">Oáza.tv</a>
+                    </blockquote>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2>{_frontend.basic.omovotv_stream}</h2>
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe src="https://player.netromedia.com/?ID=46d4ddf8-8cfe-4d35-b5d0-92c4fde8766a&iframe=true&h=480&w=640&autoPlay=false&scaling=scale"
+                            class="embed-responsive-item" frameborder="0" scrolling="no"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <br><br>
+
     </div>
-
-    <br>
-
-    <div class="row">
-        <div class="col-md-6">
-            <h2>{_frontend.basic.fb_newsfeed}</h2>
-            <div class="fb-page" data-href="https://www.facebook.com/oazatv"
-                 data-tabs="timeline" data-width="500" data-small-header="false"
-                 data-adapt-container-width="true" data-hide-cover="false"
-                 data-show-facepile="true">
-                <blockquote cite="https://www.facebook.com/oazatv" class="fb-xfbml-parse-ignore">
-                    <a href="https://www.facebook.com/oazatv">Oáza.tv</a>
-                </blockquote>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <h2>{_frontend.basic.omovotv_stream}</h2>
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe src="https://player.netromedia.com/?ID=46d4ddf8-8cfe-4d35-b5d0-92c4fde8766a&iframe=true&h=480&w=640&autoPlay=false&scaling=scale"
-                        class="embed-responsive-item" frameborder="0" scrolling="no"></iframe>
-            </div>
-        </div>
-    </div>
-
-    <br><br>
-
-</div>
 
 {/block}
 
 {block pageScripts}
 
-<script>
-    var tag = document.createElement('script');
+    <script>
+        var tag = document.createElement('script');
 
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    var player;
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('player', {
-        height: '720',
-        width: '100%',
-        videoId: {$values['youtube_link']},
-        events: {
-          'onReady': onPlayerReady
+        var player;
+        var onAir = {$onAir};
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '720',
+                width: '100%',
+                videoId: {$values['youtube_link']},
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
         }
-      });
-    }
 
-    function onPlayerReady(event) {
-      event.target.playVideo();
-    }
-
-    getPlayerTexts();
-
-    setInterval(function() {
-        getPlayerTexts();
-    }, 10 * 1000);
-    
-    function getPlayerTexts() {
-        $.get( {plink "LiveStream:ajaxRefresh"}, function(response) {
-            var cs = response['bottom_text_cs'];
-            var en = response['bottom_text_en'];
-            var textElement = $('#player-bottom-text');
-
-            switch({$lang}) {
-                case 'cs':
-                    textElement.html(cs);
-                    break;
-                case 'en':
-                    textElement.html(en);
-                    break;
+        function onPlayerReady(event) {
+            if (onAir) {
+                event.target.playVideo();
             }
-        });
-    }
-</script>
+        }
+
+        getPlayerTexts();
+
+        setInterval(function () {
+            getPlayerTexts();
+        }, 10 * 1000);
+
+        function getPlayerTexts() {
+            $.get( {plink "LiveStream:ajaxRefresh"}, function (response) {
+                if (response.on_air === "online") {
+                    onAir = true;
+                } else {
+                    onAir = false;
+                }
+
+                if (!onAir) {
+                    player.stopVideo();
+                }
+
+                var cs = response['bottom_text_cs'];
+                var en = response['bottom_text_en'];
+                var textElement = $('#player-bottom-text');
+
+                switch ({$lang}) {
+                    case 'cs':
+                        textElement.html(cs);
+                        break;
+                    case 'en':
+                        textElement.html(en);
+                        break;
+                }
+            });
+        }
+    </script>
 {/block}
