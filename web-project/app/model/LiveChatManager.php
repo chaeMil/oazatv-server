@@ -43,19 +43,35 @@ class LiveChatManager extends BaseModel {
         return $messages;
     }
 
-    public function getNonApprovedMessages() {
-        $messages = self::$database->table(self::TABLE_NAME)
-            ->select('*')
-            ->where(array(self::COLUMN_APPROVED => false))
-            ->fetchAll();
+    public function getNonApprovedMessages($datetime = null) {
+        if ($datetime == null) {
+            $messages = self::$database->table(self::TABLE_NAME)
+                ->select('*')
+                ->where(array(self::COLUMN_APPROVED => false))
+                ->order(self::COLUMN_DATETIME.' DESC')
+                ->fetchAll();
+        } else {
+            $messages = self::$database->table(self::TABLE_NAME)
+                ->select('*')
+                ->where(array(self::COLUMN_APPROVED => false, self::COLUMN_DATETIME.' > ' .$datetime))
+                ->fetchAll();
+        }
         return $messages;
     }
 
-    public function getApprovedMessages() {
-        $messages = self::$database->table(self::TABLE_NAME)
-            ->select('*')
-            ->where(array(self::COLUMN_APPROVED => true))
-            ->fetchAll();
+    public function getApprovedMessages($datetime = null) {
+        if ($datetime == null) {
+            $messages = self::$database->table(self::TABLE_NAME)
+                ->select('*')
+                ->where(array(self::COLUMN_APPROVED => true))
+                ->order(self::COLUMN_DATETIME.' DESC')
+                ->fetchAll();
+        } else {
+            $messages = self::$database->table(self::TABLE_NAME)
+                ->select('*')
+                ->where(array(self::COLUMN_APPROVED => true, self::COLUMN_DATETIME.' > ' .$datetime))
+                ->fetchAll();
+        }
         return $messages;
     }
 

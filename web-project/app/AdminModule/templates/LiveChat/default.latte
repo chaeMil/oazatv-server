@@ -13,11 +13,25 @@
                             <div class="panel-heading">
                                 Neschválené zprávy
                             </div>
-                            <div class="panel-body" style="height: calc(100vh - 200px); overflow: scroll">
+                            <div class="panel-body"
+                                 style="height: calc(100vh - 200px); overflow: scroll">
                                 {foreach $nonApprovedMessages as $message}
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             {$message['datetime']} - {$message['name']}
+                                            <div class="btn-group pull-right">
+                                                <a href="#"
+                                                   data-message-id="{$message['id']}"
+                                                   data-confirm="Smazat?"
+                                                   class="btn btn-xs btn-danger delete-message">
+                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                </a>
+                                                <a href="#"
+                                                   data-message-id="{$message['id']}"
+                                                   class="btn btn-xs btn-success approve-message">
+                                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
                                         </div>
                                         <div class="panel-body">
                                             {$message['message']}
@@ -32,11 +46,18 @@
                             <div class="panel-heading">
                                 Schválené zprávy
                             </div>
-                            <div class="panel-body" style="height: calc(100vh - 200px); overflow: scroll">
+                            <div class="panel-body"
+                                 id="approved-messages"
+                                 style="height: calc(100vh - 200px); overflow: scroll">
                                 {foreach $approvedMessages as $message}
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             {$message['datetime']} - {$message['name']}
+                                            <div class="btn-group pull-right">
+                                                <a href="#" class="btn btn-xs btn-danger delete-message">
+                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
                                         </div>
                                         <div class="panel-body">
                                             {$message['message']}
@@ -50,4 +71,85 @@
             </div>
         </div>
     </div>
+{/block}
+
+{block pageScripts}
+    <script>
+        $('.delete-message').click(function(e) {
+            e.preventDefault();
+
+            var messageElement = $(this).closest('.panel');
+            var id = $(this).attr('data-message-id');
+
+            bootbox.confirm({
+                message: "Smazat zprávu?",
+                buttons: {
+                    confirm: {
+                        label: 'Ano',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'Ne',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+                    if (result) {
+
+                        $.ajax({
+                            url: {plink 'LiveChat:deleteMessage'},
+                            method: 'post',
+                            data: {
+                                'id': id
+                            },
+                            success: function(response) {
+                                if (response.status == 1) {
+                                    messageElement.remove();
+                                }
+                            }
+                        })
+                    }
+                }
+            });
+        });
+
+        $('.approve-message').click(function(e) {
+            e.preventDefault();
+
+            var messageElement = $(this).closest('.panel');
+            var id = $(this).attr('data-message-id');
+
+            bootbox.confirm({
+                message: "Schválit zprávu?",
+                buttons: {
+                    confirm: {
+                        label: 'Ano',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'Ne',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+                    if (result) {
+
+                        $.ajax({
+                            url: {plink 'LiveChat:approveMessage'},
+                            method: 'post',
+                            data: {
+                                'id': id
+                            },
+                            success: function(response) {
+                                if (response.status == 1) {
+                                    messageElement.detach();
+                                    messageElement.prependTo($('#approved-messages'));
+                                }
+                            }
+                        })
+                    }
+                }
+            });
+        })
+    </script>
 {/block}

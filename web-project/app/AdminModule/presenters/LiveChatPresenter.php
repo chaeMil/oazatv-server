@@ -31,7 +31,8 @@ class LiveChatPresenter extends BaseSecuredPresenter{
         $this->template->nonApprovedMessages = $nonApprovedMessages;
     }
 
-    public function actionDeleteMessage($id) {
+    public function actionDeleteMessage() {
+        $id = $_POST['id'];
         $status = $this->liveChatManager->deleteMessage($id);
         if ($this->isAjax()) {
             $this->sendJson(array('status' => $status));
@@ -40,7 +41,8 @@ class LiveChatPresenter extends BaseSecuredPresenter{
         }
     }
 
-    public function actionApproveMessage($id) {
+    public function actionApproveMessage() {
+        $id = $_POST['id'];
         $status = $this->liveChatManager->approveMessage($id);
         if ($this->isAjax()) {
             $this->sendJson(array('status' => $status));
