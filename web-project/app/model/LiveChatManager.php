@@ -43,8 +43,8 @@ class LiveChatManager extends BaseModel {
         return $messages;
     }
 
-    public function getNonApprovedMessages($datetime = null) {
-        if ($datetime == null) {
+    public function getNonApprovedMessages($lastVisibleId = null) {
+        if ($lastVisibleId == null) {
             $messages = self::$database->table(self::TABLE_NAME)
                 ->select('*')
                 ->where(array(self::COLUMN_APPROVED => false))
@@ -53,14 +53,14 @@ class LiveChatManager extends BaseModel {
         } else {
             $messages = self::$database->table(self::TABLE_NAME)
                 ->select('*')
-                ->where(array(self::COLUMN_APPROVED => false, self::COLUMN_DATETIME.' > ' .$datetime))
+                ->where(array(self::COLUMN_APPROVED => false, self::COLUMN_ID.' > '.$lastVisibleId))
                 ->fetchAll();
         }
         return $messages;
     }
 
-    public function getApprovedMessages($datetime = null) {
-        if ($datetime == null) {
+    public function getApprovedMessages($lastVisibleId = null) {
+        if ($lastVisibleId == null) {
             $messages = self::$database->table(self::TABLE_NAME)
                 ->select('*')
                 ->where(array(self::COLUMN_APPROVED => true))
@@ -69,7 +69,7 @@ class LiveChatManager extends BaseModel {
         } else {
             $messages = self::$database->table(self::TABLE_NAME)
                 ->select('*')
-                ->where(array(self::COLUMN_APPROVED => true, self::COLUMN_DATETIME.' > ' .$datetime))
+                ->where(array(self::COLUMN_APPROVED => true, self::COLUMN_ID.' > '.$lastVisibleId))
                 ->fetchAll();
         }
         return $messages;

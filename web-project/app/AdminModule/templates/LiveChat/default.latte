@@ -28,28 +28,6 @@
                             <div class="panel-body"
                                  id="non-approved-messages"
                                  style="height: calc(100vh - 200px); overflow: scroll">
-                                {foreach $nonApprovedMessages as $message}
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            {$message['datetime']} - {$message['name']}
-                                            <div class="btn-group pull-right">
-                                                <a href="#"
-                                                   data-message-id="{$message['id']}"
-                                                   class="btn btn-xs btn-danger delete-message">
-                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                                </a>
-                                                <a href="#"
-                                                   data-message-id="{$message['id']}"
-                                                   class="btn btn-xs btn-success approve-message">
-                                                    <i class="fa fa-check" aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="panel-body">
-                                            {$message['message']}
-                                        </div>
-                                    </div>
-                                {/foreach}
                             </div>
                         </div>
                     </div>
@@ -61,23 +39,6 @@
                             <div class="panel-body"
                                  id="approved-messages"
                                  style="height: calc(100vh - 200px); overflow: scroll">
-                                {foreach $approvedMessages as $message}
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            {$message['datetime']} - {$message['name']}
-                                            <div class="btn-group pull-right">
-                                                <a href="#"
-                                                   data-message-id="{$message['id']}"
-                                                   class="btn btn-xs btn-danger delete-message">
-                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="panel-body">
-                                            {$message['message']}
-                                        </div>
-                                    </div>
-                                {/foreach}
                             </div>
                         </div>
                     </div>
@@ -89,115 +50,173 @@
 
 {block pageScripts}
     <script>
-        $('.delete-message').click(function (e) {
-            e.preventDefault();
 
-            var messageElement = $(this).closest('.panel');
-            var id = $(this).attr('data-message-id');
+        var refreshFinish = 0;
+        window.lastVisibleId = 0;
 
-            bootbox.confirm({
-                message: "Smazat zprávu?",
-                buttons: {
-                    confirm: {
-                        label: 'Ano',
-                        className: 'btn-success'
-                    },
-                    cancel: {
-                        label: 'Ne',
-                        className: 'btn-danger'
-                    }
+        function onRefreshDone() {
+            if (refreshFinish == 2) {
+                bindApproveMessage();
+                bindDeleteMessage();
+            }
+        }
+
+        function refreshMessages() {
+            refreshFinish = 0;
+
+            $.ajax({
+                url: {plink 'LiveChat:GetNonApprovedMessages'},
+                method: 'post',
+                data: {
+                    'lastVisibleId': lastVisibleId
                 },
-                callback: function (result) {
-                    if (result) {
-
-                        $.ajax({
-                            url: {plink 'LiveChat:deleteMessage'},
-                            method: 'post',
-                            data: {
-                                'id': id
-                            },
-                            success: function (response) {
-                                if (response.status == 1) {
-                                    messageElement.remove();
-                                }
-                            }
-                        })
-                    }
+                success: function(response) {
+                    $('#non-approved-messages').prepend(response);
+                    refreshFinish += 1;
+                    onRefreshDone();
                 }
             });
-        });
 
-        $('.approve-message').click(function (e) {
-            e.preventDefault();
-
-            var messageElement = $(this).closest('.panel');
-            var id = $(this).attr('data-message-id');
-
-            bootbox.confirm({
-                message: "Schválit zprávu?",
-                buttons: {
-                    confirm: {
-                        label: 'Ano',
-                        className: 'btn-success'
-                    },
-                    cancel: {
-                        label: 'Ne',
-                        className: 'btn-danger'
-                    }
+            $.ajax({
+                url: {plink 'LiveChat:GetApprovedMessages'},
+                method: 'post',
+                data: {
+                    'lastVisibleId': lastVisibleId
                 },
-                callback: function (result) {
-                    if (result) {
-
-                        $.ajax({
-                            url: {plink 'LiveChat:approveMessage'},
-                            method: 'post',
-                            data: {
-                                'id': id
-                            },
-                            success: function (response) {
-                                if (response.status == 1) {
-                                    messageElement.detach();
-                                    messageElement.find('.approve-message').remove();
-                                    messageElement.prependTo($('#approved-messages'));
-                                }
-                            }
-                        })
-                    }
+                success: function(response) {
+                    $('#approved-messages').prepend(response);
+                    refreshFinish += 1;
+                    onRefreshDone();
                 }
             });
-        });
+        }
 
-        $('#delete-all-messages').click(function (e) {
-            e.preventDefault();
+        function bindDeleteMessage() {
+            $('.delete-message').off().on('click', function (e) {
+                e.preventDefault();
 
-            bootbox.confirm({
-                message: "Smazat vše?",
-                buttons: {
-                    confirm: {
-                        label: 'Ano',
-                        className: 'btn-success'
+                var messageElement = $(this).closest('.panel');
+                var id = $(this).attr('data-message-id');
+
+                bootbox.confirm({
+                    message: "Smazat zprávu?",
+                    buttons: {
+                        confirm: {
+                            label: 'Ano',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'Ne',
+                            className: 'btn-danger'
+                        }
                     },
-                    cancel: {
-                        label: 'Ne',
-                        className: 'btn-danger'
-                    }
-                },
-                callback: function (result) {
-                    if (result) {
+                    callback: function (result) {
+                        if (result) {
 
-                        $.ajax({
-                            url: {plink 'LiveChat:deleteAllMessages'},
-                            method: 'post',
-                            success: function (response) {
-                                if (response.status) {
-                                    $('#non-approved-messages').empty();
-                                    $('#approved-messages').empty();
+                            $.ajax({
+                                url: {plink 'LiveChat:deleteMessage'},
+                                method: 'post',
+                                data: {
+                                    'id': id
+                                },
+                                success: function (response) {
+                                    if (response.status == 1) {
+                                        messageElement.remove();
+                                    }
                                 }
-                            }
-                        })
+                            })
+                        }
                     }
-                }
+                });
             });
+        }
+
+        function bindApproveMessage() {
+            $('.approve-message').off().on('click', function (e) {
+                e.preventDefault();
+
+                var messageElement = $(this).closest('.panel');
+                var id = $(this).attr('data-message-id');
+
+                bootbox.confirm({
+                    message: "Schválit zprávu?",
+                    buttons: {
+                        confirm: {
+                            label: 'Ano',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'Ne',
+                            className: 'btn-danger'
+                        }
+                    },
+                    callback: function (result) {
+                        if (result) {
+
+                            $.ajax({
+                                url: {plink 'LiveChat:approveMessage'},
+                                method: 'post',
+                                data: {
+                                    'id': id
+                                },
+                                success: function (response) {
+                                    if (response.status == 1) {
+                                        messageElement.detach();
+                                        messageElement.find('.approve-message').remove();
+                                        messageElement.prependTo($('#approved-messages'));
+                                    }
+                                }
+                            })
+                        }
+                    }
+                });
+            });
+        }
+
+        function bindDeleteAllMessages() {
+            $('#delete-all-messages').off().on('click', function (e) {
+                e.preventDefault();
+
+                bootbox.confirm({
+                    message: "Smazat vše?",
+                    buttons: {
+                        confirm: {
+                            label: 'Ano',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'Ne',
+                            className: 'btn-danger'
+                        }
+                    },
+                    callback: function (result) {
+                        if (result) {
+
+                            $.ajax({
+                                url: {plink 'LiveChat:deleteAllMessages'},
+                                method: 'post',
+                                success: function (response) {
+                                    if (response.status) {
+                                        $('#non-approved-messages').empty();
+                                        $('#approved-messages').empty();
+                                    }
+                                }
+                            })
+                        }
+                    }
+                });
+            });
+        }
+
+        $(document).ready(function() {
+            refreshMessages();
+            bindDeleteMessage();
+            bindApproveMessage();
+            bindDeleteAllMessages();
+
+            setInterval(function() {
+                refreshMessages();
+            }, 5000);
         });
     </script>
 {/block}

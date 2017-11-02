@@ -59,4 +59,16 @@ class LiveChatPresenter extends BaseSecuredPresenter{
             $this->redirect('default');
         }
     }
+
+    public function actionGetNonApprovedMessages() {
+        $lastVisibleId = $_POST['lastVisibleId'];
+        $messages = $this->liveChatManager->getNonApprovedMessages($lastVisibleId);
+        $this->template->messages = $messages;
+    }
+
+    public function actionGetApprovedMessages() {
+        $lastVisibleId = $_POST['lastVisibleId'];
+        $messages = $this->liveChatManager->getApprovedMessages($lastVisibleId);
+        $this->template->messages = $messages;
+    }
 }

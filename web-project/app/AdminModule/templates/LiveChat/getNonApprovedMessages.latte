@@ -1,0 +1,28 @@
+{foreach $messages as $message}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            {$message['datetime']} - {$message['name']}
+            <div class="btn-group pull-right">
+                <a href="#"
+                   data-message-id="{$message['id']}"
+                   class="btn btn-xs btn-danger delete-message">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </a>
+                <a href="#"
+                   data-message-id="{$message['id']}"
+                   class="btn btn-xs btn-success approve-message">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+        <div class="panel-body">
+            {$message['message']}
+        </div>
+    </div>
+
+    <script>
+        if (window.lastVisibleId < {$message['id']}) {
+            window.lastVisibleId = {$message['id']};
+        }
+    </script>
+{/foreach}
