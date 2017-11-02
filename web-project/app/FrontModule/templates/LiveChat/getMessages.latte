@@ -1,0 +1,21 @@
+{foreach $messages as $message}
+    <div class="panel panel-default card-2">
+        <div class="panel-heading">
+            {$message['name']} - {$message['datetime']}
+            <a href="#" class="btn btn-danger btn-md pull-right hide-message">
+                <i class="fa fa-trash-o" aria-hidden="true" style="font-size: 30px"></i>
+            </a>
+        </div>
+        <div class="panel-body">
+            <p class="lead" style="margin-bottom: 0">
+                {$message['message']}
+            </p>
+        </div>
+    </div>
+
+    <script>
+        if (window.lastVisibleId < {$message['id']}) {
+            window.lastVisibleId = {$message['id']};
+        }
+    </script>
+{/foreach}

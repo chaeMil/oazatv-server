@@ -1,0 +1,65 @@
+{block content}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12" id="messages">
+
+            </div>
+        </div>
+    </div>
+
+{/block}
+
+{block pageScripts}
+    <script>
+        window.lastVisibleId = 0;
+
+        function bindHideMessage() {
+            $('.hide-message').off().on('click', function(e) {
+                e.preventDefault();
+                $(this).closest('.panel').remove();
+            });
+        }
+
+        function onRefreshDone() {
+            bindHideMessage();
+        }
+
+        function refreshMessages() {
+            console.log('refreshing now');
+
+            $.ajax({
+                url: {plink 'LiveChat:getMessages'},
+                method: 'post',
+                data: {
+                    'lastVisibleId': lastVisibleId
+                },
+                success: function(response) {
+                    $('#messages').prepend(response);
+                    onRefreshDone();
+                }
+            });
+        }
+
+        refreshMessages();
+
+        $(document).ready(function() {
+            setInterval(function() {
+                refreshMessages();
+            }, 5000);
+        });
+    </script>
+
+    <style>
+        .navbar {
+            display: none;
+        }
+
+        .footer {
+            display: none;
+        }
+
+        .container.main-content.padded {
+            margin-top: 0;
+        }
+    </style>
+{/block}
