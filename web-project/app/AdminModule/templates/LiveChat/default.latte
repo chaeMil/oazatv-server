@@ -1,0 +1,53 @@
+{block content}
+    <div id="wrapper">
+
+        {include ../navbar.latte}
+
+        <div class="container-fluid">
+            <div class="row">
+                <h2>Live Chat</h2>
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading">
+                                Neschválené zprávy
+                            </div>
+                            <div class="panel-body" style="height: calc(100vh - 200px); overflow: scroll">
+                                {foreach $nonApprovedMessages as $message}
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            {$message['datetime']} - {$message['name']}
+                                        </div>
+                                        <div class="panel-body">
+                                            {$message['message']}
+                                        </div>
+                                    </div>
+                                {/foreach}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                Schválené zprávy
+                            </div>
+                            <div class="panel-body" style="height: calc(100vh - 200px); overflow: scroll">
+                                {foreach $approvedMessages as $message}
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            {$message['datetime']} - {$message['name']}
+                                        </div>
+                                        <div class="panel-body">
+                                            {$message['message']}
+                                        </div>
+                                    </div>
+                                {/foreach}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{/block}

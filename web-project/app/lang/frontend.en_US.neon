@@ -26,6 +26,10 @@ basic:
     photo_albums: "Photo albums"
     fb_newsfeed: "Facebook newsfeed"
     omovotv_stream: "Omovo TV test stream"
+    livechat: "Pošlete nám zprávu"
+    something_went_wrong: "Něco se pokazilo"
+livechat:
+    successfully_sent: 'Úspěšně odesláno'
 search:
     more: "more results"
 homepage:

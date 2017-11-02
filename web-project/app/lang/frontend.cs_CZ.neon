@@ -26,6 +26,10 @@ basic:
     photo_albums: "Fotoalba"
     fb_newsfeed: "Facebook novinky"
     omovotv_stream: "Omovo TV testovací přenos"
+    livechat: "Send us a message"
+    something_went_wrong: "Something wen wrong"
+livechat:
+    successfully_sent: 'Successfully sent'
 search:
     more: "další výsledky"
 homepage:

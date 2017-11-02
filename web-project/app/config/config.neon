@@ -50,6 +50,7 @@ services:
     - Model\ArchiveMenuManager
     - Model\ServerMonitorManager
     - Model\PrivateLinksManager
+    - Model\LiveChatManager
     - App\RouterFactory
     webDir: App\Services\WebDir(%wwwDir%)
     router: @App\RouterFactory::createRouter

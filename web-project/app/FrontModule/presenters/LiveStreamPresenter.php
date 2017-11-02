@@ -2,6 +2,7 @@
 
 namespace App\FrontModule;
 
+use Model\LiveChatManager;
 use Nette,
  Nette\Application\Responses\JsonResponse,
  Model\LiveStreamManager;
@@ -15,14 +16,17 @@ class LiveStreamPresenter extends BasePresenter {
     public $database;
     public $container;
     public $liveStreamManager;
+    public $liveChatManager;
 
     function __construct(Nette\DI\Container $container,
             Nette\Database\Context $database, 
-            LiveStreamManager $liveStreamManager) {
+            LiveStreamManager $liveStreamManager,
+            LiveChatManager $liveChatManager) {
         
         parent::__construct($container, $database);
         
         $this->liveStreamManager = $liveStreamManager;
+        $this->liveChatManager = $liveChatManager;
     }
 
     public function renderDefault() {
@@ -52,6 +56,19 @@ class LiveStreamPresenter extends BasePresenter {
     public function actionAjaxRefresh() {
         $values = $this->liveStreamManager->loadValues();
         $this->sendResponse(new JsonResponse($values));
+    }
+
+    public function actionSubmitMessage() {
+        $name = $_POST['name'];
+        $message = $_POST['message'];
+
+        $status = $this->liveChatManager->createMessage($name, $message);
+        if ($this->isAjax()) {
+            $this->sendJson(array('status' => $status));
+        } else {
+            $this->flashMessage('Úspěšně odesláno');
+            $this->redirect('default');
+        }
     }
     
 }
