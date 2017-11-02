@@ -13,54 +13,89 @@
         </div>
     </div>
 
+    <br>
+
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <br>
-                <div id="player-bottom-text">
-
-                </div>
-            </div>
-        </div>
-
-        <br>
-
-        <div class="row">
-            <div class="col-lg-6 col-md-7">
-                <h2>{_frontend.basic.fb_newsfeed}</h2>
-                <div class="fb-page" data-href="https://www.facebook.com/oazatv"
-                     data-tabs="timeline" data-width="500" data-small-header="false"
-                     data-adapt-container-width="true" data-hide-cover="false"
-                     data-show-facepile="true">
-                    <blockquote cite="https://www.facebook.com/oazatv" class="fb-xfbml-parse-ignore">
-                        <a href="https://www.facebook.com/oazatv">Oáza.tv</a>
-                    </blockquote>
+        <div class="col-md-10 col-md-offset-1">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="panel panel-default card-2">
+                        <div class="panel-body">
+                            <div id="player-bottom-text"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div id="livechat-wrapper" class="col-lg-6 col-md-5 {if !$onAir}hidden{/if}">
-                <h2>{_frontend.basic.livechat}</h2>
-                <form action="#" id="livechat">
-                    <p>
-                        <input type="text" name="name" minlength="3">
-                    </p>
-
-                    <p>
-                        <textarea name="message" cols="30" rows="10" minlength="10"></textarea>
-                    </p>
-
-                    <p>
-                        <input type="submit">
-                    </p>
-                </form>
-            </div>
-            {*<div class="col-md-6">
-                <h2>{_frontend.basic.omovotv_stream}</h2>
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe src="https://player.netromedia.com/?ID=46d4ddf8-8cfe-4d35-b5d0-92c4fde8766a&iframe=true&h=480&w=640&autoPlay=false&scaling=scale"
-                            class="embed-responsive-item" frameborder="0" scrolling="no"></iframe>
+            <div class="row">
+                <div class="col-xl-5 col-lg-6 col-md-6">
+                    <div class="panel panel-default card-2">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{_frontend.basic.fb_newsfeed}</h3>
+                        </div>
+                        <div class="panel-body" style="padding: 3px">
+                            <iframe frameborder="0" height="0" width="0" onload="var _this = this; window.setTimeout(function(){ setupFBframe(_this); },500 /* let dom settle before eval parent dimensions */ );"></iframe>
+                        </div>
+                    </div>
                 </div>
-            </div>*}
+
+                <div id="livechat-wrapper" class="col-xl-7 col-lg-6 col-md-6 {if !$onAir}hidden{/if}">
+                    <div class="panel panel-default card-2">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{_frontend.basic.livechat}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form action="#" id="livechat">
+                                <div class="row">
+                                    <div class="col-sm-2 text-right">
+                                        <label for="name">{_frontend.livechat.name}</label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <input type="text"
+                                               name="name"
+                                               minlength="3"
+                                               class="form-control">
+                                    </div>
+                                </div>
+
+                                <br>
+
+                                <div class="row">
+                                    <div class="col-sm-2 text-right">
+                                        <label for="message">{_frontend.livechat.message}</label>
+                                    </div>
+
+                                    <div class="col-sm-10">
+                                    <textarea name="message"
+                                              class="form-control"
+                                              cols="30"
+                                              rows="10"
+                                              minlength="10"></textarea>
+                                    </div>
+                                </div>
+
+                                <br>
+
+                                <div class="row">
+                                    <div class="col-sm-10 col-sm-offset-2">
+                                        <input type="submit"
+                                               class="btn btn-primary"
+                                               value="{_frontend.livechat.submit}">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {*<div class="col-md-6">
+                    <h2>{_frontend.basic.omovotv_stream}</h2>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe src="https://player.netromedia.com/?ID=46d4ddf8-8cfe-4d35-b5d0-92c4fde8766a&iframe=true&h=480&w=640&autoPlay=false&scaling=scale"
+                                class="embed-responsive-item" frameborder="0" scrolling="no"></iframe>
+                    </div>
+                </div>*}
+            </div>
+
         </div>
 
         <br><br>
@@ -134,7 +169,40 @@
             });
         }
 
-        $('#livechat').submit(function(e) {
+        function setupFBframe(frame) {
+
+            if (frame.src) return; // already set up
+
+            // get parent container dimensions to use in src attrib
+            var container = frame.parentNode;
+
+            var containerWidth = container.offsetWidth - 6;
+            var containerHeight = 450;
+
+            var src = 'https://www.facebook.com/plugins/page.php' +
+                '?href=https%3A%2F%2Fwww.facebook.com%2Foazatv%2F' +
+                '&tabs=timeline' +
+                '&width=' + containerWidth +
+                '&height=' + containerHeight +
+                '&small_header=false' +
+                '&adapt_container_width=false' + /* doesn't seem to matter */
+                '&hide_cover=false' +
+                '&hide_cta=true' +
+                '&show_facepile=true' +
+                '&appId';
+
+            frame.width = containerWidth;
+            frame.height = containerHeight;
+            frame.src = src;
+
+            // scale up if container > 500px wide
+            if (containerWidth > 500) {
+                var scale = (containerWidth / 500 );
+                frame.style.transform = 'scale(' + scale + ')';
+            }
+        }
+
+        $('#livechat').submit(function (e) {
             e.preventDefault();
             var name = $(this).find('[name="name"]').val();
             var message = $(this).find('[name="message"]').val();
@@ -147,7 +215,7 @@
                         'name': name,
                         'message': message
                     },
-                    success : function (response) {
+                    success: function (response) {
                         if (response.status) {
                             $('#livechat')[0].reset();
                             alert({_frontend.livechat.successfully_sent})

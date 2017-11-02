@@ -27,9 +27,12 @@ basic:
     fb_newsfeed: "Facebook newsfeed"
     omovotv_stream: "Omovo TV test stream"
     livechat: "Pošlete nám zprávu"
-    something_went_wrong: "Něco se pokazilo"
+    something_went_wrong: "Something went wrong"
 livechat:
     successfully_sent: 'Úspěšně odesláno'
+    name: 'Name'
+    message: 'Message'
+    submit: "Submit"
 search:
     more: "more results"
 homepage:
