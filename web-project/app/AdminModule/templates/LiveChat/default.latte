@@ -22,7 +22,6 @@
                                             <div class="btn-group pull-right">
                                                 <a href="#"
                                                    data-message-id="{$message['id']}"
-                                                   data-confirm="Smazat?"
                                                    class="btn btn-xs btn-danger delete-message">
                                                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                                                 </a>
@@ -54,7 +53,9 @@
                                         <div class="panel-heading">
                                             {$message['datetime']} - {$message['name']}
                                             <div class="btn-group pull-right">
-                                                <a href="#" class="btn btn-xs btn-danger delete-message">
+                                                <a href="#"
+                                                   data-message-id="{$message['id']}"
+                                                   class="btn btn-xs btn-danger delete-message">
                                                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                                                 </a>
                                             </div>
@@ -143,6 +144,7 @@
                             success: function(response) {
                                 if (response.status == 1) {
                                     messageElement.detach();
+                                    messageElement.find('.approve-message').remove();
                                     messageElement.prependTo($('#approved-messages'));
                                 }
                             }
