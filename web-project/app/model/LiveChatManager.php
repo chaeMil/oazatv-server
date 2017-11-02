@@ -90,6 +90,9 @@ class LiveChatManager extends BaseModel {
     }
 
     public function deleteAllMessages() {
-        self::$database->table(self::TABLE_NAME)->delete();
+        if (self::$database->table(self::TABLE_NAME)->delete()) {
+            return true;
+        }
+        return false;
     }
 }

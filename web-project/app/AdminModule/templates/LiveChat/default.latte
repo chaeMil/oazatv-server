@@ -5,7 +5,19 @@
 
         <div class="container-fluid">
             <div class="row">
-                <h2>Live Chat</h2>
+
+                <div class="row">
+                    <div class="col-md-9">
+                        <h2>Live Chat</h2>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="#"
+                           id="delete-all-messages"
+                           class="btn btn-danger pull-right">
+                            Smazat všechny zprávy
+                        </a>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-xs-6">
@@ -14,6 +26,7 @@
                                 Neschválené zprávy
                             </div>
                             <div class="panel-body"
+                                 id="non-approved-messages"
                                  style="height: calc(100vh - 200px); overflow: scroll">
                                 {foreach $nonApprovedMessages as $message}
                                     <div class="panel panel-default">
@@ -76,7 +89,7 @@
 
 {block pageScripts}
     <script>
-        $('.delete-message').click(function(e) {
+        $('.delete-message').click(function (e) {
             e.preventDefault();
 
             var messageElement = $(this).closest('.panel');
@@ -103,7 +116,7 @@
                             data: {
                                 'id': id
                             },
-                            success: function(response) {
+                            success: function (response) {
                                 if (response.status == 1) {
                                     messageElement.remove();
                                 }
@@ -114,7 +127,7 @@
             });
         });
 
-        $('.approve-message').click(function(e) {
+        $('.approve-message').click(function (e) {
             e.preventDefault();
 
             var messageElement = $(this).closest('.panel');
@@ -141,7 +154,7 @@
                             data: {
                                 'id': id
                             },
-                            success: function(response) {
+                            success: function (response) {
                                 if (response.status == 1) {
                                     messageElement.detach();
                                     messageElement.find('.approve-message').remove();
@@ -152,6 +165,39 @@
                     }
                 }
             });
-        })
+        });
+
+        $('#delete-all-messages').click(function (e) {
+            e.preventDefault();
+
+            bootbox.confirm({
+                message: "Smazat vše?",
+                buttons: {
+                    confirm: {
+                        label: 'Ano',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'Ne',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+                    if (result) {
+
+                        $.ajax({
+                            url: {plink 'LiveChat:deleteAllMessages'},
+                            method: 'post',
+                            success: function (response) {
+                                if (response.status) {
+                                    $('#non-approved-messages').empty();
+                                    $('#approved-messages').empty();
+                                }
+                            }
+                        })
+                    }
+                }
+            });
+        });
     </script>
 {/block}
