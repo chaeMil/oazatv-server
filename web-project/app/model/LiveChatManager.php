@@ -48,7 +48,7 @@ class LiveChatManager extends BaseModel {
             $messages = self::$database->table(self::TABLE_NAME)
                 ->select('*')
                 ->where(array(self::COLUMN_APPROVED => false))
-                ->order(self::COLUMN_DATETIME.' DESC')
+                ->order(self::COLUMN_DATETIME.' ASC')
                 ->fetchAll();
         } else {
             $messages = self::$database->table(self::TABLE_NAME)
@@ -64,7 +64,7 @@ class LiveChatManager extends BaseModel {
             $messages = self::$database->table(self::TABLE_NAME)
                 ->select('*')
                 ->where(array(self::COLUMN_APPROVED => true))
-                ->order(self::COLUMN_DATETIME.' DESC')
+                ->order(self::COLUMN_DATETIME.' ASC')
                 ->fetchAll();
         } else {
             $messages = self::$database->table(self::TABLE_NAME)
