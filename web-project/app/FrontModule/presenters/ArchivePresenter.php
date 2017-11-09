@@ -161,7 +161,7 @@ class ArchivePresenter extends BasePresenter {
                 $paginator->getItemsPerPage());
 
         $itemsForCount = $this->videoManager
-            ->getVideosFromDBbyTagFilter('english', 'czech', 0, 999);
+            ->getVideosFromDBbyTagFilter('english', 'czech', 0, 9999);
 
         $paginator->setItemCount(sizeof($itemsForCount));
 
@@ -192,7 +192,7 @@ class ArchivePresenter extends BasePresenter {
             $paginator->getItemsPerPage());
 
         $itemsForCount = $this->videoManager
-            ->getVideosFromDBbyTagFilter('russian', 'czech', 0, 999);
+            ->getVideosFromDBbyTagFilter('russian', 'czech', 0, 9999);
 
         $paginator->setItemCount(sizeof($itemsForCount));
 
