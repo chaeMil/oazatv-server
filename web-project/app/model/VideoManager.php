@@ -306,7 +306,7 @@ class VideoManager extends BaseModel
             ->select('*')
             ->where("(" . self::COLUMN_TAGS . " LIKE '%" . $tag
                 . "%' AND " . self::COLUMN_TAGS . " NOT LIKE '%" . $tagFilter
-                . "%') AND (", self::COLUMN_PUBLISHED . " = 1)")
+                . "%') AND ", self::COLUMN_PUBLISHED . " = 1")
             ->limit($limit, $offset)
             ->fetchAll();
     }
