@@ -716,11 +716,19 @@
             margin-left: @navbar-padding-horizontal;
         }
 
+        @media (min-width: @screen-md-min) {
+            float: right;
+        }
+
         .form-control {
             color: @gray-lighter;
             background-color: lighten(@brand-primary, 8%);
 
-            @media (max-width: @screen-md-max) {
+            @media (max-width: @screen-sm-max) {
+                width: 100%;
+            }
+
+            @media (max-width: @screen-md-max) and (min-width: @screen-sm-min) {
                 width: 180px;
             }
         }
