@@ -90,7 +90,7 @@ class MainPresenter extends BasePresenter {
         $this->template->archiveMenuManager = $this->archiveMenuManager;
         $this->template->archiveMenu = $this->archiveMenuManager->getLocalizedMenus($this->lang);
         $this->template->englishVideosCount = sizeof($this->videoManager->getVideosFromDBbyTagFilter('english', 'czech', 0, 999));
-        $this->template->russianVideosCount = sizeof($this->videoManager->getVideosFromDBbyTagFilter('pусский', 'czech', 0, 999));
+        $this->template->russianVideosCount = sizeof($this->videoManager->getVideosFromDBbyTagFilter('russian', 'czech', 0, 999));
         $this->template->videosWithSubtitlesCount = sizeof($this->videoManager->getVideosWithSubtitles(0, 9999));
         $this->template->albumsCount = sizeof($this->photosManager->getAlbumsFromDB(0, 9999));
         $this->template->categories = $this->categoriesManager->getLocalizedCategories($this->lang);
