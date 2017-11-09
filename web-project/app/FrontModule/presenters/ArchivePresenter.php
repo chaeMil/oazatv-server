@@ -186,13 +186,13 @@ class ArchivePresenter extends BasePresenter {
         $paginator->setItemsPerPage($itemsPerPage);
         $paginator->setPage($page);
 
-        $items = $this->videoManager->getVideosFromDBbyTagFilter('pусский',
+        $items = $this->videoManager->getVideosFromDBbyTagFilter('russian',
             'czech',
             $paginator->getOffset(),
             $paginator->getItemsPerPage());
 
         $itemsForCount = $this->videoManager
-            ->getVideosFromDBbyTagFilter('pусский', 'czech', 0, 999);
+            ->getVideosFromDBbyTagFilter('russian', 'czech', 0, 999);
 
         $paginator->setItemCount(sizeof($itemsForCount));
 
@@ -204,7 +204,7 @@ class ArchivePresenter extends BasePresenter {
 
         $this->getBasicVariables($localizedVideos, $paginator);
         $this->template->activeMenu = array('id' => 'russian');
-        $this->template->paginationBaselink = $this->link('pусский');
+        $this->template->paginationBaselink = $this->link('russian');
     }
 
     public function renderMenu($id, $attr = 1) {
@@ -249,7 +249,7 @@ class ArchivePresenter extends BasePresenter {
         $this->template->archiveMenuManager = $this->archiveMenuManager;
         $this->template->videosWithSubtitlesCount = sizeof($this->videoManager->getVideosWithSubtitles(0, 9999));
         $this->template->englishVideosCount = sizeof($this->videoManager->getVideosFromDBbyTagFilter('english', 'czech', 0, 999));
-        $this->template->russianVideosCount = sizeof($this->videoManager->getVideosFromDBbyTagFilter('pусский', 'czech', 0, 999));
+        $this->template->russianVideosCount = sizeof($this->videoManager->getVideosFromDBbyTagFilter('russian', 'czech', 0, 999));
         $this->template->albumsCount = sizeof($this->photosManager->getAlbumsFromDB(0, 9999));
     }
 
