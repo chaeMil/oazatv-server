@@ -1,0 +1,27 @@
+{block content}
+<div class="row">
+    <div class="frontpage-archive-menu text-center col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <a n:href="Archive:albums" class="btn btn-lg btn-primary">
+            {_frontend.basic.photo_albums}
+            <span class="badge">
+            {$albumsCount}
+        </span>
+        </a>
+        <a n:href="Archive:videosWithSubtitles" class="btn btn-lg btn-primary">
+            {_frontend.basic.videos_with_subtitles}
+            <span class="badge">
+        {$videosWithSubtitlesCount}
+    </span>
+        </a>
+
+        {foreach $archiveMenu as $menu}
+            <a n:href="Archive:Menu $menu['tags']" class="btn btn-lg btn-primary">
+                {$menu['name']}
+                <span class="badge">
+                {$archiveMenuManager->countItemsInMenuByTag($menu['tags'])}
+            </span>
+            </a>
+        {/foreach}
+    </div>
+</div>
+

@@ -300,6 +300,16 @@ class VideoManager extends BaseModel
             ->fetchAll();
     }
 
+    public function getVideosFromDBbyTagFilter($tag, $tagFilter, $offset = 0, $limit = 10)
+    {
+        return self::$database->table(self::TABLE_NAME)
+            ->select('*')
+            ->where(array(self::COLUMN_TAGS . " LIKE '%" . $tag . "%' AND " . self::COLUMN_TAGS . " NOT LIKE '%" . $tagFilter . "%'",
+                self::COLUMN_PUBLISHED => true))
+            ->limit($limit, $offset)
+            ->fetchAll();
+    }
+
     public function getVideosFromDBbyTags($tags, $offset = 0, $limit = 10)
     {
         $tagsArray = explode(",", str_replace(" ", "", $tags));

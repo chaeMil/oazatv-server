@@ -12,7 +12,7 @@ Model\ArchiveMenuManager;
 
 
 class ArchivePresenter extends BasePresenter {
-    
+
     private $archiveManager;
     private $categoriesManager;
     private $videoManager;
@@ -27,7 +27,7 @@ class ArchivePresenter extends BasePresenter {
             VideoManager $videoManager,
             PhotosManager $photosManager,
             ArchiveMenuManager $archiveMenuManager) {
-        
+
         parent::__construct($container, $database);
         $this->archiveManager = $archiveManager;
         $this->categoriesManager = $categoriesManager;
@@ -35,50 +35,49 @@ class ArchivePresenter extends BasePresenter {
         $this->photosManager = $photosManager;
         $this->archiveMenuManager = $archiveMenuManager;
     }
-    
+
     public function renderDefault() {
         $this->redirect('Archive:Page');
     }
-    
+
     public function renderPage($id = 1) {
-        
         $page = $id;
-        
+
         $paginator = new Nette\Utils\Paginator;
         $paginator->setItemCount($this->archiveManager->countArchive());
         $paginator->setItemsPerPage(32);
         $paginator->setPage($page);
 
         $archive = $this->archiveManager
-                ->getVideosAndPhotoAlbumsFromDB($paginator->getOffset(), 
-                        $paginator->getItemsPerPage(), 
+                ->getVideosAndPhotoAlbumsFromDB($paginator->getOffset(),
+                        $paginator->getItemsPerPage(),
                         $this->lang);
 
         $this->getBasicVariables($archive, $paginator);
         $this->template->paginationBaselink = $this->link('Page');
     }
-    
+
     public function renderCategory($id, $attr = 1) {
 
         $category = $this->categoriesManager->getLocalizedCategory($id, $this->lang);
         $itemsPerPage = 32;
-        
+
         $paginator = new Nette\Utils\Paginator;
         $paginator->setItemsPerPage($itemsPerPage);
         $paginator->setPage($attr);
-        
+
         $videos = $this->videoManager
-                ->getVideosFromDBbyCategory($category['id'], 
+                ->getVideosFromDBbyTag($category['id'],
                         $paginator->getOffset(),
                         $paginator->getItemsPerPage());
-        
+
         $videosForCount = $this->videoManager
-                ->getVideosFromDBbyCategory($category['id'], 
+                ->getVideosFromDBbyCategory($category['id'],
                         0,
                         $this->archiveManager->countArchive());
 
         $paginator->setItemCount(sizeof($videosForCount));
-        
+
         $localizedVideos = array();
         foreach($videos as $video) {
             $localizedVideos[] = $this->videoManager
@@ -145,9 +144,39 @@ class ArchivePresenter extends BasePresenter {
         $this->template->activeMenu = array('id' => 'albums');
         $this->template->paginationBaselink = $this->link('Albums');
     }
-    
-    public function renderMenu($id, $attr = 1) {
 
+    public function renderEnglish($id) {
+        $this->setView('page');
+
+        $page = $id;
+        $itemsPerPage = 32;
+
+        $paginator = new Nette\Utils\Paginator;
+        $paginator->setItemsPerPage($itemsPerPage);
+        $paginator->setPage($page);
+
+        $items = $this->videoManager->getVideosFromDBbyTagFilter('english',
+                'czech',
+                $paginator->getOffset(),
+                $paginator->getItemsPerPage());
+
+        $itemsForCount = $this->videoManager
+            ->getVideosFromDBbyTagFilter('english', 'czech', 0, 999);
+
+        $paginator->setItemCount(sizeof($itemsForCount));
+
+        $localizedVideos = array();
+        foreach($items as $video) {
+            $localizedVideos[] = $this->videoManager
+                ->createLocalizedVideoObject($this->lang, $video);
+        }
+
+        $this->getBasicVariables($localizedVideos, $paginator);
+        $this->template->activeMenu = array('id' => 'english');
+        $this->template->paginationBaselink = $this->link('English');
+    }
+
+    public function renderMenu($id, $attr = 1) {
         $tags = $id;
         $itemsPerPage = 32;
 

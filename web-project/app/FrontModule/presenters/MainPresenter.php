@@ -2,6 +2,7 @@
 
 namespace App\FrontModule;
 
+use Model\ArchiveMenuManager;
 use Nette,
 Nette\Database\Context,
 Model\VideoManager,
@@ -19,7 +20,7 @@ class MainPresenter extends BasePresenter {
     private $analyticsManager;
     private $categoriesManager;
     private $frontPageManager;
-    private $anyVariable;
+    private $archiveMenuManager;
     
     public function __construct(Nette\DI\Container $container,
             Context $database, LoaderFactory $webLoader,
@@ -27,7 +28,8 @@ class MainPresenter extends BasePresenter {
             PhotosManager $photosManager,
             AnalyticsManager $analyticsManager,
             CategoriesManager $categoriesManager,
-            FrontPageManager $frontPageManager) {
+            FrontPageManager $frontPageManager,
+            ArchiveMenuManager $archiveMenuManager) {
         
         parent::__construct($container, $database,$webLoader);
         $this->videoManager = $videoManager;
@@ -35,22 +37,10 @@ class MainPresenter extends BasePresenter {
         $this->analyticsManager = $analyticsManager;
         $this->categoriesManager = $categoriesManager;
         $this->frontPageManager = $frontPageManager;
+        $this->archiveMenuManager = $archiveMenuManager;
     }
-  
-    public function handleChangeVariable() {
-        $this->anyVariable = 'changed value via ajax';
-        if ($this->isAjax()) {
-            $this->redrawControl('ajaxChange');
-        }
-    }
-    
+
     public function renderDefault() {
-      
-        if ($this->anyVariable === NULL) {
-            $this->anyVariable = 'default value';
-        }
-        $this->template->anyVariable = $this->anyVariable;
-      
         //support legacy links
         $params = $this->getHttpRequest()->getQuery();
         if (isset($params['page'])) {
@@ -66,14 +56,6 @@ class MainPresenter extends BasePresenter {
                 }
             }
         }
-        
-        $this->template->categories = $this->categoriesManager
-                ->getLocalizedCategories($this->lang);
-        
-        $this->template->rows = $this->frontPageManager->getRowsFromDB();
-        $this->template->frontPageManager = $this->frontPageManager;
-        $this->template->blockDefinitions = $this->frontPageManager->getBlocksDefinitions();
-        $this->template->lang = $this->lang;
         
         $newestVideos = $this->videoManager->getVideosFromDB(0, 16);
         $templateNewestVideos = null;
@@ -104,12 +86,20 @@ class MainPresenter extends BasePresenter {
         }
         
         $latestVideo = $this->videoManager->getLatestVideoFromDB();
-        
+
+        $this->template->archiveMenuManager = $this->archiveMenuManager;
+        $this->template->archiveMenu = $this->archiveMenuManager->getLocalizedMenus($this->lang);
+        $this->template->videosWithSubtitlesCount = sizeof($this->videoManager->getVideosWithSubtitles(0, 9999));
+        $this->template->albumsCount = sizeof($this->photosManager->getAlbumsFromDB(0, 9999));
+        $this->template->categories = $this->categoriesManager->getLocalizedCategories($this->lang);
+        $this->template->rows = $this->frontPageManager->getRowsFromDB();
+        $this->template->frontPageManager = $this->frontPageManager;
+        $this->template->blockDefinitions = $this->frontPageManager->getBlocksDefinitions();
+        $this->template->lang = $this->lang;
         $this->template->popularVideos = $templatePopularVideos;
         $this->template->newestVideos = $templateNewestVideos;
         $this->template->newestAlbums = $templateNewestAlbums;
-        $this->template->latestVideo = $this->videoManager
-                ->createLocalizedVideoObject($this->lang, $latestVideo);
+        $this->template->latestVideo = $this->videoManager->createLocalizedVideoObject($this->lang, $latestVideo);
         $this->template->lang = $this->lang;
         $this->template->user = $this->getUser();
         $this->template->videoManager = $this->videoManager;
