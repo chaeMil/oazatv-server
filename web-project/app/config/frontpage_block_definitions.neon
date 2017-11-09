@@ -217,3 +217,10 @@ frontpage_blocks:
                 name: 'link'
                 type: 'text'
                 mutations: 'cs|en'
+    archive_menu:
+        name: 'archive_menu'
+        info: 'Archiv menu'
+        inputs:
+            none:
+                name: 'none'
+                type: 'text'

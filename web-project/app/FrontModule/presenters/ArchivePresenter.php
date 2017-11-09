@@ -41,7 +41,6 @@ class ArchivePresenter extends BasePresenter {
     }
     
     public function renderPage($id = 1) {
-        
         $page = $id;
         
         $paginator = new Nette\Utils\Paginator;
@@ -147,7 +146,6 @@ class ArchivePresenter extends BasePresenter {
     }
     
     public function renderMenu($id, $attr = 1) {
-
         $tags = $id;
         $itemsPerPage = 32;
 
