@@ -16,6 +16,22 @@
                 {$videosWithSubtitlesCount}
             </span>
         </li>
+        <li class="list-group-item {if isset($activeMenu) && $activeMenu['id'] == 'english'}active{/if}">
+            <a n:href="Archive:english">
+                English
+            </a>
+            <span class="badge">
+                {$englishVideosCount}
+            </span>
+        </li>
+        <li class="list-group-item {if isset($activeMenu) && $activeMenu['id'] == 'russian'}active{/if}">
+            <a n:href="Archive:russian">
+                pусский
+            </a>
+            <span class="badge">
+                {$russianVideosCount}
+            </span>
+        </li>
         {foreach $archiveMenu as $menu}
             <li class="list-group-item {if isset($activeMenu) && $activeMenu['id'] == $menu['id']}active{/if}">
                 <a n:href="Archive:Menu $menu['tags']">

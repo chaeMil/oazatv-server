@@ -10,10 +10,21 @@
         <a n:href="Archive:videosWithSubtitles" class="btn btn-lg btn-primary">
             {_frontend.basic.videos_with_subtitles}
             <span class="badge">
-        {$videosWithSubtitlesCount}
-    </span>
+                {$videosWithSubtitlesCount}
+            </span>
         </a>
-
+        <a n:href="Archive:english" class="btn btn-lg btn-primary">
+            English
+            <span class="badge">
+                {$englishVideosCount}
+            </span>
+        </a>
+        <a n:href="Archive:russian" class="btn btn-lg btn-primary">
+            pусский
+                <span class="badge">
+                {$russianVideosCount}
+            </span>
+        </a>
         {foreach $archiveMenu as $menu}
             <a n:href="Archive:Menu $menu['tags']" class="btn btn-lg btn-primary">
                 {$menu['name']}
