@@ -67,7 +67,7 @@ class ArchivePresenter extends BasePresenter {
         $paginator->setPage($attr);
 
         $videos = $this->videoManager
-                ->getVideosFromDBbyTag($category['id'],
+                ->getVideosFromDBbyCategory($category['id'],
                         $paginator->getOffset(),
                         $paginator->getItemsPerPage());
 
@@ -176,6 +176,37 @@ class ArchivePresenter extends BasePresenter {
         $this->template->paginationBaselink = $this->link('English');
     }
 
+    public function renderRussian($id) {
+        $this->setView('page');
+
+        $page = $id;
+        $itemsPerPage = 32;
+
+        $paginator = new Nette\Utils\Paginator;
+        $paginator->setItemsPerPage($itemsPerPage);
+        $paginator->setPage($page);
+
+        $items = $this->videoManager->getVideosFromDBbyTagFilter('pусский',
+            'czech',
+            $paginator->getOffset(),
+            $paginator->getItemsPerPage());
+
+        $itemsForCount = $this->videoManager
+            ->getVideosFromDBbyTagFilter('pусский', 'czech', 0, 999);
+
+        $paginator->setItemCount(sizeof($itemsForCount));
+
+        $localizedVideos = array();
+        foreach($items as $video) {
+            $localizedVideos[] = $this->videoManager
+                ->createLocalizedVideoObject($this->lang, $video);
+        }
+
+        $this->getBasicVariables($localizedVideos, $paginator);
+        $this->template->activeMenu = array('id' => 'russian');
+        $this->template->paginationBaselink = $this->link('pусский');
+    }
+
     public function renderMenu($id, $attr = 1) {
         $tags = $id;
         $itemsPerPage = 32;
@@ -217,6 +248,8 @@ class ArchivePresenter extends BasePresenter {
         $this->template->categories = $this->categoriesManager->getLocalizedCategories($this->lang);
         $this->template->archiveMenuManager = $this->archiveMenuManager;
         $this->template->videosWithSubtitlesCount = sizeof($this->videoManager->getVideosWithSubtitles(0, 9999));
+        $this->template->englishVideosCount = sizeof($this->videoManager->getVideosFromDBbyTagFilter('english', 'czech', 0, 999));
+        $this->template->russianVideosCount = sizeof($this->videoManager->getVideosFromDBbyTagFilter('pусский', 'czech', 0, 999));
         $this->template->albumsCount = sizeof($this->photosManager->getAlbumsFromDB(0, 9999));
     }
 
