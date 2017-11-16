@@ -302,11 +302,12 @@ class VideoManager extends BaseModel
 
     public function getVideosFromDBbyTagFilter($tag, $tagFilter, $offset = 0, $limit = 10)
     {
-        $where = "(" . self::COLUMN_TAGS . " LIKE '%".$tag."%' AND "
-            . self::COLUMN_TAGS . " NOT LIKE '%".$tagFilter."%') AND "
+        $where = "(" . self::COLUMN_TAGS . " LIKE '%" . $tag . "%' AND "
+            . self::COLUMN_TAGS . " NOT LIKE '%" . $tagFilter . "%') AND "
             . self::COLUMN_PUBLISHED . " = 1";
         $result = self::$database
-            ->query("SELECT * FROM ". self::TABLE_NAME ." WHERE ". $where . " LIMIT " .$limit . " OFFSET ".$offset)
+            ->query("SELECT * FROM " . self::TABLE_NAME . " WHERE " . $where . " ORDER BY " . self::COLUMN_DATE . " DESC "
+                . " LIMIT " . $limit . " OFFSET " . $offset)
             ->fetchAll();
         return $result;
     }
