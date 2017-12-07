@@ -72,7 +72,7 @@ class ConversionManager {
                 $CONVextension = ".webm";
                 $CONVcodecVideo = "libvpx";
                 $CONVcodecAudio = "libvorbis";
-                $CONVextraParam = "-async 1";
+                $CONVextraParam = "-deinterlace -async 1";
                 break;
             case VideoManager::COLUMN_MP4_FILE_LOWRES:
                 if ($queueItem['profile'] == 0) {
