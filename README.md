@@ -45,6 +45,7 @@ Apache With PHP 5.4 and **exec command enabled!**
 ##Tested on
 - Ubuntu 12.04 64bit with PHP 5.5
 - Ubuntu 15.04 64bit with PHP 5.5
+- Ubuntu 16.04 LTS 64bit with PHP 7.0
 
 ##Installing
 1. git clone https://github.com/chaeMil/oazatv-server.git
