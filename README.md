@@ -1,7 +1,7 @@
 # oazatv-server
 Oáza.tv Server Application
 
-This project is aiming to create full replacement for the pright now oorly implemented www.oaza.tv server,
+This project is implementation of www.oaza.tv server,
 including backend administration, frontend user website and json API for mobile apps to use.
 
 ##Main features of this system are:
