@@ -59,8 +59,6 @@ class ArchiveMenuPresenter extends BaseSecuredPresenter {
             '1' => 'Ano',
         );
         
-        $form->addHidden('id');
-        
         $form->addText('name_cs', 'název česky')
                 ->setRequired()
                 ->setAttribute("class", "form-control");
