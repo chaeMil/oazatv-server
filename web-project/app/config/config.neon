@@ -68,7 +68,7 @@ translation:
 
 constants:
     VERSION: "0.9.6 (2017-09-29)"
-    LATEST_ANDROID_APP_VERSION: 2017040701
+    LATEST_ANDROID_APP_VERSION: 2018032001
     DB_PREFIX: ""
     DB_ADMIN_PREFIX: "admin_"
     ADMIN_UPLOADED_DIR: "uploaded/"
