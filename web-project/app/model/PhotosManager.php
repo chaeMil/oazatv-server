@@ -240,9 +240,12 @@ class PhotosManager {
     }
 
     public function deletePhotoThumbnails($photoId) {
-        foreach($this->getPhotoThumbnails($photoId) as $thumbnail) {
-            if (file_exists($thumbnail)) {
-                unlink($thumbnail);
+        $photoThumbnails = $this->getPhotoThumbnails($photoId);
+        if ($photoThumbnails != null) {
+            foreach($photoThumbnails as $thumbnail) {
+                if (file_exists($thumbnail)) {
+                    unlink($thumbnail);
+                }
             }
         }
     }
