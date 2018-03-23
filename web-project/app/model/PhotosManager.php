@@ -151,7 +151,7 @@ class PhotosManager {
                 ->order($order);
         }
     }
-    
+
      public function getAlbumsFromDBtoAPI($from, $count, $order = "date DESC, id DESC") {
 
         $albums = $this->database->table(self::TABLE_NAME_ALBUMS)
@@ -159,16 +159,16 @@ class PhotosManager {
                 ->where(self::COLUMN_PUBLISHED, 1)
                 ->limit($count, $from)
                 ->order($order);
-        
+
         $outputArray = array();
-        
+
         foreach($albums as $album) {
             $arrayItemFromDB = $this->getAlbumFromDB($album['id']);
             $arrayItemFromDB = $arrayItemFromDB->toArray();
             $arrayItemFromDB['type'] = 'album';
             $outputArray[] = $arrayItemFromDB;
         }
-        
+
         return $outputArray;
     }
 
@@ -197,7 +197,7 @@ class PhotosManager {
                     mkdir($thumbsLocation);
                     chmod($thumbsLocation, 0777);
                 }
-            }      
+            }
             if (file_exists($thumbsLocation)) {
                 $thumb = $thumbLocation;
                 $thumbfile = ALBUMS_FOLDER.$photo->album_id.'/thumbs/'.str_replace(".jpg", "", $photo->file);
@@ -223,9 +223,9 @@ class PhotosManager {
 
             $thumbsDir = ALBUMS_FOLDER.$photo->album_id.'/thumbs/';
             if (!file_exists($thumbsDir)) {
-               mkdir($thumbsDir); 
+               mkdir($thumbsDir);
             }
-            
+
             ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file,
                     self::THUMB_2048, self::THUMB_2048, ALBUMS_FOLDER.$photo->album_id.'/thumbs/');
             ImageUtils::resizeImage(ALBUMS_FOLDER.$photo->album_id.'/', $photo->file,
@@ -262,7 +262,9 @@ class PhotosManager {
             unlink($file);
         }
 
-        $photo->delete();
+        $this->database->table(self::TABLE_NAME_PHOTOS)
+                ->where(self::COLUMN_ID, $photoId)
+                ->delete();
     }
 
     public function getPhotosFromAlbum($aldumId) {
@@ -319,7 +321,7 @@ class PhotosManager {
 
 
         $tags = explode(",", $input[self::COLUMN_TAGS]);
-        
+
         $album['id'] = $input[self::COLUMN_ID];
         $album['hash'] = $input[self::COLUMN_HASH];
         $album['tags'] = $tags;
