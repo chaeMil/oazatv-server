@@ -1,0 +1,16 @@
+{block content}
+    <div class="container">
+        <div class="row">
+            {if $station == 'en'}
+                <h2>Oáza.tv - English</h2>
+                <div style='position: relative; padding-bottom: 56%; height: 0;'><iframe src='//app.viloud.tv/player/embed/channel/c045d1b495f229c915bfa1e03a825cd6?autoplay=1&volume=1&controls=1&title=1&share=0&random=0' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' frameborder='0' allowfullscreen></iframe></div>
+            {/if}
+            {if $station == 'cz'}
+                <h2>Oáza.tv - česky</h2>
+                <div style='position: relative; padding-bottom: 56%; height: 0;'><iframe src='//app.viloud.tv/player/embed/channel/5010c4653fb08277d937f567b7b9046d?autoplay=1&volume=1&controls=1&title=1&share=0&random=0' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' frameborder='0' allowfullscreen></iframe></div>
+            {/if}
+        </div>
+    </div>
+
+    <br>
+{/block}

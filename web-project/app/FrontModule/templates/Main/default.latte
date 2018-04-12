@@ -1,5 +1,26 @@
 {block content}
 
+    <div class="container">
+        <div class="row streams">
+            <a n:href="Tv:default?station=cz" class="col-md-6">
+                <div class="stream cz">
+                    <div class="bg"></div>
+                    <span>
+                        {_frontend.basic.czech_stream}
+                    </span>
+                </div>
+            </a>
+            <a n:href="Tv:default?station=cz" class="col-md-6">
+                <div class="stream en">
+                    <div class="bg"></div>
+                    <span>
+                        {_frontend.basic.english_stream}
+                    </span>
+                </div>
+            </a>
+        </div>
+    </div>
+
 {if isset($rows)}
     {foreach $rows as $row}
         
