@@ -28,6 +28,8 @@ basic:
     omovotv_stream: "Omovo TV test stream"
     livechat: "Pošlete nám zprávu"
     something_went_wrong: "Something went wrong"
+    czech_stream: "Czech stream"
+    english_stream: "English stream"
 livechat:
     successfully_sent: 'Úspěšně odesláno'
     name: 'Name'

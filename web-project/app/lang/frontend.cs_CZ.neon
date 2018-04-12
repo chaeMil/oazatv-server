@@ -27,6 +27,8 @@ basic:
     fb_newsfeed: "Facebook novinky"
     omovotv_stream: "Omovo TV testovací přenos"
     something_went_wrong: "Něco se pokazilo"
+    czech_stream: "České vysílání"
+    english_stream: "Anglický vysílání"
 livechat:
     successfully_sent: 'Úspěšně odesláno'
     name: 'Jméno'
