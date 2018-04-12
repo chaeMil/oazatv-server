@@ -4,13 +4,9 @@
         <div class="container">
             <div class="video-player">
                 <div class="column col-md-10 col-md-offset-1">
-                    <div id="player" class="{if !$onAir}hidden{/if}"></div>
-                    <div id="viloud-player">
-                        <div style='position: relative; padding-bottom: 56%; height: 0;'>
-                            <iframe src='//app.viloud.tv/player/embed/channel/6bda89eb32008bf6a63c5811b715b87e?autoplay=1&volume=1&controls=1&title=1&share=1&random=0'
-                                    style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;'
-                                    frameborder='0' allowfullscreen></iframe>
-                        </div>
+                    <div class="embed-responsive embed-responsive-16by9 onair{if !$onAir} offline{/if}">
+                        <h1>{_frontend.basic.on_air_offline}</h1>
+                        <div id="player"></div>
                     </div>
                 </div>
             </div>
@@ -38,8 +34,7 @@
                             <h3 class="panel-title">{_frontend.basic.fb_newsfeed}</h3>
                         </div>
                         <div class="panel-body" style="padding: 3px">
-                            <iframe frameborder="0" height="0" width="0"
-                                    onload="var _this = this; window.setTimeout(function(){ setupFBframe(_this); },500 /* let dom settle before eval parent dimensions */ );"></iframe>
+                            <iframe frameborder="0" height="0" width="0" onload="var _this = this; window.setTimeout(function(){ setupFBframe(_this); },500 /* let dom settle before eval parent dimensions */ );"></iframe>
                         </div>
                     </div>
                 </div>
@@ -154,12 +149,9 @@
 
                 if (!onAir) {
                     player.stopVideo();
-                    $('#viloud-player').addClass('visible');
                     $('#livechat-wrapper').addClass('hidden');
                 } else {
                     $('#livechat-wrapper').removeClass('hidden');
-                    $('#viloud-player').remove();
-                    $('#player').removeClass('hidden');
                 }
 
                 var cs = response['bottom_text_cs'];
@@ -205,7 +197,7 @@
 
             // scale up if container > 500px wide
             if (containerWidth > 500) {
-                var scale = (containerWidth / 500);
+                var scale = (containerWidth / 500 );
                 frame.style.transform = 'scale(' + scale + ')';
             }
         }
