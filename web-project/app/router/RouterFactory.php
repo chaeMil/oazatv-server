@@ -22,7 +22,7 @@ class RouterFactory {
 
                 $securedApi = 0;
 		        if (SECURED_API) {
-		            $secured = Route::SECURED;
+		            $securedApi = Route::SECURED;
                 }
 
                 //json api links
