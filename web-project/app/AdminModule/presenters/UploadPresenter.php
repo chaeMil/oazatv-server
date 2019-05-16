@@ -89,8 +89,8 @@ class UploadPresenter extends BaseSecuredPresenter {
                 ->setHtmlId("submit")
                 ->setAttribute("class", "btn btn-primary btn-xl");
         
-        $form->onSuccess[] = $this->prepareVideoInDBSucceeded;
-        
+        $form->onSuccess[] = [$this, 'prepareVideoInDBSucceeded'];
+
         $this->bootstrapFormRendering($form);
         
         return $form;

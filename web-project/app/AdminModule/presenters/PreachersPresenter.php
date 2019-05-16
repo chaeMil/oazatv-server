@@ -81,7 +81,7 @@ class PreachersPresenter extends BaseSecuredPresenter {
                 ->setAttribute("class", "btn-lg btn-success btn-block");
         
 
-        $form->onSuccess[] = $this->preacherSucceeded;
+        $form->onSuccess[] = [$this, 'preacherSucceeded'];
 
         // setup Bootstrap form rendering
         $this->bootstrapFormRendering($form);

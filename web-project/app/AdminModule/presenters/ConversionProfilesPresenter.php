@@ -82,7 +82,7 @@ class ConversionProfilesPresenter extends BaseSecuredPresenter {
         
 
         // call method signInFormSucceeded() on success
-        $form->onSuccess[] = $this->profileSucceeded;
+        $form->onSuccess[] = [$this, 'profileSucceeded'];
 
         // setup Bootstrap form rendering
         $this->bootstrapFormRendering($form);

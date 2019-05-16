@@ -18,7 +18,7 @@ use Nette,
  Model\CategoriesManager,
  Model\ConversionProfilesManager,
  App\FileUtils,
- Nextras\Datagrid\Datagrid;
+ ADT\Datagrid\Datagrid;
 use Nette\Application\Responses\JsonResponse;
 
 /**
@@ -143,9 +143,9 @@ class VideoPresenter extends BaseSecuredPresenter {
 
         $grid->addCellsTemplate(__DIR__.'/../templates/Video/listCell.latte');
 
-        $grid->setPagination(30, $this->getDataSourceSum);
+        $grid->setPagination(30, [$this, 'getDataSourceSum']);
 
-        $grid->setDataSourceCallback($this->getDataSource);
+        $grid->setDataSourceCallback([$this, 'getDataSource']);
 
         return $grid;
     }
@@ -283,7 +283,7 @@ class VideoPresenter extends BaseSecuredPresenter {
 
 
         // call method signInFormSucceeded() on success
-        $form->onSuccess[] = $this->videoBasicInfoSucceeded;
+        $form->onSuccess[] = [$this, 'videoBasicInfoSucceeded'];
 
         // setup Bootstrap form rendering
         $this->bootstrapFormRendering($form);

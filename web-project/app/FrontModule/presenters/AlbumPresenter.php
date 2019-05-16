@@ -53,7 +53,7 @@ class AlbumPresenter extends BasePresenter {
             ->setAttribute("class", "btn btn-success btn-block");
 
         // call method signInFormSucceeded() on success
-        $form->onSubmit[] = $this->privateLinkSend;
+        $form->onSubmit[] = [$this, 'privateLinkSend'];
 
         // setup Bootstrap form rendering
         $this->bootstrapFormRendering($form);

@@ -73,7 +73,7 @@ class CategoriesPresenter extends BaseSecuredPresenter {
                 ->setAttribute("class", "btn-lg btn-success btn-block");
 
         // call method signInFormSucceeded() on success
-        $form->onSuccess[] = $this->categorySucceeded;
+        $form->onSuccess[] = [$this, 'categorySucceeded'];
 
         // setup Bootstrap form rendering
         $this->bootstrapFormRendering($form);

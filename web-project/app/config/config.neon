@@ -11,12 +11,11 @@ php:
     date.timezone: Europe/Prague
 
 
-nette:
-    application:
-        catchExceptions: true
-        errorPresenter: Front:Error
-        mapping:
-            *: App\*Module\*Presenter
+application:
+    catchExceptions: true
+    errorPresenter: Front:Error
+    mapping:
+        *: App\*Module\*Presenter
 
 latte:
     macros:

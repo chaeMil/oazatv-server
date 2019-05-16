@@ -78,7 +78,7 @@ class SettingsPresenter extends BaseSecuredPresenter {
         $form->addSubmit('save', null)
                 ->setAttribute("class", "btn btn-primary btn-xl");
 
-        $form->onSuccess[] = $this->addUserSucceeded;
+        $form->onSuccess[] = [$this, 'addUserSucceeded'];
 
         $this->bootstrapFormRendering($form);
 
@@ -114,7 +114,7 @@ class SettingsPresenter extends BaseSecuredPresenter {
         $form->addSubmit("submit", "uložit")
                 ->setAttribute("class", "btn btn-success btn-lg");
         
-        $form->onSuccess[] = $this->saveServerSettingsSucceeded;
+        $form->onSuccess[] = [$this, 'saveServerSettingsSucceeded'];
         
         $this->bootstrapFormRendering($form);
         
@@ -153,7 +153,7 @@ class SettingsPresenter extends BaseSecuredPresenter {
         $form->addSubmit("submit", "uložit")
                 ->setAttribute("class", "btn btn-success btn-lg");
         
-        $form->onSuccess[] = $this->addKeyValueSucceeded;
+        $form->onSuccess[] = [$this, 'addKeyValueSucceeded'];
         
         $this->bootstrapFormRendering($form);
         
@@ -179,7 +179,7 @@ class SettingsPresenter extends BaseSecuredPresenter {
         $form->addSubmit("submit", "smazat")
                 ->setAttribute("class", "btn btn-danger");
         
-        $form->onSuccess[] = $this->deleteKeySucceeded;
+        $form->onSuccess[] = [$this, 'deleteKeySucceeded'];
         
         $this->bootstrapFormRendering($form);
         

@@ -81,7 +81,7 @@ class SongsPresenter extends BaseSecuredPresenter {
         
 
         // call method signInFormSucceeded() on success
-        $form->onSuccess[] = $this->songSucceeded;
+        $form->onSuccess[] = [$this, 'songSucceeded'];
 
         // setup Bootstrap form rendering
         $this->bootstrapFormRendering($form);
