@@ -12,9 +12,9 @@
                     {if isset($video['mp4']) && !$isCrOS} {*hack to work on chromebooks*}
                         <source src="{$basePath}/{$video['mp4']}" type='video/mp4' label='original'>
                     {/if}
-                    {if isset($video['webm'])}
+                    {*if isset($video['webm'])}
                         <source src="{$basePath}/{$video['webm']}" type='video/webm' label='original'>
-                    {/if}
+                    {/if*}
                     {if isset($video['mp4_lowres'])}
                         <source src="{$basePath}/{$video['mp4_lowres']}" type='video/mp4' label='LQ' />
                     {/if}
