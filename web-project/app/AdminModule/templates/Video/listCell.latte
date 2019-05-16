@@ -32,19 +32,19 @@
 
 {define col-name_cs}
     <td>
-        {if isset($cell)}<a href="{plink Video:detail $row['id']}">{$cell}</a>{/if}
+        <a href="{plink Video:detail $row['id']}">{$row['name_cs']}</a>
     </td>
 {/define}
 
 {define col-name_en}
     <td>
-        {if isset($cell)}<a href="{plink Video:detail $row['id']}">{$cell}</a>{/if}
+        <a href="{plink Video:detail $row['id']}">{$row['name_en']}</a>
     </td>
 {/define}
 
 {define col-note}
     <td class="hidden-xs hidden-sm" style="max-width: 200px; max-height: 80px; overflow-y: scroll">
-        {if isset($cell)}<span>{$cell}</span>{/if}
+        <span>{$row['note']}</span>
     </td>
 {/define}
 
@@ -60,7 +60,7 @@
 
 {define col-published}
     <td>
-        {if isset($cell) && $cell == 1}
+        {if $row['published'] == 1}
             <i class="fa fa-check" aria-hidden="true" style="color: green; font-size: 24px;"></i>
         {else}
             <i class="fa fa-times" aria-hidden="true" style="color: red; font-size: 24px;"></i>
@@ -88,6 +88,6 @@
 
 {define col-date}
     <td>
-        {if isset($cell)}<span>{$cell|date:'j.n.Y'}</span>{/if}
+        <span>{$row['date']|date:'j.n.Y'}</span>
     </td>
 {/define}
